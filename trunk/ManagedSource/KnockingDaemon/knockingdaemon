@@ -1,0 +1,2 @@
+#!/bin/sh
+sudo mono bin/Debug/KnockingDaemon.exe
