@@ -2,7 +2,7 @@
 using System;
 using Gdk;
 
-namespace SharpKnocking.Common
+namespace SharpKnocking.Common.Widgets
 {
 	
 	/// <summary>

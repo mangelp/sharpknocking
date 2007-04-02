@@ -58,9 +58,21 @@ namespace SharpKnocking.Common.Widgets
 			}
 		}
 		
+		
 		public new ResponseType Run()
 		{
 			return (ResponseType)(base.Run());		
+		}
+		
+		public static ResponseType Show(Window parent, MessageType type, string message, params object[] args)
+		{
+			OkDialog dialog = new OkDialog(parent,type,message,args);
+			
+			ResponseType res = dialog.Run();
+			
+			dialog.Destroy();
+			
+			return res;
 		}
 	}
 }
