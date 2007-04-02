@@ -1,0 +1,47 @@
+ 
+SHARP KNOCKING PROJECT
+
+ This project is a implementation of the port knocking principles (see 
+www.portknocking.org) in c# for every *nix flavour that have a kernel with
+ iptables (1.3.5 at least) and mono (1.2.3 at least).
+
+LICENSE
+
+ (c) 2007 by the authors:
+     Luis Román Gutiérrez
+	 Miguel Ángel Pérez Valencia
+
+ This project is licensed under the LGPL V2 wich can be read in the file 
+lgpl.txt in the root of the sources.
+
+DIRECTORIES ESTRUCTURE
+
+- Doc 
+   Documentation directory. Examples and Api docs.
+- ManagedSource
+   Project Solution.
+   Source code written in c# using monodevelop.
+        - Common
+            Subproject.
+            Common functionality used by various subprojects.
+        - CommonWidgets 
+            Subproject.
+            Common ui controls.
+        - Doorman
+            Subproject.
+            Server side manager application.
+        - KnockingDaemon
+            Subproject.
+            Capture packets and looks for knockings. Handles rules to allow
+            incoming connections.
+        - NetfilterFirewall
+            Subproject.
+            OO aproach to work against iptables command-line utility.
+        - PortKnocker
+            Subproject.
+            Client application to perform the knocking that grants access to a
+            hidden service in the target machine.
+- Tests
+   Samples and testing scripts.
+
+
