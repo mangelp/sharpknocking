@@ -2,7 +2,7 @@
 using System;
 using Gtk;
 
-namespace SharpKnocking.Common.Widgets
+namespace SharpKnocking.Common.Widgets.CommonDialogs
 {	
 	/// <summary>
 	/// This class specialices <c>MessageDialog</c>
@@ -20,7 +20,7 @@ namespace SharpKnocking.Common.Widgets
 		/// <param name = "question">
 		/// The message which would be shown in the dialog.
 		/// </param>
-		public ConfirmDialog(Window parent, string question, params object[] args)
+		private ConfirmDialog(Window parent, string question, params object[] args)
 			: base(	parent,
 					DialogFlags.DestroyWithParent,
 					MessageType.Question, 
@@ -33,9 +33,30 @@ namespace SharpKnocking.Common.Widgets
 			this.Icon = parent.Icon;
 		}	
 		
-		public new ResponseType Run()
+		private new ResponseType Run()
 		{
 			return (ResponseType)(base.Run());		
+		}
+		
+		/// <summary>
+		/// Shows a Yes/No question dialog.
+		/// </summary>
+		/// <param name = "parent">
+		/// The window the <c>ConfirmDialog</c> instance is
+		/// created from.
+		/// </param>
+		/// <param name = "question">
+		/// The message which would be shown in the dialog.
+		/// </param>
+		public static ResponseType Show(Window parent, string question, params object[] args)
+		{
+			ConfirmDialog cd = new ConfirmDialog(parent,question,args);
+			
+			ResponseType res = cd.Run();
+			
+			cd.Destroy();
+			
+			return res;
 		}
 	}
 }

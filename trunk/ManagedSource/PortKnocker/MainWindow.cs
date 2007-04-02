@@ -7,6 +7,7 @@ using Glade;
 using SharpKnocking.Common;
 using SharpKnocking.Common.Calls;
 using SharpKnocking.Common.Widgets;
+using SharpKnocking.Common.Widgets.CommonDialogs;
 
 namespace SharpKnocking.PortKnocker
 {
@@ -226,18 +227,17 @@ namespace SharpKnocking.PortKnocker
 			CallNode selectedNode = (CallNode)(callsView.NodeSelection.SelectedNode);
 			
 			// First, we have to confirm.				
-			ConfirmDialog confirmDialog = 
-				new ConfirmDialog(	mainWindow,
-									"¿Realmente quieres borrar la secuencia de llamada \n«{0}»?",
-									selectedNode.Description);	 
+			ResponseType res = 
+				ConfirmDialog.Show(
+					mainWindow,
+					"¿Realmente quieres borrar la secuencia de llamada \n«{0}»?",
+					selectedNode.Description);	 
 			
             
-            if(confirmDialog.Run()  == ResponseType.Yes)
+            if(res == ResponseType.Yes)
             {                  
 				callsStore.RemoveNode(callsView.NodeSelection.SelectedNode);			
 			}	
-			
-			confirmDialog.Destroy();
 		}
 		
 		private void OnCallsViewRowActivated(object sender, RowActivatedArgs a)
@@ -261,7 +261,8 @@ namespace SharpKnocking.PortKnocker
 
 		private void OnItmAboutActivated(object sender, EventArgs a)
 		{
-			AppInfoDialog ad = new AppInfoDialog(
+			AppInfoDialog.Show(
+				mainWindow,
 				"PortKnocker",
 				"Esta es la aplicación que realiza tareas de «llamador» dentro"+
 				" del proyecto SharpKnocking.");

@@ -4,6 +4,7 @@ using System;
 using Gtk; 
 
 using SharpKnocking.Common;
+using SharpKnocking.Common.Widgets;
 
 namespace SharpKnocking.Doorman
 {

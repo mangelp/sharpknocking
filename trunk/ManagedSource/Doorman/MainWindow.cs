@@ -9,6 +9,7 @@ using SharpKnocking.Common.Calls;
 using SharpKnocking.Common.Widgets;
 using SharpKnocking.Common.Remoting;
 using SharpKnocking.Doorman.Remoting;
+using SharpKnocking.Common.Widgets.CommonDialogs;
 
 namespace SharpKnocking.Doorman
 {
@@ -98,9 +99,10 @@ namespace SharpKnocking.Doorman
 		
 			// First we confirm
 			
-			ConfirmDialog cd = new ConfirmDialog(mainWindow, "¿Realmente deseas cerrar Doorman?");
+			ResponseType res = 
+				ConfirmDialog.Show(mainWindow, "¿Realmente deseas cerrar Doorman?");
 			
-			if(cd.Run() == ResponseType.Yes)
+			if(res == ResponseType.Yes)
 			{	
 			    try
 			    {
@@ -108,29 +110,25 @@ namespace SharpKnocking.Doorman
 			    }
 			    catch(System.UnauthorizedAccessException)
 			    {
-			        OkDialog dlg = new OkDialog(mainWindow, MessageType.Info, 
-			                              "No se tienen los permisos necesarios para"+
-			                              "\nguardar la configuración de llamadas."+
-			                              "\n\nSi quiere guardar cambios inicie la"+
-			                              "\n aplicación como root.");
-			        dlg.Run();
+			        OkDialog.Show(mainWindow, MessageType.Info, 
+			       		"No se tienen los permisos necesarios para"+
+			        	"\nguardar la configuración de llamadas."+
+			        	"\n\nSi quiere guardar cambios inicie la"+
+			        	"\n aplicación como root.");
 			    }
 			    
 				Application.Quit ();	
 				
-				ConfirmDialog cd1 = 
-					new ConfirmDialog(
+				res = ConfirmDialog.Show(
 						mainWindow, 
 						"¿Desea cerrar también el daemon de apertura de puertos");
 				
-				if(cd1.Run() == ResponseType.Yes)
+				if(res == ResponseType.Yes)
 				{
 					// TODO: Implement the closing of the daemon.
 				}
 				
 			}		
-			
-			cd.Destroy();
 		}
 		
 		#endregion Public
@@ -199,18 +197,16 @@ namespace SharpKnocking.Doorman
 				
 				if(File.Exists(filename))
 				{
-					ConfirmDialog overwriteDialog = 
-						new ConfirmDialog(
+					ResponseType res = ConfirmDialog.Show(
 							chooserDialog.Window,
 							"Ya existe un fichero «{0}» en la carpeta seleccionada.\n"+
 							"¿Desea sobreescribirlo?",
 							Path.GetFileName(filename));
-					if(overwriteDialog.Run() == ResponseType.Yes)
+							
+					if(res == ResponseType.Yes)
 					{
 						node.Sequence.Store(filename);
-					}
-					
-					overwriteDialog.Destroy();			
+					}		
 				}
 				else
 				{
@@ -322,8 +318,8 @@ namespace SharpKnocking.Doorman
 				msg = 	"¿Desea activar la apertura de puertos?";
 			}
 			
-			ConfirmDialog cd = new ConfirmDialog(mainWindow, msg);
-			if(cd.Run() == ResponseType.Yes)
+			ResponseType res = ConfirmDialog.Show(mainWindow, msg);
+			if(res == ResponseType.Yes)
 			{
 				
 			}
@@ -359,21 +355,16 @@ namespace SharpKnocking.Doorman
 			CallNode selectedNode = (CallNode)(callsView.NodeSelection.SelectedNode);
 			
 			// First, we have to confirm.				
-			MessageDialog confirmDialog = new MessageDialog (mainWindow, 
-                                      DialogFlags.DestroyWithParent,
-                                   	  MessageType.Question, 
-                                      ButtonsType.YesNo,
-                                      "¿Realmente quieres borrar la secuencia de llamada \n«"+
-                                      selectedNode.Description+"»?");
+			ResponseType res =
+				ConfirmDialog.Show(
+					mainWindow,                                     
+                    "¿Realmente quieres borrar la secuencia de llamada \n«{0}»?",
+                    selectedNode.Description);
             
-            confirmDialog.Title = "Pregunta";
-            
-            if(confirmDialog.Run()  == (int)ResponseType.Yes)
+            if(res == ResponseType.Yes)
             {                  
 				callsStore.RemoveNode(callsView.NodeSelection.SelectedNode);			
-			}	
-			
-			confirmDialog.Destroy();
+			}
 		}
 		
 		private void OnCallActivationStateChanged(object sender, ToggledArgs a)
@@ -410,7 +401,8 @@ namespace SharpKnocking.Doorman
 
 		private void OnItmAboutActivated(object sender, EventArgs a)
 		{
-			AppInfoDialog ad = new AppInfoDialog(
+			AppInfoDialog.Show(
+				mainWindow,
 				"Doorman",
 				"Esta aplicación del proyecto SharpKnocking permite establecer"+
 				" que «llamadas» abrirán los puertos asociados a las mismas.");

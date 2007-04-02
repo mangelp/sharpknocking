@@ -2,7 +2,7 @@
 using System;
 using Gtk;
 
-namespace SharpKnocking.Common.Widgets
+namespace SharpKnocking.Common.Widgets.CommonDialogs
 {
 	
 	/// <summary>
@@ -23,7 +23,7 @@ namespace SharpKnocking.Common.Widgets
 		/// <param name = "message">
 		/// The message which will be shown as the dialog's text.
 		/// </param>
-		public OkDialog(Window parent, MessageType type, string message, params object[] args)
+		private OkDialog(Window parent, MessageType type, string message, params object[] args)
 			: base(	parent,
 					DialogFlags.DestroyWithParent,
 					type,
@@ -59,11 +59,24 @@ namespace SharpKnocking.Common.Widgets
 		}
 		
 		
-		public new ResponseType Run()
+		private new ResponseType Run()
 		{
 			return (ResponseType)(base.Run());		
 		}
 		
+		
+		/// <summary>
+		/// This method shows a message dialog to the user.
+		/// </summary>
+		/// <param name = "parent">
+		/// The window the dialog is created from.
+		/// </param>
+		/// <param name = "type">
+		/// The type of the message.
+		/// </param>
+		/// <param name = "message">
+		/// The message which will be shown as the dialog's text.
+		/// </param>
 		public static ResponseType Show(Window parent, MessageType type, string message, params object[] args)
 		{
 			OkDialog dialog = new OkDialog(parent,type,message,args);

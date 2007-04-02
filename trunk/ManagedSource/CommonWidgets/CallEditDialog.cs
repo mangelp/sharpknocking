@@ -8,6 +8,8 @@ using Glade;
 
 using SharpKnocking.Common;
 using SharpKnocking.Common.Calls;
+using SharpKnocking.Common.Widgets.CommonDialogs;
+
 
 namespace SharpKnocking.Common.Widgets
 {
@@ -212,19 +214,15 @@ namespace SharpKnocking.Common.Widgets
 		
 		private ResponseType ShowSaveQuestion()
 		{
-		    // A message dialog is created to ask the user
-		    // whether to save the changes or not.
-		    
-		    ConfirmDialog md = 
-		    	new ConfirmDialog(
-		    			callEditDialog,                                    
-                        "¿Estas seguro de guardar esta secuencia de llamada?");
-                                    
+		    // A message dialog is used to ask the user
+		    // whether to save the changes or not.		   
+            ResponseType res = 
+            	ConfirmDialog.Show(    
+            		callEditDialog,                                    
+                    "¿Estas seguro de guardar esta secuencia de llamada?");                    
      
-            // The action which was selected is returned.
-            ResponseType res= md.Run ();
-            md.Destroy();
-            return res;		    
+            
+            return res;	
 		}
 		
 		/// <summary>
@@ -263,14 +261,9 @@ namespace SharpKnocking.Common.Widgets
 		    else
 		    {
 		        // The errors are shown.
-		        OkDialog okDialog = 
-		        	new OkDialog(callEditDialog, MessageType.Error,
+		        OkDialog.Show(callEditDialog, MessageType.Error,
 		        	          "No se pudo guardar la llamada porque:\n\n{0}",
-		        	          errors);
-		        	          
-				okDialog.Run();
-				okDialog.Destroy();
-		            
+		        	          errors);		        	          
 		             
 		        return false;
 		    }
@@ -449,14 +442,11 @@ namespace SharpKnocking.Common.Widgets
 		    }    
 		    else if(!editing)
 		    {
-		        OkDialog okDialog = new OkDialog(
+		        OkDialog.Show(
 		        	callEditDialog,
 		        	MessageType.Info,		        
 		            "Debe introducir los datos de la sequencia de llamada\n"+
 		            "antes de aceptar los cambios.");
-		        okDialog.Run();
-		        okDialog.Destroy();	
-		        	    
 		    }
 		    
 		    callEditDialog.Respond(ResponseType.None);
