@@ -104,22 +104,12 @@ namespace SharpKnocking.Doorman
 			
 			if(res == ResponseType.Yes)
 			{	
-			    try
-			    {
-			       SaveData();
-			    }
-			    catch(System.UnauthorizedAccessException)
-			    {
-			        OkDialog.Show(mainWindow, MessageType.Info, 
-			       		"No se tienen los permisos necesarios para"+
-			        	"\nguardar la configuración de llamadas."+
-			        	"\n\nSi quiere guardar cambios inicie la"+
-			        	"\n aplicación como root.");
-			    }
+			    
+			    SaveData();
 			    
 				Application.Quit ();	
 				
-				res = ConfirmDialog.Show(
+				res = ConfirmDialog.Show(						
 						mainWindow, 
 						"¿Desea cerrar también el daemon de apertura de puertos");
 				
@@ -260,6 +250,21 @@ namespace SharpKnocking.Doorman
 			callsView.RowActivated += OnCallsViewRowActivated;
 			
 			callsView.ShowAll();	
+			
+			mainWindow.Realized += OnWindowRealized;
+		}
+		
+		private void OnWindowRealized(object o, EventArgs a)
+		{
+			if (!UnixNative.ExecUserIsRoot())
+			{
+		        OkDialog.Show(
+		        	null, 
+		        	MessageType.Info, 
+		        	"No puedes ejecutar la aplicación si no eres root");
+		        			       
+		        Application.Quit();
+		    }
 		}
 		
 		private void LoadData()
@@ -308,9 +313,9 @@ namespace SharpKnocking.Doorman
 		private void OnBtnBlockClicked(object sender, EventArgs a)
 		{
 			string msg;
-			if(trafficBlocked)
+			if(!trafficBlocked)
 			{
-				msg = 	"¿Desea bloquear la apertura de puertos?" +
+				msg = 	"¿Desea bloquear la apertura de puertos?\n" +
 						"Esto también cerrará los puertos que estuvieran abiertos.";
 			}
 			else
@@ -319,9 +324,10 @@ namespace SharpKnocking.Doorman
 			}
 			
 			ResponseType res = ConfirmDialog.Show(mainWindow, msg);
+			
 			if(res == ResponseType.Yes)
 			{
-				
+				daemonComm.SendCommand(RemoteCommandActions.Die);
 			}
 		}
 		
@@ -436,8 +442,6 @@ namespace SharpKnocking.Doorman
 		{
 			SaveData();
 		}
-
-		
 		
 		private void OnTxtFilterChanged(object sender, EventArgs a)
 		{

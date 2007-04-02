@@ -4,7 +4,9 @@ using System.Runtime.InteropServices;
 using Gtk;
 using Gdk;
 
+using SharpKnocking.Common;
 using SharpKnocking.Common.Widgets;
+using SharpKnocking.Common.Widgets.CommonDialogs;
  
 namespace SharpKnocking.Doorman
 {
@@ -22,7 +24,8 @@ namespace SharpKnocking.Doorman
 			
 			this.window = new MainWindow();
 		
-			InitializeWidgets();			
+			InitializeWidgets();
+							
 		}
 		
 		#region Private methods
