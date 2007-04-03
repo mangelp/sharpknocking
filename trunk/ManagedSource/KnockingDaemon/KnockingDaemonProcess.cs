@@ -7,10 +7,12 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 
 using SharpKnocking.Common;
+using SharpKnocking.Common.Calls;
 using SharpKnocking.Common.Remoting;
 using SharpKnocking.NetfilterFirewall;
 using SharpKnocking.KnockingDaemon.PacketFilter;
 using SharpKnocking.KnockingDaemon.FirewallAccessor;
+using SharpKnocking.KnockingDaemon.SequenceDetection;
 
 namespace SharpKnocking.KnockingDaemon
 {
@@ -25,34 +27,21 @@ namespace SharpKnocking.KnockingDaemon
     /// with the daemon and coordinates the other "daemon" class that run
     /// in a separate thread.
     /// </remarks>
-	public class KnockingDaemonProcess: IDaemonProcessUnit
+	public class KnockingDaemonProcess: IDisposable
 	{	
-	    private Thread monitorThread;
-	
-        private TcpChannel tcpChannel;
-        
+        private NetfilterAccessor accessor;
+        private CallSequence[] calls;
         private RemoteDaemon commObject;
         private ObjRef commObjectRef;
-
-        private RemoteManager managerObject;
+        private bool doCapture = true;
         private bool isInteractiveMode;
         private bool isStarted;
-	        
+        private RemoteManager managerObject;
+        private TcpdumpMonitor monitor;
+        private Thread monitorThread;
         private bool running;
-        
-        public bool Running
-        {
-            get { return this.running;}
-        }
-        
-        private bool stopped;
-        
-        public bool Stopped
-        {
-            get { return this.stopped;}
-        }
-        
-        private bool doCapture = true;
+        private SequenceDetectorManager seqManager;
+        private TcpChannel tcpChannel;
         
         /// <summary>
         /// Gets/Sest if the capture process should be done
@@ -62,8 +51,11 @@ namespace SharpKnocking.KnockingDaemon
             get { return this.doCapture ;}
             set { this.doCapture = value;}
         }
-	
-        private TcpdumpMonitor monitor;
+        
+        public bool Running
+        {
+            get { return true;}
+        }
         
         /// <summary>
         /// Gets/Sets a reference to the daemon that capture packets and generate
@@ -74,8 +66,6 @@ namespace SharpKnocking.KnockingDaemon
             get { return monitor;}
             set { this.monitor = value;}
         }
-        
-        private NetfilterAccessor accessor;
         
         /// <summary>
         /// Gets/sets a reference to the daemon that manages netfilter rules,
@@ -118,6 +108,27 @@ namespace SharpKnocking.KnockingDaemon
                 ChannelServices.UnregisterChannel(this.tcpChannel);
                 this.tcpChannel = null;
             }
+            
+            //Set sequence manager
+	        if(this.seqManager !=null)
+            {
+	            this.seqManager.Dispose();
+	            this.seqManager = null;
+	        }
+	        
+	        //Clear calls
+	        this.calls = null;
+	        
+	        //Clear accessor
+	        if(this.accessor !=null)
+	        {
+    	        this.accessor.End();
+    	        this.accessor = null;
+	        }
+	        
+	        //If still exists the lock file erase it
+	        if(UnixNative.ExistsLockFile())
+                UnixNative.RemoveLockFile();
         }
         
         /// <summary>
@@ -129,55 +140,38 @@ namespace SharpKnocking.KnockingDaemon
             
             try
             {
+                //Init rules accessor
+                this.accessor.Init();
                 //We need to register our remoting object and try to reach the
                 //one from the manager
                 this.RegisterServerObject();
                 this.RegisterManagerEnd();
                 //This will start the monitor
                 this.HotRestart();
+                
+                //Keep the process up
+                while(this.running)
+                {;}
             }
             catch(Exception ex)
             {
                 Debug.Write("Exception catched in intercommunication processing.");
+                this.accessor.End();
                 throw ex;
             }
+            
+            this.running = false;
         }
         
-        /// 
+        /// <summary> 
+        /// Stops the procesing.
+        /// </summary>
         public void Stop()
         {
-            if(!this.running)
-                return;
+            this.InternalStopMonitor();
+            this.Dispose();
             
-            if(!this.doCapture)
-            {
-                Debug.Write("Stopping capture processing.");
-                this.monitor.Stop();
-            }
-            else
-            {
-                Debug.Write("Capture processing disabled. Can't stop.");
-            }
-            
-            this.stopped = true;
-        }
-        
-        public void Start()
-        {
-            if(!this.running)
-                return;
-            
-            if(!this.doCapture)
-            {
-                Debug.Write("Resuming capture processing");
-                this.monitor.Start();
-            }
-            else
-            {
-                Debug.Write("Capture processing disabled. Can't start.");
-            }
-            
-            this.stopped = false;
+            this.running = false;
         }
         
         /// <summary>
@@ -187,28 +181,26 @@ namespace SharpKnocking.KnockingDaemon
         {
             //Inconditionally we kill the monitor if it is running and if not
             //we start it if the flag doCapture isn't set to false
-            
-            if(this.monitor!= null && this.monitor.Running)
-            {
-                Debug.Write("Killing packet capture process");
-                this.monitor.Kill();
-                
-                if(this.monitorThread.ThreadState == ThreadState.Running)
-                {
-                    this.monitorThread.Abort();
-                }
-            }
+            this.InternalStopMonitor();
             
             if(this.doCapture)
             {
                 Debug.Write("Initing packet capture process");
-                this.monitor = new TcpdumpMonitor();
+                this.calls = CallsLoader.Load();
+                this.monitor = new TcpdumpMonitor(this.calls);
+                if(this.seqManager !=null)
+                {
+                    this.seqManager.Dispose();
+                }
+                this.seqManager = new SequenceDetectorManager(this.calls, this.monitor);
                 this.monitorThread = new Thread(new ThreadStart(this.monitor.Run));
                 this.monitorThread.Start();
             }
             else
             {
                 Debug.Write("Packet capture disabled by command line option --nocapture");
+                this.monitorThread = null;
+                this.monitor = null;
             }
         }
         
@@ -225,6 +217,43 @@ namespace SharpKnocking.KnockingDaemon
             this.commObjectRef = RemotingServices.Marshal(this.commObject, RemoteEndService.DaemonServiceName);
             //Set a handler in the event to get notifications about incoming messages
             this.commObject.Received += new RemoteEndEventHandler(this.OnReceivedHandler);
+        }
+        
+        /// <summary>
+        /// Stops the processing and clears all the objects used.
+        /// Doesn't init
+        /// </summary>
+        private void InternalStopMonitor()
+        {
+            if(!this.doCapture)
+            {
+                Debug.Write("Stopping capture processing.");
+                
+                if(this.seqManager!=null)
+                {
+                    this.seqManager.Dispose();
+                    this.seqManager = null;
+                }
+                
+                if(this.monitor!= null && this.monitor.Running)
+                {
+                    Debug.Write("Killing packet capture process");
+                    this.monitor.Dispose();
+                    
+                    if(this.monitorThread.ThreadState == ThreadState.Running)
+                    {
+                        this.monitorThread.Abort();
+                    }
+                }
+                else
+                {
+                    this.monitor = null;
+                }
+            }
+            else
+            {
+                Debug.Write("Capture processing disabled. Can't stop.");
+            }
         }
         
         private void OnReceivedHandler(object sender, RemoteEndEventArgs args)
@@ -251,9 +280,6 @@ namespace SharpKnocking.KnockingDaemon
                 case RemoteCommandActions.HotRestart:
                     this.HotRestart();
                     this.SendResponse(args.Action, null);
-                    break;
-                case RemoteCommandActions.Start:
-                    this.Start();
                     break;
                 case RemoteCommandActions.StartInteractiveMode:
                     this.isInteractiveMode = true;

@@ -87,7 +87,7 @@ namespace SharpKnocking.NetfilterFirewall
 		private FirewallManager()
 		{
             this.ruleSet = new NetfilterRuleSet();
-            this.tempFileName = "/tmp/sharpKnockingTempFile";
+            this.tempFileName = UnixNative.CreateTempFileName();
             this.chainName = "SharpKnocking-INPUT";
             
             Debug.Write("FirewallManager instance created!");
@@ -350,7 +350,7 @@ namespace SharpKnocking.NetfilterFirewall
             NetfilterTable nTable = this.ruleSet.GetDefaultTable();
             
             //If there are more rules we return to them to continue traversing existing rules
-            //so users with firewall generators can apply rules to new connections
+            //TODO: Encapsulate this as a new operation mode -> mangelp
             if(nTable.Chains.Length>1 && nTable.Chains[0].CurrentName == this.chainName)
             {
                 //Back to input chain but to the next rule.
@@ -364,10 +364,6 @@ namespace SharpKnocking.NetfilterFirewall
             //Add option
             rule.Options.Add(jop);
 
-            //TODO: If at the start there was a chain redirection in the input
-            // chain with firewall configuration we should redirect the packets
-            // to that chain rather than accepting them directly -> mangelp
-
             //Execute
             FirewallManager.instance.ApplyRule(rule);
             //Execute in default table named filter
@@ -376,9 +372,45 @@ namespace SharpKnocking.NetfilterFirewall
             return rule;
         }
         
+        /// <summary>
+        /// Creates a backup file with the current rule set in netfilter
+        /// </summary>
+        /// <returns>
+        /// The file name with the backup
+        /// </returns>
+        public string BackupCurrentSet()
+        {
+            string fileName = UnixNative.CreateTempFileName();
+            Debug.Write("Storing backup copy of set: "+fileName+"");
+            IpTablesCmd.Save(fileName);
+            return fileName;
+        }
+        
+        /// <summary>
+        /// Restores a rule set from a file
+        /// </summary>
+        public void RestoreRuleSetBackup(string file)
+        {
+            if(!System.IO.File.Exists(file))
+                throw new System.IO.FileNotFoundException("The file doesn't exists: "+file);
+                
+            IpTablesCmd.Restore(file);
+        }
+        
+        /// <summary>
+        /// Removes knocking chain
+        /// </summary>
         public void Dispose()
         {
-            this.RemoveSharpKnockingChain();
+            if(!this.dryRun)
+            {
+                this.RemoveSharpKnockingChain();
+            }
+            
+            //Clear ourselves from the static reference so everything gets removed.
+            FirewallManager.instance = new FirewallManager ();
+            //Clear the rule set
+            this.ruleSet.Clear();
         }
 	}
 }

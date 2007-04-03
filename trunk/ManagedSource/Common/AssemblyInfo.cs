@@ -7,12 +7,12 @@ using System.Runtime.CompilerServices;
 // change them to the information which is associated with the assembly
 // you compile.
 
-[assembly: AssemblyTitle("")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SharpKnocking Common Logic")]
+[assembly: AssemblyDescription("Common Logic for the SharpKnocking project")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyProduct("SharpKnocking")]
+[assembly: AssemblyCopyright("(c)2007")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

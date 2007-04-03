@@ -1,5 +1,6 @@
 
 using System;
+using SharpKnocking.Common.Calls;
 
 namespace SharpKnocking.KnockingDaemon.SequenceDetection
 {
@@ -24,12 +25,25 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 	       get { return this.ip;}
 	   }
 	   
+	   private string serializedSequence;
+	   
+	   /// <summary>
+	   /// Sequence that was hit serialzed as an string.
+	   /// </summary>
+	   public string SerializedSequence
+	   {
+	       get { return this.serializedSequence;}
+	   }
+	   
 	   /// <summary>
 	   /// Parametrized constructor.
 	   /// </summary>
-	   public SequenceDetectorEventArgs(string ip)
+	   /// <param name="ip">Ip address that did the knocking</param>
+	   /// <param name="serSeq">CallSequence serialized as an string</param>
+	   public SequenceDetectorEventArgs(string ip, string serSeq)
 	   {
 	       this.ip = ip;
+	       this.serializedSequence = serSeq;
 	   }
 	}
 }

@@ -76,5 +76,25 @@ namespace SharpKnocking.Common
         {
             return Mono.Unix.UnixEnvironment.EffectiveUserId == 0;
         }
+        
+        /// <summary>
+        /// Creates a temporary file name
+        /// </sumamry>
+        /// <returns>
+        /// A temporary name for a file that doesn't exist
+        /// </returns>
+        public static string CreateTempFileName()
+        {
+            Random r = new Random(DateTime.Now.Millisecond);
+            
+            string name = "/tmp/SharpKnocking."+r.Next()+"tmp";
+            
+            while(File.Exists(name))
+            {
+                name = "/tmp/SharpKnocking."+r.Next()+"tmp";
+            }
+            
+            return name;
+        }
 	}
 }

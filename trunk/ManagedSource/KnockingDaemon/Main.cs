@@ -13,21 +13,21 @@ using SharpKnocking.KnockingDaemon.FirewallAccessor;
 namespace SharpKnocking.KnockingDaemon
 {
    
-	// Main class for the daemon process
+    /// <summary>
+    /// Main class
+    /// </summary>
+    /// <remarks>
+    /// Exit codes:</br>
+    /// 0- Normal exit.</br>
+    /// 1- Another instance running.</br>
+    /// 2- Can't create lock file.</br>
+    /// 3- Unmanaged exception thrown.</br>
+    /// 4- Tried to run without root permissions.</br>
+    /// 5- WTF</br>
+    /// </remarks>
 	class MainClass
 	{
-	    /// <summary>
-	    /// Application entry point
-	    /// </summary>
-	    /// <remarks>
-	    /// Exit codes:</br>
-	    /// 0: Normal exit.</br>
-	    /// 1: Another instance running.</br>
-	    /// 2: Can't create lock file.</br>
-	    /// 3: Unmanaged exception thrown.</br>
-	    /// 4: Tried to run without root permissions.</br>
-	    /// 5: WTF!</br>
-	    /// </remarks>
+
         [MTAThread()]
 		public static int Main(string[] args)
 		{
@@ -134,13 +134,12 @@ namespace SharpKnocking.KnockingDaemon
             Console.Out.WriteLine ("(c)2007 Luís Roman Gutierrez y Miguel Ángel Pérez Valencia"); 
             Console.Out.WriteLine ("Commands: --nofwmodify, --nocapture, --dbg, -v, -vv, -vvv, -h, --help, --cfg, --dry");
             Console.Out.WriteLine ("     --dbg, -v, -vv, -vvv: The first activates debuggin and the rest the level of");
-            Console.Out.WriteLine ("       detail.");
+            Console.Out.WriteLine ("       detail (more 'v' means more verbose).");
             Console.Out.WriteLine ("     --nocapture: Don't start the capture thread. This makes daemon unusable");
             Console.Out.WriteLine ("     --nofwmodify: Don't modify current rule set. This makes daemon unusable");
             Console.Out.WriteLine ("     --cfg: The next argument must be a valid iptables configuration file that");
             Console.Out.WriteLine ("       will be loaded.");
             Console.Out.WriteLine ("     --dry: The current ruleset of the firewall will remain untouched");
-            
         }
 	}
 }

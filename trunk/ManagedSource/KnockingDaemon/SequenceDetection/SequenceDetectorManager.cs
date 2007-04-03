@@ -112,14 +112,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		{
 			SequenceDetector sd = sender as SequenceDetector;
 			
-			// TODO: Report the sequence detected
-			// One of two ways:
-			// - Notify other with an event and let it add the rule
-			// - Put here the code to add a rule or call someone else
-			//   to add the rule.
-			// - If interactive mode request permission to add the rule and
-			//   go for one of the above options.
-			Console.WriteLine(sd.CallSequence);
+			Console.WriteLine("Detected sequence {0}",sd.CallSequence);
 		}
 		
 		private void OnPacketCaptured(object sender, PacketCapturedEventArgs a)

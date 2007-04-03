@@ -27,9 +27,5 @@ namespace SharpKnocking.Common
 	    /// If the daemon is running and it is'n stopped this stops it.
 	    /// </summary>
 	    void Stop ();
-	    /// <summary>
-	    /// Returns true if the daemon is running and stoped. False if not.
-	    /// </summary>
-	    bool Stopped { get;}
 	}
 }

@@ -424,5 +424,13 @@ namespace SharpKnocking.NetfilterFirewall
             
             return;
 		}
+		
+		/// <summary>
+		/// Empties the tables releasing objects to the garbage collector
+		/// </summary>
+		public void Clear()
+		{
+		    this.tables.Clear();
+		}
 	}
 }

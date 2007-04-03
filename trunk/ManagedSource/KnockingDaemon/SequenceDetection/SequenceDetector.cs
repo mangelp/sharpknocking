@@ -85,7 +85,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 					
 					if((next+1) == this.CallSequence.Ports.Length)
 					{
-						this.OnSequenceDetectedHelper(sourceAddr);
+						this.OnSequenceDetectedHelper(sourceAddr, this.CallSequence.Store ());
 					}
 				}
 				else
@@ -104,9 +104,9 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		
 		#region Private methods
 		
-		private void OnSequenceDetectedHelper(string ip)
+		private void OnSequenceDetectedHelper(string ip, string seq)
 		{
-		    SequenceDetectorEventArgs args = new SequenceDetectorEventArgs(ip);
+		    SequenceDetectorEventArgs args = new SequenceDetectorEventArgs(ip, seq);
 		    
 			if(SequenceDetected != null)
 				SequenceDetected(this, args);

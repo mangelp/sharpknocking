@@ -17,7 +17,8 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 	/// </summary>
 	public class NetfilterAccessor
 	{	
-	
+	    private string backupRulesFile;
+	    
 	    private FirewallManager fManager;
 	    
 	    /// <summary>
@@ -40,17 +41,6 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 	       get { return this.parameters ; }
 	    }
 	    
-	    private bool running;
-	    
-	    /// <summary>
-	    /// If true the accessor is working but if it is false the accesor 
-	    /// failed.
-	    /// </summary>
-	    public bool Running
-	    {
-	       get{ return this.running;}
-	    }
-	    
 		/// <summary>
 		/// Empty constructor. Inits some collections.
 		/// </summary>
@@ -63,20 +53,30 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 		/// <summary>
 		/// Loads the current netfilter rule set.
 		/// </summary>
+		/// <remarks>
+		/// If there is an unexpected exception the old rule set is reloaded.
+		/// </remarks>
 		public void Init()
 		{
             try
             {
+                this.backupRulesFile = this.fManager.BackupCurrentSet();
+                
+                
                 if(this.Parameters.ContainsKey("cfg"))
                 {
+                    //Load a rule set. Usefull for debugging
                     this.fManager.LoadRuleSetFrom((string)this.Parameters["cfg"]);    
                 }
                 else if(this.Parameters.ContainsKey("ldcurrent"))
                 {
+                    //Load the current rule set in netfilter tables
                     this.fManager.LoadCurrentRuleSet();
                 }
                 else
                 {
+                    //We did a backup of the rule set so we can safely
+                    //remove all rules applying our own rule set.
                     this.fManager.RuleSet.SetAsSafe();
                     this.fManager.ApplyCurrentRuleSet();
                 }
@@ -85,9 +85,8 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
     		    {
     		        Debug.Write("The iptables rule set haven't been"+
                               " loaded. How i'm going to work without"+
-                              " it?\n Daemon thread exiting!");
-                    this.running = false;
-    		        return;
+                              " it?!");
+    		        throw new InvalidOperationException("Can't load the required data");
     		    }
 
                 this.fManager.AddSharpKnockingChain();
@@ -104,7 +103,26 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
             catch(Exception ex)
             {
                 Debug.Write("Error in rule daemon:\n"+ex);
+                Debug.Write("Restoring previous rule set...");
+                this.fManager.RestoreRuleSetBackup(this.backupRulesFile);
+                this.backupRulesFile = String.Empty;
             }
+		}
+		
+		/// <summary>
+		/// Ends the activity for the accessor restoring the old rule set if
+		/// there is a valid file and if its not running dry.
+		/// </summary>
+		public void End()
+		{
+		    if(!this.DryRun && !Net20.StringIsNullOrEmpty(this.backupRulesFile))
+		    {
+		        this.fManager.RestoreRuleSetBackup(this.backupRulesFile);
+		        this.backupRulesFile = String.Empty ;
+		    }
+		    
+		    //This clears the manager rule set 
+		    this.fManager.Dispose();
 		}
 		
 	}
