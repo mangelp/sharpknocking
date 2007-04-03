@@ -130,8 +130,8 @@ namespace SharpKnocking.Doorman
 		public void Show()
 		{	
 			//mainWindow.SkipTaskbarHint = false;		
-			//mainWindow.ShowAll();
-			mainWindow.Deiconify();
+			mainWindow.ShowAll();
+			//mainWindow.Deiconify();
 		}
 		
 		#endregion Public
@@ -530,7 +530,8 @@ namespace SharpKnocking.Doorman
 		private void OnWindowDeleteEvent (object sender, DeleteEventArgs a) 
 		{			
 			
-			Quit();
+			//Quit();
+			mainWindow.Hide();
 			a.RetVal = true;
 			
 		}

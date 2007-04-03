@@ -337,6 +337,7 @@ no se sale del programa o se guarda la configuración.</property>
                 <child>
                   <widget class="GtkButton" id="btnBlock">
                     <property name="visible">True</property>
+                    <property name="tooltip" translatable="yes">Bloquea el proceso de apertura de puertos.</property>
                     <signal name="clicked" handler="OnBtnBlockClicked"/>
                     <child>
                       <widget class="GtkHBox" id="hbox9">
@@ -356,7 +357,6 @@ no se sale del programa o se guarda la configuración.</property>
                             <property name="visible">True</property>
                             <property name="label" translatable="yes">_Bloquear</property>
                             <property name="use_underline">True</property>
-                            <property name="tooltip" translatable="yes">Bloquea el proceso de apertura de puertos.</property>
                           </widget>
                           <packing>
                             <property name="position">1</property>
@@ -388,6 +388,7 @@ no se sale del programa o se guarda la configuración.</property>
                   <widget class="GtkButton" id="btnClose">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="tooltip" translatable="yes">Cierra la aplicación</property>
                     <signal name="clicked" handler="OnBtnCloseClicked"/>
                     <child>
                       <widget class="GtkAlignment" id="alignment9">
