@@ -1,2 +1,9 @@
 #!/bin/sh
-sudo mono bin/Debug/KnockingDaemon.exe
+
+prefix="/usr/local"
+exec_prefix="${prefix}"
+libdir="${exec_prefix}/lib/managedsource"
+
+cd ${libdir}
+
+exec mono  "KnockingDaemon.exe" "$@"

@@ -19,7 +19,7 @@
       <Entry build="True" name="KnockingDaemonControl" configuration="Release" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="Doorman" single="True">
+  <StartMode startupentry="PortKnocker" single="True">
     <Execute type="None" entry="PortKnocker" />
     <Execute type="None" entry="KnockingDaemon" />
     <Execute type="None" entry="NetfilterFirewall" />

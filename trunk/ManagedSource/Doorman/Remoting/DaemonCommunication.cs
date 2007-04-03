@@ -9,27 +9,16 @@ using SharpKnocking.Common.Remoting;
 
 namespace SharpKnocking.Doorman.Remoting
 {
+	
+	
+
 	/// <summary>
 	/// Models the operations required to send and receive messages to and from
 	/// the daemon.
 	/// </summary>
 	public class DaemonCommunication: IDisposable
 	{
-	    /// <summary>
-	    /// Current status for the comunication.
-	    /// </summary>
-	    public string Status
-	    {
-	       get { return this.status;}
-	    }
-	    
-	    /// <summary>
-	    /// Checks if the connection with the daemon is valid
-	    /// </summary>
-	    public bool IsConnected
-	    {
-	       get { return this.isConnected;}
-	    }
+		#region Attributes
 	    
 	    //Flag to see if we requested hello
 		private bool helloReq;
@@ -52,6 +41,32 @@ namespace SharpKnocking.Doorman.Remoting
 		private bool isConnected;
 		private string status;
 		
+		#endregion Attributes
+		
+		public event EventHandler Hello;
+		
+		#region Events
+		
+		#endregion Events
+	
+		/// <summary>
+        /// Default constructor.
+        /// </summary>   
+		public DaemonCommunication()
+		{
+
+		}
+	
+		#region Properties
+		
+		/// <summary>
+	    /// Checks if the connection with the daemon is valid
+	    /// </summary>
+	    public bool IsConnected
+	    {
+	       get { return this.isConnected;}
+	    }
+		
 		/// <summary>
 		/// Remote object used for comunication
 		/// </summary>
@@ -59,14 +74,22 @@ namespace SharpKnocking.Doorman.Remoting
 		{
 			get { return this.remoteObj;}
 		}
-         
-        /// <summary>
-        /// Default constructor.
-        /// </summary>   
-		public DaemonCommunication()
-		{
-
-		}
+		
+	    /// <summary>
+	    /// Current status for the comunication.
+	    /// </summary>
+	    public string Status
+	    {
+	       get { return this.status;}
+	       
+	    }
+	    
+	    #endregion Properties
+	    
+	    
+		
+		#region Public methods       
+        
 		
         /// <summary>
         /// End comunication.
@@ -91,19 +114,7 @@ namespace SharpKnocking.Doorman.Remoting
         }
 		
 		/// <summary>
-		/// Finishes the comunication with the daemon
-		/// </summary>
-        public void UnregisterDaemonEnd()
-        {	
-        	if(this.remoteObj != null)
-        	{
-        		this.remoteObj.SendRequest(RemoteCommandActions.Bye, null);
-        		this.remoteObj = null;
-        	}
-        }
-        
-        /// <summary>
-        /// Starts the comunication with the daemon
+        /// Starts the comunication with the daemon.
         /// </summary>
         public void Init()
         {
@@ -115,16 +126,19 @@ namespace SharpKnocking.Doorman.Remoting
             
             this.myEnd = new RemoteManager();
             //Set as a remoting object to comunicate
-            this.myEndRef = RemotingServices.Marshal(myEnd, RemoteEndService.ManagerServiceName);
+            this.myEndRef = 
+            	RemotingServices.Marshal(myEnd, RemoteEndService.ManagerServiceName);
             
 			//Set a event handler to get notifications of incoming messages.
-            this.myEnd.Received += new RemoteEndEventHandler(this.IncomingMessage_event);
+            this.myEnd.Received += new RemoteEndEventHandler(this.OnIncomingMessage);
             
             this.RegisterDaemonEnd();
         }
-        
-        /// <summary>
-        /// Sends a command to the other end of the comunication
+		
+		
+		
+		 /// <summary>
+        /// Sends a command to the other end of the comunication.
         /// </summary>
         /// <returns>
         /// True if the command is sent and false if not.
@@ -176,63 +190,31 @@ namespace SharpKnocking.Doorman.Remoting
             
             return true;
         }
-        
-        /// <summary>
-        /// Tries to return a new remote end object from the daemon to perform
-        /// the calls for comunication
-        /// </summary>
-        /// <remarks>
-        /// This method is called every time that a request is sent and a 
-        /// </remarks>
-        private bool RegisterDaemonEnd()
-        {           
-            Debug.VerboseWrite("DaemonCommunication: Trying to register remote end");
-
-        	//Gets the object from the daemon part
-        	if(this.remoteObj == null)
+		
+		/// <summary>
+		/// Finishes the comunication with the daemon.
+		/// </summary>
+        public void UnregisterDaemonEnd()
+        {	
+        	if(this.remoteObj != null)
         	{
-        	    try
-        	    {
-        	        string uri = "tcp://localhost:"+
-        	                     RemoteEndService.DaemonPortNumber+
-        	                     "/"+RemoteEndService.DaemonServiceName;
-        	                     
-        	        Debug.VerboseWrite("DaemonCommunication: Uri="+uri);
-        	                     
-	                this.remoteObj = (RemoteDaemon) Activator.GetObject(
-	                                               typeof(RemoteDaemon), 
-	                                               uri);
-	                                               
-                    //Set up the communication channel
-	               if(this.remoteObj != null)
-	               {
-	                   Debug.VerboseWrite("Remote object got "+this.remoteObj.Name );
-	            	  //Say hello to the daemon so he can create the required object
-	            	  //to stay in touch.
-	            	  this.helloReq = true;
-	            	  Debug.VerboseWrite("Sending request to remote object");
-	                  remoteObj.SendRequest(RemoteCommandActions.Hello, null);
-	                  Debug.VerboseWrite("Remote object request sent");
-	                  return true;
-	               }
-                }
-                catch(RemotingException ex)
-                {
-                    
-                    if(!UnixNative.ExistsLockFile())
-                        this.status = "Remote daemon not running";
-                    else
-                        this.status = "Can't connect with remote daemon. Connection refused";
-                        
-                    Debug.Write("DaemonCommunication: "+this.status+".\nDetails:"+ex);
-                }
+        		this.remoteObj.SendRequest(RemoteCommandActions.Bye, null);
+        		this.remoteObj = null;
         	}
-        	
-        	return false;
         }
+        
+        #endregion Public methods
+        
+        #region Private methods
 			
-	    //Handler for incoming messages (requests and responses).
-		private void IncomingMessage_event(object sender, RemoteEndEventArgs args)
+		private void OnHelloSender()
+		{
+			if(Hello != null)
+				Hello(this,EventArgs.Empty);
+		}
+			
+	    // Handler for incoming messages (requests and responses).
+		private void OnIncomingMessage(object sender, RemoteEndEventArgs args)
 		{
 			if(args.IsRequest)
 			{
@@ -244,16 +226,19 @@ namespace SharpKnocking.Doorman.Remoting
 			}
 		}
 		
-		//Request procesing. Only we spect events from the daemon with notifications
-		//of access attemps
+		// Request procesing. Only we spect events from the daemon with notifications
+		// of access attemps
 		private void ProcessRequest(RemoteCommandActions action, object data)
 		{
 			switch(action)
 			{
-				case RemoteCommandActions.Event:
-					//This happens only when the daemon is not in interactive mode.
-					//It sends continuously the sequence
-					//TODO:
+				case RemoteCommandActions.AccessRequest:
+				
+					// In this case, data is a string with the xml serialization
+					// of a CallSequence object.					
+					string xmlSeq = data as String;
+					
+					
 					break;
 				case RemoteCommandActions.Bye:
 				    //The daemon has ended by unknown causes. End the comunication.
@@ -262,20 +247,22 @@ namespace SharpKnocking.Doorman.Remoting
 			}
 		}
 		
-	    //Response procesing. The responses that will be received are:
-	    //- Hello/bye
-	    //- Status/StatusExtended	
-	    //- Start/Stop/Hotrestart
+	    // Response procesing. The responses that will be received are:
+	    // - Hello/bye
+	    // - Status/StatusExtended	
+	    // - Start/Stop/Hotrestart
 		private void ProcessResponse(RemoteCommandActions action, object data)
 		{
 			switch(action)
 			{
-				case RemoteCommandActions.Hello:
-					//Daemon up and running
+				case RemoteCommandActions.Hello:					
 					if(this.helloReq)
 					{
-					   this.helloReq = false;
-					   this.isConnected = true;
+						//Daemon up and running
+					   	this.helloReq = false;
+					   	this.isConnected = true;
+					   	
+					   	OnHelloSender();
 					}
 					break;
 				case RemoteCommandActions.Bye:
@@ -284,7 +271,7 @@ namespace SharpKnocking.Doorman.Remoting
 					{
 					    this.byeReq = false;
 					    this.isConnected = false;
-					    this.UnregisterDaemonEnd ();
+					    this.UnregisterDaemonEnd();
 					}
 					break;
 				case RemoteCommandActions.Status:
@@ -310,6 +297,62 @@ namespace SharpKnocking.Doorman.Remoting
 				    break;
 			}
 		}
+		
+		/// <summary>
+        /// Tries to return a new remote end object from the daemon to perform
+        /// the calls for comunication.
+        /// </summary>
+        /// <remarks>
+        /// This method is called every time that a request is sent and aswered. 
+        /// </remarks>
+        private bool RegisterDaemonEnd()
+        {           
+            Debug.VerboseWrite("DaemonCommunication: Trying to register remote end");
+
+        	//Gets the object from the daemon part
+        	if(this.remoteObj == null)
+        	{
+        	    try
+        	    {
+        	        string uri = "tcp://localhost:"+
+        	                     RemoteEndService.DaemonPortNumber+
+        	                     "/"+RemoteEndService.DaemonServiceName;
+        	                     
+        	        Debug.VerboseWrite("DaemonCommunication: Uri="+uri);
+        	                     
+	                this.remoteObj = (RemoteDaemon) Activator.GetObject(
+	                                               typeof(RemoteDaemon), 
+	                                               uri);
+	                                               
+                   	// Set up the communication channel
+	               	if(this.remoteObj != null)
+	               	{
+	             		Debug.VerboseWrite("Remote object got "+this.remoteObj.Name );
+	            	  	// Say hello to the daemon so he can create the required object
+	            	  	// to stay in touch.
+	            	  	this.helloReq = true;
+	            	  	Debug.VerboseWrite("Sending request to remote object");
+	                  	remoteObj.SendRequest(RemoteCommandActions.Hello, null);
+	                  	Debug.VerboseWrite("Remote object request sent");
+	                  	return true;
+	               	}
+                }
+                catch(RemotingException ex)
+                {
+                    
+                    if(!UnixNative.ExistsLockFile())
+                        this.status = "Remote daemon not running";
+                    else
+                        this.status = "Can't connect with remote daemon. Connection refused";
+                        
+                    Debug.VerboseWrite(
+                    	"DaemonCommunication: "+this.status+".\nDetails:"+ex,
+                    	VerbosityLevels.Insane);
+                }
+        	}
+        	
+        	return false;
+        }
 		
 		private void SendRequest(RemoteCommandActions action, object data)
 		{
@@ -341,5 +384,7 @@ namespace SharpKnocking.Doorman.Remoting
 		    Debug.VerboseWrite("Sending Response "+action);
 		    this.remoteObj.SendRequest( action, data);
 		}
+		
+		#endregion Private methods
 	}
 }

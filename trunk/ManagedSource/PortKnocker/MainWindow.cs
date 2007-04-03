@@ -279,7 +279,7 @@ namespace SharpKnocking.PortKnocker
 			if(icfcd.Run() == ResponseType.Ok)
 			{
 				// We have selected a valid? file
-				CallSequence imported = CallSequence.Load(icfcd.Filename);
+				CallSequence imported = CallSequence.LoadFromFile(icfcd.Filename);
 				
 				AddCallSequence(imported);
 			}

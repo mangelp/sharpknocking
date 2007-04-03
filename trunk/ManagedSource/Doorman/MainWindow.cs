@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Threading;
+using System.Diagnostics;
 
 using Gtk;
 using Glade;
@@ -72,7 +74,7 @@ namespace SharpKnocking.Doorman
 			
 			InitializeWidgets();
 			
-			LoadData();
+			Init();
 		}
 		
 		/// <summary>
@@ -209,6 +211,56 @@ namespace SharpKnocking.Doorman
 			
 		}		
 		
+		private void Init()
+		{
+		    // We have to check that we had stored a config file.
+		    
+		    DoormanConfig config = DoormanConfig.Load();
+		    	    
+		    if(config != null)
+		    {
+		    	//There is a config file
+		        foreach(CallSequence sequence in config.CallSequences)
+		        {
+		            AddCallSequence(sequence,
+		            				config.GetActivationStatus(sequence));
+		        }
+		    }		    
+            
+            if(!UnixNative.ExistsLockFile())            
+            {
+            	OkDialog.Show(
+            		mainWindow,
+            		MessageType.Info,
+            		"El daemon no esta corriendo, se intentará lanzar ahora.");            		
+            	
+            	string daemonPath = WhichWrapper.Search("knockingdaemon");
+            	
+            	if(daemonPath == null)            	
+            	{
+            		OkDialog.Show(
+            			mainWindow, 			
+            			MessageType.Error,
+            			"El daemon de monitorización de paquetes no se encuentra en el sistema.\n"+
+            			"Doorman se cerrará inmediatamente.");
+            		
+            		mainWindow.Destroy();
+            			
+            	}
+            	else
+            	{
+            		Process.Start(daemonPath);
+            		
+            	}
+            }
+            
+            // We create the communication system with the daemokn.
+		    this.daemonComm = new DaemonCommunication();
+		    this.daemonComm.Init();
+            
+		}
+		
+		
 		private void InitializeWidgets()
 		{
 			btnExportImage.FromPixbuf = ImageResources.FileExportIcon16;
@@ -267,25 +319,6 @@ namespace SharpKnocking.Doorman
 		    }
 		}
 		
-		private void LoadData()
-		{
-		    // We have to check that we had stored a config file.
-		    
-		    DoormanConfig config = DoormanConfig.Load();
-		    	    
-		    if(config != null)
-		    {
-		    	//There is a config file
-		        foreach(CallSequence sequence in config.CallSequences)
-		        {
-		            AddCallSequence(sequence,
-		            				config.GetActivationStatus(sequence));
-		        }
-		    }		    
-            
-            this.daemonComm = new DaemonCommunication();
-            this.daemonComm.Init();
-		}
 		
 		
 		
@@ -425,7 +458,7 @@ namespace SharpKnocking.Doorman
 			if(icfcd.Run() == ResponseType.Ok)
 			{
 				// We have selected a valid? file
-				CallSequence imported = CallSequence.Load(icfcd.Filename);
+				CallSequence imported = CallSequence.LoadFromFile(icfcd.Filename);
 				
 				AddCallSequence(imported,true);
 			}

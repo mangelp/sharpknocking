@@ -108,15 +108,15 @@ namespace SharpKnocking.Common.Calls
 		
 		/// <summary>
 		/// This method allows to retrieve a CallSequence's instance
-		/// which had been serialized previously.
+		/// which had been serialized previously into a file.
 		/// </summary>
 		/// <param name = "path">
 		/// The path of the file which contains the stored instance.
 		/// </param>
 		/// <returns>
-		/// The instance of CallSequence which was readen.
+		/// The instance of CallSequence which was readed.
 		/// </returns>
-		public static CallSequence Load(string path)
+		public static CallSequence LoadFromFile(string path)
 		{
 			XmlSerializer serializer =  new XmlSerializer(
 		                                    typeof(CallSequence),
@@ -127,6 +127,30 @@ namespace SharpKnocking.Common.Calls
 		    {              
                 res = (CallSequence)(serializer.Deserialize(fs));     
             }
+            
+            return res;
+		}
+		
+		/// <summary>
+		/// This method allows to retrieve a CallSequence's instance
+		/// which had been serialized previously as a string.
+		/// </summary>
+		/// <param name = "xml">
+		/// The XML string which contains the object's info.
+		/// </param>
+		/// <returns>
+		/// The instance of CallSequence which was readed.
+		/// </returns>
+		public static CallSequence LoadFromString(string xml)
+		{
+			XmlSerializer serializer =  new XmlSerializer(
+		                                    typeof(CallSequence),
+		                                    new Type[]{typeof(int)});
+		    
+		    CallSequence res;                           
+		     
+            res = (CallSequence)(serializer.Deserialize(new StringReader(xml)));     
+            
             
             return res;
 		}
@@ -181,6 +205,31 @@ namespace SharpKnocking.Common.Calls
 			return true;
 			
 		}	
+		
+		/// <summary>
+		/// This method's use is to save an instance of an CallSequence object
+		/// into a file.
+		/// </summary>
+		/// <returns>
+		/// The XML serialization of the object.
+		/// </returns>
+		public string Store()
+		{
+			XmlSerializer serializer =  new XmlSerializer(
+		                                    typeof(CallSequence),
+		                                    new Type[]{typeof(int)});
+		                                    
+		    string res;
+           	using (StringWriter sw = new StringWriter())
+		    {              
+                serializer.Serialize(sw, this);  
+                
+                sw.Close();
+                res = sw.ToString();  
+            }
+            
+            return res;
+		}
 		
 		/// <summary>
 		/// This method's use is to save an instance of an CallSequence object

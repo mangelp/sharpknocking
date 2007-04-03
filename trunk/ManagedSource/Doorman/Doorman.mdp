@@ -21,6 +21,7 @@
     <File name="./Remoting/DaemonCommunication.cs" subtype="Code" buildaction="Compile" />
     <File name="./ExportCallFileChooserDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./TrayIcon.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Remoting/DaemonCommunicationEvents.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="Common" />

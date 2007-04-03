@@ -17,7 +17,9 @@ namespace SharpKnocking.KnockingDaemon
         [MTAThread()]
 		public static int Main(string[] args)
 		{
-            
+			
+		
+		   
 		    NetfilterDaemon nDaemon = new NetfilterDaemon();
             Thread nThread;
             TcpdumpMonitor capDaemon = new TcpdumpMonitor();
