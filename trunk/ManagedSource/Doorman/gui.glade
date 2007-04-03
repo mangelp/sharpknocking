@@ -107,7 +107,6 @@
                         <property name="label" translatable="yes">gtk-about</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="OnItmAboutActivated"/>
                       </widget>
                     </child>
                   </widget>
@@ -122,10 +121,12 @@
         <child>
           <widget class="GtkLabel" id="label1">
             <property name="visible">True</property>
-            <property name="xalign">0</property>
-            <property name="xpad">6</property>
-            <property name="ypad">10</property>
-            <property name="label" translatable="yes">Aquí puede crear, editar y utilizar las secuencias de llamada.</property>
+            <property name="ypad">1</property>
+            <property name="label" translatable="yes">Aquí puede crear, editar y utilizar las secuencias de llamada.
+
+Los cambios en las secuencias no tienen efecto hasta que
+no se sale del programa o se guarda la configuración.</property>
+            <property name="justify">GTK_JUSTIFY_CENTER</property>
           </widget>
           <packing>
             <property name="expand">False</property>
@@ -136,7 +137,7 @@
         <child>
           <widget class="GtkHBox" id="hbox1">
             <property name="visible">True</property>
-            <property name="border_width">6</property>
+            <property name="border_width">5</property>
             <property name="spacing">6</property>
             <child>
               <widget class="GtkVButtonBox" id="vbuttonbox1">
@@ -174,7 +175,7 @@
                             <child>
                               <widget class="GtkLabel" id="label2">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Nueva</property>
+                                <property name="label" translatable="yes">_Nueva</property>
                                 <property name="use_underline">True</property>
                               </widget>
                               <packing>
@@ -219,7 +220,7 @@
                             <child>
                               <widget class="GtkLabel" id="label3">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Eliminar</property>
+                                <property name="label" translatable="yes">_Eliminar</property>
                                 <property name="use_underline">True</property>
                               </widget>
                               <packing>
@@ -267,7 +268,7 @@
                             <child>
                               <widget class="GtkLabel" id="label6">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Editar</property>
+                                <property name="label" translatable="yes">E_ditar</property>
                                 <property name="use_underline">True</property>
                               </widget>
                               <packing>
@@ -315,7 +316,7 @@
                             <child>
                               <widget class="GtkLabel" id="label7">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Exportar</property>
+                                <property name="label" translatable="yes">E_xportar</property>
                                 <property name="use_underline">True</property>
                               </widget>
                               <packing>
@@ -353,7 +354,8 @@
                         <child>
                           <widget class="GtkLabel" id="btnBlockLabel">
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">Bloquear</property>
+                            <property name="label" translatable="yes">_Bloquear</property>
+                            <property name="use_underline">True</property>
                             <property name="tooltip" translatable="yes">Bloquea el proceso de apertura de puertos.</property>
                           </widget>
                           <packing>
@@ -366,6 +368,19 @@
                   <packing>
                     <property name="fill">False</property>
                     <property name="position">4</property>
+                    <property name="secondary">True</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="btnSave">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">gtk-save</property>
+                    <property name="use_stock">True</property>
+                    <property name="tooltip" translatable="yes">Guarda la configuración de secuencias</property>
+                    <signal name="clicked" handler="OnBtnSaveClicked"/>
+                  </widget>
+                  <packing>
+                    <property name="position">5</property>
                     <property name="secondary">True</property>
                   </packing>
                 </child>
@@ -411,7 +426,7 @@
                     </child>
                   </widget>
                   <packing>
-                    <property name="position">5</property>
+                    <property name="position">6</property>
                     <property name="secondary">True</property>
                   </packing>
                 </child>
@@ -603,9 +618,9 @@
       <widget class="GtkImageMenuItem" id="quitItem">
         <property name="visible">True</property>
         <property name="label" translatable="yes">gtk-quit</property>
+        <property name="use_underline">True</property>
         <property name="use_stock">True</property>
         <signal name="activate" handler="OnQuitItemActivated"/>
-        <accelerator key="q" modifiers="GDK_CONTROL_MASK | GDK_MOD1_MASK" signal="activate"/>
       </widget>
     </child>
   </widget>

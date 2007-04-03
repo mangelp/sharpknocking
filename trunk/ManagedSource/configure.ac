@@ -82,19 +82,19 @@ AC_CONFIG_FILES([
 ./KnockingDaemonControl/ManagedSource.KnockingDaemonControl.pc
 managedsource.pc
 ./NetfilterFirewall/Makefile
-./KnockingDaemonControl/knockingdaemoncontrol
+./Common/Makefile
+./CommonWidgets/Makefile
 ./PortKnocker/Makefile
-./KnockingDaemonControl/Makefile
 ./KnockingDaemon/ManagedSource.KnockingDaemon.pc
 ./Makefile
 ./KnockingDaemon/Makefile
-./CommonWidgets/Makefile
 ./KnockingDaemon/knockingdaemon
+./Doorman/ManagedSource.Doorman.pc
 ./CommonWidgets/ManagedSource.CommonWidgets.pc
 ./Doorman/Makefile
 ./Doorman/doorman
-./Doorman/ManagedSource.Doorman.pc
-./Common/Makefile
+./KnockingDaemonControl/Makefile
+./KnockingDaemonControl/knockingdaemoncontrol
 
 ])
 

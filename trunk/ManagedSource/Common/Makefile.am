@@ -44,7 +44,8 @@ FILES = \
 	./Remoting/IRemoteManager.cs \
 	./Remoting/IRemoteDaemon.cs \
 	./Remoting/RemoteManager.cs \
-	./Remoting/RemoteDaemon.cs 
+	./Remoting/RemoteDaemon.cs \
+	./IDaemonProcessUnit.cs 
 
 DATA_FILES = 
 

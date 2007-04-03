@@ -22,9 +22,11 @@ namespace SharpKnocking.Doorman
 			Glade.XML gxml = new Glade.XML (null, "gui.glade", "trayMenu", null);
 			gxml.Autoconnect (this);
 			
-			this.window = new MainWindow();
+			
 		
 			InitializeWidgets();
+			
+			this.window = new MainWindow();
 							
 		}
 		
@@ -48,11 +50,14 @@ namespace SharpKnocking.Doorman
 		{
 	   		if (args.Event.Button == 3) //right click
 	   		 {
-	      		
-				trayMenu.ShowAll();
-	      		trayMenu.Popup(
-	      			null, null, null, 
-	      			IntPtr.Zero, args.Event.Button, args.Event.Time);
+	      		try
+	      		{
+					trayMenu.ShowAll();
+		      		trayMenu.Popup(	      		
+		      			null, null, null, 
+		      			IntPtr.Zero, args.Event.Button, args.Event.Time);
+				}
+				catch(Exception){}
 	   		}
 		}
 		
@@ -63,7 +68,7 @@ namespace SharpKnocking.Doorman
 		
 		private void OnRestoreItemActivated(object o, EventArgs args)
 		{
-			
+			window.Show();
 		}
 		
 		#endregion Private methods

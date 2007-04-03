@@ -755,6 +755,7 @@
                     <property name="visible">True</property>
                     <property name="label" translatable="yes">_Número de puertos a generar:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">portNumberSpinButton</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>

@@ -41,11 +41,13 @@ namespace SharpKnocking.Doorman.Remoting
 		private bool isConnected;
 		private string status;
 		
-		#endregion Attributes
+		#endregion Attributes	
+		
+		#region Events
 		
 		public event EventHandler Hello;
 		
-		#region Events
+		public event AccessRequestEventHandler AccessRequest;
 		
 		#endregion Events
 	
@@ -85,8 +87,6 @@ namespace SharpKnocking.Doorman.Remoting
 	    }
 	    
 	    #endregion Properties
-	    
-	    
 		
 		#region Public methods       
         
@@ -212,6 +212,16 @@ namespace SharpKnocking.Doorman.Remoting
 			if(Hello != null)
 				Hello(this,EventArgs.Empty);
 		}
+		
+		private void OnAccessRequestSender(string data)
+		{
+			// We take the xml data and then send the event.
+			if(AccessRequest != null)
+			{
+				AccessRequest(this, new AccessRequestEventArgs(data));
+			}			
+			
+		}
 			
 	    // Handler for incoming messages (requests and responses).
 		private void OnIncomingMessage(object sender, RemoteEndEventArgs args)
@@ -235,9 +245,8 @@ namespace SharpKnocking.Doorman.Remoting
 				case RemoteCommandActions.AccessRequest:
 				
 					// In this case, data is a string with the xml serialization
-					// of a CallSequence object.					
-					string xmlSeq = data as String;
-					
+					// of a CallSequence object and the source ip address.							
+					OnAccessRequestSender(data as String);					
 					
 					break;
 				case RemoteCommandActions.Bye:

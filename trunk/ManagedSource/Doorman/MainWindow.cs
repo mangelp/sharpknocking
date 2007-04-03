@@ -95,7 +95,8 @@ namespace SharpKnocking.Doorman
 		}
 		
 		/// <summary>
-		/// This method manages 
+		/// This method manages the programs exit.
+		/// </summary>
 		public void Quit()
 		{		
 		
@@ -121,6 +122,16 @@ namespace SharpKnocking.Doorman
 				}
 				
 			}		
+		}
+		
+		/// <summary>
+		/// Shows the dialog.
+		/// </summary>
+		public void Show()
+		{	
+			//mainWindow.SkipTaskbarHint = false;		
+			//mainWindow.ShowAll();
+			mainWindow.Deiconify();
 		}
 		
 		#endregion Public
@@ -249,14 +260,16 @@ namespace SharpKnocking.Doorman
             	}
             	else
             	{
-            		Process.Start(daemonPath);
-            		
+            		Process.Start(daemonPath);            		
             	}
             }
             
             // We create the communication system with the daemokn.
-		    this.daemonComm = new DaemonCommunication();
-		    this.daemonComm.Init();
+		    daemonComm = new DaemonCommunication();
+		    daemonComm.AccessRequest +=	
+		    	new AccessRequestEventHandler(OnAccessRequested);
+		    	
+		    daemonComm.Init();
             
 		}
 		
@@ -332,13 +345,39 @@ namespace SharpKnocking.Doorman
 		    }
 		    
 		    config.Save();
+		    
+		    // Now we have to restart the daemon, so the new rules are applied.
+		    daemonComm.SendCommand(RemoteCommandActions.HotRestart);	    
+		    
 		}
 		
 		#endregion Private methods
 		
 		#region Event handlers
 		
-		private void OnBtnAddClicked(object seder,EventArgs a)
+		private void OnAccessRequested(object sender, AccessRequestEventArgs a)
+		{
+			// We ask the user what he wants to do.
+			ResponseType res = 
+				ConfirmDialog.Show( 
+					mainWindow,
+					"Se detectó la secuencia de llamada «{0}» que abre el " +
+					"puerto {1} proveniente de {2}.\n"+
+					"¿Desea abrirlo?",
+					a.CallSequence.Description,
+					a.CallSequence.TargetPort,
+					a.SourceIP);
+			
+			// Then we tell the daemon.
+			if(res == ResponseType.Yes)
+				daemonComm
+				.SendCommand(RemoteCommandActions.Accept);
+			else
+				daemonComm.SendCommand(RemoteCommandActions.Deny);
+				
+		}
+		
+		private void OnBtnAddClicked(object sender, EventArgs a)
 		{
 			AddCall();						
 		}
@@ -360,7 +399,7 @@ namespace SharpKnocking.Doorman
 			
 			if(res == ResponseType.Yes)
 			{
-				daemonComm.SendCommand(RemoteCommandActions.Die);
+				daemonComm.SendCommand(RemoteCommandActions.Stop);
 			}
 		}
 		
@@ -404,6 +443,11 @@ namespace SharpKnocking.Doorman
             {                  
 				callsStore.RemoveNode(callsView.NodeSelection.SelectedNode);			
 			}
+		}
+		
+		private void OnBtnSaveClicked(object sender, EventArgs a)
+		{
+			SaveData();
 		}
 		
 		private void OnCallActivationStateChanged(object sender, ToggledArgs a)
@@ -484,7 +528,8 @@ namespace SharpKnocking.Doorman
 		
 		// Connect the Signals defined in Glade
 		private void OnWindowDeleteEvent (object sender, DeleteEventArgs a) 
-		{
+		{			
+			
 			Quit();
 			a.RetVal = true;
 			

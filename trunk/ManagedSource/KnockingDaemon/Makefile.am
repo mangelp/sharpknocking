@@ -33,16 +33,16 @@ all: $(ASSEMBLY)
 FILES = \
 	./Main.cs \
 	./AssemblyInfo.cs \
-	./NetfilterDaemon.cs \
-	./InterCommDaemon.cs \
+	./KnockingDaemonProcess.cs \
 	./PacketFilter/TcpdumpMonitor.cs \
 	./PacketFilter/PacketInfo.cs \
 	./PacketFilter/PacketAssembler.cs \
 	./SequenceDetection/SequenceDetectorManager.cs \
 	./SequenceDetection/SequenceDetector.cs \
-	./CallsLoader.cs \
 	./PacketFilter/PacketFilterEvents.cs \
-	./SequenceDetection/SequenceDetectorEvents.cs 
+	./SequenceDetection/SequenceDetectorEvents.cs \
+	./FirewallAccessor/NetfilterAccessor.cs \
+	./SequenceDetection/CallsLoader.cs 
 
 DATA_FILES = 
 

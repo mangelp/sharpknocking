@@ -240,17 +240,17 @@ namespace SharpKnocking.Common.Widgets
 		    
 		    if(txtDescription.Text.Trim().Length == 0)
 		    {
-		        errors += " .- Debe introducir una descripción para la llamada.\n";
+		        errors += " · Debe introducir una descripción para la llamada.\n";
 		    }
 		    
 		    if(portsStore.IterNChildren()==0)
 		    {
-		        errors += " .- No hay puertos en la lista de puertos.";
+		        errors += " · No hay puertos en la lista de puertos.";
 		    }		
 		    
 		    if(!Net20.TryParseIP(ipAddress))
 		    {
-		    	errors += " .- La dirección IP usada como destino no es válida.\n";
+		    	errors += " · La dirección IP usada como destino no es válida.\n";
 		    }
 		    
 		    if(errors.Length == 0)
