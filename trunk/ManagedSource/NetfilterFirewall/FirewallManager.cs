@@ -55,9 +55,30 @@ namespace SharpKnocking.NetfilterFirewall
         
         private NetfilterRuleSet ruleSet;
         
+        /// <summary>
+        /// Current rule set loaded.
+        /// </summary>
         public NetfilterRuleSet RuleSet
         {
             get { return this.ruleSet;}
+        }
+        
+        private bool dryRun;
+        
+        /// <summary>
+        /// If set to true all the actions over the iptables command results as
+        /// successful but they are not really done. If false the actions are
+        /// done.
+        /// </summary>
+        /// <remarks>
+        /// This will cause that the rule set will be changed but the rule set
+        /// in netfilter will remain as is. Take this in account when you set
+        /// this flag to true.
+        /// </remarks>
+        public bool DryRun
+        {
+            get { return this.dryRun;}
+            set { this.dryRun = value;}
         }
 	    
         /// <summary>
@@ -100,6 +121,9 @@ namespace SharpKnocking.NetfilterFirewall
         {
             this.ruleSet.SaveToFile(tempFileName+".ruleset",true);
             
+            if(this.dryRun )
+                return;
+                
             IpTablesCmd.Restore(tempFileName+".ruleset");
         }
         
@@ -110,6 +134,9 @@ namespace SharpKnocking.NetfilterFirewall
         {   
             Debug.VerboseWrite("Executing rule: "+rule);
             
+            if(this.dryRun)
+                return;
+                
             IpTablesCmd.Exec(new string[] {rule+""});
         }
         

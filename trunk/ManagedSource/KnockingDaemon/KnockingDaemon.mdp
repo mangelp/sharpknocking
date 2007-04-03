@@ -16,17 +16,18 @@
   <Contents>
     <File name="./Main.cs" subtype="Code" buildaction="Compile" />
     <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./NetfilterDaemon.cs" subtype="Code" buildaction="Compile" />
-    <File name="./InterCommDaemon.cs" subtype="Code" buildaction="Compile" />
+    <File name="./KnockingDaemonProcess.cs" subtype="Code" buildaction="Compile" />
     <File name="./PacketFilter/TcpdumpMonitor.cs" subtype="Code" buildaction="Compile" />
     <File name="./PacketFilter/PacketInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./PacketFilter/PacketAssembler.cs" subtype="Code" buildaction="Compile" />
     <File name="./SequenceDetection" subtype="Directory" buildaction="Compile" />
     <File name="./SequenceDetection/SequenceDetectorManager.cs" subtype="Code" buildaction="Compile" />
     <File name="./SequenceDetection/SequenceDetector.cs" subtype="Code" buildaction="Compile" />
-    <File name="./CallsLoader.cs" subtype="Code" buildaction="Compile" />
     <File name="./PacketFilter/PacketFilterEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="./SequenceDetection/SequenceDetectorEvents.cs" subtype="Code" buildaction="Compile" />
+    <File name="./FirewallAccessor" subtype="Directory" buildaction="Compile" />
+    <File name="./FirewallAccessor/NetfilterAccessor.cs" subtype="Code" buildaction="Compile" />
+    <File name="./SequenceDetection/CallsLoader.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

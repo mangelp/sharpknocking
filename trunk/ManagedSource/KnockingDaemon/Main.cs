@@ -5,8 +5,10 @@ using System.Threading;
 
 using SharpKnocking.Common;
 using SharpKnocking.Common.Calls;
+using SharpKnocking.NetfilterFirewall;
 using SharpKnocking.KnockingDaemon.PacketFilter;
 using SharpKnocking.KnockingDaemon.SequenceDetection;
+using SharpKnocking.KnockingDaemon.FirewallAccessor;
 
 namespace SharpKnocking.KnockingDaemon
 {
@@ -14,21 +16,24 @@ namespace SharpKnocking.KnockingDaemon
 	// Main class for the daemon process
 	class MainClass
 	{
+	    /// <summary>
+	    /// Application entry point
+	    /// </summary>
+	    /// <remarks>
+	    /// Exit codes:</br>
+	    /// 0: Normal exit.</br>
+	    /// 1: Another instance running.</br>
+	    /// 2: Can't create lock file.</br>
+	    /// 3: Unmanaged exception thrown.</br>
+	    /// 4: Tried to run without root permissions.</br>
+	    /// 5: WTF!</br>
+	    /// </remarks>
         [MTAThread()]
 		public static int Main(string[] args)
 		{
-			
-		
-		   
-		    NetfilterDaemon nDaemon = new NetfilterDaemon();
-            Thread nThread;
-            TcpdumpMonitor capDaemon = new TcpdumpMonitor();
-            Thread capThread;
-            
-            bool noruledaemon = false;
-            bool nocapturedaemon = false;
-            
-            //Moved below
+            //This is the daemon in charge of inter process comunication. It
+            //behaves as a remote control for all the functionality.
+            KnockingDaemonProcess daemon = new KnockingDaemonProcess();
 		    
 		    // Here we do parameter processing
 		    for(int i=0; i<args.Length; i++)
@@ -37,7 +42,7 @@ namespace SharpKnocking.KnockingDaemon
 		        
 		        if(args[i]=="--cfg")
 		        {
-		            nDaemon.Parameters.Add("cfg",args[++i]);
+		            daemon.Accessor.Parameters.Add("cfg",args[++i]);
 		        }
 		        else if(args[i]=="--dbg")
 		        {
@@ -50,13 +55,13 @@ namespace SharpKnocking.KnockingDaemon
 		            Debug.MoreVerbose = true;
                     Debug.VerbLevel = VerbosityLevels.Normal;
 		        }
-                else if(args[i]=="--noruledaemon")
+                else if(args[i]=="--nofwmodify")
                 {
-                    noruledaemon=true;
+                    daemon.Accessor.DryRun =true;
                 }
-                else if(args[i]=="--nocapturedaemon")
+                else if(args[i]=="--nocapture")
                 {
-                    nocapturedaemon=true;
+                    daemon.DoCapture = false;
                 }
                 else if(args[i]=="-vv")
                 {
@@ -70,7 +75,7 @@ namespace SharpKnocking.KnockingDaemon
                 }
                 else if(args[i]=="--ldcurrent")
                 {
-                    nDaemon.Parameters.Add("ldcurrent",null);
+                    daemon.Accessor.Parameters.Add("ldcurrent",null);
                 }
                 else if(args[i]=="-h" || args[i]=="--help")
                 {
@@ -79,10 +84,24 @@ namespace SharpKnocking.KnockingDaemon
                 }
 		    }
 		    
-		    
-            if(!UnixNative.CreateLockFile() && !File.Exists(UnixNative.LockFile))
+		    if(!UnixNative.ExecUserIsRoot())
+		    {
+		        //If we aren't rut exit mercyfully
+		        Console.Out.WriteLine("You need root permissions to run this daemon");
+		        return 4;
+		    }
+		    else if(UnixNative.ExistsLockFile())
+		    {
+		        //The file already exists. Daemon created.
+		        Console.Out.WriteLine("Another instance of the daemon is running. If not\n"+
+		                      "remove the lock file: "+UnixNative.LockFile);
+		        return 1;
+		    }
+            else if(!UnixNative.CreateLockFile() || !File.Exists(UnixNative.LockFile))
             {
-                throw new Exception("Can't create lock file!");
+                Console.Out.WriteLine("Can't create lock file. Check the permissions to write into\n"+
+                                "the file: "+UnixNative.LockFile );
+                return 2;
             }
             else
             {
@@ -92,57 +111,17 @@ namespace SharpKnocking.KnockingDaemon
                         
             try
             {
-                Debug.Write("Instantiating Rule daemon");
-                nThread = new Thread(new ThreadStart(nDaemon.Run));
-                
-                if(!noruledaemon)
-                {
-                    Debug.Write("Starting rule daemon thread");
-                    nThread.Start();
-                }
-                else
-                {
-                    Debug.Write("Rule daemon not starting");
-                }
-                
-                Debug.Write("Instantiating capture daemon");
-        		capThread = new Thread(new ThreadStart(capDaemon.Run));
-                
-                if(!nocapturedaemon)
-                {           
-                    CallSequence [] sequences = CallsLoader.Load();
-                    capDaemon.SetSequences(sequences);
-                    
-                    SequenceDetectorManager detectorManager =
-                    	new SequenceDetectorManager(sequences);
-                    
-                    detectorManager.LinkPacketMonitor(capDaemon);
-                    
-                    Debug.Write("Starting capture daemon thread");
-                    
-                    capThread.Start();
-                }
-                else
-                {
-                    Debug.Write("Capture daemon not starting");
-                }
-                
-                //This is the daemon in charge of inter process comunication. It
-                //behaves as a remote control for all the functionality.
-                InterCommDaemon icDaemon = new InterCommDaemon();
-                icDaemon.CapDaemon = capDaemon;
-                icDaemon.NetDaemon = nDaemon;
-                
                 //Run the communication daemon
-                icDaemon.Run();
+                Debug.Write("Instantiating communication daemon");
+                daemon.Run();
             }
             catch(Exception ex)
             {
-                Debug.Write("Unexpected fail: "+ex.Message);
+                Debug.VerboseWrite("Unexpected fail: "+ex.Message, VerbosityLevels.Insane );
                 Debug.Write("Details: \n"+ex);
                 Debug.Write("Finishing daemon. Removing lock file...");
                 UnixNative.RemoveLockFile();
-                return 1;
+                return 3;
             }
 		    
 		    return 0;
@@ -150,8 +129,17 @@ namespace SharpKnocking.KnockingDaemon
         
         private static void PrintHelpMessage()
         {
-            Console.Out.WriteLine("KnockingDaemon service for the SharpKnocking suite.");
-            Console.Out.WriteLine("Use -h to print usage information.");
+            Console.Out.WriteLine ("KnockingDaemon service for the SharpKnocking suite.");
+            Console.Out.WriteLine ("Released under LGPL terms.");
+            Console.Out.WriteLine ("(c)2007 Luís Roman Gutierrez y Miguel Ángel Pérez Valencia"); 
+            Console.Out.WriteLine ("Commands: --nofwmodify, --nocapture, --dbg, -v, -vv, -vvv, -h, --help, --cfg, --dry");
+            Console.Out.WriteLine ("     --dbg, -v, -vv, -vvv: The first activates debuggin and the rest the level of");
+            Console.Out.WriteLine ("       detail.");
+            Console.Out.WriteLine ("     --nocapture: Don't start the capture thread. This makes daemon unusable");
+            Console.Out.WriteLine ("     --nofwmodify: Don't modify current rule set. This makes daemon unusable");
+            Console.Out.WriteLine ("     --cfg: The next argument must be a valid iptables configuration file that");
+            Console.Out.WriteLine ("       will be loaded.");
+            Console.Out.WriteLine ("     --dry: The current ruleset of the firewall will remain untouched");
             
         }
 	}

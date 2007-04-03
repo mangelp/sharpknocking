@@ -1,5 +1,6 @@
 
 using System;
+using System.Threading;
 using System.Collections;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
@@ -9,6 +10,7 @@ using SharpKnocking.Common;
 using SharpKnocking.Common.Remoting;
 using SharpKnocking.NetfilterFirewall;
 using SharpKnocking.KnockingDaemon.PacketFilter;
+using SharpKnocking.KnockingDaemon.FirewallAccessor;
 
 namespace SharpKnocking.KnockingDaemon
 {
@@ -20,37 +22,13 @@ namespace SharpKnocking.KnockingDaemon
     /// </summary>
     /// <remarks>
     /// This class is not really a daemon itself. It runs in the main thread started
-    /// with the daemon and coordinates the other two "daemon" classes that run
-    /// in separate threads (one for each one). So our Knocking daemon is really
-    /// a process with 3 daemons executing each one in his own thread.
+    /// with the daemon and coordinates the other "daemon" class that run
+    /// in a separate thread.
     /// </remarks>
-	public class InterCommDaemon: IDisposable
-	{
-        private TcpdumpMonitor capDaemon;
-        
-        /// <summary>
-        /// Gets/Sets a reference to the daemon that capture packets and generate
-        /// objects with sequence information.
-        /// </summary>
-        public TcpdumpMonitor CapDaemon
-        {
-            get { return capDaemon;}
-            set { this.capDaemon = value;}
-        }
-        
-        private NetfilterDaemon netDaemon;
-        
-        /// <summary>
-        /// Gets/sets a reference to the daemon that manages netfilter rules,
-        /// receives sequence information and issues the rules that grant access
-        /// to remote users.
-        /// </summary>
-        public NetfilterDaemon NetDaemon
-        {
-            get { return netDaemon;}
-            set { netDaemon = value;}
-        }
-        
+	public class KnockingDaemonProcess: IDaemonProcessUnit
+	{	
+	    private Thread monitorThread;
+	
         private TcpChannel tcpChannel;
         
         private RemoteDaemon commObject;
@@ -59,23 +37,68 @@ namespace SharpKnocking.KnockingDaemon
         private RemoteManager managerObject;
         private bool isInteractiveMode;
         private bool isStarted;
-		
-		public InterCommDaemon()
-		{
-		}
+	        
+        private bool running;
         
-        /// <summary>
-        /// Runs the comunication daemon
-        /// </summary>
-        public void Run()
+        public bool Running
         {
-            //We need to register our remoting object and try to reach the
-            //one from the manager
-            this.RegisterServerObject();
-            this.RegisterManagerEnd();
-            this.isStarted = true;
+            get { return this.running;}
         }
         
+        private bool stopped;
+        
+        public bool Stopped
+        {
+            get { return this.stopped;}
+        }
+        
+        private bool doCapture = true;
+        
+        /// <summary>
+        /// Gets/Sest if the capture process should be done
+        /// </summary>
+        public bool DoCapture
+        {
+            get { return this.doCapture ;}
+            set { this.doCapture = value;}
+        }
+	
+        private TcpdumpMonitor monitor;
+        
+        /// <summary>
+        /// Gets/Sets a reference to the daemon that capture packets and generate
+        /// objects with sequence information.
+        /// </summary>
+        public TcpdumpMonitor Monitor
+        {
+            get { return monitor;}
+            set { this.monitor = value;}
+        }
+        
+        private NetfilterAccessor accessor;
+        
+        /// <summary>
+        /// Gets/sets a reference to the daemon that manages netfilter rules,
+        /// receives sequence information and issues the rules that grant access
+        /// to remote users.
+        /// </summary>
+        public NetfilterAccessor Accessor
+        {
+            get { return this.accessor ;}
+            set { this.accessor = value;}
+        }
+		
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public KnockingDaemonProcess()
+		{
+		    this.accessor = new NetfilterAccessor ();
+		}
+		
+		/// <summary>
+		/// Clear everything.
+		/// </summary>
         public void Dispose()
         {
             this.UnregisterManagerEnd();
@@ -94,6 +117,98 @@ namespace SharpKnocking.KnockingDaemon
             {
                 ChannelServices.UnregisterChannel(this.tcpChannel);
                 this.tcpChannel = null;
+            }
+        }
+        
+        /// <summary>
+        /// Runs the comunication daemon
+        /// </summary>
+        public void Run()
+        {
+            this.running = true;
+            
+            try
+            {
+                //We need to register our remoting object and try to reach the
+                //one from the manager
+                this.RegisterServerObject();
+                this.RegisterManagerEnd();
+                //This will start the monitor
+                this.HotRestart();
+            }
+            catch(Exception ex)
+            {
+                Debug.Write("Exception catched in intercommunication processing.");
+                throw ex;
+            }
+        }
+        
+        /// 
+        public void Stop()
+        {
+            if(!this.running)
+                return;
+            
+            if(!this.doCapture)
+            {
+                Debug.Write("Stopping capture processing.");
+                this.monitor.Stop();
+            }
+            else
+            {
+                Debug.Write("Capture processing disabled. Can't stop.");
+            }
+            
+            this.stopped = true;
+        }
+        
+        public void Start()
+        {
+            if(!this.running)
+                return;
+            
+            if(!this.doCapture)
+            {
+                Debug.Write("Resuming capture processing");
+                this.monitor.Start();
+            }
+            else
+            {
+                Debug.Write("Capture processing disabled. Can't start.");
+            }
+            
+            this.stopped = false;
+        }
+        
+        /// <summary>
+        /// Do a hot restart of the processing to reload config changes.
+        /// </summary>
+        public void HotRestart()
+        {
+            //Inconditionally we kill the monitor if it is running and if not
+            //we start it if the flag doCapture isn't set to false
+            
+            if(this.monitor!= null && this.monitor.Running)
+            {
+                Debug.Write("Killing packet capture process");
+                this.monitor.Kill();
+                
+                if(this.monitorThread.ThreadState == ThreadState.Running)
+                {
+                    this.monitorThread.Abort();
+                }
+            }
+            
+            if(this.doCapture)
+            {
+                Debug.Write("Initing packet capture process");
+                this.monitor = new TcpdumpMonitor();
+                this.monitorThread = new Thread(new ThreadStart(this.monitor.Run));
+                this.monitorThread.Start();
+            }
+            else
+            {
+                Debug.Write("Packet capture disabled by command line option --nocapture");
             }
         }
         
@@ -119,7 +234,7 @@ namespace SharpKnocking.KnockingDaemon
             else
                 this.HandleResponse(args);
         }
-                    
+        
         private void HandleRequest(RemoteEndEventArgs args)
         {
             switch(args.Action)
@@ -134,11 +249,11 @@ namespace SharpKnocking.KnockingDaemon
                     this.isInteractiveMode = false;
                     break;
                 case RemoteCommandActions.HotRestart:
-                    //TODO: Do hot restart :B
+                    this.HotRestart();
                     this.SendResponse(args.Action, null);
                     break;
                 case RemoteCommandActions.Start:
-                    //TODO: Start the daemon parts
+                    this.Start();
                     break;
                 case RemoteCommandActions.StartInteractiveMode:
                     this.isInteractiveMode = true;
@@ -153,8 +268,7 @@ namespace SharpKnocking.KnockingDaemon
                         this.SendResponse(RemoteCommandActions.Status, RemoteServerStatus.Stopped);
                     break;
                 case RemoteCommandActions.Stop:
-                    //TODO: Stop the other two daemon parts
-                    this.isStarted = false;
+                    this.Stop();
                     break;
             }
         }
@@ -220,6 +334,8 @@ namespace SharpKnocking.KnockingDaemon
             
             if(this.managerObject==null)
                 Debug.VerboseWrite("Can't instantiate manager end");
+            else
+                this.SendRequest(RemoteCommandActions.Hello, null);
         }
         
         /// <summary>

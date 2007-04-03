@@ -5,13 +5,13 @@ using System.Collections;
 using SharpKnocking.Common;
 using SharpKnocking.Common.Calls;
 
-namespace SharpKnocking.KnockingDaemon
+namespace SharpKnocking.KnockingDaemon.SequenceDetection
 {
 	
 	/// <summary>
-	/// 
+	/// Loader methods for the currently configured sequences.
 	/// </summary>
-	public class CallsLoader
+	public static class CallsLoader
 	{
 	
 		/// <summary>

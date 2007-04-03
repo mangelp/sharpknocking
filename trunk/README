@@ -1,4 +1,4 @@
- 
+
 SHARP KNOCKING PROJECT
 
  This project is a implementation of the port knocking principles (see 
@@ -36,7 +36,8 @@ DIRECTORIES ESTRUCTURE
             incoming connections.
         - NetfilterFirewall
             Subproject.
-            OO aproach to work against iptables command-line utility.
+            Approach to work against iptables command-line utility using a object-oriented
+			way.
         - PortKnocker
             Subproject.
             Client application to perform the knocking that grants access to a

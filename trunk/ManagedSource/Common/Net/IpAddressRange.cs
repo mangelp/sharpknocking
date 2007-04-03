@@ -12,31 +12,46 @@ namespace SharpKnocking.Common.Net
 	    
 	    private NetMask mask;
 	    
+	    /// <summary>
+	    /// Address netmask
+	    /// </summary>
 	    public NetMask Mask
 	    {
 	        get { return this.mask;}
 	        set {this.mask = value;}
 	    }
 		
+		/// <summary>
+		/// Default constructor. Inits the ip value to 0.0.0.0
+		/// </summary>
 		public IpAddressRange()
 		  :base(Convert.ToInt64(0))
 		{
 		    
 		}
 		
+		/// <summary>
+		/// Constructor. Inits the addres.
+		/// </summary>
 		public IpAddressRange(byte[] addr)
 		  :base(addr)
 		{
 		    
 		}
 		
+		/// <summary>
+		/// Constructor. Inits the address.
+		/// </summary>
 		public IpAddressRange(long addr)
 		  :base(addr)
 		{
 		    
 		}
         
-		
+		/// <summary>
+		/// Returns a new instance of a IpAddressRange object that represents
+		/// the string.
+		/// </summary>
 		public new static IpAddressRange Parse(string range)
 		{
 		    range = range.Trim();

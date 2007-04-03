@@ -5,6 +5,7 @@ using System.Diagnostics;
 
 using SharpKnocking.Common;
 using SharpKnocking.Common.Calls;
+using SharpKnocking.KnockingDaemon.SequenceDetection;
 
 namespace SharpKnocking.KnockingDaemon.PacketFilter
 {
@@ -13,31 +14,78 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 	/// This class is used to launch a tcpdump proccess so we can listen to the
 	/// the packages we are interested in.
 	/// </summary>
-	public class TcpdumpMonitor
+	public class TcpdumpMonitor: IDaemonProcessUnit
 	{
-		public event PacketCapturedEventHandler PacketCaptured; 
 	
-    	private ArrayList calls;
-    	
-    	private CallSequence [] sequences;
+		public event PacketCapturedEventHandler PacketCaptured;
 		
-		private Process monitoringProccess;
+		private Process monitoringProccess; 
+    	
+    	private bool running;
+		
+		private CallSequence [] sequences;
+		
+		private SequenceDetectorManager seqManager;
+		
+		private bool stopped;
 		
 		public TcpdumpMonitor()
+		{			
+		}
+		
+		public void Dispose()
 		{
-			calls = new ArrayList();			
+		    if(this.monitoringProccess !=null)
+		    {
+		       if(!this.monitoringProccess.HasExited)
+	               monitoringProccess.Kill();
+	               
+	           this.monitoringProccess = null;
+	         }
+	         
+	         if(this.seqManager !=null)
+             {
+	             this.seqManager.Dispose();
+	             this.seqManager = null;
+	         }
+	           
+	         this.sequences = null;
 		}
 		
 		#region Properties
+		
+		/// <summary>
+		/// Gets the running status of the monitor.
+		/// </summary>
+		/// <remarks>
+		/// If this flag is true means that the monitor is initialized and
+		/// working, but it can be in a stopped status so it will not do any
+		/// processing task. See <c>Stopped</c> property.
+		/// </remarks>
+		public bool Running
+		{
+		    get 
+		    {
+		        return this.running ;
+		    }
+		}
 
 		/// <summary>
-		/// This property allows its user to retrieve the running status of the 
+		/// This property allows its user to retrieve the stopped status of the 
 		/// TcpdumpMonitor.
 		/// </summary>
-		public bool Running
+		/// <remarks>
+		/// If this flag is true means that the monitor is procesing incoming
+		/// packets. If it's set to false the monitor kills the process that
+		/// capture packets and stops processing. Changing the value from false
+		/// to true will cause the creation of a new process and the reload of
+		/// the rule set.
+		/// To change the flag you must use <c>Stop</c> and <c>Start</c> methods.
+		/// </remarks>
+		public bool Stopped
         {
-            get 
-            { 
+            get
+            {
                 if(this.monitoringProccess!=null 
                 	&& !this.monitoringProccess.HasExited)
                 {
@@ -66,8 +114,23 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		
 		#region Public methods
 		
+		//Loads the sequences and reinstantiates the sequence manager
+		private void LoadSequences()
+		{
+		     //Load new sequence set
+		     this.sequences = CallsLoader.Load();
+		     //Clear existing sequence manager
+		     if(this.seqManager != null)
+		     {
+		         this.seqManager.Dispose();
+		     }
+		     //Get a fresh instance of the manager
+             this.seqManager = new SequenceDetectorManager(this.sequences, this);
+		}
+		
 		public void Run()
 		{			
+		    this.running = true;
 			string tcpdumpPath = WhichWrapper.Search("tcpdump");
 			
 			if(tcpdumpPath == null)
@@ -75,50 +138,73 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 				// There's no tcpdump in the system.
 				Console.WriteLine(
 					"¡Necesita el programa «tcpdump» para usar SharpKnocking!");
+				this.running = false;
+				return;
 			}
-			else
+			
+			this.LoadSequences();
+
+			string expression = CreateExpression(sequences);				
+		    
+			monitoringProccess = new Process();
+		    
+			monitoringProccess.StartInfo.FileName = tcpdumpPath;
+			
+			// Arguments given to tcpdump are
+			// -i any, so we monitor every network interface.
+			// -x, so the package's content is showed as hexadecimal numbers,
+			// -l, so the output is buffered,
+			// -q, so the output contains less info,
+			// -f, so tcpdump doesn't try to resolve ip names.
+			monitoringProccess.StartInfo.Arguments =
+				 "-i any -x -l -q -f " + expression ;
+				 
+			monitoringProccess.StartInfo.UseShellExecute = false;
+			monitoringProccess.StartInfo.RedirectStandardOutput = true;	
+				
+			monitoringProccess.Start();
+			
+			PacketAssembler assembler = new PacketAssembler();
+			
+			assembler.PacketCaptured += new PacketCapturedEventHandler(OnPacketCaptured);
+			
+			while(!monitoringProccess.HasExited)
 			{
-				
-				string expression = CreateExpression(sequences);				
-			
-				monitoringProccess = new Process();
-			
-				monitoringProccess.StartInfo.FileName = tcpdumpPath;
-				
-				// Arguments given to tcpdump are
-				// -i any, so we monitor every network interface.
-				// -x, so the package's content is showed as hexadecimal numbers,
-				// -l, so the output is buffered,
-				// -q, so the output contains less info,
-				// -f, so tcpdump doesn't try to resolve ip names.
-				monitoringProccess.StartInfo.Arguments =
-					 "-i any -x -l -q -f " + expression ;
-					 
-				monitoringProccess.StartInfo.UseShellExecute = false;
-				monitoringProccess.StartInfo.RedirectStandardOutput = true;	
-					
-				monitoringProccess.Start();
-				
-				PacketAssembler assembler = new PacketAssembler();
-				
-				assembler.PacketCaptured += new PacketCapturedEventHandler(OnPacketCaptured);
-				
-				while(!monitoringProccess.HasExited)
-				{
-					assembler.AddLine(
-						monitoringProccess.StandardOutput.ReadLine());							
-				}
+			    if(!this.stopped)
+			    {
+			        assembler.AddLine(
+				        monitoringProccess.StandardOutput.ReadLine());
+				}				
 			}
+
 		}
 		
-		public void SetSequences(CallSequence [] sequences)
+		public void Kill()
 		{
-			this.sequences = sequences;		
+		    //Clear everything
+			this.Dispose();
 		}
 		
-		public void StopMonitoring()
+		/// <summary>
+		/// Stops processing. Pause.
+		/// </summary>
+		public void Stop()
 		{
-			monitoringProccess.Kill();
+            if(!this.running)
+                return;
+            
+            this.stopped = true; 
+		}
+		
+		/// <summary>
+		/// Resumes processing. Quit pause.
+		/// </summary>
+		public void Start()
+		{
+		    if(!this.running)
+		        return;
+		        
+		    this.stopped = false;
 		}
 		
 		#endregion Public methods

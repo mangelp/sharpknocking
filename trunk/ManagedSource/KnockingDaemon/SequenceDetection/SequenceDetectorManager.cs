@@ -12,11 +12,12 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 	/// This class manages the process of matching a packet sequence to 
 	/// call sequence defined.
 	/// </summary>	
-	public class SequenceDetectorManager
+	public class SequenceDetectorManager: IDisposable
 	{
 		#region Attributes
 		
 		private ArrayList detectors;
+		private TcpdumpMonitor monitor;
 
 		#endregion Attributes
 		
@@ -26,12 +27,36 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		/// <param name = "sequences">
 		/// The secuences which will be monitored.
 		/// </param>
-		public SequenceDetectorManager(CallSequence [] sequences)
+		public SequenceDetectorManager(CallSequence [] sequences, TcpdumpMonitor monitor)
 		{
 			detectors = new ArrayList();
 			
 			foreach(CallSequence seq in sequences)
 				AddSequence(seq);
+				
+		    this.monitor = monitor;
+		    
+			monitor.PacketCaptured += 
+				new PacketCapturedEventHandler(OnPacketCaptured);
+		}
+		
+		/// <summary>
+		/// Clear collections, events handling and references to other objects.
+		/// </summary>
+		public void Dispose()
+		{
+		    if(this.detectors !=null)
+		    {
+		        this.detectors.Clear();
+		        this.detectors = null;
+		    }
+		    
+		    if(this.monitor !=null)
+		    {
+		        this.monitor.PacketCaptured -= 
+		            new PacketCapturedEventHandler(OnPacketCaptured);
+		        this.monitor = null;
+		    } 
 		}
 		
 		#region Public Methods
@@ -66,18 +91,18 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 			}
 		}
 		
-		/// <summary>
-		/// This method allow to indicate which object will provide the packets
-		/// which should be checked.
-		/// </summary>
-		/// <param name = "monitor">
-		/// The monitor class' instance.
-		/// </param>
-		public void LinkPacketMonitor(TcpdumpMonitor monitor)
-		{
-			monitor.PacketCaptured += 
-				new PacketCapturedEventHandler(OnPacketCaptured);			
-		}
+//		/// <summary>
+//		/// This method allow to indicate which object will provide the packets
+//		/// which should be checked.
+//		/// </summary>
+//		/// <param name = "monitor">
+//		/// The monitor class' instance.
+//		/// </param>
+//		public void LinkPacketMonitor(TcpdumpMonitor monitor)
+//		{
+//			monitor.PacketCaptured += 
+//				new PacketCapturedEventHandler(OnPacketCaptured);			
+//		}
 		
 		#endregion Public Methods
 		
