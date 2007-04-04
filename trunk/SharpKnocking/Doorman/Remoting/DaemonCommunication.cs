@@ -176,6 +176,7 @@ namespace SharpKnocking.Doorman.Remoting
                     this.startReq = true;
                     this.status = "Requesting daemon stop";
                     this.SendRequest(action, null);
+                    this.UnregisterDaemonEnd();
                     break;
                 case RemoteCommandActions.Status:
                 case RemoteCommandActions.StatusExtended:
@@ -198,7 +199,6 @@ namespace SharpKnocking.Doorman.Remoting
         {	
         	if(this.remoteObj != null)
         	{
-        		this.remoteObj.SendRequest(RemoteCommandActions.Bye, null);
         		this.remoteObj = null;
         	}
         }
@@ -226,6 +226,8 @@ namespace SharpKnocking.Doorman.Remoting
 	    // Handler for incoming messages (requests and responses).
 		private void OnIncomingMessage(object sender, RemoteEndEventArgs args)
 		{
+		    Debug.VerboseWrite("Incomming message: Action: "+args.Action+", Data: '"+args.Data+"'");
+		    
 			if(args.IsRequest)
 			{
 				this.ProcessRequest (args.Action, args.Data);

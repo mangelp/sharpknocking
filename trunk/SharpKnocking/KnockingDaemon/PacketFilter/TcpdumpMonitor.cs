@@ -18,12 +18,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 	/// </summary>
 	public class TcpdumpMonitor: IDisposable
 	{
-	    private bool disposed;
-	    
-	    public bool Disposed
-	    {
-	       get { return this.disposed; }
-	    }
+	    private bool die=false;
 	    
 		public event PacketCapturedEventHandler PacketCaptured;
 		
@@ -45,6 +40,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		/// </summary>
 		public void Dispose()
 		{
+		    this.die = true;
 		    if(this.monitoringProccess !=null)
 		    {
 		       if(!this.monitoringProccess.HasExited)
@@ -53,17 +49,23 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		          {
 	                  monitoringProccess.Kill();
 	              }
-	              catch(InvalidOperationException)
+	              catch(InvalidOperationException ex)
 	              {
-	                  
+	                  SharpKnocking.Common.Debug.VerboseWrite(
+	                           "Exception killing monitor: "+ex);
 	              }
+	              
+	              this.monitoringProccess.Dispose();
 	           }
-	               
+	           else
+	           {
+	               this.monitoringProccess.Dispose();
+	           }
+	           
 	           this.monitoringProccess = null;
 	         }
-	           
+	         
 	         this.sequences = null;
-	         this.disposed = true;
 	         
 //	         this.OnDisposedEvent();
 		}
@@ -130,14 +132,14 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
     				 
     			monitoringProccess.StartInfo.UseShellExecute = false;
     			monitoringProccess.StartInfo.RedirectStandardOutput = true;	
-    				
+    		    SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run() Starting monitor process");
     			monitoringProccess.Start();
     			
     			PacketAssembler assembler = new PacketAssembler();
     			
     			assembler.PacketCaptured += new PacketCapturedEventHandler(OnPacketCaptured);
     			
-    			while(!monitoringProccess.HasExited)
+    			while(!die && !monitoringProccess.HasExited && assembler!=null)
     			{
     		        assembler.AddLine(
     			        monitoringProccess.StandardOutput.ReadLine());			
@@ -145,7 +147,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 			}
 			catch(Exception ex)
 			{
-                SharpKnocking.Common.Debug.Write("Error while processing packets: "+ex);
+                SharpKnocking.Common.Debug.Write("TcpdumpMonitor::Run(): Error while processing packets: "+ex);
 			}
 
 		}
@@ -155,8 +157,9 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		/// </summary>
 		public void Stop()
 		{           
-            this.Dispose (); 
+		    this.die = true;
             this.sequences = null;
+            this.Dispose (); 
 		}
 		
 		#endregion Public methods

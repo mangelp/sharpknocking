@@ -217,16 +217,27 @@ namespace SharpKnocking.KnockingDaemon
             if(this.doCapture)
             {
                 Debug.Write("Initing packet capture process");
-                //Load the calls
-                this.calls = CallsLoader.Load();
-                //Create a new monitor for these calls
-                this.monitor = new TcpdumpMonitor(this.calls);
-                //Create a new sequence manager that gets the notifications about
-                //packets from the monitor and uses the current calls array.
-                this.seqManager = new SequenceDetectorManager(this.calls, this.monitor);
-                //Start a new thread
-                this.monitorThread = new Thread(new ThreadStart(this.monitor.Run));
-                this.monitorThread.Start();
+                
+                try
+                {
+                    //Load the calls
+                    this.calls = CallsLoader.Load();
+                    //Create a new monitor for these calls
+                    this.monitor = new TcpdumpMonitor(this.calls);
+                    //Create a new sequence manager that gets the notifications about
+                    //packets from the monitor and uses the current calls array.
+                    this.seqManager = new SequenceDetectorManager(this.calls, this.monitor);
+                    if(this.monitorThread!=null)
+                        this.monitorThread = null;
+                    //Start a new thread
+                    this.monitorThread = new Thread(new ThreadStart(this.monitor.Run));
+                    Debug.VerboseWrite ("Starting new thread", VerbosityLevels.High);
+                    this.monitorThread.Start();
+                }
+                catch(ThreadAbortException ex)
+                {
+                    Debug.VerboseWrite("KnockingDaemon::HotRestart() exception: \n"+ex);
+                }
             }
             else
             {
@@ -267,12 +278,12 @@ namespace SharpKnocking.KnockingDaemon
                 if(this.monitor!= null && this.monitor.Running)
                 {
                     Debug.Write("Killing packet capture process");
-                    this.monitor.Dispose();
+                    this.monitor.Stop();
                     
-                    if(this.monitorThread.ThreadState == ThreadState.Running)
-                    {
-                        this.monitorThread.Abort();
-                    }
+//                    if(this.monitorThread.ThreadState == ThreadState.Running)
+//                    {
+//                        this.monitorThread.Abort();
+//                    }
                 }
                 else
                 {
@@ -351,7 +362,9 @@ namespace SharpKnocking.KnockingDaemon
                     this.isInteractiveMode = false;
                     break;
                 case RemoteCommandActions.HotRestart:
+                    Debug.VerboseWrite("KDP: <HotRestart>");
                     this.HotRestart();
+                    Debug.VerboseWrite("KDP: </HotRestart>");
                     this.SendResponse(args.Action, null);
                     break;
                 case RemoteCommandActions.StartInteractiveMode:
@@ -377,12 +390,17 @@ namespace SharpKnocking.KnockingDaemon
             if(this.managerObject==null)
                 this.RegisterManagerEnd();
                
-            if(this.managerObject==null)
-                throw new RemotingException(
-                     "Can't connect to the manager end to answer request! ("+
-                     action+")");
+//            if(this.managerObject==null)
+//                throw new RemotingException(
+//                     "Can't connect to the manager end to answer request! ("+
+//                     action+")");
+            
+            //Return instead of givving an exception
+            if(this.managerObject == null)
+                return;
             
             Debug.VerboseWrite("KnockingDaemonProcess: Sending response to "+action);
+            
             this.managerObject.SendResponse(action, data);
         }
         
@@ -391,10 +409,14 @@ namespace SharpKnocking.KnockingDaemon
             if(this.managerObject==null)
                 this.RegisterManagerEnd();
             
-            if(this.managerObject==null)
-                throw new RemotingException(
-                     "Can't connect to the manager end to answer request! ("+
-                     action+")");
+//            if(this.managerObject==null)
+//                throw new RemotingException(
+//                     "Can't connect to the manager end to answer request! ("+
+//                     action+")");
+
+            //If there isn't manager go back without sending answer.
+            if(this.managerObject == null)
+                return;
                 
             Debug.VerboseWrite("KnockingDaemonProcess: Sending request to "+action);
             this.managerObject.SendRequest(action, data);
@@ -418,7 +440,9 @@ namespace SharpKnocking.KnockingDaemon
         /// </summary>
         private void RegisterManagerEnd()
         {
-            if(this.managerObject != null)
+            Debug.VerboseWrite("Registering manager end: ", VerbosityLevels.High);
+            
+            if(this.managerObject == null)
             {
                 try
                 {
@@ -436,6 +460,10 @@ namespace SharpKnocking.KnockingDaemon
                                 VerbosityLevels.High);
                         this.SendRequest(RemoteCommandActions.Hello, null);
                     }
+                    else
+                    {
+                        Debug.VerboseWrite("Manager end not found!", VerbosityLevels.High);
+                    }
                 }
                 catch(RemotingException ex)
                 {
@@ -451,10 +479,9 @@ namespace SharpKnocking.KnockingDaemon
         {
             if(this.managerObject!=null)
             {
-                this.SendRequest(RemoteCommandActions.Bye, null);
                 this.managerObject = null;
             }
         }
-
+        
 	}
 }

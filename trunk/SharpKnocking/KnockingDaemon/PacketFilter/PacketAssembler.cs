@@ -3,6 +3,8 @@ using System;
 using System.Timers;
 using System.Collections;
 
+using SharpKnocking.Common;
+
 namespace SharpKnocking.KnockingDaemon.PacketFilter
 {
 	
@@ -47,6 +49,10 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		/// </summary>
 		public void AddLine(string line)
 		{
+		    if(Net20.StringIsNullOrEmpty(line) || this.lineBuffer==null
+		      || this.timer == null)
+		        return;
+		        
 			// The timer is stopped.
 			timer.Enabled = false;
 			

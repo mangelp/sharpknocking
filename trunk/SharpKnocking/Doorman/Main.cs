@@ -19,8 +19,6 @@ namespace SharpKnocking.Doorman
 		    // Here we do parameter processing
 		    for(int i=0; i<args.Length; i++)
 		    {
-		        Debug.VerboseWrite ("Parameters[ "+i+" ] = "+args[i]+"");
-		        
 		        if(args[i]=="--dbg")
 		        {
 		            // Enable debugging
