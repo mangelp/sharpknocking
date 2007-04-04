@@ -112,10 +112,15 @@ namespace SharpKnocking.Doorman
 			{	
 			    
 			    SaveData();
+				daemonComm.SendCommand(RemoteCommandActions.Bye);
+				
 				
 				res = ConfirmDialog.Show(						
 						mainWindow, 
 						"¿Desea cerrar también el daemon de apertura de puertos");
+				
+				
+				
 				
 				if(res == ResponseType.Yes)
 				{

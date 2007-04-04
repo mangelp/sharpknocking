@@ -3,9 +3,9 @@ exec_prefix=${prefix}
 pkglibdir=@libdir@/@PACKAGE@
 Libraries=  ${pkglibdir}/@PORTKNOCKER_DEBUG_LIB@@PORTKNOCKER_RELEASE_LIB@
 
-Name: ManagedSource.PortKnocker
+Name: SharpKnocking.PortKnocker
 Description: 
 Version: @VERSION@
 
-Requires:  glade-sharp-2.0 gtk-sharp-2.0 glib-sharp-2.0 ManagedSource.Common ManagedSource.CommonWidgets
+Requires:  glade-sharp-2.0 glib-sharp-2.0 gtk-sharp-2.0 SharpKnocking.Common SharpKnocking.CommonWidgets
 Libs:  -r:${pkglibdir}/@PORTKNOCKER_DEBUG_LIB@@PORTKNOCKER_RELEASE_LIB@

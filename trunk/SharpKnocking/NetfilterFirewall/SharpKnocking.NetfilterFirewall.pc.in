@@ -3,9 +3,9 @@ exec_prefix=${prefix}
 pkglibdir=@libdir@/@PACKAGE@
 Libraries=  ${pkglibdir}/@NETFILTERFIREWALL_DEBUG_LIB@@NETFILTERFIREWALL_RELEASE_LIB@
 
-Name: ManagedSource.NetfilterFirewall
+Name: SharpKnocking.NetfilterFirewall
 Description: IpTables rules generator. It can modify the iptables configuration on the fly.
 Version: @VERSION@
 
-Requires:  ManagedSource.Common
+Requires:  SharpKnocking.Common
 Libs:  -r:${pkglibdir}/@NETFILTERFIREWALL_DEBUG_LIB@@NETFILTERFIREWALL_RELEASE_LIB@

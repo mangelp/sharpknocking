@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<UserCombinePreferences filename="/home/luis/programacion/csl-csknocking-g/SharpKnocking/SharpKnocking.mds">
+  <Files>
+    <File filename="./CommonWidgets/NodeStoreFilter.cs" />
+    <File filename="./CommonWidgets/PortDialog.cs" />
+    <File filename="./Doorman/MainWindow.cs" />
+    <File filename="./Doorman/CallNode.cs" />
+    <File filename="Bienvenido" />
+  </Files>
+  <Views>
+    <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
+      <TreeView>
+        <Node expanded="True">
+          <Node name="CommonWidgets" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="NodeStoreFilter.cs" expanded="False" selected="True" />
+          </Node>
+          <Node name="Doorman" expanded="True" />
+          <Node name="KnockingDaemon" expanded="True" />
+          <Node name="PortKnocker" expanded="True">
+            <Node name="Resources" expanded="True" />
+          </Node>
+        </Node>
+      </TreeView>
+    </ViewMemento>
+    <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ClassPad">
+      <TreeView>
+        <Node expanded="True" selected="True">
+          <Node name="KnockingDaemon" expanded="True" />
+        </Node>
+      </TreeView>
+    </ViewMemento>
+    <ViewMemento Id="MonoDevelop.NUnit.TestPad">
+      <TreeView>
+        <Node expanded="False" />
+      </TreeView>
+    </ViewMemento>
+    <ViewMemento Id="MonoQuery.DatabasePad">
+      <TreeView>
+        <Node expanded="False" />
+      </TreeView>
+    </ViewMemento>
+  </Views>
+  <Properties>
+    <Properties>
+      <Property key="ActiveConfiguration" value="Debug" />
+      <Property key="ActiveWindow" value="Bienvenido" />
+    </Properties>
+  </Properties>
+</UserCombinePreferences>
