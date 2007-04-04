@@ -131,9 +131,9 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 		/// <summary>
 		/// Add a rule that gives acces for a ip
 		/// </summary>
-		public void AddAccessToIp(string ip)
+		public void AddAccessToIp(string ip, int port)
 		{
-		    this.fManager.GrantAccess(ip);
+		    this.fManager.GrantAccess(ip, port);
 		}
 		
 		/// <summary>

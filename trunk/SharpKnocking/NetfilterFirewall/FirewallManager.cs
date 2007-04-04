@@ -329,7 +329,7 @@ namespace SharpKnocking.NetfilterFirewall
         /// <returns>
         /// The rule added.
         /// </returns>
-        public NetfilterRule GrantAccess(string ipAddr)
+        public NetfilterRule GrantAccess(string ipAddr, int port)
         {
             Debug.VerboseWrite("Granting access to ipAddr");
             if(Net20.StringIsNullOrEmpty(ipAddr))

@@ -139,7 +139,6 @@ namespace SharpKnocking.KnockingDaemon
             Console.Out.WriteLine ("     --nofwmodify: Don't modify current rule set. This makes daemon unusable");
             Console.Out.WriteLine ("     --cfg: The next argument must be a valid iptables configuration file that");
             Console.Out.WriteLine ("       will be loaded.");
-            Console.Out.WriteLine ("     --dry: The current ruleset of the firewall will remain untouched");
         }
 	}
 }

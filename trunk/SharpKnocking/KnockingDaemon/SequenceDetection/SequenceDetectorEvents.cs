@@ -35,12 +35,23 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 	       get { return this.serializedSequence;}
 	   }
 	   
+	   private int port;
+	   
+	   /// <summary>
+	   /// Port number
+	   /// </summary>
+	   public int Port
+	   {
+	       get { return port;}
+	       set { this.port = value;}
+	   }
+	   
 	   /// <summary>
 	   /// Parametrized constructor.
 	   /// </summary>
 	   /// <param name="ip">Ip address that did the knocking</param>
 	   /// <param name="serSeq">CallSequence serialized as an string</param>
-	   public SequenceDetectorEventArgs(string ip, string serSeq)
+	   public SequenceDetectorEventArgs(string ip, string serSeq, int port)
 	   {
 	       this.ip = ip;
 	       this.serializedSequence = serSeq;

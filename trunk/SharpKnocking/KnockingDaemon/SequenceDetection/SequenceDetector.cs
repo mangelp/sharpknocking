@@ -21,6 +21,10 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		
 		private CallSequence sequence;
 		
+		//NOTE: There is a severe limitation. There is not a timeout logic that
+		//will delete entries when they become old so the hashtable will grow 
+		//for ever until the daemon is restarted.
+		
 		//Number of ports in sequence touched
 		private Hashtable hitsTable;
 
@@ -76,6 +80,9 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 			//and we add if it is correct.
 			if(this.hitsTable.ContainsKey (sourceAddr))
 			{
+			    Debug.VerboseWrite("Adding ip to collection: "+sourceAddr, 
+			             VerbosityLevels.High);
+			    
 				int next = (int)this.hitsTable[sourceAddr];
 				
 				if(packet.DestinationPort == this.CallSequence.Ports[next])
@@ -85,11 +92,15 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 					
 					if((next+1) == this.CallSequence.Ports.Length)
 					{
+					    Debug.VerboseWrite("Sequence hit for ip: "+sourceAddr, 
+					               VerbosityLevels.High);
+					    this.hitsTable.Remove(sourceAddr);
 					    //A sequence have been completely detected so we must
 					    //notify other about it. We serialize the CallSequence
 					    //object as an xml
 						this.OnSequenceDetectedHelper(sourceAddr, 
-						          this.CallSequence.Store ());
+						          this.CallSequence.Store (), 
+						          this.CallSequence.TargetPort);
 					}
 				}
 				else
@@ -108,9 +119,9 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		
 		#region Private methods
 		
-		private void OnSequenceDetectedHelper(string ip, string seq)
+		private void OnSequenceDetectedHelper(string ip, string seq, int port)
 		{
-		    SequenceDetectorEventArgs args = new SequenceDetectorEventArgs(ip, seq);
+		    SequenceDetectorEventArgs args = new SequenceDetectorEventArgs(ip, seq, port);
 		    
 			if(SequenceDetected != null)
 				SequenceDetected(this, args);

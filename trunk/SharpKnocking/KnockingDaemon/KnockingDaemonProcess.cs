@@ -300,14 +300,14 @@ namespace SharpKnocking.KnockingDaemon
             this.commObject.Received += new RemoteEndEventHandler(this.OnReceivedHandler);
         }
         
-        private void OnDisposedHandler(object sender, EventArgs args)
-        {
-            if(this.running)
-            {
-                Debug.VerboseWrite("The packet pacture have ended by an unexpected error. Stopping daemon.");
-                this.Stop();
-            }
-        }
+//        private void OnDisposedHandler(object sender, EventArgs args)
+//        {
+//            if(this.running)
+//            {
+//                Debug.VerboseWrite("The packet pacture have ended by an unexpected error. Stopping daemon.");
+//                this.Stop();
+//            }
+//        }
         
         //Handles a sequence detected
         private void OnSequenceDetectedHandler(object sender, 
@@ -320,7 +320,7 @@ namespace SharpKnocking.KnockingDaemon
             }
             else
             {
-                this.accessor.AddAccessToIp(args.IP);
+                this.accessor.AddAccessToIp(args.IP, args.Port);
             }
         }
         
@@ -340,8 +340,11 @@ namespace SharpKnocking.KnockingDaemon
                 case RemoteCommandActions.Bye:
                     this.UnregisterManagerEnd();
                     break;                    
+                case RemoteCommandActions.Die:
+                    this.Stop();
+                    break;
                 case RemoteCommandActions.Hello:
-                    Debug.VerboseWrite("Hello to manager", VerbosityLevels.High);
+                    Debug.VerboseWrite("Hello back to manager", VerbosityLevels.High);
                     this.SendResponse(RemoteCommandActions.Hello , null);
                     break;
                 case RemoteCommandActions.EndInteractiveMode:
