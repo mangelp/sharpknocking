@@ -291,6 +291,8 @@ namespace SharpKnocking.PortKnocker
 				
 				AddCallSequence(imported);
 			}
+			
+			icfcd.Destroy();
 		}		
 		
 		private void OnItmQuitActivated(object sender, EventArgs a)

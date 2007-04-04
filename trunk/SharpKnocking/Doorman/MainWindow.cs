@@ -109,8 +109,6 @@ namespace SharpKnocking.Doorman
 			{	
 			    
 			    SaveData();
-			    
-				Application.Quit ();	
 				
 				res = ConfirmDialog.Show(						
 						mainWindow, 
@@ -122,6 +120,7 @@ namespace SharpKnocking.Doorman
 					daemonComm.SendCommand(RemoteCommandActions.Die);
 				}
 				
+				Application.Quit ();
 			}		
 		}
 		

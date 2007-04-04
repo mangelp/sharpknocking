@@ -156,7 +156,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 			if(ports.Count > 0)
 			{	
 				int i;
-				for( i = 0; i < ports.Count - 2; i++)
+				for( i = 0; i < ports.Count - 1; i++)
 				{
 					expression += String.Format("dst port {0} or ", ports[i]);
 				}
