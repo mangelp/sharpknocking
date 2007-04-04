@@ -162,7 +162,7 @@
                                 <child>
                                   <widget class="GtkLabel" id="label2">
                                     <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Nueva</property>
+                                    <property name="label" translatable="yes">_Nueva</property>
                                     <property name="use_underline">True</property>
                                   </widget>
                                   <packing>
@@ -207,7 +207,7 @@
                                 <child>
                                   <widget class="GtkLabel" id="label3">
                                     <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Eliminar</property>
+                                    <property name="label" translatable="yes">_Eliminar</property>
                                     <property name="use_underline">True</property>
                                   </widget>
                                   <packing>
@@ -255,7 +255,7 @@
                                 <child>
                                   <widget class="GtkLabel" id="label6">
                                     <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Editar</property>
+                                    <property name="label" translatable="yes">E_ditar</property>
                                     <property name="use_underline">True</property>
                                   </widget>
                                   <packing>
@@ -303,7 +303,7 @@
                                 <child>
                                   <widget class="GtkLabel" id="label5">
                                     <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Llamar</property>
+                                    <property name="label" translatable="yes">_Llamar</property>
                                     <property name="use_underline">True</property>
                                   </widget>
                                   <packing>

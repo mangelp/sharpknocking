@@ -59,6 +59,8 @@ namespace SharpKnocking.Doorman
 		
 		private bool trafficBlocked;
 		
+		private NodeStoreFilter storeFilter;
+		
 		
 		#endregion Non Glade-related attributes
 	
@@ -90,7 +92,8 @@ namespace SharpKnocking.Doorman
 		{		    
 		    CallNode newNode = new CallNode(call);
 		    newNode.Active = status;
-		    callsStore.AddNode(newNode);
+		    //callsStore.AddNode(newNode);
+		    storeFilter.Add(newNode);
 		    return newNode;
 		}
 		
@@ -179,6 +182,8 @@ namespace SharpKnocking.Doorman
 		    	new CallEditDialog(mainWindow, selectedNode.Sequence);
 		    	
 		    ced.Run();  
+		    
+		    txtFilter.Text = "";
 		    
 		    foreach(TreeViewColumn col in callsView.Columns)
 		   		col.QueueResize();	
@@ -284,11 +289,14 @@ namespace SharpKnocking.Doorman
 			itmExportImage.FromPixbuf = ImageResources.FileExportIcon16;
 			itmExport.Sensitive = false;
 		
-		    // TreeView model inicialization. Columns are: 'Description' 
-		    // and 'IP address'.
+		    // TreeView model inicialization.
 			callsStore =  new NodeStore(typeof(CallNode));
 			
+			
+			
 			callsView = new NodeView(callsStore);
+			
+			storeFilter = new NodeStoreFilter(callsStore, "Address");
 			
 			callsView.RulesHint = true;
 			callsView.ExpanderColumn = null;
@@ -317,9 +325,6 @@ namespace SharpKnocking.Doorman
 			
 			
             
-			callsView.SearchEntry = txtFilter;			
-			callsView.SearchColumn = 0;
-			
 			// We set the selection change event handler.
 			callsView.NodeSelection.Changed += OnCallsViewSelectionChanged;	
 			callsView.RowActivated += OnCallsViewRowActivated;
@@ -349,7 +354,7 @@ namespace SharpKnocking.Doorman
 		{
 		    DoormanConfig config = new DoormanConfig();
 		    
-		    foreach(CallNode callNode in callsStore)
+		    foreach(CallNode callNode in storeFilter.Nodes)
 		    {
 		        config.AddCall(callNode.Sequence, callNode.Active);
 		    }
@@ -389,6 +394,7 @@ namespace SharpKnocking.Doorman
 		
 		private void OnBtnAddClicked(object sender, EventArgs a)
 		{
+			txtFilter.Text = "";
 			AddCall();						
 		}
 		
@@ -451,7 +457,9 @@ namespace SharpKnocking.Doorman
             
             if(res == ResponseType.Yes)
             {                  
-				callsStore.RemoveNode(callsView.NodeSelection.SelectedNode);			
+            	txtFilter.Text = "";
+				//callsStore.RemoveNode(callsView.NodeSelection.SelectedNode);
+				storeFilter.Remove(callsView.NodeSelection.SelectedNode);		
 			}
 		}
 		
@@ -534,6 +542,8 @@ namespace SharpKnocking.Doorman
 		{
 		    //The clear button is activated only when the searched text exists.
 		    btnClearFilter.Sensitive=txtFilter.Text.Length > 0;
+		    
+		    storeFilter.Filter = txtFilter.Text.Trim();
 		}
 		
 		// Connect the Signals defined in Glade

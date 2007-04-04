@@ -154,7 +154,10 @@ namespace SharpKnocking.PortKnocker
 			callsView.AppendColumn ("Puerto", new CellRendererText(),"text",2);
 			
             
-			callsView.SearchEntry = txtFilter;			
+			callsView.SearchEntry = txtFilter;		
+			
+			
+				
 			callsView.SearchColumn = 0;
 			
 			// We set the selection change event handler.
