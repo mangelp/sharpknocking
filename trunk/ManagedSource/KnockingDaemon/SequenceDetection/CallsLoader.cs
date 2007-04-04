@@ -29,7 +29,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 			{
 				if(config.GetActivationStatus(seq))
 				{
-					calls.Add(seq);	
+					calls.Add(seq);
 				}
 			}
 			

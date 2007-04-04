@@ -93,13 +93,13 @@ namespace SharpKnocking.KnockingDaemon
 		    else if(UnixNative.ExistsLockFile())
 		    {
 		        //The file already exists. Daemon created.
-		        Console.Out.WriteLine("Another instance of the daemon is running. If not\n"+
+		        Console.Out.WriteLine("Another instance of the daemon is running. If not"+
 		                      "remove the lock file: "+UnixNative.LockFile);
 		        return 1;
 		    }
             else if(!UnixNative.CreateLockFile() || !File.Exists(UnixNative.LockFile))
             {
-                Console.Out.WriteLine("Can't create lock file. Check the permissions to write into\n"+
+                Console.Out.WriteLine("Can't create lock file. Check the permissions to write into"+
                                 "the file: "+UnixNative.LockFile );
                 return 2;
             }
