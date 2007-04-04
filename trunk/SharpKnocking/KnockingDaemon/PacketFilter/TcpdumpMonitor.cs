@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Diagnostics;
 
+using Mono.Unix.Native;
+
 using SharpKnocking.Common;
 using SharpKnocking.Common.Calls;
 using SharpKnocking.KnockingDaemon.SequenceDetection;
@@ -16,6 +18,13 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 	/// </summary>
 	public class TcpdumpMonitor: IDisposable
 	{
+	    private bool disposed;
+	    
+	    public bool Disposed
+	    {
+	       get { return this.disposed; }
+	    }
+	    
 		public event PacketCapturedEventHandler PacketCaptured;
 		
 		private Process monitoringProccess; 
@@ -39,12 +48,24 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		    if(this.monitoringProccess !=null)
 		    {
 		       if(!this.monitoringProccess.HasExited)
-	               monitoringProccess.Kill();
+		       {
+		          try
+		          {
+	                  monitoringProccess.Kill();
+	              }
+	              catch(InvalidOperationException)
+	              {
+	                  
+	              }
+	           }
 	               
 	           this.monitoringProccess = null;
 	         }
 	           
 	         this.sequences = null;
+	         this.disposed = true;
+	         
+//	         this.OnDisposedEvent();
 		}
 		
 		#region Properties
@@ -80,45 +101,51 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		
 		public void Run()
 		{			
+            try
+            {
+    			string tcpdumpPath = WhichWrapper.Search("tcpdump");
+    			
+    			if(tcpdumpPath == null)
+    			{
+    				// There's no tcpdump in the system.
+    				Console.WriteLine(
+    					"¡Necesita el programa «tcpdump» para usar SharpKnocking!");
+    				return;
+    			}
 
-			string tcpdumpPath = WhichWrapper.Search("tcpdump");
-			
-			if(tcpdumpPath == null)
-			{
-				// There's no tcpdump in the system.
-				Console.WriteLine(
-					"¡Necesita el programa «tcpdump» para usar SharpKnocking!");
-				return;
+    			string expression = CreateExpression(sequences);				
+    		    
+    			monitoringProccess = new Process();
+    		    
+    			monitoringProccess.StartInfo.FileName = tcpdumpPath;
+    			
+    			// Arguments given to tcpdump are
+    			// -i any, so we monitor every network interface.
+    			// -x, so the package's content is showed as hexadecimal numbers,
+    			// -l, so the output is buffered,
+    			// -q, so the output contains less info,
+    			// -f, so tcpdump doesn't try to resolve ip names.
+    			monitoringProccess.StartInfo.Arguments =
+    				 "-i any -x -l -q -f " + expression ;
+    				 
+    			monitoringProccess.StartInfo.UseShellExecute = false;
+    			monitoringProccess.StartInfo.RedirectStandardOutput = true;	
+    				
+    			monitoringProccess.Start();
+    			
+    			PacketAssembler assembler = new PacketAssembler();
+    			
+    			assembler.PacketCaptured += new PacketCapturedEventHandler(OnPacketCaptured);
+    			
+    			while(!monitoringProccess.HasExited)
+    			{
+    		        assembler.AddLine(
+    			        monitoringProccess.StandardOutput.ReadLine());			
+    			}
 			}
-
-			string expression = CreateExpression(sequences);				
-		    
-			monitoringProccess = new Process();
-		    
-			monitoringProccess.StartInfo.FileName = tcpdumpPath;
-			
-			// Arguments given to tcpdump are
-			// -i any, so we monitor every network interface.
-			// -x, so the package's content is showed as hexadecimal numbers,
-			// -l, so the output is buffered,
-			// -q, so the output contains less info,
-			// -f, so tcpdump doesn't try to resolve ip names.
-			monitoringProccess.StartInfo.Arguments =
-				 "-i any -x -l -q -f " + expression ;
-				 
-			monitoringProccess.StartInfo.UseShellExecute = false;
-			monitoringProccess.StartInfo.RedirectStandardOutput = true;	
-				
-			monitoringProccess.Start();
-			
-			PacketAssembler assembler = new PacketAssembler();
-			
-			assembler.PacketCaptured += new PacketCapturedEventHandler(OnPacketCaptured);
-			
-			while(!monitoringProccess.HasExited)
+			catch(Exception ex)
 			{
-		        assembler.AddLine(
-			        monitoringProccess.StandardOutput.ReadLine());			
+                SharpKnocking.Common.Debug.Write("Error while processing packets: "+ex);
 			}
 
 		}
@@ -179,6 +206,12 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 			if(PacketCaptured != null)
 				PacketCaptured(this, a);
 		}
+		
+//		private void OnDisposedEvent()
+//		{
+//		    if(this.Disposed!=null)
+//		      this.Disposed(this, EventArgs.Empty);
+//		}
 
 		#endregion Private methods
 	}

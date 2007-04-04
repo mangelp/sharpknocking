@@ -96,5 +96,31 @@ namespace SharpKnocking.Common
             
             return name;
         }
+        
+        public static bool HandleCtrlCSignal(SignalHandler usrHandler)
+        {
+            SignalHandler handler = Mono.Unix.Native.Stdlib.signal(Signum.SIGINT , usrHandler);
+            
+            if(handler == Stdlib.SIG_ERR)
+            {
+                Debug.Write("Error handling SIGINT: "+Stdlib.GetLastError());
+                return false;
+            }
+            
+            return true;
+        }
+        
+        public static bool HandleTermSignal(SignalHandler usrHandler)
+        {
+            SignalHandler handler = Mono.Unix.Native.Stdlib.signal(Signum.SIGTERM, usrHandler);
+            
+            if(handler == Stdlib.SIG_ERR)
+            {
+                Debug.Write("Error handling SIGTERM: "+Stdlib.GetLastError());
+                return false;
+            }
+            
+            return true;
+        }
 	}
 }

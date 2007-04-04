@@ -15,7 +15,7 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 	/// Loads the ruleset from netfilter throught iptables, listens to incoming
 	/// knockings and alters the ruleset to configure properly the firewall.
 	/// </summary>
-	public class NetfilterAccessor
+	public class NetfilterAccessor: IDisposable
 	{	
 	    private string backupRulesFile;
 	    
@@ -100,9 +100,7 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
                 }
                 
                 Debug.VerboseWrite("NetfilterAccessor::Init(rulesetused)", VerbosityLevels.High);
-                Debug.VerboseWrite("Applying ruleset:\n<Ruleset>");
-                Debug.VerboseWrite(this.fManager.RuleSet.SaveToString());
-                Debug.VerboseWrite("</Ruleset>");
+                Debug.VerboseWrite("**\n"+this.fManager.RuleSet.SaveToString()+"\n**");
             }
             catch(Exception ex)
             {
@@ -121,6 +119,7 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 		{
 		    if(!this.DryRun && !Net20.StringIsNullOrEmpty(this.backupRulesFile))
 		    {
+		        Debug.Write("Restoring previous rule set ...");
 		        this.fManager.RestoreRuleSetBackup(this.backupRulesFile);
 		        this.backupRulesFile = String.Empty ;
 		    }
@@ -135,6 +134,13 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 		public void AddAccessToIp(string ip)
 		{
 		    this.fManager.GrantAccess(ip);
+		}
+		
+		/// <summary>
+		/// </summary>
+		public void Dispose()
+		{
+
 		}
 	}
 }

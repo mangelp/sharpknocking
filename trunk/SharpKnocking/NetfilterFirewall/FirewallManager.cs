@@ -407,10 +407,12 @@ namespace SharpKnocking.NetfilterFirewall
         /// </summary>
         public void Dispose()
         {
-            if(!this.dryRun)
-            {
-                this.RemoveSharpKnockingChain();
-            }
+             //FIX: This gives an exception if the rules are restores before
+             //Client code must care this!
+//            if(!this.dryRun)
+//            {
+//                this.RemoveSharpKnockingChain();
+//            }
             
             //Clear ourselves from the static reference so everything gets removed.
             FirewallManager.instance = new FirewallManager ();

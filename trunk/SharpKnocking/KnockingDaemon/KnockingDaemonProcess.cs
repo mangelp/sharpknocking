@@ -6,6 +6,8 @@ using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 
+using Mono.Unix.Native;
+
 using SharpKnocking.Common;
 using SharpKnocking.Common.Calls;
 using SharpKnocking.Common.Remoting;
@@ -84,6 +86,25 @@ namespace SharpKnocking.KnockingDaemon
 		public KnockingDaemonProcess()
 		{
 		    this.accessor = new NetfilterAccessor ();
+		    if(!UnixNative.HandleTermSignal(new SignalHandler(this.HandleTermSignal)))
+		    {
+		        Console.Out.WriteLine ("KnockingDaemonProcess:: Term signal unhandled"); 
+		    }
+		    else
+		    {
+		        Console.Out.WriteLine ("KnockingDaemonProcess:: Term signal handled");
+		    }
+		    
+            if(!UnixNative.HandleCtrlCSignal (new SignalHandler(this.HandleTermSignal)))
+		    {
+		        Console.Out.WriteLine ("KnockingDaemonProcess:: Ctrl-C signal unhandled"); 
+		    }
+		    else
+		    {
+		        Console.Out.WriteLine ("KnockingDaemonProcess:: Ctrl-C signal handled");
+		    }
+		    
+		    this.doCapture = true;
 		}
 		
 		/// <summary>
@@ -177,10 +198,10 @@ namespace SharpKnocking.KnockingDaemon
         /// </summary>
         public void Stop()
         {
+            this.running = false;
+            Console.Out.WriteLine("Stopping requested. Daemon will die now");
             this.InternalStopMonitor();
             this.Dispose();
-            
-            this.running = false;
         }
         
         /// <summary>
@@ -188,6 +209,7 @@ namespace SharpKnocking.KnockingDaemon
         /// </summary>
         public void HotRestart()
         {
+            this.running = false;
             //Inconditionally we kill the monitor if it is running and if not
             //we start it if the flag doCapture isn't set to false
             this.InternalStopMonitor();
@@ -213,6 +235,15 @@ namespace SharpKnocking.KnockingDaemon
                 this.monitorThread = null;
                 this.monitor = null;
             }
+            
+            this.running = true;
+        }
+        
+        private void HandleTermSignal(int signal)
+        {
+            //Term signal marks the end of the processing
+            Console.Out.WriteLine("TERM/CTRL-C signal cautch. Trying to exit graccessfully.("+signal+")");
+            this.Stop();    
         }
         
         /// <summary>
@@ -221,7 +252,7 @@ namespace SharpKnocking.KnockingDaemon
         /// </summary>
         private void InternalStopMonitor()
         {
-            if(!this.doCapture)
+            if(this.doCapture)
             {
                 Debug.Write("Stopping capture processing.");
                 
@@ -267,6 +298,15 @@ namespace SharpKnocking.KnockingDaemon
             this.commObjectRef = RemotingServices.Marshal(this.commObject, RemoteEndService.DaemonServiceName);
             //Set a handler in the event to get notifications about incoming messages
             this.commObject.Received += new RemoteEndEventHandler(this.OnReceivedHandler);
+        }
+        
+        private void OnDisposedHandler(object sender, EventArgs args)
+        {
+            if(this.running)
+            {
+                Debug.VerboseWrite("The packet pacture have ended by an unexpected error. Stopping daemon.");
+                this.Stop();
+            }
         }
         
         //Handles a sequence detected
