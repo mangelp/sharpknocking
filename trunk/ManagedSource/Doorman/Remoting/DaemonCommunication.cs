@@ -124,7 +124,7 @@ namespace SharpKnocking.Doorman.Remoting
             
             ChannelServices.RegisterChannel(this.myChannel);
             
-            this.myEnd = new RemoteManager();
+            this.myEnd = new RemoteManager(true);
             //Set as a remoting object to comunicate
             this.myEndRef = 
             	RemotingServices.Marshal(myEnd, RemoteEndService.ManagerServiceName);
@@ -327,8 +327,6 @@ namespace SharpKnocking.Doorman.Remoting
         	                     RemoteEndService.DaemonPortNumber+
         	                     "/"+RemoteEndService.DaemonServiceName;
         	                     
-        	        Debug.VerboseWrite("DaemonCommunication: Uri="+uri);
-        	                     
 	                this.remoteObj = (RemoteDaemon) Activator.GetObject(
 	                                               typeof(RemoteDaemon), 
 	                                               uri);
@@ -340,9 +338,8 @@ namespace SharpKnocking.Doorman.Remoting
 	            	  	// Say hello to the daemon so he can create the required object
 	            	  	// to stay in touch.
 	            	  	this.helloReq = true;
-	            	  	Debug.VerboseWrite("Sending request to remote object");
+	            	  	Debug.VerboseWrite("Daemon found!\nSending hello to daemon ...");
 	                  	remoteObj.SendRequest(RemoteCommandActions.Hello, null);
-	                  	Debug.VerboseWrite("Remote object request sent");
 	                  	return true;
 	               	}
                 }

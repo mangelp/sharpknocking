@@ -47,7 +47,7 @@ namespace SharpKnocking.NetfilterFirewall
             if(ret!=0)
                 throw new InvalidOperationException("The command '"+cmd+"' returned "+ret);
             
-            Debug.VerboseWrite("Save to file '"+fileName+"': success");
+            Debug.VerboseWrite("Saving current netfilter rule set to file '"+fileName+"': success");
             
             return ret;
         }

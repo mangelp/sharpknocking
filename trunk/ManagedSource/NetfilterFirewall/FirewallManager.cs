@@ -34,7 +34,7 @@ namespace SharpKnocking.NetfilterFirewall
         
         /// <summary>
         /// Temporary file name to store rules when using the current loaded
-        /// set of rules.
+        /// set of rules. This file may be overwritten continuously.
         /// </summary>
         public string TempFileName
         {
@@ -88,6 +88,8 @@ namespace SharpKnocking.NetfilterFirewall
 		{
             this.ruleSet = new NetfilterRuleSet();
             this.tempFileName = UnixNative.CreateTempFileName();
+            Debug.VerboseWrite("FirewallManager will use "+this.tempFileName+
+                    " for scratch", VerbosityLevels.High);
             this.chainName = "SharpKnocking-INPUT";
             
             Debug.Write("FirewallManager instance created!");
@@ -98,11 +100,11 @@ namespace SharpKnocking.NetfilterFirewall
         /// </summary>
         public void LoadCurrentRuleSet()
         {
-            Debug.Write("Storing: "+tempFileName+".ruleset");
+            Debug.Write("Storing current netfilter set in: "+tempFileName+".rr.ruleset");
             IpTablesCmd.Save(tempFileName+".ruleset");
             
-            Debug.Write("Loading: "+tempFileName+".ruleset");
-            this.ruleSet.LoadFromFile(tempFileName+".ruleset");
+            Debug.Write("Loading current set from: "+tempFileName+".rr.ruleset");
+            this.ruleSet.LoadFromFile(tempFileName+".rr.ruleset");
         }
         
         /// <summary>
@@ -110,7 +112,7 @@ namespace SharpKnocking.NetfilterFirewall
         /// </summary>
         public void LoadRuleSetFrom(string fileName)
         {
-            Debug.Write("Loading: "+fileName+"");
+            Debug.Write("Loading rule set from: "+fileName+"");
             this.ruleSet.LoadFromFile(fileName);
         }
 
@@ -119,6 +121,7 @@ namespace SharpKnocking.NetfilterFirewall
         /// </summary>
         public void ApplyCurrentRuleSet()
         {
+            Debug.VerboseWrite("Applying current rule set");
             this.ruleSet.SaveToFile(tempFileName+".ruleset",true);
             
             if(this.dryRun )
@@ -184,6 +187,7 @@ namespace SharpKnocking.NetfilterFirewall
         /// </remarks>
         public void AddSharpKnockingChain()
         {            
+            Debug.VerboseWrite("Adding SharpKnocking chain");
             NetfilterRule rule = null;
             JumpOption jopt = null;
             
@@ -327,6 +331,7 @@ namespace SharpKnocking.NetfilterFirewall
         /// </returns>
         public NetfilterRule GrantAccess(string ipAddr)
         {
+            Debug.VerboseWrite("Granting access to ipAddr");
             if(Net20.StringIsNullOrEmpty(ipAddr))
                 throw new ArgumentException("The address can't be null or empty", "ipAddr");
             
@@ -393,7 +398,7 @@ namespace SharpKnocking.NetfilterFirewall
         {
             if(!System.IO.File.Exists(file))
                 throw new System.IO.FileNotFoundException("The file doesn't exists: "+file);
-                
+            Debug.Write("Restoring backup copy from: "+file);
             IpTablesCmd.Restore(file);
         }
         

@@ -60,6 +60,7 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 		{
             try
             {
+                Debug.VerboseWrite("NetfilterAccessor::Init("+this.DryRun+")", VerbosityLevels.High);
                 this.backupRulesFile = this.fManager.BackupCurrentSet();
                 
                 
@@ -78,6 +79,7 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
                     //We did a backup of the rule set so we can safely
                     //remove all rules applying our own rule set.
                     this.fManager.RuleSet.SetAsSafe();
+                    Debug.VerboseWrite("NetfilterAccessor::Init(emptyrules)", VerbosityLevels.High);
                     this.fManager.ApplyCurrentRuleSet();
                 }
 
@@ -89,6 +91,7 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
     		        throw new InvalidOperationException("Can't load the required data");
     		    }
 
+                Debug.VerboseWrite("NetfilterAccessor::Init(addknockingchain)", VerbosityLevels.High);
                 this.fManager.AddSharpKnockingChain();
                 
                 if(!this.Parameters.ContainsKey("ldcurrent"))
@@ -96,6 +99,7 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
                     this.fManager.ApplyCurrentRuleSet();
                 }
                 
+                Debug.VerboseWrite("NetfilterAccessor::Init(rulesetused)", VerbosityLevels.High);
                 Debug.VerboseWrite("Applying ruleset:\n<Ruleset>");
                 Debug.VerboseWrite(this.fManager.RuleSet.SaveToString());
                 Debug.VerboseWrite("</Ruleset>");
@@ -125,5 +129,12 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 		    this.fManager.Dispose();
 		}
 		
+		/// <summary>
+		/// Add a rule that gives acces for a ip
+		/// </summary>
+		public void AddAccessToIp(string ip)
+		{
+		    this.fManager.GrantAccess(ip);
+		}
 	}
 }

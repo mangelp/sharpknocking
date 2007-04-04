@@ -79,7 +79,7 @@ namespace SharpKnocking.Common
         
         /// <summary>
         /// Creates a temporary file name
-        /// </sumamry>
+        /// </summary>
         /// <returns>
         /// A temporary name for a file that doesn't exist
         /// </returns>

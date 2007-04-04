@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 
+using SharpKnocking.Common;
 using SharpKnocking.Common.Calls;
 using SharpKnocking.KnockingDaemon.PacketFilter;
 
@@ -14,6 +15,12 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 	/// </summary>	
 	public class SequenceDetectorManager: IDisposable
 	{
+        #region Events
+        
+        public event SequenceDetectorEventHandler SequenceDetected;
+        
+        #endregion
+	   
 		#region Attributes
 		
 		private ArrayList detectors;
@@ -27,6 +34,10 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		/// <param name = "sequences">
 		/// The secuences which will be monitored.
 		/// </param>
+		/// <remarks>
+		/// The monitor reference is required to handle the <c>PacketCapture</c> 
+		/// event and to release it in <c>Dispose</c> implementation. 
+		/// </remarks>
 		public SequenceDetectorManager(CallSequence [] sequences, TcpdumpMonitor monitor)
 		{
 			detectors = new ArrayList();
@@ -108,11 +119,23 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		
 		#region Private Methods
 		
-		private void OnSequenceDetected(object sender, EventArgs a)
+		//Manages the event SequenceDetected from any detector.
+		private void OnSequenceDetected(object sender, 
+		                  SequenceDetectorEventArgs args)
+		{			
+			Debug.VerboseWrite("Detected sequence "+
+			         ((SequenceDetector)sender).CallSequence);
+		    //Rethrow the event but making this class the owner
+		    this.OnSequenceDetectedEvent(args);	
+		}
+		
+		//Notifies about the sequenceDetected event from one detector
+		private void OnSequenceDetectedEvent(SequenceDetectorEventArgs args)
 		{
-			SequenceDetector sd = sender as SequenceDetector;
-			
-			Console.WriteLine("Detected sequence {0}",sd.CallSequence);
+			if(this.SequenceDetected != null)
+			{
+			    this.SequenceDetected(this, args); 
+			}
 		}
 		
 		private void OnPacketCaptured(object sender, PacketCapturedEventArgs a)

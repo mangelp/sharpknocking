@@ -17,13 +17,13 @@ namespace SharpKnocking.KnockingDaemon
     /// Main class
     /// </summary>
     /// <remarks>
-    /// Exit codes:</br>
-    /// 0- Normal exit.</br>
-    /// 1- Another instance running.</br>
-    /// 2- Can't create lock file.</br>
-    /// 3- Unmanaged exception thrown.</br>
-    /// 4- Tried to run without root permissions.</br>
-    /// 5- WTF</br>
+    /// Exit codes:
+    /// 0- Normal exit.
+    /// 1- Another instance running.
+    /// 2- Can't create lock file.
+    /// 3- Unmanaged exception thrown.
+    /// 4- Tried to run without root permissions.
+    /// 5- WTF
     /// </remarks>
 	class MainClass
 	{

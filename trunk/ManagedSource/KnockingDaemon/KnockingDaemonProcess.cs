@@ -112,6 +112,8 @@ namespace SharpKnocking.KnockingDaemon
             //Set sequence manager
 	        if(this.seqManager !=null)
             {
+                this.seqManager.SequenceDetected -= 
+                        new SequenceDetectorEventHandler(this.OnSequenceDetectedHandler);
 	            this.seqManager.Dispose();
 	            this.seqManager = null;
 	        }
@@ -129,6 +131,12 @@ namespace SharpKnocking.KnockingDaemon
 	        //If still exists the lock file erase it
 	        if(UnixNative.ExistsLockFile())
                 UnixNative.RemoveLockFile();
+                
+             if(this.monitor!=null)
+             {
+                 this.monitor.Dispose();
+                 this.monitor = null;
+             }
         }
         
         /// <summary>
@@ -146,7 +154,7 @@ namespace SharpKnocking.KnockingDaemon
                 //one from the manager
                 this.RegisterServerObject();
                 this.RegisterManagerEnd();
-                //This will start the monitor
+                //This will start the monitor thread and load the sequences
                 this.HotRestart();
                 
                 //Keep the process up
@@ -155,7 +163,8 @@ namespace SharpKnocking.KnockingDaemon
             }
             catch(Exception ex)
             {
-                Debug.Write("Exception catched in intercommunication processing.");
+                Debug.Write("Exception catched in KnockingDaemon processing.");
+                Debug.VerboseWrite("Details: "+ex);
                 this.accessor.End();
                 throw ex;
             }
@@ -186,42 +195,29 @@ namespace SharpKnocking.KnockingDaemon
             if(this.doCapture)
             {
                 Debug.Write("Initing packet capture process");
+                //Load the calls
                 this.calls = CallsLoader.Load();
+                //Create a new monitor for these calls
                 this.monitor = new TcpdumpMonitor(this.calls);
-                if(this.seqManager !=null)
-                {
-                    this.seqManager.Dispose();
-                }
+                //Create a new sequence manager that gets the notifications about
+                //packets from the monitor and uses the current calls array.
                 this.seqManager = new SequenceDetectorManager(this.calls, this.monitor);
+                //Start a new thread
                 this.monitorThread = new Thread(new ThreadStart(this.monitor.Run));
                 this.monitorThread.Start();
             }
             else
             {
                 Debug.Write("Packet capture disabled by command line option --nocapture");
+                this.seqManager = null;
                 this.monitorThread = null;
                 this.monitor = null;
             }
         }
         
-        private void RegisterServerObject()
-        {
-            //Create the channel for the daemon part of communication
-            this.tcpChannel = new TcpChannel(RemoteEndService.DaemonPortNumber);
-            
-            ChannelServices.RegisterChannel(this.tcpChannel);
-            
-            //Create the object for the comunication
-            this.commObject = new RemoteDaemon();
-            //Set as a remoting object to comunicate
-            this.commObjectRef = RemotingServices.Marshal(this.commObject, RemoteEndService.DaemonServiceName);
-            //Set a handler in the event to get notifications about incoming messages
-            this.commObject.Received += new RemoteEndEventHandler(this.OnReceivedHandler);
-        }
-        
         /// <summary>
-        /// Stops the processing and clears all the objects used.
-        /// Doesn't init
+        /// Stops the monitor for packets, kills the sequence manager and clears
+        /// the sequences used.
         /// </summary>
         private void InternalStopMonitor()
         {
@@ -234,6 +230,8 @@ namespace SharpKnocking.KnockingDaemon
                     this.seqManager.Dispose();
                     this.seqManager = null;
                 }
+                
+                this.calls = new CallSequence[0];
                 
                 if(this.monitor!= null && this.monitor.Running)
                 {
@@ -256,6 +254,36 @@ namespace SharpKnocking.KnockingDaemon
             }
         }
         
+        private void RegisterServerObject()
+        {
+            //Create the channel for the daemon part of communication
+            this.tcpChannel = new TcpChannel(RemoteEndService.DaemonPortNumber);
+            
+            ChannelServices.RegisterChannel(this.tcpChannel);
+            
+            //Create the object for the comunication
+            this.commObject = new RemoteDaemon(true);
+            //Set as a remoting object to comunicate
+            this.commObjectRef = RemotingServices.Marshal(this.commObject, RemoteEndService.DaemonServiceName);
+            //Set a handler in the event to get notifications about incoming messages
+            this.commObject.Received += new RemoteEndEventHandler(this.OnReceivedHandler);
+        }
+        
+        //Handles a sequence detected
+        private void OnSequenceDetectedHandler(object sender, 
+                        SequenceDetectorEventArgs args)
+        {
+            if(this.isInteractiveMode)
+            {
+                this.SendRequest (RemoteCommandActions.AccessRequest, 
+                        args.IP + "<>" + args.SerializedSequence );  
+            }
+            else
+            {
+                this.accessor.AddAccessToIp(args.IP);
+            }
+        }
+        
         private void OnReceivedHandler(object sender, RemoteEndEventArgs args)
         {
             if(args.IsRequest)
@@ -266,12 +294,14 @@ namespace SharpKnocking.KnockingDaemon
         
         private void HandleRequest(RemoteEndEventArgs args)
         {
+            Debug.VerboseWrite("Received request!\nRequest: "+args.Action+" Data: '"+args.Data+"'"); 
             switch(args.Action)
             {
                 case RemoteCommandActions.Bye:
                     this.UnregisterManagerEnd();
                     break;                    
                 case RemoteCommandActions.Hello:
+                    Debug.VerboseWrite("Hello to manager", VerbosityLevels.High);
                     this.SendResponse(RemoteCommandActions.Hello , null);
                     break;
                 case RemoteCommandActions.EndInteractiveMode:
@@ -309,7 +339,7 @@ namespace SharpKnocking.KnockingDaemon
                      "Can't connect to the manager end to answer request! ("+
                      action+")");
             
-            Debug.VerboseWrite("InterCommDaemon: Sending response to "+action);
+            Debug.VerboseWrite("KnockingDaemonProcess: Sending response to "+action);
             this.managerObject.SendResponse(action, data);
         }
         
@@ -323,7 +353,7 @@ namespace SharpKnocking.KnockingDaemon
                      "Can't connect to the manager end to answer request! ("+
                      action+")");
                 
-            Debug.VerboseWrite("InterCommDaemon: Sending response to "+action);
+            Debug.VerboseWrite("KnockingDaemonProcess: Sending request to "+action);
             this.managerObject.SendRequest(action, data);
         }
 
@@ -345,23 +375,30 @@ namespace SharpKnocking.KnockingDaemon
         /// </summary>
         private void RegisterManagerEnd()
         {
-            try
+            if(this.managerObject != null)
             {
-                if(this.managerObject==null)
-                    this.managerObject = (RemoteManager)Activator.GetObject(typeof(RemoteManager),
-                                                         "tcp://localhost:"+
-                                                         RemoteEndService.ManagerPortNumber+
-                                                         "/"+RemoteEndService.ManagerServiceName);
+                try
+                {
+        	        string uri = "tcp://localhost:"+
+        	                     RemoteEndService.ManagerPortNumber+
+        	                     "/"+RemoteEndService.ManagerServiceName;
+                
+                    this.managerObject = (RemoteManager)Activator.GetObject(
+                                                            typeof(IRemoteManager),
+                                                            uri);
+                                                             
+                    if(this.managerObject!=null)
+                    {
+                        Debug.VerboseWrite("Manager found!\nSending hello to manager ...", 
+                                VerbosityLevels.High);
+                        this.SendRequest(RemoteCommandActions.Hello, null);
+                    }
+                }
+                catch(RemotingException ex)
+                {
+                    Debug.VerboseWrite("Can't get daemon remote object\nDetails:"+ex);
+                }
             }
-            catch(RemotingException ex)
-            {
-                Debug.Write("Can't get remote object\nDetails:"+ex);
-            }
-            
-            if(this.managerObject==null)
-                Debug.VerboseWrite("Can't instantiate manager end");
-            else
-                this.SendRequest(RemoteCommandActions.Hello, null);
         }
         
         /// <summary>
