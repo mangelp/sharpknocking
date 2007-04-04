@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+pkglibdir=@libdir@/@PACKAGE@
+Libraries=  ${pkglibdir}/@COMMON_DEBUG_LIB@@COMMON_RELEASE_LIB@
+
+Name: ManagedSource.Common
+Description: 
+Version: @VERSION@
+
+Requires: 
+Libs:  -r:${pkglibdir}/@COMMON_DEBUG_LIB@@COMMON_RELEASE_LIB@

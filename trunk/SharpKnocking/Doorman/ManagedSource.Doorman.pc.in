@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+pkglibdir=@libdir@/@PACKAGE@
+Libraries=  ${pkglibdir}/@DOORMAN_DEBUG_LIB@@DOORMAN_RELEASE_LIB@
+
+Name: ManagedSource.Doorman
+Description: 
+Version: @VERSION@
+
+Requires:  glib-sharp-2.0 gtk-sharp-2.0 glade-sharp-2.0 ManagedSource.Common ManagedSource.CommonWidgets
+Libs:  -r:${pkglibdir}/@DOORMAN_DEBUG_LIB@@DOORMAN_RELEASE_LIB@

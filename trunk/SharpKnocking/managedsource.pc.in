@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+pkglibdir=@libdir@/@PACKAGE@
+Libraries= @DEBUG_CONFIG_LIBRARIES@ @RELEASE_CONFIG_LIBRARIES@ 
+
+Name: ManagedSource
+Description: 
+Version: 0.1
+
+Requires: gtk-sharp-2.0 glib-sharp-2.0 glade-sharp-2.0 
+Libs: @DEBUG_CONFIG_LIBS@ @RELEASE_CONFIG_LIBS@ 
