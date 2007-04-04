@@ -80,7 +80,8 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 			//and we add if it is correct.
 			if(this.hitsTable.ContainsKey (sourceAddr))
 			{
-			    Debug.VerboseWrite("Adding ip to collection: "+sourceAddr, 
+			    Debug.VerboseWrite("Existing ip in collection: "+sourceAddr
+			             +" port "+packet.DestinationPort, 
 			             VerbosityLevels.High);
 			    
 				int next = (int)this.hitsTable[sourceAddr];
@@ -111,6 +112,9 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 			}
 			else if(packet.DestinationPort == this.CallSequence.Ports[0])
 			{
+			    Debug.VerboseWrite("Adding ip in collection: "+sourceAddr
+			             +" port "+packet.DestinationPort, 
+			             VerbosityLevels.High);
 				this.hitsTable.Add(this.CallSequence.Address, 1);
 			}
 		}
