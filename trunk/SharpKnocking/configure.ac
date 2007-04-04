@@ -1,7 +1,7 @@
 dnl Warning: This is an automatically generated file, do not edit!
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([ManagedSource], [0.1])
+AC_INIT([SharpKnocking], [0.1])
 AM_INIT_AUTOMAKE([foreign])
 
 dnl pkg-config
@@ -75,26 +75,26 @@ fi
 
 
 AC_CONFIG_FILES([
-./PortKnocker/ManagedSource.PortKnocker.pc
-./NetfilterFirewall/ManagedSource.NetfilterFirewall.pc
-./PortKnocker/portknocker
-./Common/ManagedSource.Common.pc
-./KnockingDaemonControl/ManagedSource.KnockingDaemonControl.pc
-managedsource.pc
+./PortKnocker/SharpKnocking.PortKnocker.pc
 ./NetfilterFirewall/Makefile
-./Common/Makefile
-./CommonWidgets/Makefile
-./PortKnocker/Makefile
-./KnockingDaemon/ManagedSource.KnockingDaemon.pc
-./Makefile
-./KnockingDaemon/Makefile
-./KnockingDaemon/knockingdaemon
-./Doorman/ManagedSource.Doorman.pc
-./CommonWidgets/ManagedSource.CommonWidgets.pc
-./Doorman/Makefile
-./Doorman/doorman
-./KnockingDaemonControl/Makefile
 ./KnockingDaemonControl/knockingdaemoncontrol
+./PortKnocker/portknocker
+./KnockingDaemon/knockingdaemon
+./PortKnocker/Makefile
+./CommonWidgets/SharpKnocking.CommonWidgets.pc
+./Doorman/SharpKnocking.Doorman.pc
+./KnockingDaemonControl/Makefile
+./NetfilterFirewall/SharpKnocking.NetfilterFirewall.pc
+./KnockingDaemon/SharpKnocking.KnockingDaemon.pc
+./KnockingDaemon/Makefile
+./Common/SharpKnocking.Common.pc
+./CommonWidgets/Makefile
+./Doorman/doorman
+./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc
+./Makefile
+sharpknocking.pc
+./Common/Makefile
+./Doorman/Makefile
 
 ])
 

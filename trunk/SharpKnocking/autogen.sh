@@ -1,6 +1,6 @@
 #! /bin/sh
 
-PROJECT=ManagedSource
+PROJECT=SharpKnocking
 FILE=
 CONFIGURE=configure.ac
 

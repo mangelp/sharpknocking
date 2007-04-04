@@ -6,7 +6,7 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG
 ASSEMBLY = ./bin/Debug/SharpKnocking.Common.dll
 COMPILE_TARGET = library
-PC_FILES_IN = ManagedSource.Common.pc.in
+PC_FILES_IN = SharpKnocking.Common.pc.in
 PROJECT_REFERENCES = 
 BUILD_DIR = ./bin/Debug
 endif
@@ -15,7 +15,7 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4
 ASSEMBLY = ./bin/Release/SharpKnocking.Common.dll
 COMPILE_TARGET = library
-PC_FILES_IN = ManagedSource.Common.pc.in
+PC_FILES_IN = SharpKnocking.Common.pc.in
 PROJECT_REFERENCES = 
 BUILD_DIR = ./bin/Release
 endif
@@ -44,8 +44,7 @@ FILES = \
 	./Remoting/IRemoteManager.cs \
 	./Remoting/IRemoteDaemon.cs \
 	./Remoting/RemoteManager.cs \
-	./Remoting/RemoteDaemon.cs \
-	./IDaemonProcessUnit.cs 
+	./Remoting/RemoteDaemon.cs 
 
 DATA_FILES = 
 

@@ -6,7 +6,7 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG
 ASSEMBLY = ./bin/Debug/CommonWidgets.dll
 COMPILE_TARGET = library
-PC_FILES_IN = ManagedSource.CommonWidgets.pc.in
+PC_FILES_IN = SharpKnocking.CommonWidgets.pc.in
 PROJECT_REFERENCES =  \
 	../Common/bin/Debug/SharpKnocking.Common.dll
 BUILD_DIR = ./bin/Debug
@@ -16,7 +16,7 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4
 ASSEMBLY = ./bin/Release/CommonWidgets.dll
 COMPILE_TARGET = library
-PC_FILES_IN = ManagedSource.CommonWidgets.pc.in
+PC_FILES_IN = SharpKnocking.CommonWidgets.pc.in
 PROJECT_REFERENCES =  \
 	../Common/bin/Release/SharpKnocking.Common.dll
 BUILD_DIR = ./bin/Release

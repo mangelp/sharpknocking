@@ -6,7 +6,7 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG
 ASSEMBLY = ./bin/Debug/NetfilterFirewall.dll
 COMPILE_TARGET = library
-PC_FILES_IN = ManagedSource.NetfilterFirewall.pc.in
+PC_FILES_IN = SharpKnocking.NetfilterFirewall.pc.in
 PROJECT_REFERENCES =  \
 	../Common/bin/Debug/SharpKnocking.Common.dll
 BUILD_DIR = ./bin/Debug
@@ -16,7 +16,7 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4
 ASSEMBLY = ./bin/Release/NetfilterFirewall.dll
 COMPILE_TARGET = library
-PC_FILES_IN = ManagedSource.NetfilterFirewall.pc.in
+PC_FILES_IN = SharpKnocking.NetfilterFirewall.pc.in
 PROJECT_REFERENCES =  \
 	../Common/bin/Release/SharpKnocking.Common.dll
 BUILD_DIR = ./bin/Release

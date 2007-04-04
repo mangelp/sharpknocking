@@ -8,8 +8,8 @@ if ENABLE_RELEASE
 endif
 
 pkglib_DATA =  $(DLL_REFERENCES)
-pkgconfig_DATA =  managedsource.pc
+pkgconfig_DATA =  sharpknocking.pc
 pkgconfigdir = $(libdir)/pkgconfig
 DLL_REFERENCES =  
-DISTCLEANFILES =  managedsource.pc
-EXTRA_DIST =  managedsource.pc.in $(DLL_REFERENCES)
+DISTCLEANFILES =  sharpknocking.pc
+EXTRA_DIST =  sharpknocking.pc.in $(DLL_REFERENCES)
