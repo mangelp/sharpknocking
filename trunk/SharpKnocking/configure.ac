@@ -75,26 +75,26 @@ fi
 
 
 AC_CONFIG_FILES([
-./CommonWidgets/SharpKnocking.CommonWidgets.pc
-./Common/SharpKnocking.Common.pc
 ./PortKnocker/SharpKnocking.PortKnocker.pc
-./PortKnocker/Makefile
-./KnockingDaemon/Makefile
-./Doorman/SharpKnocking.Doorman.pc
-./KnockingDaemonControl/knockingdaemoncontrol
-./KnockingDaemon/SharpKnocking.KnockingDaemon.pc
 ./NetfilterFirewall/Makefile
-./KnockingDaemonControl/Makefile
+./KnockingDaemonControl/knockingdaemoncontrol
 ./PortKnocker/portknocker
-./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc
+./KnockingDaemon/knockingdaemon
+./PortKnocker/Makefile
+./CommonWidgets/SharpKnocking.CommonWidgets.pc
+./Doorman/SharpKnocking.Doorman.pc
+./KnockingDaemonControl/Makefile
+./NetfilterFirewall/SharpKnocking.NetfilterFirewall.pc
+./KnockingDaemon/SharpKnocking.KnockingDaemon.pc
+./KnockingDaemon/Makefile
+./Common/SharpKnocking.Common.pc
+./CommonWidgets/Makefile
 ./Doorman/doorman
+./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc
 ./Makefile
 sharpknocking.pc
-./CommonWidgets/Makefile
 ./Common/Makefile
 ./Doorman/Makefile
-./NetfilterFirewall/SharpKnocking.NetfilterFirewall.pc
-./KnockingDaemon/knockingdaemon
 
 ])
 

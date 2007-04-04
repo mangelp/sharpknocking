@@ -94,7 +94,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		/// </param>
 		public void CheckPacket(PacketInfo packet)
 		{
-			Console.WriteLine("Manager recivió {0}",packet);
+			Console.WriteLine("Manager recived {0}",packet);
 			
 			foreach(SequenceDetector sd in detectors)
 			{

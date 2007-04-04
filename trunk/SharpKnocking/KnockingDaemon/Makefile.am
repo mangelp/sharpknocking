@@ -42,7 +42,8 @@ FILES = \
 	./PacketFilter/PacketFilterEvents.cs \
 	./SequenceDetection/SequenceDetectorEvents.cs \
 	./FirewallAccessor/NetfilterAccessor.cs \
-	./SequenceDetection/CallsLoader.cs 
+	./PortInverseResolver.cs \
+	./CallsLoader.cs 
 
 DATA_FILES = 
 

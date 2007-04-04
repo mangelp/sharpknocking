@@ -220,6 +220,8 @@ namespace SharpKnocking.KnockingDaemon
                 
                 try
                 {
+                	PortInverseResolver.LoadTranslations();
+                
                     //Load the calls
                     this.calls = CallsLoader.Load();
                     //Create a new monitor for these calls

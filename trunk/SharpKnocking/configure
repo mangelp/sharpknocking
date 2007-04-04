@@ -2856,7 +2856,7 @@ fi
 fi
 
 
-ac_config_files="$ac_config_files ./PortKnocker/SharpKnocking.PortKnocker.pc ./Doorman/Makefile ./KnockingDaemonControl/knockingdaemoncontrol ./PortKnocker/portknocker ./NetfilterFirewall/Makefile ./KnockingDaemon/knockingdaemon ./PortKnocker/Makefile ./CommonWidgets/SharpKnocking.CommonWidgets.pc ./Doorman/SharpKnocking.Doorman.pc ./KnockingDaemonControl/Makefile ./NetfilterFirewall/SharpKnocking.NetfilterFirewall.pc ./KnockingDaemon/SharpKnocking.KnockingDaemon.pc ./KnockingDaemon/Makefile ./Common/SharpKnocking.Common.pc ./Makefile ./Doorman/doorman ./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc sharpknocking.pc ./Common/Makefile ./CommonWidgets/Makefile"
+ac_config_files="$ac_config_files ./PortKnocker/SharpKnocking.PortKnocker.pc ./NetfilterFirewall/Makefile ./KnockingDaemonControl/knockingdaemoncontrol ./PortKnocker/portknocker ./KnockingDaemon/knockingdaemon ./PortKnocker/Makefile ./CommonWidgets/SharpKnocking.CommonWidgets.pc ./Doorman/SharpKnocking.Doorman.pc ./KnockingDaemonControl/Makefile ./NetfilterFirewall/SharpKnocking.NetfilterFirewall.pc ./KnockingDaemon/SharpKnocking.KnockingDaemon.pc ./KnockingDaemon/Makefile ./Common/SharpKnocking.Common.pc ./CommonWidgets/Makefile ./Doorman/doorman ./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc ./Makefile sharpknocking.pc ./Common/Makefile ./Doorman/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -3436,10 +3436,9 @@ for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
     "./PortKnocker/SharpKnocking.PortKnocker.pc") CONFIG_FILES="$CONFIG_FILES ./PortKnocker/SharpKnocking.PortKnocker.pc" ;;
-    "./Doorman/Makefile") CONFIG_FILES="$CONFIG_FILES ./Doorman/Makefile" ;;
+    "./NetfilterFirewall/Makefile") CONFIG_FILES="$CONFIG_FILES ./NetfilterFirewall/Makefile" ;;
     "./KnockingDaemonControl/knockingdaemoncontrol") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemonControl/knockingdaemoncontrol" ;;
     "./PortKnocker/portknocker") CONFIG_FILES="$CONFIG_FILES ./PortKnocker/portknocker" ;;
-    "./NetfilterFirewall/Makefile") CONFIG_FILES="$CONFIG_FILES ./NetfilterFirewall/Makefile" ;;
     "./KnockingDaemon/knockingdaemon") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemon/knockingdaemon" ;;
     "./PortKnocker/Makefile") CONFIG_FILES="$CONFIG_FILES ./PortKnocker/Makefile" ;;
     "./CommonWidgets/SharpKnocking.CommonWidgets.pc") CONFIG_FILES="$CONFIG_FILES ./CommonWidgets/SharpKnocking.CommonWidgets.pc" ;;
@@ -3449,12 +3448,13 @@ do
     "./KnockingDaemon/SharpKnocking.KnockingDaemon.pc") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemon/SharpKnocking.KnockingDaemon.pc" ;;
     "./KnockingDaemon/Makefile") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemon/Makefile" ;;
     "./Common/SharpKnocking.Common.pc") CONFIG_FILES="$CONFIG_FILES ./Common/SharpKnocking.Common.pc" ;;
-    "./Makefile") CONFIG_FILES="$CONFIG_FILES ./Makefile" ;;
+    "./CommonWidgets/Makefile") CONFIG_FILES="$CONFIG_FILES ./CommonWidgets/Makefile" ;;
     "./Doorman/doorman") CONFIG_FILES="$CONFIG_FILES ./Doorman/doorman" ;;
     "./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc" ;;
+    "./Makefile") CONFIG_FILES="$CONFIG_FILES ./Makefile" ;;
     "sharpknocking.pc") CONFIG_FILES="$CONFIG_FILES sharpknocking.pc" ;;
     "./Common/Makefile") CONFIG_FILES="$CONFIG_FILES ./Common/Makefile" ;;
-    "./CommonWidgets/Makefile") CONFIG_FILES="$CONFIG_FILES ./CommonWidgets/Makefile" ;;
+    "./Doorman/Makefile") CONFIG_FILES="$CONFIG_FILES ./Doorman/Makefile" ;;
 
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}

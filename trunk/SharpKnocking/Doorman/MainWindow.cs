@@ -123,8 +123,7 @@ namespace SharpKnocking.Doorman
 				
 				
 				if(res == ResponseType.Yes)
-				{
-					// TODO: Implement the closing of the daemon.
+				{					
 					daemonComm.SendCommand(RemoteCommandActions.Die);
 				}
 				

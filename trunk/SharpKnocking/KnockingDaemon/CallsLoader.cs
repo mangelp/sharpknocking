@@ -5,7 +5,7 @@ using System.Collections;
 using SharpKnocking.Common;
 using SharpKnocking.Common.Calls;
 
-namespace SharpKnocking.KnockingDaemon.SequenceDetection
+namespace SharpKnocking.KnockingDaemon
 {
 	
 	/// <summary>
