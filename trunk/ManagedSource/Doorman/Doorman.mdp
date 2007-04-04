@@ -1,10 +1,13 @@
 <Project name="Doorman" fileversion="2.0" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <CustomCommands>
+        <Command type="Custom" name="Ejecutar con privilegios" command="kdesu doorman" />
+      </CustomCommands>
       <Output directory="./bin/Debug" assembly="Doorman" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" win32Icon="./" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="./bin/Release" assembly="Doorman" />

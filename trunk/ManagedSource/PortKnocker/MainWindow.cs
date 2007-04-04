@@ -118,6 +118,10 @@ namespace SharpKnocking.PortKnocker
 		    	new CallEditDialog(mainWindow, selectedNode.Sequence);
 		    
 		    ced.Run();
+		    
+		     foreach(TreeViewColumn col in callsView.Columns)
+		   		col.QueueResize();
+		    
 		    ced.Destroy();
 		    		    
 		}
@@ -136,15 +140,19 @@ namespace SharpKnocking.PortKnocker
 			callsViewScroll.Add(callsView);			
 						
 		    callsView.HeadersVisible=true;
+		   
+		    
+		    callsView.AppendColumn ("Descripción", new CellRendererText (),"text",0);
+		    
 		    TreeViewColumn dirColumn = 	new TreeViewColumn(
 		    								"Dirección IP",
 		    								new CellRendererText (),
-		    								"text",0);
-		    
+		    								"text", 1);
+		    				
 		    callsView.AppendColumn(dirColumn);
 			
-			callsView.AppendColumn ("Puerto", new CellRendererText(),"text",1);
-			callsView.AppendColumn ("Descripción", new CellRendererText (),"text",2);
+			callsView.AppendColumn ("Puerto", new CellRendererText(),"text",2);
+			
             
 			callsView.SearchEntry = txtFilter;			
 			callsView.SearchColumn = 0;

@@ -1,6 +1,10 @@
 <Combine name="ManagedSource" fileversion="2.0" outputpath="./build/bin/" MakePkgConfig="True" MakeLibPC="True">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
+      <CustomCommands>
+        <Command type="Custom" name="make" command="make" />
+        <Command type="Custom" name="make install" command="kdesu make install" />
+      </CustomCommands>
       <Entry build="True" name="PortKnocker" configuration="Debug" />
       <Entry build="True" name="KnockingDaemon" configuration="Debug" />
       <Entry build="True" name="Common" configuration="Debug" />

@@ -1,6 +1,9 @@
 <Project name="KnockingDaemon" fileversion="2.0" Description="Daemon application that monitorizes knockings and change firewall&#xA;rules." language="C#" clr-version="Net_1_1" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <CustomCommands>
+        <Command type="Custom" name="Ejecutar con privilegios" command="kdesu knockingdaemon" />
+      </CustomCommands>
       <Output directory="./bin/Debug" assembly="KnockingDaemon" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />

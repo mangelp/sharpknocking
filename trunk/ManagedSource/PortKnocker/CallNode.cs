@@ -10,8 +10,7 @@ namespace SharpKnocking.PortKnocker
 	/// <summary>
 	/// This class implements the nodes used to store and represent
 	/// call sequences.
-	/// </summary>
-    [TreeNode (ColumnCount=2)]
+	/// </summary>    
     public class CallNode : TreeNode
     {
         private CallSequence callSequence;
@@ -28,7 +27,7 @@ namespace SharpKnocking.PortKnocker
         }
 
         
-        [TreeNodeValue (Column=0)]
+        [TreeNodeValue (Column=1)]
         public string Address 
         {
             get 
@@ -37,7 +36,7 @@ namespace SharpKnocking.PortKnocker
             }
         }
 
-		[TreeNodeValue (Column=1)]
+		[TreeNodeValue (Column=2)]
 		public int TargetPort
 		{
 			get
@@ -46,7 +45,7 @@ namespace SharpKnocking.PortKnocker
 			}
 		}
 			
-        [TreeNodeValue (Column=2)]
+        [TreeNodeValue (Column=0)]
         public string Description
         {
             get 

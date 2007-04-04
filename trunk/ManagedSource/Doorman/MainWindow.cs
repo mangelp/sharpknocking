@@ -119,6 +119,7 @@ namespace SharpKnocking.Doorman
 				if(res == ResponseType.Yes)
 				{
 					// TODO: Implement the closing of the daemon.
+					daemonComm.SendCommand(RemoteCommandActions.Die);
 				}
 				
 			}		
@@ -176,9 +177,13 @@ namespace SharpKnocking.Doorman
 		    	callsView.NodeSelection.SelectedNode as CallNode;
 		    	
 		    CallEditDialog ced = 
-		    	new CallEditDialog(mainWindow, selectedNode.Sequence);		
+		    	new CallEditDialog(mainWindow, selectedNode.Sequence);
 		    	
 		    ced.Run();  
+		    
+		    foreach(TreeViewColumn col in callsView.Columns)
+		   		col.QueueResize();	
+		   		
 		    ced.Destroy();  
 		}
 		
@@ -297,15 +302,21 @@ namespace SharpKnocking.Doorman
      		crt.Activatable = true;
      		crt.Toggled += OnCallActivationStateChanged;    		
 		    
-		    callsView.AppendColumn("Activada", crt,"active",0);
+		    callsView.AppendColumn("Activa", crt,"active",0);
+		    
+		    TreeViewColumn descColumn = 
+		    	new TreeViewColumn("Descripción", new CellRendererText (),"text",1);		    
+		   	    
+		    callsView.AppendColumn (descColumn);
 		    
 		    TreeViewColumn dirColumn =  
-		    	new TreeViewColumn("Dirección IP", new CellRendererText (),"text",1);
+		    	new TreeViewColumn("Dirección IP", new CellRendererText (),"text",2);
 		    
 		    callsView.AppendColumn(dirColumn);
 			
-			callsView.AppendColumn ("Puerto", new CellRendererText(),"text",2);
-			callsView.AppendColumn ("Descripción", new CellRendererText (),"text",3);
+			callsView.AppendColumn ("Puerto", new CellRendererText(),"text",3);
+			
+			
             
 			callsView.SearchEntry = txtFilter;			
 			callsView.SearchColumn = 0;
@@ -523,7 +534,7 @@ namespace SharpKnocking.Doorman
 		private void OnTxtFilterChanged(object sender, EventArgs a)
 		{
 		    //The clear button is activated only when the searched text exists.
-		    btnClearFilter.Sensitive=txtFilter.Text.Length>0;
+		    btnClearFilter.Sensitive=txtFilter.Text.Length > 0;
 		}
 		
 		// Connect the Signals defined in Glade

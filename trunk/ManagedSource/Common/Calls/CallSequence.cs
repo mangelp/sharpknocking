@@ -199,9 +199,8 @@ namespace SharpKnocking.Common.Calls
 				
 				
 				Thread.Sleep(20);
-			}
+			}			
 			
-			// TODO: See how to see if the target port opened as intended ->luis
 			return true;
 			
 		}	

@@ -41,7 +41,7 @@ namespace SharpKnocking.Doorman
 			}
 		}
         
-        [TreeNodeValue (Column = 1)]
+        [TreeNodeValue (Column = 2)]
         public string Address 
         {
             get 
@@ -50,7 +50,7 @@ namespace SharpKnocking.Doorman
             }
         }
 
-		[TreeNodeValue (Column = 2)]
+		[TreeNodeValue (Column = 3)]
 		public int TargetPort
 		{
 			get
@@ -59,7 +59,7 @@ namespace SharpKnocking.Doorman
 			}
 		}
 			
-        [TreeNodeValue (Column = 3)]
+        [TreeNodeValue (Column = 1)]
         public string Description
         {
             get 
