@@ -46,14 +46,13 @@ namespace SharpKnocking.Common.Widgets
 			set			
 			{
 				
-				if(Net20.StringIsNullOrEmpty(filter))
+				if(Net20.StringIsNullOrEmpty(value))
 				{
 					ClearFilter();
 				}
 				else
 				{
 					filter = value.ToLower();
-					
 					DoFilter();
 				}
 			}
@@ -128,26 +127,22 @@ namespace SharpKnocking.Common.Widgets
 		private void DoFilter()
 		{
 			ArrayList aux = new ArrayList();
-			Console.WriteLine("aju "+filter);
+			
 			
 			foreach(TreeNode node in store)
 			{
-				Console.WriteLine("aju1 "+filter);
-				
 				PropertyInfo pinfo = node.GetType().GetProperty(filterProperty);
 				string val = pinfo.GetValue(node, null) as string;
-				Console.WriteLine("Valor {0}", val);
-				
 				if(val.ToLower().IndexOf(filter) != -1)
 					aux.Add(node);
-					
-				
 			}
 			
-			Console.WriteLine("aju2 "+filter);
+		
 			nodeStore.Clear();
 			foreach(TreeNode node in aux)
+			{
 				nodeStore.AddNode(node);
+			}
 			
 		}
 		

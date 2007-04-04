@@ -33,7 +33,8 @@ FILES = \
 	./RandomPortGeneratorDialog.cs \
 	./CommonDialogs/OkDialog.cs \
 	./CommonDialogs/ConfirmDialog.cs \
-	./CommonDialogs/AppInfoDialog.cs 
+	./CommonDialogs/AppInfoDialog.cs \
+	./NodeStoreFilter.cs 
 
 DATA_FILES = 
 

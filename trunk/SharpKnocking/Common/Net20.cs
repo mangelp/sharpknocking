@@ -78,7 +78,7 @@ namespace SharpKnocking.Common
 	    /// </summary>
 	    public static bool StringIsNullOrEmpty(string str)
 	    {
-	        if(str==null || str.Length==0)
+	        if(str == null || str.Length == 0)
 	            return true;
 	        
 	        return false;

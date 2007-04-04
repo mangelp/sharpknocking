@@ -55,7 +55,8 @@ REFERENCES =  \
 	-r:System.Runtime.Remoting \
 	-r:System.Runtime.Serialization.Formatters.Soap \
 	-r:System.Messaging \
-	-r:System.Security
+	-r:System.Security \
+	-r:Mono.Posix
 
 DLL_REFERENCES = 
 

@@ -44,6 +44,8 @@ namespace SharpKnocking.PortKnocker
 		
 		private NodeView callsView;
 		
+		private NodeStoreFilter storeFilter;
+		
 		private static string configFilePath = 
 		    Environment.GetEnvironmentVariable("HOME") + "/.portknocker";
 		
@@ -74,7 +76,13 @@ namespace SharpKnocking.PortKnocker
 		public CallNode AddCallSequence(CallSequence call)
 		{		    
 		    CallNode newNode = new CallNode(call);
-		    callsStore.AddNode(newNode);
+		    
+		    txtFilter.Text = "";
+		    
+		    storeFilter.Add(newNode);
+		    
+		    
+		    
 		    return newNode;
 		}
 		
@@ -119,7 +127,10 @@ namespace SharpKnocking.PortKnocker
 		    
 		    ced.Run();
 		    
-		     foreach(TreeViewColumn col in callsView.Columns)
+		    txtFilter.Text = "";
+		    
+		    // So the columns are resized properly.
+		    foreach(TreeViewColumn col in callsView.Columns)
 		   		col.QueueResize();
 		    
 		    ced.Destroy();
@@ -133,6 +144,8 @@ namespace SharpKnocking.PortKnocker
 			callsStore =  new NodeStore(typeof(CallNode));
 			
 			callsView = new NodeView(callsStore);
+			
+			storeFilter = new NodeStoreFilter(callsStore, "Address");
 			
 			callsView.RulesHint = true;
 			callsView.ExpanderColumn = null;
@@ -154,11 +167,6 @@ namespace SharpKnocking.PortKnocker
 			callsView.AppendColumn ("Puerto", new CellRendererText(),"text",2);
 			
             
-			callsView.SearchEntry = txtFilter;		
-			
-			
-				
-			callsView.SearchColumn = 0;
 			
 			// We set the selection change event handler.
 			callsView.NodeSelection.Changed += OnCallsViewSelectionChanged;	
@@ -247,7 +255,9 @@ namespace SharpKnocking.PortKnocker
             
             if(res == ResponseType.Yes)
             {                  
-				callsStore.RemoveNode(callsView.NodeSelection.SelectedNode);			
+            	txtFilter.Text = "";
+				//callsStore.RemoveNode(callsView.NodeSelection.SelectedNode);
+				storeFilter.Remove(callsView.NodeSelection.SelectedNode);			
 			}	
 		}
 		
@@ -314,6 +324,8 @@ namespace SharpKnocking.PortKnocker
 		{
 		    //The clear button is activated only when the searched text exists.
 		    btnClearFilter.Sensitive=txtFilter.Text.Length>0;
+		    
+		    storeFilter.Filter =  txtFilter.Text.Trim();
 		}
 		
 		// Connect the Signals defined in Glade

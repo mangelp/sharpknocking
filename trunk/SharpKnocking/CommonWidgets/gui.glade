@@ -279,6 +279,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="has_focus">True</property>
+                    <property name="max_length">30</property>
                     <signal name="changed" handler="OnTxtDescriptionChanged"/>
                   </widget>
                   <packing>

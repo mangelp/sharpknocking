@@ -542,7 +542,7 @@ namespace SharpKnocking.Doorman
 		{
 		    //The clear button is activated only when the searched text exists.
 		    btnClearFilter.Sensitive=txtFilter.Text.Length > 0;
-		    
+		   
 		    storeFilter.Filter = txtFilter.Text.Trim();
 		}
 		
