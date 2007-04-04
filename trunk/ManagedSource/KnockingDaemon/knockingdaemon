@@ -1,9 +1,0 @@
-#!/bin/sh
-
-prefix="/usr/local"
-exec_prefix="${prefix}"
-libdir="${exec_prefix}/lib/managedsource"
-
-cd ${libdir}
-
-exec mono  "KnockingDaemon.exe" "$@"
