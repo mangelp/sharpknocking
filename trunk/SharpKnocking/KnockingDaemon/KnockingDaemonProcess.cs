@@ -365,7 +365,7 @@ namespace SharpKnocking.KnockingDaemon
                     Debug.VerboseWrite("KDP: <HotRestart>");
                     this.HotRestart();
                     Debug.VerboseWrite("KDP: </HotRestart>");
-                    this.SendResponse(args.Action, null);
+                    this.SendResponse(args.Action, true);
                     break;
                 case RemoteCommandActions.StartInteractiveMode:
                     this.isInteractiveMode = true;

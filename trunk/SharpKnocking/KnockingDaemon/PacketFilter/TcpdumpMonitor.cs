@@ -114,6 +114,9 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
     					"¡Necesita el programa «tcpdump» para usar SharpKnocking!");
     				return;
     			}
+    			
+    			if(sequences==null)
+    			    return;
 
     			string expression = CreateExpression(sequences);				
     		    
@@ -139,7 +142,9 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
     			
     			assembler.PacketCaptured += new PacketCapturedEventHandler(OnPacketCaptured);
     			
-    			while(!die && !monitoringProccess.HasExited && assembler!=null)
+    			SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run() Reading incoming packets.");
+    			
+    			while(!die && monitoringProccess!=null && !monitoringProccess.HasExited)
     			{
     		        assembler.AddLine(
     			        monitoringProccess.StandardOutput.ReadLine());			
