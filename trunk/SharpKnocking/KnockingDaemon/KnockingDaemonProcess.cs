@@ -180,7 +180,11 @@ namespace SharpKnocking.KnockingDaemon
                 
                 //Keep the process up
                 while(this.running)
-                {;}
+                {
+                	// FIX: Hey, we don't want to eat all CPU cicles.
+                	Thread.Sleep(100);
+                	
+                }
             }
             catch(Exception ex)
             {

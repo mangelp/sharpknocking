@@ -111,7 +111,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
     			{
     				// There's no tcpdump in the system.
     				Console.WriteLine(
-    					"¡Necesita el programa «tcpdump» para usar SharpKnocking!");
+    					"tcpdump is required to use SharpKnocking!");
     				return;
     			}
     			

@@ -1,7 +1,9 @@
 
 using System;
 
+
 using Mono.Unix.Native;
+
 
 using SharpKnocking.Common;
 
@@ -40,12 +42,22 @@ namespace SharpKnocking.NetfilterFirewall
         /// iptables-save output.
         /// </summary>
         public static int Save(string fileName)
-        {   
-            string cmd = ""+ipTablesCommand+"-save > "+fileName;
+        {          	
+            string cmd = String.Format("{0}-save > {1}",ipTablesCommand, fileName);
             int ret = Mono.Unix.Native.Syscall.system(cmd);
             
+            
+            
             if(ret!=0)
-                throw new InvalidOperationException("The command '"+cmd+"' returned "+ret);
+            {
+                //throw new InvalidOperationException("The command '"+cmd+"' returned "+ret);
+            }
+            else
+            {
+            	// It returns an errorcode also if there are no rules.
+            	System.IO.File.Create(fileName);
+            }
+            
             
             Debug.VerboseWrite("Saving current netfilter rule set to file '"+fileName+"': success");
             

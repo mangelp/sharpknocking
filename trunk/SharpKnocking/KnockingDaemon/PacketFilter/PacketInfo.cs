@@ -3,6 +3,9 @@ using System;
 using System.Net;
 using System.Globalization;
 
+using SharpKnocking.Common;
+using SharpKnocking.KnockingDaemon;
+
 namespace SharpKnocking.KnockingDaemon.PacketFilter
 {
 	
@@ -90,18 +93,45 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		{
 			PacketInfo packet = new PacketInfo();
 			
+			bool error = false;
+			
 			try
 			{
-				packet.port = Int32.Parse(destinationPort);				
+				packet.port = Int32.Parse(destinationPort);
+			}
+			catch(FormatException e)
+			{
+				// We try to look in the dictionary.
+				string port = PortInverseResolver.Translate(destinationPort);
+				
+				if(Net20.StringIsNullOrEmpty(port))
+				{
+					error = true;
+				}
+				else
+				{
+					packet.port = Int32.Parse(port);
+				}
+			}	
+			
+			try
+			{
+							
 				packet.order = Int32.Parse(order, NumberStyles.AllowHexSpecifier);			
 				packet.time = arrivalTime;				
 				
 				packet.sourceAddress = IPAddress.Parse(sourceAddress); 			
 			}
 			catch(Exception e)
+			{				
+				error = true;
+				
+			}
+			
+			if(error)
 			{
 				packet = null;
-				Console.WriteLine(e.Message);
+				Debug.VerboseWrite("Malformed packet received");
 			}
 			
 			return packet;

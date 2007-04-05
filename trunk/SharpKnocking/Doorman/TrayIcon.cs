@@ -16,6 +16,8 @@ namespace SharpKnocking.Doorman
 		Menu trayMenu;		
 		
 		MainWindow window;
+		
+		private bool visible;
 	
 		public TrayIcon()
 		{
@@ -27,6 +29,8 @@ namespace SharpKnocking.Doorman
 			InitializeWidgets();
 			
 			this.window = new MainWindow();
+			
+			visible = true;
 							
 		}
 		
@@ -58,6 +62,18 @@ namespace SharpKnocking.Doorman
 		      			IntPtr.Zero, args.Event.Button, args.Event.Time);
 				}
 				catch(Exception){}
+	   		}
+	   		else if(args.Event.Button == 1) // Left click
+	   		{
+	   			// We set the new state;
+	   			visible = !visible;
+	   			if(visible)
+	   				window.Show();
+	   			else
+	   				window.Hide();
+	   			
+	   				
+	   			
 	   		}
 		}
 		

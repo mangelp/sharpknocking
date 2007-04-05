@@ -64,7 +64,13 @@ namespace SharpKnocking.Doorman
 		
 		#endregion Non Glade-related attributes
 	
-		#region Public
+		#region Properties
+		
+		
+		
+		#endregion Properties
+	
+		#region Public methods
 		
 		public MainWindow () 
 		{
@@ -95,6 +101,14 @@ namespace SharpKnocking.Doorman
 		    //callsStore.AddNode(newNode);
 		    storeFilter.Add(newNode);
 		    return newNode;
+		}
+		
+		/// <summary>
+		/// This method hides the window.
+		/// </summary>
+		public void Hide()
+		{
+			mainWindow.Hide();
 		}
 		
 		/// <summary>
@@ -141,7 +155,7 @@ namespace SharpKnocking.Doorman
 			//mainWindow.Deiconify();
 		}
 		
-		#endregion Public
+		#endregion Public methods
 		
 		
 		
@@ -219,15 +233,22 @@ namespace SharpKnocking.Doorman
 							"¿Desea sobreescribirlo?",
 							Path.GetFileName(filename));
 							
-					if(res == ResponseType.Yes)
+					if(res == ResponseType.No)
 					{
-						node.Sequence.Store(filename);
+						return;
 					}		
 				}
-				else
-				{
-				    node.Sequence.Store(filename);
-				}
+				 
+				node.Sequence.Store(filename);
+				
+				// We change permisions, so anyone can access the file.
+				System.Diagnostics.Process p = new System.Diagnostics.Process();
+				p.StartInfo.FileName = "chmod";
+				p.StartInfo.Arguments = String.Format("+r {0}", filename);
+				
+				p.Start();
+				p.WaitForExit();
+				Console.WriteLine("Salida: "+p.ExitCode);
 				
 			}
 			
@@ -554,7 +575,7 @@ namespace SharpKnocking.Doorman
 		private void OnWindowDeleteEvent (object sender, DeleteEventArgs a) 
 		{			
 			
-			//Quit();
+			
 			mainWindow.Hide();
 			a.RetVal = true;
 			

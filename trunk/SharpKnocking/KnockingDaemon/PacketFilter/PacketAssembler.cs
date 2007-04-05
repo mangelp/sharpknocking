@@ -36,8 +36,6 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		public PacketAssembler()
 		{
 			InitTimer();
-			
-			
 			lineBuffer = new ArrayList();		
 		}
 		
@@ -146,7 +144,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		
 		private void OnTimerElapsed(object sender, ElapsedEventArgs a)
 		{
-			Console.WriteLine("timeout!");
+			Debug.VerboseWrite("timeout!");
 			
 			
 			timer.Enabled = false;

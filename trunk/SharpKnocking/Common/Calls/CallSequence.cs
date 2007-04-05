@@ -123,7 +123,7 @@ namespace SharpKnocking.Common.Calls
 		                                    new Type[]{typeof(int)});
 		    
 		    CallSequence res;                           
-		    using (FileStream fs = new FileStream(path, FileMode.Open)) 
+		    using (StreamReader fs = new StreamReader(path))
 		    {              
                 res = (CallSequence)(serializer.Deserialize(fs));     
             }
