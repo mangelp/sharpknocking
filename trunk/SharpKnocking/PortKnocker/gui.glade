@@ -46,7 +46,7 @@
                         <child internal-child="image">
                           <widget class="GtkImage" id="menu-item-image1">
                             <property name="visible">True</property>
-                            <property name="stock">gtk-convert</property>
+                            <property name="stock">gtk-open</property>
                           </widget>
                         </child>
                       </widget>
@@ -148,7 +148,7 @@
                             <child>
                               <widget class="GtkHBox" id="hbox2">
                                 <property name="visible">True</property>
-                                <property name="spacing">2</property>
+                                <property name="spacing">4</property>
                                 <child>
                                   <widget class="GtkImage" id="image1">
                                     <property name="visible">True</property>
@@ -193,7 +193,7 @@
                             <child>
                               <widget class="GtkHBox" id="hbox3">
                                 <property name="visible">True</property>
-                                <property name="spacing">2</property>
+                                <property name="spacing">4</property>
                                 <child>
                                   <widget class="GtkImage" id="image2">
                                     <property name="visible">True</property>
@@ -241,7 +241,7 @@
                             <child>
                               <widget class="GtkHBox" id="hbox6">
                                 <property name="visible">True</property>
-                                <property name="spacing">2</property>
+                                <property name="spacing">4</property>
                                 <child>
                                   <widget class="GtkImage" id="image5">
                                     <property name="visible">True</property>
@@ -274,6 +274,50 @@
                       </packing>
                     </child>
                     <child>
+                      <widget class="GtkButton" id="btnImport">
+                        <property name="visible">True</property>
+                        <property name="tooltip" translatable="yes">Importa una llamada guardada previamente con Doorman</property>
+                        <signal name="clicked" handler="OnBtnImportClicked"/>
+                        <child>
+                          <widget class="GtkAlignment" id="alignment1">
+                            <property name="visible">True</property>
+                            <property name="xscale">0</property>
+                            <child>
+                              <widget class="GtkHBox" id="hbox7">
+                                <property name="visible">True</property>
+                                <property name="spacing">4</property>
+                                <child>
+                                  <widget class="GtkImage" id="image7">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-open</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="label7">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">_Importar</property>
+                                    <property name="use_underline">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
                       <widget class="GtkButton" id="btnCall">
                         <property name="visible">True</property>
                         <property name="sensitive">False</property>
@@ -289,7 +333,7 @@
                             <child>
                               <widget class="GtkHBox" id="hbox5">
                                 <property name="visible">True</property>
-                                <property name="spacing">2</property>
+                                <property name="spacing">4</property>
                                 <child>
                                   <widget class="GtkImage" id="image4">
                                     <property name="visible">True</property>
@@ -318,7 +362,7 @@
                         </child>
                       </widget>
                       <packing>
-                        <property name="position">3</property>
+                        <property name="position">4</property>
                       </packing>
                     </child>
                   </widget>
@@ -337,7 +381,7 @@
                         <child>
                           <widget class="GtkHBox" id="hbox8">
                             <property name="visible">True</property>
-                            <property name="spacing">2</property>
+                            <property name="spacing">6</property>
                             <child>
                               <widget class="GtkImage" id="image6">
                                 <property name="visible">True</property>

@@ -467,6 +467,7 @@ namespace SharpKnocking.Doorman
 		{
 		    EditSelectedCall();// We delegate in another method.
 		}
+		
 
 		private void OnBtnRemoveClicked(object sender, EventArgs a)
 		{

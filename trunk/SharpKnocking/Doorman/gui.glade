@@ -46,7 +46,7 @@
                         <child internal-child="image">
                           <widget class="GtkImage" id="menu-item-image1">
                             <property name="visible">True</property>
-                            <property name="stock">gtk-convert</property>
+                            <property name="stock">gtk-open</property>
                           </widget>
                         </child>
                       </widget>

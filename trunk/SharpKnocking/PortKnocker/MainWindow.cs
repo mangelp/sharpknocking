@@ -137,6 +137,20 @@ namespace SharpKnocking.PortKnocker
 		    		    
 		}
 		
+		private void ImportCall()
+		{
+			ImportCallFileChooserDialog icfcd = new ImportCallFileChooserDialog();
+			if(icfcd.Run() == ResponseType.Ok)
+			{
+				// We have selected a valid? file
+				CallSequence imported = CallSequence.LoadFromFile(icfcd.Filename);
+				
+				AddCallSequence(imported);
+			}
+			
+			icfcd.Destroy();
+		}
+		
 		private void InitializeWidgets()
 		{
 		    // TreeView model inicialization. Columns are: 'Description' 
@@ -239,6 +253,12 @@ namespace SharpKnocking.PortKnocker
 			// We delegate in another method.
 		    EditSelectedCall();
 		}
+		
+		
+		private void OnBtnImportClicked(object sender, EventArgs a)
+		{
+			ImportCall();
+		}
 
 		private void OnBtnRemoveClicked(object sender, EventArgs a)
 		{
@@ -296,16 +316,8 @@ namespace SharpKnocking.PortKnocker
 		
 		private void OnItmImportActivated(object sender, EventArgs a)
 		{
-			ImportCallFileChooserDialog icfcd = new ImportCallFileChooserDialog();
-			if(icfcd.Run() == ResponseType.Ok)
-			{
-				// We have selected a valid? file
-				CallSequence imported = CallSequence.LoadFromFile(icfcd.Filename);
-				
-				AddCallSequence(imported);
-			}
+			ImportCall();
 			
-			icfcd.Destroy();
 		}		
 		
 		private void OnItmQuitActivated(object sender, EventArgs a)
