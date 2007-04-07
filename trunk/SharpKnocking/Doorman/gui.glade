@@ -61,7 +61,7 @@
                           <widget class="GtkImage" id="itmExportImage">
                             <property name="visible">True</property>
                             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_ENTER_NOTIFY_MASK</property>
-                            <property name="stock">gtk-missing-image</property>
+                            <property name="stock">gtk-save-as</property>
                           </widget>
                         </child>
                       </widget>
@@ -306,7 +306,7 @@ no se sale del programa o se guarda la configuración.</property>
                             <child>
                               <widget class="GtkImage" id="btnExportImage">
                                 <property name="visible">True</property>
-                                <property name="stock">gtk-missing-image</property>
+                                <property name="stock">gtk-save-as</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
@@ -570,7 +570,7 @@ no se sale del programa o se guarda la configuración.</property>
                         <child>
                           <widget class="GtkImage" id="exportButtonImage">
                             <property name="visible">True</property>
-                            <property name="stock">gtk-missing-image</property>
+                            <property name="stock">gtk-save-as</property>
                           </widget>
                           <packing>
                             <property name="expand">False</property>
@@ -579,7 +579,8 @@ no se sale del programa o se guarda la configuración.</property>
                         <child>
                           <widget class="GtkLabel" id="label5">
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">Exportar</property>
+                            <property name="label" translatable="yes">_Exportar</property>
+                            <property name="use_underline">True</property>
                           </widget>
                           <packing>
                             <property name="expand">False</property>

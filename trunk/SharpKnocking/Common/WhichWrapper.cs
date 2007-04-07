@@ -34,7 +34,7 @@ namespace SharpKnocking.Common
 			
 			if(path == "")
 			{				
-				return null;
+				return null;			
 			}
 			
 			return path;		

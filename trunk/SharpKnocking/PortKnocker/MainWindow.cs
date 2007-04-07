@@ -283,7 +283,7 @@ namespace SharpKnocking.PortKnocker
 		
 		private void OnCallsViewRowActivated(object sender, RowActivatedArgs a)
 		{
-		    EditSelectedCall();// We delegate in another method.
+		    EditSelectedCall();// We delegate in another method.		    
 		}   
 		
 
@@ -337,7 +337,8 @@ namespace SharpKnocking.PortKnocker
 		    //The clear button is activated only when the searched text exists.
 		    btnClearFilter.Sensitive=txtFilter.Text.Length>0;
 		    
-		    storeFilter.Filter =  txtFilter.Text.Trim();
+		    storeFilter.Filter =  txtFilter.Text.Trim();	    
+		    
 		}
 		
 		// Connect the Signals defined in Glade

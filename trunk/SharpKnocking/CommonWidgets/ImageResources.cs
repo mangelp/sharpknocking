@@ -10,16 +10,8 @@ namespace SharpKnocking.Common.Widgets
 	/// in all the interfaces.
 	/// </summary>
 	public class ImageResources
-	{
+	{		
 		
-		public static Pixbuf FileExportIcon16
-		{
-			get
-			{
-				return Pixbuf.LoadFromResource("fileexport.png");
-			}
-		}
-	
 		public static Pixbuf SharpKnockingIcon22
 		{
 			get

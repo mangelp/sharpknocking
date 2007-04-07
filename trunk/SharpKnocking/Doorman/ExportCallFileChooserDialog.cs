@@ -17,25 +17,31 @@ namespace SharpKnocking.Doorman
 	{
 		#region Glade widgets
 		[Glade.WidgetAttribute]
-		private FileChooserDialog exportCallFileChooserDialog;
+		private FileChooserDialog exportCallFileChooserDialog;		
 		
 		[Glade.WidgetAttribute]
-		private Button exportButton;
+		private Button cancelButton;		
 		
 		[Glade.WidgetAttribute]
-		private Button cancelButton;
-		
-		[Glade.WidgetAttribute]
-		private Image exportButtonImage;
-
+		private Button exportButton;	
+	
 		#endregion Glade widgets
 		
-		public ExportCallFileChooserDialog()
+		/// <summary>
+		/// <c>ExportCallFileChooser</c>'s constructor method.
+		/// </summary>
+		/// <param name = "parent">
+		/// The window this dialog is created from.
+		/// </param>
+		public ExportCallFileChooserDialog(Window parent)
 		{
 			Glade.XML gxml =
 				new Glade.XML(null,"gui.glade","exportCallFileChooserDialog",null);
 				
 			gxml.Autoconnect(this);
+			
+			exportCallFileChooserDialog.TransientFor = parent;
+			exportCallFileChooserDialog.Modal = true;
 			
 			exportCallFileChooserDialog.AddActionWidget(exportButton, ResponseType.Ok);
 			exportCallFileChooserDialog.AddActionWidget(cancelButton, ResponseType.Cancel);
@@ -52,9 +58,7 @@ namespace SharpKnocking.Doorman
 			
 			FileFilter allFilter = new FileFilter();
 			allFilter.Name = "Todos los archivos";
-			allFilter.AddPattern("*.*");
-			
-			exportButtonImage.Pixbuf = ImageResources.FileExportIcon16;
+			allFilter.AddPattern("*.*");	
 			
 			exportCallFileChooserDialog.AddFilter(callFilter);
 			exportCallFileChooserDialog.AddFilter(xmlFilter);

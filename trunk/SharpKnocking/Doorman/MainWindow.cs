@@ -38,14 +38,9 @@ namespace SharpKnocking.Doorman
 		private Button btnEdit;
 		
 		[WidgetAttribute]
-		private Button btnExport;
+		private Button btnExport;	
 		
-		[WidgetAttribute]
-		private Image btnExportImage;
-		
-		[WidgetAttribute]
-		private Image itmExportImage;
-		
+				
 		[WidgetAttribute]
 		private MenuItem itmExport;
 		
@@ -212,7 +207,7 @@ namespace SharpKnocking.Doorman
 		private void ExportCall()
 		{
 			ExportCallFileChooserDialog chooserDialog =
-				new ExportCallFileChooserDialog();
+				new ExportCallFileChooserDialog(mainWindow);
 		
 			if(chooserDialog.Run() == ResponseType.Ok)
 			{		
@@ -309,9 +304,7 @@ namespace SharpKnocking.Doorman
 		
 		
 		private void InitializeWidgets()
-		{
-			btnExportImage.FromPixbuf = ImageResources.FileExportIcon16;
-			itmExportImage.FromPixbuf = ImageResources.FileExportIcon16;
+		{			
 			itmExport.Sensitive = false;
 		
 		    // TreeView model inicialization.

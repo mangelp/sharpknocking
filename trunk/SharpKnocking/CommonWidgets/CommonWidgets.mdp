@@ -21,7 +21,6 @@
     <File name="./PortDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="../../Common/Artwork/sharpknocking22.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../../Common/Artwork/sharpknocking96.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="../../Common/Artwork/fileexport.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="./RandomPortGeneratorDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="./CommonDialogs" subtype="Directory" buildaction="Compile" />
     <File name="./CommonDialogs/OkDialog.cs" subtype="Code" buildaction="Compile" />
