@@ -6,7 +6,9 @@ using Gtk;
 
 using SharpKnocking.Common;
 using SharpKnocking.Common.Widgets;
+using SharpKnocking.Common.Remoting;
 using SharpKnocking.Common.Widgets.CommonDialogs;
+
 
 namespace SharpKnocking.Doorman
 {	
@@ -44,6 +46,8 @@ namespace SharpKnocking.Doorman
                 {
                     PrintHelpMessage();
                 }
+                
+               	
 		    }
 		
 			// We start the application.

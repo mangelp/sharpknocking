@@ -292,6 +292,8 @@ namespace SharpKnocking.KnockingDaemon
                 //Create a new sequence manager that gets the notifications about
                 //packets from the monitor and uses the current calls array.
                 this.seqManager = new SequenceDetectorManager(this.calls, this.monitor);
+                this.seqManager.SequenceDetected +=
+                	new SequenceDetectorEventHandler(OnSequenceDetectedHandler);
                 
                 if(this.monitorThread!=null)
                     this.monitorThread = null;
@@ -312,8 +314,11 @@ namespace SharpKnocking.KnockingDaemon
         private void OnSequenceDetectedHandler(object sender, 
                         SequenceDetectorEventArgs args)
         {
+        
+        	Debug.VerboseWrite("Sequence detected");
             if(this.isInteractiveMode)
             {
+            	Debug.VerboseWrite("Asking Doorman for clearance to continue");
                 this.pendingCalls.Add (args.IP+":"+args.Port, null);
                 this.communicator.SendRequest (RemoteCommandActions.AccessRequest, 
                         args.IP + "<>" + args.SerializedSequence);  

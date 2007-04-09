@@ -132,8 +132,10 @@ namespace SharpKnocking.Common.Remoting
                                 "LocalPort, LocalName, RemotePort, RemoteName");
                                 
             Debug.VerboseWrite("RemoteEndCommunicator: Registering remoting object with uri "+this.remoteUri );
-
-            this.channel = new TcpChannel(RemoteEndService.ManagerPortNumber);
+			
+			Debug.VerboseWrite(localPort +" "+ remotePort);
+			
+            this.channel = new TcpChannel(this.localPort);
             
             ChannelServices.RegisterChannel(this.channel);
             

@@ -76,8 +76,8 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		public void CheckPacket(PacketInfo packet)
 		{
 		    string sourceAddr = packet.SourceAddress.ToString();
-			//If we have it we check the number if not we check the first number
-			//and we add if it is correct.
+			// If we have it we check the number if not we check the first number
+			// and we add if it is correct.
 			if(this.hitsTable.ContainsKey (sourceAddr))
 			{
 			    Debug.VerboseWrite("Existing ip in collection: "+sourceAddr
@@ -99,15 +99,16 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 					    //A sequence have been completely detected so we must
 					    //notify other about it. We serialize the CallSequence
 					    //object as an xml
-						this.OnSequenceDetectedHelper(sourceAddr, 
-						          this.CallSequence.Store (), 
-						          this.CallSequence.TargetPort);
+						this.OnSequenceDetectedHelper(
+							sourceAddr, 
+						    this.CallSequence.Store(), 
+						    this.CallSequence.TargetPort);
 					}
 				}
 				else
 				{
-					//Reset expected packet number
-					this.hitsTable [sourceAddr] = 0;
+					//Reset expected packet number					
+					this.hitsTable.Remove(sourceAddr);
 				}
 			}
 			else if(packet.DestinationPort == this.CallSequence.Ports[0])
