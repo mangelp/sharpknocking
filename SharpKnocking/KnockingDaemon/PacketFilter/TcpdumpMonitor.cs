@@ -116,7 +116,8 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
     			
     			SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run() Reading incoming packets.");
     			
-    			while(!die && monitoringProccess!=null && !monitoringProccess.HasExited)
+    			while(!die && monitoringProccess!=null && !monitoringProccess.HasExited 
+    			         && this.monitoringProccess.StandardOutput!=null)
     			{
     		        assembler.AddLine(
     			        monitoringProccess.StandardOutput.ReadLine());			
@@ -127,9 +128,12 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
                 SharpKnocking.Common.Debug.Write("TcpdumpMonitor::Run(): Error while processing packets: "+ex);
 			}
 			
-			this.Stop();
+			this.KillActions();
 
             this.running  = false;
+            this.die = true;
+            
+            SharpKnocking.Common.Debug.Write("TcpdumpMonitor::Run(): Exiting run method");
 		}
 		
 		/// <summary>
@@ -156,6 +160,19 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
     		    if(this.monitoringProccess !=null)
     		    {
     		        this.monitoringProccess.Close ();
+    		    
+        		    SharpKnocking.Common.Debug.VerboseWrite (
+        		        "TcpDumpMonitor::KillActions: waiting for end");
+        		            		    
+        		    this.monitoringProccess.WaitForExit();
+    		    
+        		    SharpKnocking.Common.Debug.VerboseWrite (
+        		        "TcpDumpMonitor::KillActions: tcpdump process finished!");
+    		    }
+    		    else
+    		    {
+        		    SharpKnocking.Common.Debug.VerboseWrite (
+        		        "TcpDumpMonitor::KillActions: tcpdump process already finished!");    		      
     		    }
 		    }
 		    catch(Exception ex)

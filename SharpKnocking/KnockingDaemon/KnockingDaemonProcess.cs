@@ -191,6 +191,8 @@ namespace SharpKnocking.KnockingDaemon
             this.running = false;
             
             this.Stop();
+            
+            Debug.VerboseWrite("KnockingDaemonProcess::Run(): Exiting");
         }
         
         /// <summary> 
@@ -200,8 +202,15 @@ namespace SharpKnocking.KnockingDaemon
         {
             Console.Out.WriteLine("KnockingDaemonProcess::Stop():"+
                             "Stop requested.");
-            this.die = false;
+            this.die = true;
             this.InternalStopMonitor();
+            
+            if(this.monitorThread!=null)
+            {
+                Debug.VerboseWrite ("KnockingDaemonProcess::InternalStopMonitor:"+
+                        " Thread status: "+this.monitorThread.ThreadState);
+            }
+            
             Console.Out.WriteLine("KnockingDaemonProcess::Stop():"+
                             "Stopping requested. Daemon will die now");
         }
@@ -215,8 +224,6 @@ namespace SharpKnocking.KnockingDaemon
             this.InternalStopMonitor();
             
             this.InternalStartMonitor();
-            
-            
         }
         
         private void HandleTermSignal(int signal)
@@ -241,6 +248,18 @@ namespace SharpKnocking.KnockingDaemon
             
             Debug.VerboseWrite("KnockingDaemonProcess::InternalStopMonitor: "+
                     "Stopping capture processing.");
+                    
+            if(this.monitor!= null)
+            {
+                this.monitor.Stop();
+                this.monitor = null;
+            }
+            
+            if(this.monitorThread!=null)
+            {
+                Debug.VerboseWrite ("KnockingDaemonProcess::InternalStopMonitor:"+
+                        " Thread status: "+this.monitorThread.ThreadState);
+            }
            
             if(this.seqManager!=null)
             {
@@ -249,13 +268,6 @@ namespace SharpKnocking.KnockingDaemon
             }
            
             this.calls = new CallSequence[0];
-           
-            if(this.monitor!= null && this.monitor.Running)
-            {
-                this.monitor.Stop();
-            }
-            
-            this.monitor = null;
         }
         
         private void InternalStartMonitor()
@@ -280,8 +292,10 @@ namespace SharpKnocking.KnockingDaemon
                 //Create a new sequence manager that gets the notifications about
                 //packets from the monitor and uses the current calls array.
                 this.seqManager = new SequenceDetectorManager(this.calls, this.monitor);
+                
                 if(this.monitorThread!=null)
                     this.monitorThread = null;
+                    
                 //Start a new thread
                 this.monitorThread = new Thread(new ThreadStart(this.monitor.Run));
                 Debug.VerboseWrite ("KnockingDaemonProcess::Starting new thread", VerbosityLevels.High);
@@ -316,6 +330,7 @@ namespace SharpKnocking.KnockingDaemon
             {
                 case RemoteCommandActions.Bye:
                     this.communicator.UnregisterRemoteEnd ();
+                    this.isInteractiveMode = false;
                     break;                    
                 case RemoteCommandActions.Die:
                     this.Stop();
@@ -348,7 +363,7 @@ namespace SharpKnocking.KnockingDaemon
                     break;
             }
         }
-            
+
         private void OnResponseHandler(object sender, RemotingCommunicatorEventArgs args)
         {
             switch(args.Action)
