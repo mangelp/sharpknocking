@@ -19,6 +19,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 	public class TcpdumpMonitor: IDisposable
 	{
 	    private bool die=false;
+	    private bool running;
 	    
 		public event PacketCapturedEventHandler PacketCaptured;
 		
@@ -40,34 +41,11 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		/// </summary>
 		public void Dispose()
 		{
-		    this.die = true;
-		    if(this.monitoringProccess !=null)
-		    {
-		       if(!this.monitoringProccess.HasExited)
-		       {
-		          try
-		          {
-	                  monitoringProccess.Kill();
-	              }
-	              catch(InvalidOperationException ex)
-	              {
-	                  SharpKnocking.Common.Debug.VerboseWrite(
-	                           "Exception killing monitor: "+ex);
-	              }
-	              
-	              this.monitoringProccess.Dispose();
-	           }
-	           else
-	           {
-	               this.monitoringProccess.Dispose();
-	           }
-	           
-	           this.monitoringProccess = null;
-	         }
-	         
-	         this.sequences = null;
-	         
-//	         this.OnDisposedEvent();
+            if(this.monitoringProccess !=null)
+            {
+                this.monitoringProccess.Dispose();
+                this.monitoringProccess = null;
+            }
 		}
 		
 		#region Properties
@@ -87,13 +65,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
         {
             get
             {
-                if(this.monitoringProccess!=null 
-                	&& !this.monitoringProccess.HasExited)
-                {
-                    return true;
-                }
-                
-                return false;
+                return this.running ;
             }
         }
 
@@ -111,7 +83,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
     			{
     				// There's no tcpdump in the system.
     				Console.WriteLine(
-    					"tcpdump is required to use SharpKnocking!");
+    					"TcpDumpMonitor::Run():tcpdump is required to use SharpKnocking!");
     				return;
     			}
     			
@@ -164,7 +136,6 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		{           
 		    this.die = true;
             this.sequences = null;
-            this.Dispose (); 
 		}
 		
 		#endregion Public methods
@@ -184,7 +155,6 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 					if(!ports.Contains(port))
 						ports.Add(port);
 				}
-				
 			}
 			
 			string expression = "";
@@ -214,12 +184,6 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 			if(PacketCaptured != null)
 				PacketCaptured(this, a);
 		}
-		
-//		private void OnDisposedEvent()
-//		{
-//		    if(this.Disposed!=null)
-//		      this.Disposed(this, EventArgs.Empty);
-//		}
 
 		#endregion Private methods
 	}

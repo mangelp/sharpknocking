@@ -3,19 +3,11 @@ using System;
 
 namespace SharpKnocking.Common.Remoting
 {
-	public class RemoteManager: RemoteEnd, IRemoteManager
+	public class RemoteManager: RemoteEnd
 	{
-		private bool valid;
-		
-		public bool Valid
-		{
-		    get { return this.valid; }
-		}
-		
-		public RemoteManager(bool valid)
+		public RemoteManager()
 		  :base(RemoteEndService.ManagerServiceName)
 		{
-		    this.valid = valid;
 		}
 	}
 }
