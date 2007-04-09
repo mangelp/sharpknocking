@@ -113,6 +113,11 @@ namespace SharpKnocking.KnockingDaemon
 		    this.communicator.ResponseReceived += 
 		          new RemotingCommunicatorEventHandler(this.OnResponseHandler);
 		          
+		    this.communicator.LocalName = RemoteEndService.DaemonServiceName;
+		    this.communicator.LocalPort = RemoteEndService.DaemonPortNumber;
+		    this.communicator.RemoteName = RemoteEndService.ManagerServiceName;
+		    this.communicator.RemotePort = RemoteEndService.ManagerPortNumber;
+		          
 		    this.pendingCalls  = new Hashtable(20);
 		}
 		

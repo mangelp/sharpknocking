@@ -126,7 +126,10 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 			{
                 SharpKnocking.Common.Debug.Write("TcpdumpMonitor::Run(): Error while processing packets: "+ex);
 			}
+			
+			this.Stop();
 
+            this.running  = false;
 		}
 		
 		/// <summary>
@@ -134,13 +137,36 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		/// </summary>
 		public void Stop()
 		{           
+		    SharpKnocking.Common.Debug.VerboseWrite (
+		        "TcpDumpMonitor::Stop(): Stopping packet capture");
 		    this.die = true;
-            this.sequences = null;
+		    this.KillActions();
 		}
 		
 		#endregion Public methods
 		
 		#region Private methods
+		
+		private void KillActions()
+		{
+		    SharpKnocking.Common.Debug.VerboseWrite (
+		        "TcpDumpMonitor::KillActions: Ending tcpdump process");
+		    try
+		    {
+    		    if(this.monitoringProccess !=null)
+    		    {
+    		        this.monitoringProccess.Close ();
+    		    }
+		    }
+		    catch(Exception ex)
+		    {
+		        SharpKnocking.Common.Debug.VerboseWrite (
+		            "TcpDumpMonitor::KillActions: Exception catched. "+
+		            "\nDetails:\n"+ex);
+		    }
+		    
+		    this.monitoringProccess = null;
+		}
 		
 		private string CreateExpression(CallSequence [] sequences)
 		{
@@ -184,7 +210,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 			if(PacketCaptured != null)
 				PacketCaptured(this, a);
 		}
-
+        
 		#endregion Private methods
 	}
 }
