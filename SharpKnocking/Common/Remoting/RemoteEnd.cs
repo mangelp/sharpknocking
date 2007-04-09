@@ -7,8 +7,15 @@ namespace SharpKnocking.Common.Remoting
     /// <summary>
     /// Models a object to comunicate between two points.
     /// </summary>
-	public class RemoteEnd: MarshalByRefObject, IRemoteEnd
+	public class RemoteEnd: MarshalByRefObject
 	{    
+        private bool valid;
+        
+        public bool Valid
+        {
+            get { return this.valid;}
+            set { this.valid = value;}
+        }
 
         private string name;
         

@@ -53,10 +53,10 @@ namespace SharpKnocking.Common.Remoting
         /// </summary>
 		static RemoteEndService()
 		{
-            RemoteEndService.daemonPortNumber = 29698;
-            RemoteEndService.managerPortNumber = 29896;
-            RemoteEndService.daemonServiceName = "Daemon";
-            RemoteEndService.managerServiceName = "Manager";
+            RemoteEndService.daemonPortNumber = 48073;
+            RemoteEndService.managerPortNumber = 48075;
+            RemoteEndService.daemonServiceName = "SharpKnockignDaemon";
+            RemoteEndService.managerServiceName = "SharpKnockingManager";
 		}
 	}
 }
