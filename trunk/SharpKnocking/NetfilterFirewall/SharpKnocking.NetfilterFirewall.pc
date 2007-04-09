@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+pkglibdir=${exec_prefix}/lib/sharpknocking
+Libraries=  ${pkglibdir}/NetfilterFirewall.dll
+
+Name: SharpKnocking.NetfilterFirewall
+Description: IpTables rules generator. It can modify the iptables configuration on the fly.
+Version: 0.1
+
+Requires:  SharpKnocking.Common
+Libs:  -r:${pkglibdir}/NetfilterFirewall.dll
