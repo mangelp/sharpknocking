@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+pkglibdir=@libdir@/@PACKAGE@
+Libraries=  ${pkglibdir}/@KNOCKINGDAEMONCONTROL_DEBUG_LIB@@KNOCKINGDAEMONCONTROL_RELEASE_LIB@
+
+Name: SharpKnocking.KnockingDaemonControl
+Description: 
+Version: @VERSION@
+
+Requires:  SharpKnocking.Common
+Libs:  -r:${pkglibdir}/@KNOCKINGDAEMONCONTROL_DEBUG_LIB@@KNOCKINGDAEMONCONTROL_RELEASE_LIB@
