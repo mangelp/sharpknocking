@@ -178,8 +178,7 @@ DATA_FILES =
 RESOURCES = \
 	./gui.glade \
 	./resources/sharpknocking22.png \
-	./resources/sharpknocking96.png \
-	./resources/fileexport.png 
+	./resources/sharpknocking96.png 
 
 EXTRAS = 
 REFERENCES = \

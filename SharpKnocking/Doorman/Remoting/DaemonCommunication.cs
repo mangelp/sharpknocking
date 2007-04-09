@@ -39,10 +39,10 @@ namespace SharpKnocking.Doorman.Remoting
                                                          typeof(RemoteDaemon));
                                                          
             
-		    this.communicator.LocalName = RemoteEndService.DaemonServiceName;
-		    this.communicator.LocalPort = RemoteEndService.DaemonPortNumber;
-		    this.communicator.RemoteName = RemoteEndService.ManagerServiceName;
-		    this.communicator.RemotePort = RemoteEndService.ManagerPortNumber;
+		    this.communicator.LocalName = RemoteEndService.ManagerServiceName;
+		    this.communicator.LocalPort = RemoteEndService.ManagerPortNumber;
+		    this.communicator.RemoteName = RemoteEndService.DaemonServiceName;
+		    this.communicator.RemotePort = RemoteEndService.DaemonPortNumber;
 		    
 		    this.communicator.RequestReceived += 
 		          new RemotingCommunicatorEventHandler(this.OnRequestHandler);
@@ -81,6 +81,8 @@ namespace SharpKnocking.Doorman.Remoting
             Debug.VerboseWrite("DaemonCommunication::Init()");
 
             this.communicator.Init();
+            
+            this.communicator.SendRequest(RemoteCommandActions.StartInteractiveMode, null);
         }
 		
 		
@@ -95,7 +97,7 @@ namespace SharpKnocking.Doorman.Remoting
         {                
             switch(action)
             {
-                case RemoteCommandActions.Hello:
+                case RemoteCommandActions.Hello:                	
                 case RemoteCommandActions.Start:
                     throw new InvalidOperationException("Action not allowed: "+action);
                 case RemoteCommandActions.HotRestart:
@@ -108,7 +110,7 @@ namespace SharpKnocking.Doorman.Remoting
                 case RemoteCommandActions.Status:
                 case RemoteCommandActions.StatusExtended:
                     this.communicator.SendRequest(action, null);
-                    break;
+                    break;                
                 default:
                     this.communicator.SendRequest(action, null);
                     break;
@@ -144,7 +146,7 @@ namespace SharpKnocking.Doorman.Remoting
 			switch(args.Action)
 			{
 				case RemoteCommandActions.AccessRequest:
-				
+					Debug.VerboseWrite("Port opening request received");
 					// In this case, data is a string with the xml serialization
 					// of a CallSequence object and the source ip address.							
 					OnAccessRequestSender(args.Data as String);					

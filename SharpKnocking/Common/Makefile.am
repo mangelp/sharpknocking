@@ -36,15 +36,14 @@ FILES = \
 	./DoormanConfig.cs \
 	./Remoting/Definitions.cs \
 	./WhichWrapper.cs \
-	./Remoting/IRemoteEnd.cs \
 	./Remoting/RemoteEnd.cs \
 	./Remoting/RemoteEndEventArgs.cs \
 	./Remoting/RemoteEndService.cs \
 	./UnixNative.cs \
-	./Remoting/IRemoteManager.cs \
-	./Remoting/IRemoteDaemon.cs \
 	./Remoting/RemoteManager.cs \
-	./Remoting/RemoteDaemon.cs 
+	./Remoting/RemoteDaemon.cs \
+	./Remoting/RemotingCommunicator.cs \
+	./Remoting/RemotingCommunicatorEvents.cs 
 
 DATA_FILES = 
 

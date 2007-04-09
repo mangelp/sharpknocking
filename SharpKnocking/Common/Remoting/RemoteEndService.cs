@@ -15,7 +15,14 @@ namespace SharpKnocking.Common.Remoting
         /// </summary>
 		public static int DaemonPortNumber
         {
-            get { return daemonPortNumber; }
+            get 
+            { 
+            	return daemonPortNumber; 
+            }
+            set
+            {
+            	daemonPortNumber = value;
+            }
         }
         
         private static int managerPortNumber;
@@ -54,7 +61,7 @@ namespace SharpKnocking.Common.Remoting
 		static RemoteEndService()
 		{
             RemoteEndService.daemonPortNumber = 48073;
-            RemoteEndService.managerPortNumber = 48075;
+            RemoteEndService.managerPortNumber = 48076;
             RemoteEndService.daemonServiceName = "SharpKnockignDaemon";
             RemoteEndService.managerServiceName = "SharpKnockingManager";
 		}
