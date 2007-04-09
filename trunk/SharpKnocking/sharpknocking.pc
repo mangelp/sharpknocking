@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+pkglibdir=${exec_prefix}/lib/sharpknocking
+Libraries=  ${pkglibdir}/SharpKnocking.Common.dll ${pkglibdir}/CommonWidgets.dll ${pkglibdir}/NetfilterFirewall.dll  
+
+Name: SharpKnocking
+Description: 
+Version: 0.1
+
+Requires: gtk-sharp-2.0 glib-sharp-2.0 glade-sharp-2.0 
+Libs:  -r:${pkglibdir}/SharpKnocking.Common.dll -r:${pkglibdir}/CommonWidgets.dll -r:${pkglibdir}/NetfilterFirewall.dll  

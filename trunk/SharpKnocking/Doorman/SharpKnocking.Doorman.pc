@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+pkglibdir=${exec_prefix}/lib/sharpknocking
+Libraries=  ${pkglibdir}/@DOORMAN_DEBUG_LIB@@DOORMAN_RELEASE_LIB@
+
+Name: SharpKnocking.Doorman
+Description: 
+Version: 0.1
+
+Requires:  glade-sharp-2.0 glib-sharp-2.0 gtk-sharp-2.0 SharpKnocking.Common SharpKnocking.CommonWidgets
+Libs:  -r:${pkglibdir}/@DOORMAN_DEBUG_LIB@@DOORMAN_RELEASE_LIB@

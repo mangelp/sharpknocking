@@ -1,0 +1,50 @@
+<Project name="CommonWidgets" fileversion="2.0" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Debug" assembly="CommonWidgets" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" win32Icon="./" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Release" assembly="CommonWidgets" />
+      <Build debugmode="False" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" win32Icon="./" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="./gui.glade" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./ImageResources.cs" subtype="Code" buildaction="Compile" />
+    <File name="./CallEditDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./ImportCallFileChooserDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./PortDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="../../Common/Artwork/sharpknocking22.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../../Common/Artwork/sharpknocking96.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="./RandomPortGeneratorDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./CommonDialogs" subtype="Directory" buildaction="Compile" />
+    <File name="./CommonDialogs/OkDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./CommonDialogs/ConfirmDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./CommonDialogs/AppInfoDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="./NodeStoreFilter.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="glade-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="atk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Project" localcopy="True" refto="Common" />
+  </References>
+  <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="./Makefile.am">
+    <BuildFilesVar />
+    <DeployFilesVar />
+    <ResourcesVar />
+    <OthersVar />
+    <GacRefVar />
+    <AsmRefVar />
+    <ProjectRefVar />
+  </MonoDevelop.Autotools.MakefileInfo>
+</Project>
