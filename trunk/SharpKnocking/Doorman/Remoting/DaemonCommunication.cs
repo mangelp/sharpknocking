@@ -10,8 +10,6 @@ using SharpKnocking.Common.Remoting;
 namespace SharpKnocking.Doorman.Remoting
 {
 	
-	
-
 	/// <summary>
 	/// Models the operations required to send and receive messages to and from
 	/// the daemon.
@@ -39,6 +37,17 @@ namespace SharpKnocking.Doorman.Remoting
 		{
             this.communicator = new RemotingCommunicator(typeof(RemoteManager), 
                                                          typeof(RemoteDaemon));
+                                                         
+            
+		    this.communicator.LocalName = RemoteEndService.DaemonServiceName;
+		    this.communicator.LocalPort = RemoteEndService.DaemonPortNumber;
+		    this.communicator.RemoteName = RemoteEndService.ManagerServiceName;
+		    this.communicator.RemotePort = RemoteEndService.ManagerPortNumber;
+		    
+		    this.communicator.RequestReceived += 
+		          new RemotingCommunicatorEventHandler(this.OnRequestHandler);
+		    this.communicator.ResponseReceived += 
+		          new RemotingCommunicatorEventHandler(this.OnResponseHandler);
 		}
 	
 		#region Properties
@@ -130,15 +139,15 @@ namespace SharpKnocking.Doorman.Remoting
 		
 		// Request procesing. Only we spect events from the daemon with notifications
 		// of access attemps
-		private void OnRequestHandler(RemoteCommandActions action, object data)
+		private void OnRequestHandler(object sender, RemotingCommunicatorEventArgs args)
 		{
-			switch(action)
+			switch(args.Action)
 			{
 				case RemoteCommandActions.AccessRequest:
 				
 					// In this case, data is a string with the xml serialization
 					// of a CallSequence object and the source ip address.							
-					OnAccessRequestSender(data as String);					
+					OnAccessRequestSender(args.Data as String);					
 					
 					break;
 				case RemoteCommandActions.Bye:
@@ -152,9 +161,9 @@ namespace SharpKnocking.Doorman.Remoting
 	    // - Hello/bye
 	    // - Status/StatusExtended	
 	    // - Start/Stop/Hotrestart
-		private void OnResponseHandler(RemoteCommandActions action, object data)
+		private void OnResponseHandler(object sender, RemotingCommunicatorEventArgs args)
 		{
-			switch(action)
+			switch(args.Action)
 			{
 				case RemoteCommandActions.Hello:					
 					OnHelloSender();
