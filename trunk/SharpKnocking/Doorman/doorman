@@ -1,9 +1,0 @@
-#!/bin/sh
-
-prefix="/usr/local"
-exec_prefix="${prefix}"
-libdir="${exec_prefix}/lib/sharpknocking"
-
-cd ${libdir}
-
-exec mono  "Doorman.exe" "$@"

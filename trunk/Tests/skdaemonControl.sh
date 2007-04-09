@@ -3,7 +3,7 @@
 # configuration file needed is in the directory.
 
 EXECPATH=" ../SharpKnocking/KnockingDaemonControl/bin/Debug/KnockingDaemonControl.exe"
-ARGS=""
+ARGS="$@"
 
 mono $EXECPATH $ARGS
 

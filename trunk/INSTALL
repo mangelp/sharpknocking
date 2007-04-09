@@ -29,10 +29,8 @@ Or try with the daily sources tarball (generated automatically):
 
 Then you will need a working installation of at least mono 1.2.3 with gtk# 
 libraries and monodevelop 0.13.
-Simply open the solution file ManagedSource.mds with monodevelop and select 
+Simply open the solution file SharpKnocking.mds with monodevelop and select 
 "build solution" from the build menu and you will get the build.
 
 We try to keep the svn sources as stable as we can but expect compiling issues 
 often.
-
-time.
