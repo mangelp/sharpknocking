@@ -52,23 +52,26 @@ namespace SharpKnocking.NetfilterFirewall.ExtendedMatch
 		    get
 		    {
 		        string name;
+		        index = index.ToLower();
 		        
 		        for(int i=0;i<this.Count;i++)
 		        {
 		            name = ((MatchExtensionHandler)this.List[i]).ExtensionName;
 		            
-		            if(name.ToLower().Equals(index.ToLower()))
+		            if(name.ToLower().Equals(index))
 		            {
 		                return (MatchExtensionHandler)this.List[i];    
 		            }
 		        }
 		        
+		        Debug.VerboseWrite("MatchExtensionList:: Not found "+index+" ("+this.List.Count+")");
 		        return null;
 		    }
 		}
 		
 		public void Add(MatchExtensionHandler option)
 		{
+		    Debug.VerboseWrite ("MatchExtensionList::Add(): "+option);
 		    this.List.Add(option);
 		}
 		

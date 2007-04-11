@@ -18,7 +18,7 @@ namespace SharpKnocking.NetfilterFirewall
     /// Implements the needed operations for our purposses for the 
     /// sharp knocking project.
     /// </summary>
-	public class FirewallManager: IDisposable
+	public class FirewallManager
 	{
         private static FirewallManager instance = new FirewallManager();
         
@@ -88,11 +88,9 @@ namespace SharpKnocking.NetfilterFirewall
 		{
             this.ruleSet = new NetfilterRuleSet();
             this.tempFileName = UnixNative.CreateTempFileName();
-            Debug.VerboseWrite("FirewallManager will use "+this.tempFileName+
-                    " for scratch", VerbosityLevels.High);
+            Debug.VerboseWrite("FirewallManager: Will use "+this.tempFileName+
+                    " for scratch");
             this.chainName = "SharpKnocking-INPUT";
-            
-            Debug.Write("FirewallManager instance created!");
 		}
         
         /// <summary>
@@ -100,10 +98,10 @@ namespace SharpKnocking.NetfilterFirewall
         /// </summary>
         public void LoadCurrentRuleSet()
         {
-            Debug.Write("Storing current netfilter set in: "+tempFileName+".rr.ruleset");
+            Debug.VerboseWrite("Storing current netfilter set in: "+tempFileName+".rr.ruleset");
             IpTablesCmd.Save(tempFileName+".ruleset");
             
-            Debug.Write("Loading current set from: "+tempFileName+".rr.ruleset");
+            Debug.VerboseWrite("Loading current set from: "+tempFileName+".rr.ruleset");
             this.ruleSet.LoadFromFile(tempFileName+".rr.ruleset");
         }
         
@@ -112,7 +110,7 @@ namespace SharpKnocking.NetfilterFirewall
         /// </summary>
         public void LoadRuleSetFrom(string fileName)
         {
-            Debug.Write("Loading rule set from: "+fileName+"");
+            Debug.VerboseWrite("Loading rule set from: "+fileName+"");
             this.ruleSet.LoadFromFile(fileName);
         }
 
@@ -135,7 +133,7 @@ namespace SharpKnocking.NetfilterFirewall
         /// </summary>
         public void ApplyRule(NetfilterRule rule)
         {   
-            Debug.VerboseWrite("Executing rule: "+rule);
+            Debug.VerboseWrite("FirewallManager::ApplyRule: Executing rule in real firewall: "+rule);
             
             if(this.dryRun)
                 return;
@@ -329,11 +327,19 @@ namespace SharpKnocking.NetfilterFirewall
         /// <returns>
         /// The rule added.
         /// </returns>
-        public NetfilterRule GrantAccess(string ipAddr, int port)
+        public NetfilterRule GrantAccess(string ipAddr, int port, ProtocolType pType)
         {
-            Debug.VerboseWrite("Granting access to ipAddr");
             if(Net20.StringIsNullOrEmpty(ipAddr))
                 throw new ArgumentException("The address can't be null or empty", "ipAddr");
+                
+            Debug.VerboseWrite("NetfilterRule:: Granting access for "+
+                    ipAddr+" to port "+port+" for protocol "+pType);
+            
+            if( pType != ProtocolType.Tcp && pType != ProtocolType.Udp )
+                throw new ArgumentException ("The only allowed protocols are tcp and udp",
+                                             "pType");
+                                             
+            Debug.VerboseWrite ("FirewallManager::GrantAccess: Creating new rule");
             
             //Create rule
             NetfilterRule rule = new NetfilterRule();
@@ -349,31 +355,53 @@ namespace SharpKnocking.NetfilterFirewall
             sop.Address = IpAddressRange.Parse(ipAddr);
             //Add option
             rule.Options.Add(sop);
+            
+            //Protocol type option
+            ProtocolOption pOpt = new ProtocolOption();
+            pOpt.Protocol = pType;
+            
+            Debug.VerboseWrite ("FirewallManager::GrantAccess: Adding protocol "+pOpt);
+            //Add to rule
+            rule.Options.Add (pOpt);
+            
+            //The above option loads an implicit extension: tcp
+            Debug.VerboseWrite ("FirewallManager::GrantAccess: Adding extended option");
+            
+            //Add a extended option named --dport with the port as parameter
+            if(pType == ProtocolType.Tcp)
+                rule.LoadedExtensions[MatchExtensions.Tcp].AddParameter("dport",port.ToString());
+            else if(pType == ProtocolType.Udp)
+                rule.LoadedExtensions[MatchExtensions.Udp].AddParameter("dport",port.ToString());
+                
+            Debug.VerboseWrite ("FirewallManager::GrantAccess: Adding jump option");
+            
             //Create option
             JumpOption jop = new JumpOption();
             
-            NetfilterTable nTable = this.ruleSet.GetDefaultTable();
-            
-            //If there are more rules we return to them to continue traversing existing rules
-            //TODO: Encapsulate this as a new operation mode -> mangelp
-            if(nTable.Chains.Length>1 && nTable.Chains[0].CurrentName == this.chainName)
-            {
-                //Back to input chain but to the next rule.
-                jop.Target = RuleTargets.Return;
-            }
-            else
-            {
+//            NetfilterTable nTable = this.ruleSet.GetDefaultTable();
+//            
+//            //If there are more rules we return to them to continue traversing existing rules
+//            //TODO: Encapsulate this as a new operation mode -> mangelp
+//            if(nTable.Chains.Length>1 && nTable.Chains[0].CurrentName == this.chainName)
+//            {
+//                //Back to input chain but to the next rule.
+//                jop.Target = RuleTargets.Return;
+//            }
+//            else
+//            {
                 jop.Target = RuleTargets.Accept;
-            }
+//            }
             
             //Add option
             rule.Options.Add(jop);
 
+            
             //Execute
             FirewallManager.instance.ApplyRule(rule);
             //Execute in default table named filter
             this.ruleSet.ExecRule(rule);
             
+            Debug.VerboseWrite ("FirewallManager::GrantAccess: Done!");
             return rule;
         }
         
@@ -386,7 +414,7 @@ namespace SharpKnocking.NetfilterFirewall
         public string BackupCurrentSet()
         {
             string fileName = UnixNative.CreateTempFileName();
-            Debug.Write("Storing backup copy of set: "+fileName+"");
+            Debug.Write("FirewallManager:: Storing backup copy of set: "+fileName+"");
             IpTablesCmd.Save(fileName);
             return fileName;
         }
@@ -394,30 +422,35 @@ namespace SharpKnocking.NetfilterFirewall
         /// <summary>
         /// Restores a rule set from a file
         /// </summary>
-        public void RestoreRuleSetBackup(string file)
+        public void RestoreRuleSetBackup(string file, bool delete)
         {
             if(!System.IO.File.Exists(file))
-                throw new System.IO.FileNotFoundException("The file doesn't exists: "+file);
+            {
+//                throw new System.IO.FileNotFoundException("The file doesn't exists: "+file);
+                Debug.Write ("Backup file not found: "+file);
+                return;
+            }
+                
             Debug.Write("Restoring backup copy from: "+file);
+            
             IpTablesCmd.Restore(file);
+            
+            if(delete)
+                System.IO.File.Delete (file);
         }
         
-        /// <summary>
-        /// Removes knocking chain
-        /// </summary>
-        public void Dispose()
+        public void Clear()
         {
-             //FIX: This gives an exception if the rules are restores before
-             //Client code must care this!
-//            if(!this.dryRun)
-//            {
-//                this.RemoveSharpKnockingChain();
-//            }
-            
-            //Clear ourselves from the static reference so everything gets removed.
-            FirewallManager.instance = new FirewallManager ();
+            Debug.VerboseWrite ("FirewallManager:: Clearing all rules", 
+                    VerbosityLevels.Insane);
+                    
             //Clear the rule set
             this.ruleSet.Clear();
+            
+            Debug.VerboseWrite ("FirewallManager:: Creating new object", 
+                    VerbosityLevels.Insane);
+            //Clear ourselves from the static reference so everything gets removed.
+            FirewallManager.instance = new FirewallManager ();
         }
 	}
 }

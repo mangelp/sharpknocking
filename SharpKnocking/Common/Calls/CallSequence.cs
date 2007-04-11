@@ -177,29 +177,38 @@ namespace SharpKnocking.Common.Calls
 			
 			byte order = 0;
 			
-			foreach(int port in ports)
+			try
 			{
-				// We create fake data for the package.
-				dataGenerator.NextBytes(data);
-				
-				data[0] = order;
-				
-				order++;
-				
-				// The target's IP address and port are specified.
-				destination = new IPEndPoint(ad,port);
-				
-				// The data is sent, good bye! :D
-				sock.SendTo(data,destination);
-				
-				Debug.VerboseWrite(port +" out");
-				
-				// We launch an event, so we can monitor proggress
-				PackageSentNotify();
-				
-				
-				Thread.Sleep(20);
-			}			
+			
+    			foreach(int port in ports)
+    			{
+    				// We create fake data for the package.
+    				dataGenerator.NextBytes(data);
+    				
+    				data[0] = order;
+    				
+    				order++;
+    				
+    				// The target's IP address and port are specified.
+    				destination = new IPEndPoint(ad,port);
+    				
+    				// The data is sent, good bye! :D
+    				sock.SendTo(data,destination);
+    				
+    				Debug.VerboseWrite("PortKnocker:: Sending to port "+port +" with order "+(order-1));
+    				
+    				// We launch an event, so we can monitor proggress
+    				PackageSentNotify();
+    				
+    				// This should be configured
+    				Thread.Sleep(100);
+    			}		
+			
+		    }
+		    catch(SocketException ex)
+		    {
+		        Debug.VerboseWrite("PortKnocker:: socket exception: "+ex.Message);
+		    }	
 			
 			return true;
 			

@@ -1,5 +1,6 @@
 
 using System;
+using System.Threading;
 using System.Collections;
 using System.Diagnostics;
 
@@ -27,13 +28,23 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		
 		private CallSequence [] sequences;
 		
+		public bool Die
+		{
+		    get { return this.die;}
+		    set 
+		    { 
+		        Net20.PrintThreadInformation("TcpdumpMonitor_Die_Set");
+		        this.die = value;
+		    }
+		}
+		
 		/// <summary>
 		/// Constructor with the sequences to detect. It creates an expresion
 		/// for tcpdump to detect these sequences
 		/// </summary>
 		public TcpdumpMonitor(CallSequence[] sequences)
 		{
-		    this.sequences = sequences;			
+		    this.sequences = sequences;
 		}
 		
 		/// <summary>
@@ -73,8 +84,12 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		
 		#region Public methods
 		
-		public void Run()
+		public static void Run(object obj)
 		{			
+		    TcpdumpMonitor monitor = (TcpdumpMonitor) obj;
+		    monitor.running = true;
+		    Net20.PrintThreadInformation ("TCPDUMPMONITOR_RUN");
+		    SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run() Starting");
             try
             {
     			string tcpdumpPath = WhichWrapper.Search("tcpdump");
@@ -87,14 +102,14 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
     				return;
     			}
     			
-    			if(sequences==null)
+    			if(monitor.sequences==null)
     			    return;
 
-    			string expression = CreateExpression(sequences);				
+    			string expression = monitor.CreateExpression(monitor.sequences);				
     		    
-    			monitoringProccess = new Process();
+    			monitor.monitoringProccess = new Process();
     		    
-    			monitoringProccess.StartInfo.FileName = tcpdumpPath;
+    			monitor.monitoringProccess.StartInfo.FileName = tcpdumpPath;
     			
     			// Arguments given to tcpdump are
     			// -i any, so we monitor every network interface.
@@ -102,36 +117,54 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
     			// -l, so the output is buffered,
     			// -q, so the output contains less info,
     			// -f, so tcpdump doesn't try to resolve ip names.
-    			monitoringProccess.StartInfo.Arguments =
-    				 "-i any -x -l -q -f " + expression ;
+    			monitor.monitoringProccess.StartInfo.Arguments =
+    				 "-i any -n -x -l -q -f " + expression ;
     				 
-    			monitoringProccess.StartInfo.UseShellExecute = false;
-    			monitoringProccess.StartInfo.RedirectStandardOutput = true;	
+    			monitor.monitoringProccess.StartInfo.UseShellExecute = false;
+    			monitor.monitoringProccess.StartInfo.RedirectStandardOutput = true;	
     		    SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run() Starting monitor process");
-    			monitoringProccess.Start();
+    			monitor.monitoringProccess.Start();
     			
     			PacketAssembler assembler = new PacketAssembler();
     			
-    			assembler.PacketCaptured += new PacketCapturedEventHandler(OnPacketCaptured);
+    			assembler.PacketCaptured += new PacketCapturedEventHandler(monitor.OnPacketCaptured);
     			
     			SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run() Reading incoming packets.");
     			
-    			while(!die && monitoringProccess!=null && !monitoringProccess.HasExited 
-    			         && this.monitoringProccess.StandardOutput!=null)
+    			while(monitor!=null && !monitor.die  
+    			         && monitor.monitoringProccess!=null 
+    			         && !monitor.monitoringProccess.HasExited 
+    			         && monitor.monitoringProccess.StandardOutput!=null)
     			{
-    		        assembler.AddLine(
-    			        monitoringProccess.StandardOutput.ReadLine());			
+    			    try
+    			    {
+    		            assembler.AddLine(
+    			            monitor.monitoringProccess.StandardOutput.ReadLine());
+    			    }
+    			    catch(Exception ex)
+    			    {
+    			        monitor.die = true;
+    		            SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run(): "+
+    		                          " Exception assembling packets: "+ex.Message);
+    		            SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run(): "+
+    		                          " Details: \n"+ex);
+    			    }
     			}
+    			
+    		    SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run(): "+
+    		                          " Loop end");
 			}
 			catch(Exception ex)
 			{
-                SharpKnocking.Common.Debug.Write("TcpdumpMonitor::Run(): Error while processing packets: "+ex);
+                SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run(): "+
+                                      "Error while processing packets: "+ex);
+                monitor.die = true;
 			}
 			
-			this.KillActions();
-
-            this.running  = false;
-            this.die = true;
+			monitor.die = true;
+			//Stop monitor
+			monitor.KillActions();
+            monitor.running  = false;
             
             SharpKnocking.Common.Debug.Write("TcpdumpMonitor::Run(): Exiting run method");
 		}
@@ -140,10 +173,14 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		/// Stops processing. Kills this process.
 		/// </summary>
 		public void Stop()
-		{           
+		{            
+		    
+		    Net20.PrintThreadInformation("TCPDUMPMONITOR_STOP");
 		    SharpKnocking.Common.Debug.VerboseWrite (
-		        "TcpDumpMonitor::Stop(): Stopping packet capture");
+		        "TcpDumpMonitor::Stop(): Stopping packet capture in "+
+		        Thread.CurrentThread.GetHashCode());
 		    this.die = true;
+		    //This stops the monitor exiting the main loop
 		    this.KillActions();
 		}
 		
@@ -153,21 +190,14 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		
 		private void KillActions()
 		{
+		    Net20.PrintThreadInformation("TCPDUMPMONITOR_KILLACTIONS");
 		    SharpKnocking.Common.Debug.VerboseWrite (
 		        "TcpDumpMonitor::KillActions: Ending tcpdump process");
 		    try
 		    {
     		    if(this.monitoringProccess !=null)
     		    {
-    		        this.monitoringProccess.Close ();
-    		    
-        		    SharpKnocking.Common.Debug.VerboseWrite (
-        		        "TcpDumpMonitor::KillActions: waiting for end");
-        		            		    
-        		    this.monitoringProccess.WaitForExit();
-    		    
-        		    SharpKnocking.Common.Debug.VerboseWrite (
-        		        "TcpDumpMonitor::KillActions: tcpdump process finished!");
+    		        this.monitoringProccess.Kill ();
     		    }
     		    else
     		    {

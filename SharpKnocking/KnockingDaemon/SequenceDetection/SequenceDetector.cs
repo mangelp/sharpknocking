@@ -74,28 +74,34 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		/// The packet which will be checked.
 		/// </param>
 		public void CheckPacket(PacketInfo packet)
-		{
-		    string sourceAddr = packet.SourceAddress.ToString();
+		{   
+		    string sourceAddr = packet.SourceAddress.ToString().Trim();
+		    Debug.VerboseWrite ("SequenceDetector:: Checking packet for address '"+sourceAddr+"'");
+		    
 			// If we have it we check the number if not we check the first number
 			// and we add if it is correct.
 			if(this.hitsTable.ContainsKey (sourceAddr))
 			{
-			    Debug.VerboseWrite("Existing ip in collection: "+sourceAddr
-			             +" port "+packet.DestinationPort, 
+			    Debug.VerboseWrite("Existing address "+sourceAddr
+			             +" for port "+packet.DestinationPort, 
 			             VerbosityLevels.High);
 			    
 				int next = (int)this.hitsTable[sourceAddr];
+				int ePort = this.CallSequence.Ports[next];
 				
-				if(packet.DestinationPort == this.CallSequence.Ports[next])
+				if(packet.DestinationPort == ePort)
 				{
-					//Increment expected packet number
-					this.hitsTable [sourceAddr] = next + 1;
+				    Debug.VerboseWrite("SequenceDetector:: Received port expected: "+ePort, 
+			             VerbosityLevels.High);
+					next++;
 					
-					if((next+1) == this.CallSequence.Ports.Length)
+					if(next >= this.CallSequence.Ports.Length)
 					{
-					    Debug.VerboseWrite("Sequence hit for ip: "+sourceAddr, 
+					    Debug.VerboseWrite("SequenceDetector:: Sequence hit for ip: "+sourceAddr, 
 					               VerbosityLevels.High);
+					               
 					    this.hitsTable.Remove(sourceAddr);
+					    
 					    //A sequence have been completely detected so we must
 					    //notify other about it. We serialize the CallSequence
 					    //object as an xml
@@ -104,19 +110,44 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 						    this.CallSequence.Store(), 
 						    this.CallSequence.TargetPort);
 					}
+					else
+					{
+					   	 //Increment expected packet number
+					     this.hitsTable [sourceAddr] = next;
+					}
 				}
 				else
 				{
+			        Debug.VerboseWrite("SequenceDetector:: Unexpected port "+packet.DestinationPort, 
+					               VerbosityLevels.High);
 					//Reset expected packet number					
 					this.hitsTable.Remove(sourceAddr);
 				}
 			}
-			else if(packet.DestinationPort == this.CallSequence.Ports[0])
-			{
-			    Debug.VerboseWrite("Adding ip in collection: "+sourceAddr
-			             +" port "+packet.DestinationPort, 
-			             VerbosityLevels.High);
-				this.hitsTable.Add(this.CallSequence.Address, 1);
+			else
+			{ 
+			    Debug.VerboseWrite("SequenceDetector:: Not in collection ", 
+					               VerbosityLevels.High);    
+					               			
+    			if(packet.DestinationPort == this.CallSequence.Ports[0])
+    			{
+    			    Debug.VerboseWrite("Adding ip in collection: "+sourceAddr
+    			             +" port "+packet.DestinationPort, 
+    			             VerbosityLevels.High);
+    				this.hitsTable.Add(sourceAddr, 1);
+    			}
+    			else
+    			{
+    			    Debug.VerboseWrite ("SequenceDetector: Packet "+
+    			             "with port "+packet.DestinationPort+" doesn't match first port "+ 
+    			             this.CallSequence.Ports[0]+ 
+    			             " and isn't in the collection ("+
+    			             this.hitsTable.Count+")");
+    			             
+    			    object[] arr = new object[this.hitsTable.Count];
+    			    this.hitsTable.Keys.CopyTo(arr, 0);
+    			    Debug.VerboseWrite ("Details: ", arr, VerbosityLevels.Insane);
+    			}
 			}
 		}
 		
@@ -126,6 +157,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		
 		private void OnSequenceDetectedHelper(string ip, string seq, int port)
 		{
+		    Debug.VerboseWrite ("SequenceDetector:: Sequence detected for ip "+ip+" and port "+port);
 		    SequenceDetectorEventArgs args = new SequenceDetectorEventArgs(ip, seq, port);
 		    
 			if(SequenceDetected != null)

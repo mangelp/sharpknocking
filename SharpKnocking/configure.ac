@@ -16,6 +16,10 @@ AC_PATH_PROG(MCS, mcs, no)
 if test "x$MCS" = "xno"; then
         AC_MSG_ERROR([mcs Not found])
 fi
+AC_PATH_PROG(GMCS, gmcs, no)
+if test "x$GMCS" = "xno"; then
+        AC_MSG_ERROR([gmcs Not found])
+fi
 
 
 PKG_CHECK_MODULES([GTK_SHARP_20], [gtk-sharp-2.0])
@@ -75,26 +79,26 @@ fi
 
 
 AC_CONFIG_FILES([
-./PortKnocker/SharpKnocking.PortKnocker.pc
-./NetfilterFirewall/Makefile
-./KnockingDaemonControl/knockingdaemoncontrol
-./PortKnocker/portknocker
-./KnockingDaemon/knockingdaemon
-./PortKnocker/Makefile
 ./CommonWidgets/SharpKnocking.CommonWidgets.pc
-./Doorman/SharpKnocking.Doorman.pc
-./KnockingDaemonControl/Makefile
-./NetfilterFirewall/SharpKnocking.NetfilterFirewall.pc
-./KnockingDaemon/SharpKnocking.KnockingDaemon.pc
-./KnockingDaemon/Makefile
 ./Common/SharpKnocking.Common.pc
-./CommonWidgets/Makefile
-./Doorman/doorman
+./PortKnocker/SharpKnocking.PortKnocker.pc
+./PortKnocker/Makefile
+./KnockingDaemon/Makefile
+./Doorman/SharpKnocking.Doorman.pc
+./KnockingDaemonControl/knockingdaemoncontrol
+./KnockingDaemon/SharpKnocking.KnockingDaemon.pc
+./NetfilterFirewall/Makefile
+./KnockingDaemonControl/Makefile
+./PortKnocker/portknocker
 ./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc
+./Doorman/doorman
 ./Makefile
 sharpknocking.pc
+./CommonWidgets/Makefile
 ./Common/Makefile
 ./Doorman/Makefile
+./NetfilterFirewall/SharpKnocking.NetfilterFirewall.pc
+./KnockingDaemon/knockingdaemon
 
 ])
 

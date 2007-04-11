@@ -1,7 +1,9 @@
 
 using System;
 using System.Net;
+using System.Threading;
 using System.Collections;
+using System.Runtime.Remoting.Contexts;
 
 namespace SharpKnocking.Common
 {
@@ -138,6 +140,17 @@ namespace SharpKnocking.Common
 	        {
 	            return false;
 	        }
+	    }
+	    
+	    public static void PrintThreadInformation(string loc)
+	    {
+	        Context con = Thread.CurrentContext;
+	        Thread curr = Thread.CurrentThread;
+	        
+	        Debug.VerboseWrite("** ["+loc+"] Context: "+con.ContextID+
+	                           " Thread: "+curr.Name+"("+curr.GetHashCode()+")"+
+	                           " Apartment: "+curr.ApartmentState+
+	                           " State: "+curr.ThreadState+" **");
 	    }
 	}
 }

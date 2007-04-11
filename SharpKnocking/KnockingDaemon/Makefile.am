@@ -2,7 +2,7 @@
 # Warning: This is an automatically generated file, do not edit!
 
 if ENABLE_DEBUG
-ASSEMBLY_COMPILER_COMMAND = mcs
+ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG "-main:SharpKnocking.KnockingDaemon.MainClass"
 
 ASSEMBLY = ./bin/Debug/KnockingDaemon.exe
@@ -15,7 +15,7 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ./bin/Debug
 endif
 if ENABLE_RELEASE
-ASSEMBLY_COMPILER_COMMAND = mcs
+ASSEMBLY_COMPILER_COMMAND = gmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4
 ASSEMBLY = ./bin/Release/KnockingDaemon.exe
 COMPILE_TARGET = exe

@@ -114,26 +114,26 @@ namespace SharpKnocking.Doorman
 		
 			// First we confirm
 			
-			ResponseType res = 
+			ResponseType resExit = 
 				ConfirmDialog.Show(mainWindow, "¿Realmente deseas cerrar Doorman?");
+				
 			
-			if(res == ResponseType.Yes)
+			if(resExit == ResponseType.Yes)
 			{	
-			    
-			    SaveData();
-				daemonComm.SendCommand(RemoteCommandActions.Bye);
-				
-				
-				res = ConfirmDialog.Show(						
+			    ResponseType resKill = ConfirmDialog.Show(						
 						mainWindow, 
 						"¿Desea cerrar también el daemon de apertura de puertos");
 				
-				
-				
-				
-				if(res == ResponseType.Yes)
+				//FIX: If we exit and kill saveData is unnecesary
+				//If not first save the data and then send the bye command
+				if(resKill == ResponseType.Yes)
 				{					
 					daemonComm.SendCommand(RemoteCommandActions.Die);
+				}
+				else
+				{
+				    SaveData();
+				    daemonComm.SendCommand(RemoteCommandActions.Bye);
 				}
 				
 				Application.Quit ();

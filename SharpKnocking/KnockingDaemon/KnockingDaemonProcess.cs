@@ -37,11 +37,17 @@ namespace SharpKnocking.KnockingDaemon
         private CallSequence[] calls;
         private bool doCapture = true;
         private bool isInteractiveMode;
-        private TcpdumpMonitor monitor;
+        private static TcpdumpMonitor monitor;
         private Thread monitorThread;
         private bool running;
         private bool die;
         private SequenceDetectorManager seqManager;
+        
+        public bool Die
+		{
+		    get { return this.die;}
+		    set { this.die = value;}
+		}
         
         /// <summary>
         /// Gets/Sest if the capture process should be done
@@ -64,7 +70,7 @@ namespace SharpKnocking.KnockingDaemon
         public TcpdumpMonitor Monitor
         {
             get { return monitor;}
-            set { this.monitor = value;}
+            set { monitor = value;}
         }
         
         /// <summary>
@@ -149,48 +155,50 @@ namespace SharpKnocking.KnockingDaemon
 	        if(UnixNative.ExistsLockFile())
                 UnixNative.RemoveLockFile();
                 
-             if(this.monitor!=null)
+             if(monitor!=null)
              {
-                 this.monitor.Dispose();
-                 this.monitor = null;
+                 monitor.Dispose();
+                 monitor = null;
              }
         }
         
         /// <summary>
         /// Runs the comunication daemon
         /// </summary>
-        public void Run()
+        public static void Run(KnockingDaemonProcess daemon)
         {
-            this.running = true;
+            daemon.running = true;
+            
+            Net20.PrintThreadInformation("RUN");
             
             try
             {
                 //Init rules accessor
-                this.accessor.Init();
+                daemon.accessor.Init();
 
                 //Init communication
-                this.communicator.Init();
+                daemon.communicator.Init();
                 
                 //Init packet monitor
-                this.InternalStartMonitor();
+                daemon.InternalStartMonitor();
                 
                 //Keep the process up
-                while(!this.die)
+                while(!daemon.die)
                 {
                 	// FIX: Hey, we don't want to eat all CPU cicles.
-                	Thread.Sleep(100);	
+                	Thread.Sleep(50);
                 }
             }
             catch(Exception ex)
             {
                 Debug.VerboseWrite("KnockingDaemonProcess::Run(): Exception catched");
                 Debug.VerboseWrite("Details: "+ex);
-                throw ex;
+                daemon.die = true;
             }
             
-            this.running = false;
+            daemon.running = false;
             
-            this.Stop();
+            daemon.InternalStopMonitor();
             
             Debug.VerboseWrite("KnockingDaemonProcess::Run(): Exiting");
         }
@@ -200,19 +208,27 @@ namespace SharpKnocking.KnockingDaemon
         /// </summary>
         public void Stop()
         {
-            Console.Out.WriteLine("KnockingDaemonProcess::Stop():"+
-                            "Stop requested.");
-            this.die = true;
-            this.InternalStopMonitor();
-            
-            if(this.monitorThread!=null)
-            {
-                Debug.VerboseWrite ("KnockingDaemonProcess::InternalStopMonitor:"+
-                        " Thread status: "+this.monitorThread.ThreadState);
-            }
-            
-            Console.Out.WriteLine("KnockingDaemonProcess::Stop():"+
-                            "Stopping requested. Daemon will die now");
+           Net20.PrintThreadInformation("STOP");
+           Debug.VerboseWrite("KnockingDaemonProcess::Stop():"+
+                           "Stop requested.");
+           this.die = true;
+           
+           if(this.monitorThread!=null)
+           {
+               Debug.VerboseWrite ("KnockingDaemonProcess::Stop:"+
+                       " Thread status: "+this.monitorThread.ThreadState);
+           }
+           
+           Console.Out.WriteLine("KnockingDaemonProcess::Stop():"+
+                           "Stopping requested. Wait while daemon dies ...");
+                           
+           if(this.accessor !=null)
+           {
+               this.accessor.End ();
+               this.accessor = null;
+           }
+
+           this.InternalStopMonitor();
         }
         
         /// <summary>
@@ -220,6 +236,7 @@ namespace SharpKnocking.KnockingDaemon
         /// </summary>
         public void HotRestart()
         {
+            Net20.PrintThreadInformation("HOTRESTART");
             Debug.VerboseWrite("KnockingDaemonProcess::HotRestart(): Invoked ...");
             this.InternalStopMonitor();
             
@@ -246,19 +263,15 @@ namespace SharpKnocking.KnockingDaemon
                 return;
             }
             
+            Net20.PrintThreadInformation("INTERNAL_STOP_MONITOR");
             Debug.VerboseWrite("KnockingDaemonProcess::InternalStopMonitor: "+
                     "Stopping capture processing.");
                     
-            if(this.monitor!= null)
+            if(monitor!= null)
             {
-                this.monitor.Stop();
-                this.monitor = null;
-            }
-            
-            if(this.monitorThread!=null)
-            {
-                Debug.VerboseWrite ("KnockingDaemonProcess::InternalStopMonitor:"+
-                        " Thread status: "+this.monitorThread.ThreadState);
+                monitor.Stop();
+                while(!monitor.Die);
+                monitor = null;
             }
            
             if(this.seqManager!=null)
@@ -279,6 +292,7 @@ namespace SharpKnocking.KnockingDaemon
                 return;
             }
        
+            Net20.PrintThreadInformation("INTERNAL_START_MONITOR");
             Debug.Write("KnockingDaemonProcess:: Initing packet capture process");
            
             try
@@ -288,20 +302,23 @@ namespace SharpKnocking.KnockingDaemon
                 //Load the calls
                 this.calls = CallsLoader.Load();
                 //Create a new monitor for these calls
-                this.monitor = new TcpdumpMonitor(this.calls);
+                monitor = new TcpdumpMonitor(this.calls);
                 //Create a new sequence manager that gets the notifications about
                 //packets from the monitor and uses the current calls array.
-                this.seqManager = new SequenceDetectorManager(this.calls, this.monitor);
+                this.seqManager = new SequenceDetectorManager(this.calls, monitor);
                 this.seqManager.SequenceDetected +=
                 	new SequenceDetectorEventHandler(OnSequenceDetectedHandler);
                 
                 if(this.monitorThread!=null)
+                {
                     this.monitorThread = null;
+                }
                     
                 //Start a new thread
-                this.monitorThread = new Thread(new ThreadStart(this.monitor.Run));
+                this.monitorThread = new Thread(new ParameterizedThreadStart(TcpdumpMonitor.Run));
+                this.monitorThread.Name = "TcpdumpMonitorThread";
                 Debug.VerboseWrite ("KnockingDaemonProcess::Starting new thread", VerbosityLevels.High);
-                this.monitorThread.Start();
+                this.monitorThread.Start(monitor);
             }
             catch(ThreadAbortException ex)
             {
@@ -315,11 +332,14 @@ namespace SharpKnocking.KnockingDaemon
                         SequenceDetectorEventArgs args)
         {
         
-        	Debug.VerboseWrite("Sequence detected");
+        	Debug.VerboseWrite("KnockingDaemonProcess::Sequence detected");
+        	
             if(this.isInteractiveMode)
             {
-            	Debug.VerboseWrite("Asking Doorman for clearance to continue");
+            	Debug.VerboseWrite("KnockingDaemonProcess::Asking Doorman for clearance to continue");
                 this.pendingCalls.Add (args.IP+":"+args.Port, null);
+                Debug.VerboseWrite ("KnockingDaemonProcess::OnSequenceDetectedHandler:"
+                        +"Sequence requested for accept!");
                 this.communicator.SendRequest (RemoteCommandActions.AccessRequest, 
                         args.IP + "<>" + args.SerializedSequence);  
             }
@@ -349,7 +369,8 @@ namespace SharpKnocking.KnockingDaemon
                     break;
                 case RemoteCommandActions.HotRestart:
                     this.HotRestart();
-                    this.communicator.SendResponse(args.Action, true);
+                    //FIX: Don't answer hot restart command
+                    //this.communicator.SendResponse(args.Action, true);
                     break;
                 case RemoteCommandActions.StartInteractiveMode:
                     this.isInteractiveMode = true;
