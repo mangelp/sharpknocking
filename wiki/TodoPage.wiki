@@ -1,6 +1,15 @@
 #summary Todo list of features
 #labels Featured
 
-=== Full feature list for next versions ===
+== Full feature list for next versions ==
 
-  * Protect only a range of ports and let the rest open to the net.
+  * Protect only a range of ports and let the rest open to the net and/or redirect them to an existing chain in the firewall.
+  * Allow more that one port to open after a successfull call sequence.
+  * Specify actions in the sequences. The actions may be executed by the daemon when a successfull call is detected and it specifies an action.
+  * Avoid duplicate sequences from an already authorized ip (for a port(s)).
+  * Add a timer to delete authentications in the daemon.
+  * Allow to check if an authentication if still valid in the PortKnocker app.
+  * Create script to start the daemon at init.
+  * Usage statistics.
+  * Interactive mode from Doorman.
+  * Improve knocking security.
