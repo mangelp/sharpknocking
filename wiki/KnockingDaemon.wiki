@@ -2,7 +2,7 @@
 
 *Mission*
 
-Manages all the sequences and comunicates against the daemon.
+Captures incoming packets and detects calling sequences. When a calling sequence is correct the respective ports are opened for the sending ip.
 
 *Notes*
 
