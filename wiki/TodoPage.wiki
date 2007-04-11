@@ -1,0 +1,6 @@
+#summary Todo list of features
+#labels Featured
+
+=== Full feature list for next versions ===
+
+  * Protect only a range of ports and let the rest open to the net.
