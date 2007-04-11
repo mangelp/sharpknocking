@@ -106,7 +106,7 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
             {
                 Debug.Write("Error in rule daemon:\n"+ex);
                 Debug.Write("Restoring previous rule set...");
-                this.fManager.RestoreRuleSetBackup(this.backupRulesFile);
+                this.fManager.RestoreRuleSetBackup(this.backupRulesFile, true);
                 this.backupRulesFile = String.Empty;
             }
 		}
@@ -119,13 +119,21 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 		{
 		    if(!this.DryRun && !Net20.StringIsNullOrEmpty(this.backupRulesFile))
 		    {
-		        Debug.Write("Restoring previous rule set ...");
-		        this.fManager.RestoreRuleSetBackup(this.backupRulesFile);
+		        Debug.Write("NetfilterAccessor:: Restoring previous rule set ...");
+		        this.fManager.RestoreRuleSetBackup(this.backupRulesFile, true);
 		        this.backupRulesFile = String.Empty ;
+		    }
+		    else if(this.DryRun)
+		    {
+		        Debug.VerboseWrite("NetfilterAccessor:: Restore not required. Running in dry mode"); 
+		    }
+		    else
+		    {
+		        Debug.VerboseWrite("NetfilterAccessor:: Restore not required. Empty file to restore"); 
 		    }
 		    
 		    //This clears the manager rule set 
-		    this.fManager.Dispose();
+		    this.fManager.Clear ();
 		}
 		
 		/// <summary>
@@ -133,7 +141,17 @@ namespace SharpKnocking.KnockingDaemon.FirewallAccessor
 		/// </summary>
 		public void AddAccessToIp(string ip, int port)
 		{
-		    this.fManager.GrantAccess(ip, port);
+		    Debug.VerboseWrite ("NetfilterAccessor:: Adding access to ip "+ip+
+		              " in port "+port+" for protocols tcp and udp");
+		    try
+		    {
+		        this.fManager.GrantAccess(ip, port, ProtocolType.Tcp);
+		        this.fManager.GrantAccess(ip, port, ProtocolType.Udp);
+		    }
+		    catch(Exception ex)
+		    {
+		        Debug.VerboseWrite("NetfilterAccessor::AddAccessToIp: Exception\nDetails:\n"+ex);
+		    }
 		}
 		
 		/// <summary>

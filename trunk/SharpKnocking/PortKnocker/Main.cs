@@ -2,6 +2,8 @@
 using System;
 using Gtk;
 
+using SharpKnocking.Common;
+
 namespace SharpKnocking.PortKnocker
 {
 	public class MainClass
@@ -9,6 +11,10 @@ namespace SharpKnocking.PortKnocker
 	
 		public static void Main (string[] args)
 		{
+		    Debug.VerbLevel = VerbosityLevels.Insane;
+		    Debug.DebugEnabled = true;
+		    Debug.MoreVerbose = true;
+		    
 		    // We start the application.
 		    Application.Init ();
 			new MainWindow ();

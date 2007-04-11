@@ -110,7 +110,7 @@ namespace SharpKnocking.NetfilterFirewall
 		{
 		    if(args.Item.HasImplicitExtension)
 		    {
-		        Debug.VerboseWrite("NetfilterRule: Option added with implicit extension: "+args.Item);
+		        Debug.VerboseWrite("NetfilterRule:: Option added with implicit extension: "+args.Item);
     		    //Exit if the implicit extension type have been loaded
     		    if(this.IsExtensionHandlerLoaded(args.Item.ExtensionType))
     		        return;
@@ -119,7 +119,7 @@ namespace SharpKnocking.NetfilterFirewall
 		    }
 		    else if(args.Item is MatchExtensionOption)
 		    {
-		        Debug.VerboseWrite("NetfilterRule: Option added with explicit extension: "+args.Item);
+		        Debug.VerboseWrite("NetfilterRule:: Option added with explicit extension: "+args.Item);
 		        //If it's this option we load the extension
 		        Type t = MatchExtensionFactory.GetExtensionType(args.Item.Value);
 		        this.LoadExtensionHandler(t);

@@ -46,18 +46,18 @@ namespace SharpKnocking.NetfilterFirewall
             string cmd = String.Format("{0}-save > {1}",ipTablesCommand, fileName);
             int ret = Mono.Unix.Native.Syscall.system(cmd);
             
-            
-            
             if(ret!=0)
             {
-                //throw new InvalidOperationException("The command '"+cmd+"' returned "+ret);
+                throw new InvalidOperationException("The command '"+cmd+"' returned "+ret);
             }
-            else
-            {
-            	// It returns an errorcode also if there are no rules.
-            	System.IO.File.Create(fileName);
-            }
-            
+            //FIX²: This fixes crashing when the rule list is empty but prevents the 
+            //current rule set of being recovered and lets the machine firewall in an
+            //inconvenient state.
+//            else
+//            {
+//            	//It returns an errorcode also if there are no rules.
+//            	System.IO.File.Create(fileName);
+//            }
             
             Debug.VerboseWrite("Saving current netfilter rule set to file '"+fileName+"': success");
             

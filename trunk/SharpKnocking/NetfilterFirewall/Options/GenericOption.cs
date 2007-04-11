@@ -155,6 +155,8 @@ namespace SharpKnocking.NetfilterFirewall.Options
                                                     extension.ToString().ToLower()+
                                                     ".");
 		    }
+		    
+		    this.hasImplicitExtension = true;
 		}
 
 	    //cache for decoding names as options

@@ -54,12 +54,15 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 			// The timer is stopped.
 			timer.Enabled = false;
 			
+			Debug.VerboseWrite ("PacketAssembler::Adding line: "+line);
+			
 			string [] linePieces = line.Split(' ');
 			
 			bool isHeader = IsHeaderLine(linePieces);	
 		
 			if(isHeader)
 			{		
+			    Debug.VerboseWrite ("PacketAssembler::Header received. Assembling ... ");
 				// If it is a header, we consider the previous package 
 				// is complete.				
 				AssemblePackage();
@@ -98,6 +101,9 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 				
 				string order =  line[8].Substring(0,2);
 								
+			    Debug.VerboseWrite ("PacketAssembler::AssemblePackage(): Data "+
+			             " Time: "+time+", Port: "+port+", Order: "+order+", Addr: "+sourceAddress);
+			             
 				PacketInfo packet = PacketInfo.Parse(
 					time,
 					port,
@@ -137,6 +143,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		
 		public void OnPacketAssembledHelper(PacketInfo packet)
 		{
+		    Debug.VerboseWrite ("PacketAssembler::Packet assembled successfully");
 			if(PacketCaptured != null)
 				PacketCaptured(this, new PacketCapturedEventArgs(packet));
 		}

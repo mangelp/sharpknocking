@@ -55,6 +55,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 	   {
 	       this.ip = ip;
 	       this.serializedSequence = serSeq;
+	       this.port = port;
 	   }
 	}
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 
+using SharpKnocking.Common;
 using SharpKnocking.NetfilterFirewall;
 
 namespace SharpKnocking.NetfilterFirewall.ExtendedMatch
@@ -24,6 +25,7 @@ namespace SharpKnocking.NetfilterFirewall.ExtendedMatch
 	    {
 	        get
 	        {
+	            Debug.VerboseWrite("ReadOnlyMatchExtensionListAdapter:: Returning extension for "+extension);
 	            return this.adapted[extension.ToString()];
 	        }
 	    }

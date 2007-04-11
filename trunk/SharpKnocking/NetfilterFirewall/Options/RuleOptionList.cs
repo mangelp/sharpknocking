@@ -121,7 +121,6 @@ namespace SharpKnocking.NetfilterFirewall.Options
 		{
 			this.OnItemsCleared();
 		}
-
 		
 		protected override void OnInsertComplete (int index, object value)
 		{

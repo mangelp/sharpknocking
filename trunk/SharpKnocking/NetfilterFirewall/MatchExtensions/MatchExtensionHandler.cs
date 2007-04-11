@@ -118,6 +118,8 @@ namespace SharpKnocking.NetfilterFirewall.ExtendedMatch
 	    /// </remarks>
 	    public virtual void AddParameter(string name, string value)
 	    {
+	        Debug.VerboseWrite("MatchExtensionHandler::AddParameter");
+	        
 		    if(!this.IsValidName(name))
 		    {
 		        throw new ArgumentException(
@@ -136,7 +138,7 @@ namespace SharpKnocking.NetfilterFirewall.ExtendedMatch
 	        param.Value = value;
 	        param.IsLongOption = name.Length>1;
 	        
-	        Debug.VerboseWrite("MatchExtensionHandler:"+this.extensionName
+	        Debug.VerboseWrite("MatchExtensionHandler::"+this.extensionName
 	                     +": Adding option "+param, VerbosityLevels.Insane);
 	        
 	        this.AddParameterWithoutChecks(param);

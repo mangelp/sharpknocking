@@ -46,7 +46,7 @@ am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
-CONFIG_CLEAN_FILES = knockingdaemon SharpKnocking.KnockingDaemon.pc
+CONFIG_CLEAN_FILES = SharpKnocking.KnockingDaemon.pc knockingdaemon
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(pkglibdir)" \
 	"$(DESTDIR)$(pkgconfigdir)"
 binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
@@ -88,6 +88,7 @@ GLADE_SHARP_20_CFLAGS = @GLADE_SHARP_20_CFLAGS@
 GLADE_SHARP_20_LIBS = @GLADE_SHARP_20_LIBS@
 GLIB_SHARP_20_CFLAGS = @GLIB_SHARP_20_CFLAGS@
 GLIB_SHARP_20_LIBS = @GLIB_SHARP_20_LIBS@
+GMCS = @GMCS@
 GTK_SHARP_20_CFLAGS = @GTK_SHARP_20_CFLAGS@
 GTK_SHARP_20_LIBS = @GTK_SHARP_20_LIBS@
 INSTALL_DATA = @INSTALL_DATA@
@@ -115,38 +116,33 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
+ac_ct_STRIP = @ac_ct_STRIP@
+ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__leading_dot = @am__leading_dot@
 am__tar = @am__tar@
 am__untar = @am__untar@
 bindir = @bindir@
 build_alias = @build_alias@
 datadir = @datadir@
-datarootdir = @datarootdir@
-docdir = @docdir@
-dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host_alias = @host_alias@
-htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
 libdir = @libdir@
 libexecdir = @libexecdir@
-localedir = @localedir@
 localstatedir = @localstatedir@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
-pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
-psdir = @psdir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
-@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = mcs
+@ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
+@ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_COMMAND = gmcs
 @ENABLE_DEBUG_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG "-main:SharpKnocking.KnockingDaemon.MainClass"
 @ENABLE_RELEASE_TRUE@ASSEMBLY_COMPILER_FLAGS = -noconfig -codepage:utf8 -warn:4
 @ENABLE_DEBUG_TRUE@ASSEMBLY = ./bin/Debug/KnockingDaemon.exe
@@ -240,9 +236,9 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-knockingdaemon: $(top_builddir)/config.status $(srcdir)/knockingdaemon.in
-	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 SharpKnocking.KnockingDaemon.pc: $(top_builddir)/config.status $(srcdir)/SharpKnocking.KnockingDaemon.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+knockingdaemon: $(top_builddir)/config.status $(srcdir)/knockingdaemon.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-binSCRIPTS: $(bin_SCRIPTS)
 	@$(NORMAL_INSTALL)

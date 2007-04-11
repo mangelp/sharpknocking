@@ -34,6 +34,7 @@ namespace SharpKnocking.NetfilterFirewall.Options
 	        set
 	        {
 	            this.protocol = value;
+	            this.Value = value.ToString().ToLower();
 	        }
 	    }
 	    

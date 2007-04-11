@@ -94,7 +94,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		/// </param>
 		public void CheckPacket(PacketInfo packet)
 		{
-			Console.WriteLine("Manager recived {0}",packet);
+			Debug.Write("SequenceDetectorManager:: Received packet: "+packet);
 			
 			foreach(SequenceDetector sd in detectors)
 			{
@@ -132,6 +132,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		//Notifies about the sequenceDetected event from one detector
 		private void OnSequenceDetectedEvent(SequenceDetectorEventArgs args)
 		{
+		    Debug.VerboseWrite ("SequenceDetectorManager:: Sequence detected!. Notifying ...");
 			if(this.SequenceDetected != null)
 			{
 			    this.SequenceDetected(this, args); 
@@ -140,6 +141,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		
 		private void OnPacketCaptured(object sender, PacketCapturedEventArgs a)
 		{
+		    Debug.VerboseWrite ("SequenceDetectorManager:: Packet captured. Analizing ...");
 			// When a packet is captured, we check the packet
 			CheckPacket(a.Packet);
 		}

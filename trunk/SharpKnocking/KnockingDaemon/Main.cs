@@ -27,10 +27,10 @@ namespace SharpKnocking.KnockingDaemon
     /// </remarks>
 	class MainClass
 	{
-
         [MTAThread()]
 		public static int Main(string[] args)
 		{
+		    Thread.CurrentThread.Name = "MainDaemonThread";
             //This is the daemon in charge of inter process comunication. It
             //behaves as a remote control for all the functionality.
             KnockingDaemonProcess daemon = new KnockingDaemonProcess();
@@ -108,23 +108,25 @@ namespace SharpKnocking.KnockingDaemon
                 Debug.Write("Lock file created!");
             }
 
-                        
+            int rCode = 0;
+              
             try
             {
                 //Run the communication daemon
                 Debug.Write("Instantiating communication daemon");
-                daemon.Run();
+                KnockingDaemonProcess.Run(daemon);
             }
             catch(Exception ex)
             {
                 Debug.VerboseWrite("Unexpected fail: "+ex.Message, VerbosityLevels.Insane );
                 Debug.Write("Details: \n"+ex);
-                Debug.Write("Finishing daemon. Removing lock file...");
-                UnixNative.RemoveLockFile();
-                return 3;
+                rCode = 3;
             }
+            
+            Debug.Write("Finishing daemon. Removing lock file...");
+            UnixNative.RemoveLockFile();
 		    
-		    return 0;
+		    return rCode;
 		}
         
         private static void PrintHelpMessage()

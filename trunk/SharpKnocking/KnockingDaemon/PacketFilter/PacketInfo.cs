@@ -94,12 +94,14 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 			PacketInfo packet = new PacketInfo();
 			
 			bool error = false;
+			string msg = String.Empty;
 			
+			//Port conversion
 			try
 			{
 				packet.port = Int32.Parse(destinationPort);
 			}
-			catch(FormatException e)
+			catch(FormatException)
 			{
 				// We try to look in the dictionary.
 				string port = PortInverseResolver.Translate(destinationPort);
@@ -107,6 +109,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 				if(Net20.StringIsNullOrEmpty(port))
 				{
 					error = true;
+					msg = "Can't resolve port "+destinationPort;
 				}
 				else
 				{
@@ -114,24 +117,50 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 				}
 			}	
 			
+			//Time check
 			try
 			{
-							
 				packet.order = Int32.Parse(order, NumberStyles.AllowHexSpecifier);			
 				packet.time = arrivalTime;				
-				
-				packet.sourceAddress = IPAddress.Parse(sourceAddress); 			
 			}
-			catch(Exception e)
+			catch(Exception ex)
 			{				
 				error = true;
-				
+				msg = "Error converting port or time: "+ex.Message; 
+			}
+			
+			try
+			{
+			    packet.sourceAddress = IPAddress.Parse(sourceAddress); 
+			}
+			catch(Exception)
+			{
+			   string[] pieces = Net20.StringSplit(sourceAddress, true, '.');
+			   
+			   if(pieces.Length >=4)
+			   {
+			       sourceAddress = pieces[0]+"."+pieces[1]+"."+pieces[2]+"."+pieces[3];
+			       try
+			       {
+			             packet.sourceAddress = IPAddress.Parse(sourceAddress);   
+			       }
+			       catch(Exception exe)
+			       {
+			             msg = "Wrong address format: "+sourceAddress+", Detail: "+exe.Message;      
+			       }
+			   }
+			   else
+			     msg = "Wrong address format: "+sourceAddress;
 			}
 			
 			if(error)
 			{
 				packet = null;
-				Debug.VerboseWrite("Malformed packet received");
+				Debug.VerboseWrite("Malformed packet received. Detail: "+msg);
+			}
+			else
+			{
+			    Debug.VerboseWrite("Package assembled!");
 			}
 			
 			return packet;
