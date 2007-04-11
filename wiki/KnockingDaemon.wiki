@@ -1,0 +1,9 @@
+#summary KnockingDaemon application
+
+*Mission*
+
+Manages all the sequences and comunicates against the daemon.
+
+*Notes*
+
+All the sequences must be added with doorman before they become usable.
