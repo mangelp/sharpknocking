@@ -17,7 +17,7 @@
   * Command line options to configure things.
   * Remote control program to query daemon information and do start/stop operations.
   * When doing a restart in the daemon all rules must be removed.
-  * There is a [http://www.chrishowie.com/ wrapper] for libpcap done in c#. Can we get any benefits of using it instead of a tcpdump process?
+  * There is a [http://www.chrishowie.com/ wrapper]([https://layla.chrishowie.com/svn/pcap-sharp svn repo]) for libpcap done in c#. Can we get any benefits of using it instead of a tcpdump process?
 
 === PortKnocker ===
   * Add support to check if the last authentication if still valid.
@@ -36,4 +36,3 @@
 
 === Misc ===
 Review some files: README, INSTALL, TODO, ...
-
