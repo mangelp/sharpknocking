@@ -3,13 +3,37 @@
 
 == Full feature list for next versions ==
 
+=== KnockingDaemon ===
   * Protect only a range of ports and let the rest open to the net and/or redirect them to an existing chain in the firewall.
   * Allow more that one port to open after a successfull call sequence.
   * Specify actions in the sequences. The actions may be executed by the daemon when a successfull call is detected and it specifies an action.
   * Avoid duplicate sequences from an already authorized ip (for a port(s)).
-  * Add a timer to delete authentications in the daemon.
-  * Allow to check if an authentication if still valid in the PortKnocker app.
+  * Add a timer to delete authentications (rules in iptables that allows an ip to open a communication for a set of ports) in the daemon.
   * Create script to start the daemon at init.
   * Usage statistics.
-  * Interactive mode from Doorman.
   * Improve knocking security.
+  * Improve daemon design. There is a severe security hole in remoting.
+  * Add a daemon configuration file.
+  * Command line options to configure things.
+  * Remote control program to query daemon information and do start/stop operations.
+  * When doing a restart in the daemon all rules must be removed.
+  * There is a [http://www.chrishowie.com/ wrapper] for libpcap done in c#. Can we get any benefits of using it instead of a tcpdump process?
+
+=== PortKnocker ===
+  * Add support to check if the last authentication if still valid.
+  * Winforms version to use it on windows and make it more portable for default windows setups.
+
+=== Doorman ===
+  * Interactive mode from Doorman.
+  * Remote administration mode.
+  * Improve security measures.
+  * Netfiler rules editor. A default rule can be configured to be used when the daemon shut downs or to redirect packets from a host that got a valid access.
+  * 
+
+=== SharpKnocking.NetfilterFirewall ===
+  * This class library needs tons of love. Needs refactoring and deep testing. 
+  * It's a big thing that have little use for SharpKnocking. Maybe it should be removed and replaced the functionality that provides with simpler stuff and make it an independent library.
+
+=== Misc ===
+Review some files: README, INSTALL, TODO, ...
+
