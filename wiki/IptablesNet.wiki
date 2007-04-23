@@ -1,0 +1,18 @@
+#summary Netfilter's ip_tables .Net wrapper throught iptables command
+
+== What's this? ==
+
+It's a new subproyect that aims to create a managed wrapper to handle rules in the netfilter firewall
+
+
+== Details ==
+
+Currently the code that is under the SharpKnocking.NetfilterFirewall namespace is being refactorized. That code uses the iptables command-line tool to change the current rule set so currently is a wrapper against that command.
+
+In a future it should be better to use some library or API to change the current rule set.
+
+The main objetive is to provide a object-oriented approach to every option but with some limitations. In the long term it should be easily extensible throught new targets and matches extensions and we should provide an api to do so.
+
+The initial version will be uploaded and integrated into svn tree in some weeks.
+
+
