@@ -82,6 +82,7 @@ namespace SharpKnocking.KnockingDaemon
                     PrintHelpMessage();
                     return 0;
                 }
+                
 		    }
 		    
 		    if(!UnixNative.ExecUserIsRoot())

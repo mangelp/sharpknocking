@@ -403,6 +403,8 @@ namespace SharpKnocking.KnockingDaemon
                 case RemoteCommandActions.Accept:
                 case RemoteCommandActions.Deny:
                 
+                	// If knocking daemon isn't in interactive mode,
+                	// we shouldn't have recived this.
                     if(!this.isInteractiveMode)
                         return;
                     
@@ -411,8 +413,10 @@ namespace SharpKnocking.KnockingDaemon
                     string ip;
                     CallSequence seq;
                     
-                    if(pos>=0)
+                    if(pos >= 0)
                     {
+                    	// TODO: Management of the data should be encapsulated
+                    	// FIX: Create class SequenceHitData, and make it serializable.
                         ip = xml.Substring(0, pos);
                         seq = CallSequence.LoadFromString (xml.Substring(pos+2));
                         if(!this.pendingCalls.Contains(ip+":"+seq.TargetPort))

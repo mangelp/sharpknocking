@@ -196,8 +196,7 @@ namespace SharpKnocking.Doorman
 			}
 	 
 			private FilterReturn ManagerFilter (IntPtr xevent, Event evnt)
-			{
-				//TODO: Implement;
+			{				
 				return FilterReturn.Continue;
 			}
 	 
