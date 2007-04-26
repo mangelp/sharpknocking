@@ -142,15 +142,20 @@ namespace SharpKnocking.Common
 	        }
 	    }
 	    
-	    public static void PrintThreadInformation(string loc)
-	    {
-	        Context con = Thread.CurrentContext;
-	        Thread curr = Thread.CurrentThread;
-	        
-	        Debug.VerboseWrite("** ["+loc+"] Context: "+con.ContextID+
-	                           " Thread: "+curr.Name+"("+curr.GetHashCode()+")"+
-	                           " Apartment: "+curr.ApartmentState+
-	                           " State: "+curr.ThreadState+" **");
-	    }
+//        /// <summary>
+//        /// Helper method to print information about the thread in which its
+//        /// called
+//        /// </summary>
+//	    public static void PrintThreadInformation(string loc)
+//	    {
+//	        Context con = Thread.CurrentContext;
+//	        Thread curr = Thread.CurrentThread;
+//	        
+//	        Debug.VerboseWrite("** ["+loc+"] Context: "+con.ContextID+
+//	                           " Thread: "+curr.Name+"("+curr.GetHashCode()+")"+
+//	                           " Apartment: "+curr.ApartmentState+
+//	                           " State: "+curr.ThreadState+" **",
+//                               VerbosityLevels.Insane);
+//	    }
 	}
 }

@@ -28,6 +28,7 @@ namespace SharpKnocking.Common.Remoting
 		private string remoteName;
 		
 		private string remoteUri;
+        private string localUri;
 		
 		public event RemotingCommunicatorEventHandler RequestReceived;
 		public event RemotingCommunicatorEventHandler ResponseReceived;
@@ -46,17 +47,26 @@ namespace SharpKnocking.Common.Remoting
 	       get { return this.disposed; }
 	    }
 	    
+        /// <summary>
+        /// Uri of the remote end to connect
+        /// </summary>
 	    public string RemoteUri
 	    {
 	       get { return this.remoteUri;}
 	    }
 	    
+        public string LocalUri
+        {
+            get { return this.localUri;}
+        }
+        
 	    public int LocalPort
 	    {
 	       get {return this.localPort ;}
 	       set 
 	       {
 	           this.localPort = value;
+               this.localUri = "tcp://localhost:"+this.localPort+"/"+this.localName;
 	       }
 	    }
 	    
@@ -66,6 +76,7 @@ namespace SharpKnocking.Common.Remoting
 	       set 
 	       {
 	           this.localName = value;
+               this.localUri = "tcp://localhost:"+this.localPort+"/"+this.localName;
 	       }
 	    }
 	    
@@ -81,7 +92,7 @@ namespace SharpKnocking.Common.Remoting
 	    
 	    public string RemoteName
 	    {
-	       get { return this.localName;}
+	       get { return this.remoteName;}
 	       set 
 	       {
 	           this.remoteName = value;
@@ -131,9 +142,7 @@ namespace SharpKnocking.Common.Remoting
                     throw new ArgumentException ("Must initialize all the properties", 
                                 "LocalPort, LocalName, RemotePort, RemoteName");
                                 
-            Debug.VerboseWrite("RemoteEndCommunicator: Registering remoting object with uri "+this.remoteUri );
-			
-			Debug.VerboseWrite(localPort +" "+ remotePort);
+            Debug.VerboseWrite("RemoteEndCommunicator: Registering remoting object with uri " +this.localUri);
 			
             this.channel = new TcpChannel(this.localPort);
             
@@ -143,7 +152,7 @@ namespace SharpKnocking.Common.Remoting
             this.localEnd.Valid = true;
             //Set as a remoting object to comunicate
             this.localEndRef = 
-            	RemotingServices.Marshal(this.localEnd , RemoteEndService.ManagerServiceName);
+            	RemotingServices.Marshal(this.localEnd , this.localName);
             
 			//Set a event handler to get notifications of incoming messages.
             this.localEnd.Received += new RemoteEndEventHandler(this.OnIncomingMessage);
@@ -224,7 +233,8 @@ namespace SharpKnocking.Common.Remoting
         	    
         	    try
         	    {
-        	                     
+        	        Debug.VerboseWrite ("Trying to connect to "+this.remoteType+
+                                        " in "+this.remoteName+":"+this.remotePort);
 	                this.remoteEnd = (RemoteEnd) Activator.GetObject(
 	                                               this.remoteType, 
 	                                               this.remoteUri);

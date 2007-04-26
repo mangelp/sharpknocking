@@ -11,6 +11,106 @@ namespace KnockingDaemonControl
 {
 	class MainClass
 	{
+	    [Alias("n", "a")]
+	    private Int32 testMe;
+	
+	    private int num;
+	    
+	    
+	    /// <summary>
+	    /// Get/Set the value for TestMe1 property
+	    /// </summary>
+	    /// <remarks>
+	    /// Generated automatically by a command.
+	    /// </remarks>
+	    public Int32 TestMe1
+	    {
+	    	get
+	    	{
+	    		return this.testMe;
+	    	}
+	    	set
+	    	{
+	    		this.testMe = value;
+	    	}
+	    }
+	    
+	    
+	    /// <summary>
+	    /// Get/Set the value for TestMe2 property
+	    /// </summary>
+	    /// <remarks>
+	    /// Generated automatically by a command.
+	    /// </remarks>
+	    public Int32 TestMe2
+	    {
+	    	get
+	    	{
+	    		return this.testMe;
+	    	}
+	    	set
+	    	{
+	    		this.testMe = value;
+	    	}
+	    }
+	    
+	    
+	    /// <summary>
+	    /// Get/Set the value for TestMe property
+	    /// </summary>
+	    /// <remarks>
+	    /// Generated automatically by a command.
+	    /// </remarks>
+	    public Int32 TestMe
+	    {
+	    	get
+	    	{
+	    		return this.testMe;
+	    	}
+	    	set
+	    	{
+	    		this.testMe = value;
+	    	}
+	    }
+	    
+	    
+	    /// <summary>
+	    /// Get/Set the value for Num property
+	    /// </summary>
+	    /// <remarks>
+	    /// Generated automatically by a command.
+	    /// </remarks>
+	    public Int32 Num
+	    {
+	    	get
+	    	{
+	    		return this.num;
+	    	}
+	    	set
+	    	{
+	    		this.num = value;
+	    	}
+	    }
+	    
+	    
+	    /// <summary>
+	    /// Get/Set the value for TestMe3 property
+	    /// </summary>
+	    /// <remarks>
+	    /// Generated automatically by a command.
+	    /// </remarks>
+	    public Int32 TestMe3
+	    {
+	    	get
+	    	{
+	    		return this.testMe;
+	    	}
+	    	set
+	    	{
+	    		this.testMe = value;
+	    	}
+	    }
+	   
 		public static void Main(string[] args)
 		{
             
