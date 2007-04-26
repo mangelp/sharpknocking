@@ -1,0 +1,30 @@
+<Project name="IptablesNet.Extensions.MatchExtensions" fileversion="2.0" Description="Matching extensions for iptables" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Debug" assembly="IptablesNet.Extensions.MatchExtensions" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin/Release" assembly="IptablesNet.Extensions.MatchExtensions" />
+      <Build debugmode="False" target="Library" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="./UdpMatchExtension.cs" subtype="Code" buildaction="Compile" />
+    <File name="./TcpMatchExtension.cs" subtype="Code" buildaction="Compile" />
+    <File name="./IcmpMatchExtension.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Definitions.cs" subtype="Code" buildaction="Compile" />
+    <File name="./StateMatchExtension.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Assembly" localcopy="True" refto="../../sharpknocking/SharpKnocking/Common/bin/Debug/SharpKnocking.Common.dll" />
+    <ProjectReference type="Project" localcopy="True" refto="IptablesNet.Core" />
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Project" localcopy="True" refto="IptablesNet.Net" />
+  </References>
+</Project>
