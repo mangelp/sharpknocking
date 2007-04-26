@@ -102,9 +102,9 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 					               
 					    this.hitsTable.Remove(sourceAddr);
 					    
-					    //A sequence have been completely detected so we must
-					    //notify other about it. We serialize the CallSequence
-					    //object as an xml
+					    // A sequence have been completely detected so we must
+					    // notify other about it. We serialize the CallSequence
+					    // object as an xml
 						this.OnSequenceDetectedHelper(
 							sourceAddr, 
 						    this.CallSequence.Store(), 

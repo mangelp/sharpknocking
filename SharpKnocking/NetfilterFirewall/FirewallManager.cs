@@ -449,6 +449,7 @@ namespace SharpKnocking.NetfilterFirewall
             
             Debug.VerboseWrite ("FirewallManager:: Creating new object", 
                     VerbosityLevels.Insane);
+                    
             //Clear ourselves from the static reference so everything gets removed.
             FirewallManager.instance = new FirewallManager ();
         }

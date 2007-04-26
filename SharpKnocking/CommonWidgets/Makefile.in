@@ -116,27 +116,32 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
-ac_ct_STRIP = @ac_ct_STRIP@
-ac_pt_PKG_CONFIG = @ac_pt_PKG_CONFIG@
 am__leading_dot = @am__leading_dot@
 am__tar = @am__tar@
 am__untar = @am__untar@
 bindir = @bindir@
 build_alias = @build_alias@
 datadir = @datadir@
+datarootdir = @datarootdir@
+docdir = @docdir@
+dvidir = @dvidir@
 exec_prefix = @exec_prefix@
 host_alias = @host_alias@
+htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
 install_sh = @install_sh@
 libdir = @libdir@
 libexecdir = @libexecdir@
+localedir = @localedir@
 localstatedir = @localstatedir@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
+pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
+psdir = @psdir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
@@ -149,8 +154,6 @@ target_alias = @target_alias@
 @ENABLE_RELEASE_TRUE@ASSEMBLY = ./bin/Release/CommonWidgets.dll
 @ENABLE_DEBUG_TRUE@COMPILE_TARGET = library
 @ENABLE_RELEASE_TRUE@COMPILE_TARGET = library
-@ENABLE_DEBUG_TRUE@PC_FILES_IN = SharpKnocking.CommonWidgets.pc.in
-@ENABLE_RELEASE_TRUE@PC_FILES_IN = SharpKnocking.CommonWidgets.pc.in
 @ENABLE_DEBUG_TRUE@PROJECT_REFERENCES = \
 @ENABLE_DEBUG_TRUE@	../Common/bin/Debug/SharpKnocking.Common.dll
 
@@ -159,6 +162,13 @@ target_alias = @target_alias@
 
 @ENABLE_DEBUG_TRUE@BUILD_DIR = ./bin/Debug
 @ENABLE_RELEASE_TRUE@BUILD_DIR = ./bin/Release
+PROGRAMFILES = \
+	SharpKnocking.Common.dll \
+	SharpKnocking.Common.dll.mdb  
+
+LINUX_PKGCONFIG = \
+	commonwidgets.pc  
+
 FILES = \
 	./ImageResources.cs \
 	./CallEditDialog.cs \
@@ -168,7 +178,8 @@ FILES = \
 	./CommonDialogs/OkDialog.cs \
 	./CommonDialogs/ConfirmDialog.cs \
 	./CommonDialogs/AppInfoDialog.cs \
-	./NodeStoreFilter.cs 
+	./NodeStoreFilter.cs \
+	./AssemblyInfo.cs 
 
 DATA_FILES = 
 RESOURCES = \
@@ -176,7 +187,11 @@ RESOURCES = \
 	./resources/sharpknocking22.png \
 	./resources/sharpknocking96.png 
 
-EXTRAS = 
+EXTRAS = \
+	SharpKnocking.Common.dll \
+	SharpKnocking.Common.dll.mdb \
+	commonwidgets.pc.in 
+
 REFERENCES = \
 	-r:System \
 	$(GTK_SHARP_20_LIBS) \

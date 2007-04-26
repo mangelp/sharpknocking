@@ -6,7 +6,6 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG
 ASSEMBLY = ./bin/Debug/CommonWidgets.dll
 COMPILE_TARGET = library
-PC_FILES_IN = SharpKnocking.CommonWidgets.pc.in
 PROJECT_REFERENCES =  \
 	../Common/bin/Debug/SharpKnocking.Common.dll
 BUILD_DIR = ./bin/Debug
@@ -16,11 +15,16 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4
 ASSEMBLY = ./bin/Release/CommonWidgets.dll
 COMPILE_TARGET = library
-PC_FILES_IN = SharpKnocking.CommonWidgets.pc.in
 PROJECT_REFERENCES =  \
 	../Common/bin/Release/SharpKnocking.Common.dll
 BUILD_DIR = ./bin/Release
 endif
+
+PROGRAMFILES = \
+	SharpKnocking.Common.dll \
+	SharpKnocking.Common.dll.mdb  
+LINUX_PKGCONFIG = \
+	commonwidgets.pc  
 
 	
 all: $(ASSEMBLY)
@@ -34,7 +38,8 @@ FILES = \
 	./CommonDialogs/OkDialog.cs \
 	./CommonDialogs/ConfirmDialog.cs \
 	./CommonDialogs/AppInfoDialog.cs \
-	./NodeStoreFilter.cs 
+	./NodeStoreFilter.cs \
+	./AssemblyInfo.cs 
 
 DATA_FILES = 
 
@@ -43,7 +48,10 @@ RESOURCES = \
 	./resources/sharpknocking22.png \
 	./resources/sharpknocking96.png 
 
-EXTRAS = 
+EXTRAS = \
+	SharpKnocking.Common.dll \
+	SharpKnocking.Common.dll.mdb \
+	commonwidgets.pc.in 
 
 REFERENCES =  \
 	-r:System \

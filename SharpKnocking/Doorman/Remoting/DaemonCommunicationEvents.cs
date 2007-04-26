@@ -25,11 +25,12 @@ namespace SharpKnocking.Doorman.Remoting
 			// We separate the xml representation of the CallSequence from
 			// the source ip with a <>, which cannot be present in the xml part.
 			
-			int idx = data.LastIndexOf("<>");
-			string xml = data.Substring(0,idx);
-			originIP = data.Substring(idx + 2);
+			Console.WriteLine(data);
 			
-			Console.WriteLine("Datos recibidos {0}, {1}", xml,originIP);
+			int idx = data.LastIndexOf("<>");
+			originIP = data.Substring(0,idx);
+			string xml = data.Substring(idx + 2);			
+			
 			call = CallSequence.LoadFromString(xml);
 			
 		}

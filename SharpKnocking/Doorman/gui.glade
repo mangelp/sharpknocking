@@ -150,8 +150,8 @@ no se sale del programa o se guarda la configuración.</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="can_default">True</property>
-                    <property name="relief">GTK_RELIEF_HALF</property>
                     <property name="tooltip" translatable="yes">Permite añadir una nueva llamada</property>
+                    <property name="relief">GTK_RELIEF_HALF</property>
                     <signal name="clicked" handler="OnBtnAddClicked"/>
                     <child>
                       <widget class="GtkAlignment" id="alignment2">
@@ -336,7 +336,6 @@ no se sale del programa o se guarda la configuración.</property>
                 </child>
                 <child>
                   <widget class="GtkButton" id="btnBlock">
-                    <property name="visible">True</property>
                     <property name="tooltip" translatable="yes">Bloquea el proceso de apertura de puertos.</property>
                     <signal name="clicked" handler="OnBtnBlockClicked"/>
                     <child>
@@ -374,9 +373,9 @@ no se sale del programa o se guarda la configuración.</property>
                 <child>
                   <widget class="GtkButton" id="btnSave">
                     <property name="visible">True</property>
+                    <property name="tooltip" translatable="yes">Guarda la configuración de secuencias</property>
                     <property name="label" translatable="yes">gtk-save</property>
                     <property name="use_stock">True</property>
-                    <property name="tooltip" translatable="yes">Guarda la configuración de secuencias</property>
                     <signal name="clicked" handler="OnBtnSaveClicked"/>
                   </widget>
                   <packing>
@@ -532,10 +531,11 @@ no se sale del programa o se guarda la configuración.</property>
     </child>
   </widget>
   <widget class="GtkFileChooserDialog" id="exportCallFileChooserDialog">
-    <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Exportar secuencia de llamada</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
     <property name="has_separator">False</property>
+    <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>

@@ -63,11 +63,11 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 pkgconfigDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(pkgconfig_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run aclocal-1.9
-AMTAR = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run tar
-AUTOCONF = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run automake-1.9
+ACLOCAL = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run aclocal-1.9
+AMTAR = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run tar
+AUTOCONF = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run automake-1.9
 AWK = gawk
 COMMONWIDGETS_DEBUG_LIB = CommonWidgets.dll
 COMMONWIDGETS_RELEASE_LIB = 
@@ -76,7 +76,7 @@ COMMON_RELEASE_LIB =
 CYGPATH_W = echo
 DEBUG_CONFIG_LIBRARIES =  ${pkglibdir}/SharpKnocking.Common.dll ${pkglibdir}/CommonWidgets.dll ${pkglibdir}/NetfilterFirewall.dll
 DEBUG_CONFIG_LIBS =  -r:${pkglibdir}/SharpKnocking.Common.dll -r:${pkglibdir}/CommonWidgets.dll -r:${pkglibdir}/NetfilterFirewall.dll
-DEFS = -DPACKAGE_NAME=\"SharpKnocking\" -DPACKAGE_TARNAME=\"sharpknocking\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"SharpKnocking\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"sharpknocking\" -DVERSION=\"0.1\" 
+DEFS = -DPACKAGE_NAME=\"SharpKnocking\" -DPACKAGE_TARNAME=\"sharpknocking\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"SharpKnocking\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"sharpknocking\" -DVERSION=\"0.1\"
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
@@ -84,13 +84,13 @@ ENABLE_DEBUG_FALSE = #
 ENABLE_DEBUG_TRUE = 
 ENABLE_RELEASE_FALSE = 
 ENABLE_RELEASE_TRUE = #
-GLADE_SHARP_20_CFLAGS = -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/glade-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/pango-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/atk-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/gdk-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/gtk-api.xml  
-GLADE_SHARP_20_LIBS = -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glade-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/pango-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/atk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gdk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gtk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
+GLADE_SHARP_20_CFLAGS = -I:/usr/lib/pkgconfig/../../share/gapi-2.0/glade-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/pango-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/atk-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/gdk-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/gtk-api.xml  
+GLADE_SHARP_20_LIBS = -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glade-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/pango-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/atk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gdk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gtk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
 GLIB_SHARP_20_CFLAGS =  
-GLIB_SHARP_20_LIBS = -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
-GMCS = /opt/mono-1.2.3.1/bin/gmcs
-GTK_SHARP_20_CFLAGS = -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/pango-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/atk-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/gdk-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/gtk-api.xml  
-GTK_SHARP_20_LIBS = -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/pango-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/atk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gdk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gtk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
+GLIB_SHARP_20_LIBS = -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
+GMCS = /usr/bin/gmcs
+GTK_SHARP_20_CFLAGS = -I:/usr/lib/pkgconfig/../../share/gapi-2.0/pango-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/atk-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/gdk-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/gtk-api.xml  
+GTK_SHARP_20_LIBS = -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/pango-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/atk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gdk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gtk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
@@ -98,8 +98,8 @@ INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run makeinfo
-MCS = /opt/mono-1.2.3.1/bin/mcs
+MAKEINFO = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run makeinfo
+MCS = /usr/bin/mcs
 NETFILTERFIREWALL_DEBUG_LIB = NetfilterFirewall.dll
 NETFILTERFIREWALL_RELEASE_LIB = 
 PACKAGE = sharpknocking
@@ -109,34 +109,39 @@ PACKAGE_STRING = SharpKnocking 0.1
 PACKAGE_TARNAME = sharpknocking
 PACKAGE_VERSION = 0.1
 PATH_SEPARATOR = :
-PKG_CONFIG = /opt/mono-1.2.3.1/bin/pkg-config
+PKG_CONFIG = /usr/bin/pkg-config
 RELEASE_CONFIG_LIBRARIES = 
 RELEASE_CONFIG_LIBS = 
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
 VERSION = 0.1
-ac_ct_STRIP = 
-ac_pt_PKG_CONFIG = 
 am__leading_dot = .
 am__tar = ${AMTAR} chof - "$$tardir"
 am__untar = ${AMTAR} xf -
 bindir = ${exec_prefix}/bin
 build_alias = 
-datadir = ${prefix}/share
+datadir = ${datarootdir}
+datarootdir = ${prefix}/share
+docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
+dvidir = ${docdir}
 exec_prefix = ${prefix}
 host_alias = 
+htmldir = ${docdir}
 includedir = ${prefix}/include
-infodir = ${prefix}/info
-install_sh = /home/mangelp/projects/sharpknocking/SharpKnocking/install-sh
+infodir = ${datarootdir}/info
+install_sh = /home/luis/programacion/csl-csknocking-g/SharpKnocking/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
+localedir = ${datarootdir}/locale
 localstatedir = ${prefix}/var
-mandir = ${prefix}/man
+mandir = ${datarootdir}/man
 mkdir_p = mkdir -p --
 oldincludedir = /usr/include
+pdfdir = ${docdir}
 prefix = /usr/local
 program_transform_name = s,x,x,
+psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
 sysconfdir = ${prefix}/etc
@@ -149,8 +154,6 @@ ASSEMBLY = ./bin/Debug/CommonWidgets.dll
 #ASSEMBLY = ./bin/Release/CommonWidgets.dll
 COMPILE_TARGET = library
 #COMPILE_TARGET = library
-PC_FILES_IN = SharpKnocking.CommonWidgets.pc.in
-#PC_FILES_IN = SharpKnocking.CommonWidgets.pc.in
 PROJECT_REFERENCES = \
 	../Common/bin/Debug/SharpKnocking.Common.dll
 
@@ -159,6 +162,13 @@ PROJECT_REFERENCES = \
 
 BUILD_DIR = ./bin/Debug
 #BUILD_DIR = ./bin/Release
+PROGRAMFILES = \
+	SharpKnocking.Common.dll \
+	SharpKnocking.Common.dll.mdb  
+
+LINUX_PKGCONFIG = \
+	commonwidgets.pc  
+
 FILES = \
 	./ImageResources.cs \
 	./CallEditDialog.cs \
@@ -168,7 +178,8 @@ FILES = \
 	./CommonDialogs/OkDialog.cs \
 	./CommonDialogs/ConfirmDialog.cs \
 	./CommonDialogs/AppInfoDialog.cs \
-	./NodeStoreFilter.cs 
+	./NodeStoreFilter.cs \
+	./AssemblyInfo.cs 
 
 DATA_FILES = 
 RESOURCES = \
@@ -176,7 +187,11 @@ RESOURCES = \
 	./resources/sharpknocking22.png \
 	./resources/sharpknocking96.png 
 
-EXTRAS = 
+EXTRAS = \
+	SharpKnocking.Common.dll \
+	SharpKnocking.Common.dll.mdb \
+	commonwidgets.pc.in 
+
 REFERENCES = \
 	-r:System \
 	$(GTK_SHARP_20_LIBS) \

@@ -136,11 +136,16 @@ namespace SharpKnocking.Common.Remoting
         /// </summary>
         public void Init()
         {
-            if(this.localPort == 0 || this.remotePort == 0 || 
-                Net20.StringIsNullOrEmpty(this.localName ) ||
-                Net20.StringIsNullOrEmpty (this.remoteName ))
-                    throw new ArgumentException ("Must initialize all the properties", 
-                                "LocalPort, LocalName, RemotePort, RemoteName");
+            if(	this.localPort == 0 
+            	|| this.remotePort == 0
+            	|| Net20.StringIsNullOrEmpty(this.localName ) 
+            	|| Net20.StringIsNullOrEmpty (this.remoteName ))
+            {
+            	throw new ArgumentException (
+            		"Must initialize all the properties", 
+                    "LocalPort, LocalName, RemotePort, RemoteName");
+            }
+           
                                 
             Debug.VerboseWrite("RemoteEndCommunicator: Registering remoting object with uri " +this.localUri);
 			
@@ -231,6 +236,10 @@ namespace SharpKnocking.Common.Remoting
         	{
         	    this.connected  = false;
         	    
+        	    Debug.VerboseWrite(
+        	    	this.remoteType.ToString()+","+
+        	    	this.remoteUri);
+        	    
         	    try
         	    {
         	        Debug.VerboseWrite ("Trying to connect to "+this.remoteType+
@@ -283,7 +292,10 @@ namespace SharpKnocking.Common.Remoting
 		    
 		    try
 		    {
+		    	
     		    Debug.VerboseWrite("RemotingCommunicator:: Sending Request "+action);
+    		    
+    		   
     		    this.remoteEnd.SendRequest( action, data);
 		    }
 		    catch(Exception ex)

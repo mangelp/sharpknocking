@@ -6,8 +6,6 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG
 ASSEMBLY = ./bin/Debug/KnockingDaemonControl.exe
 COMPILE_TARGET = exe
-ASSEMBLY_WRAPPER = knockingdaemoncontrol
-ASSEMBLY_WRAPPER_IN = knockingdaemoncontrol.in
 PROJECT_REFERENCES =  \
 	../Common/bin/Debug/SharpKnocking.Common.dll
 BUILD_DIR = ./bin/Debug
@@ -17,12 +15,16 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4
 ASSEMBLY = ./bin/Release/KnockingDaemonControl.exe
 COMPILE_TARGET = exe
-ASSEMBLY_WRAPPER = knockingdaemoncontrol
-ASSEMBLY_WRAPPER_IN = knockingdaemoncontrol.in
 PROJECT_REFERENCES =  \
 	../Common/bin/Release/SharpKnocking.Common.dll
 BUILD_DIR = ./bin/Release
 endif
+
+PROGRAMFILES = \
+	SharpKnocking.Common.dll \
+	SharpKnocking.Common.dll.mdb  
+BINARIES = \
+	knockingdaemoncontrol  
 
 	
 all: $(ASSEMBLY)
@@ -35,7 +37,10 @@ DATA_FILES =
 
 RESOURCES = 
 
-EXTRAS = 
+EXTRAS = \
+	SharpKnocking.Common.dll \
+	SharpKnocking.Common.dll.mdb \
+	knockingdaemoncontrol.in 
 
 REFERENCES =  \
 	-r:System \

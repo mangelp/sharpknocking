@@ -390,23 +390,37 @@ namespace SharpKnocking.Doorman
 		
 		private void OnAccessRequested(object sender, AccessRequestEventArgs a)
 		{
+		
+			Gtk.Application.Invoke(sender, a, OnAccessRequestedInvoked);	
+				
+		}
+		
+		private void OnAccessRequestedInvoked(object sender, EventArgs ar)
+		{
+		
+			AccessRequestEventArgs a = ar  as AccessRequestEventArgs;
+			SharpKnocking.Common.Debug.VerboseWrite("Access requested");
+		
 			// We ask the user what he wants to do.
 			ResponseType res = 
 				ConfirmDialog.Show( 
 					mainWindow,
 					"Se detectó la secuencia de llamada «{0}» que abre el " +
-					"puerto {1} proveniente de {2}.\n"+
-					"¿Desea abrirlo?",
+					"puerto {1} proveniente de la dirección IP {2}.\n"+
+					"¿Desea abrir el puerto?",
 					a.CallSequence.Description,
 					a.CallSequence.TargetPort,
 					a.SourceIP);
 			
 			// Then we tell the daemon.
 			if(res == ResponseType.Yes)
-				daemonComm
-				.SendCommand(RemoteCommandActions.Accept);
+			{
+				daemonComm.SendCommand(RemoteCommandActions.Accept);
+			}
 			else
+			{
 				daemonComm.SendCommand(RemoteCommandActions.Deny);
+			}
 				
 		}
 		
@@ -489,8 +503,7 @@ namespace SharpKnocking.Doorman
 		
 		private void OnCallActivationStateChanged(object sender, ToggledArgs a)
 		{
-			// Argh
-		    CallNode node =  callsStore.GetNode(new TreePath(a.Path)) as CallNode;
+			CallNode node =  callsStore.GetNode(new TreePath(a.Path)) as CallNode;
 		    node.Active = !node.Active;
 		}
 		
