@@ -33,7 +33,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		    get { return this.die;}
 		    set 
 		    { 
-		        Net20.PrintThreadInformation("TcpdumpMonitor_Die_Set");
+		        //Net20.PrintThreadInformation("TcpdumpMonitor_Die_Set");
 		        this.die = value;
 		    }
 		}
@@ -88,7 +88,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		{			
 		    TcpdumpMonitor monitor = (TcpdumpMonitor) obj;
 		    monitor.running = true;
-		    Net20.PrintThreadInformation ("TCPDUMPMONITOR_RUN");
+		    //Net20.PrintThreadInformation ("TCPDUMPMONITOR_RUN");
 		    SharpKnocking.Common.Debug.VerboseWrite("TcpdumpMonitor::Run() Starting");
             try
             {
@@ -175,7 +175,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		public void Stop()
 		{            
 		    
-		    Net20.PrintThreadInformation("TCPDUMPMONITOR_STOP");
+		    //Net20.PrintThreadInformation("TCPDUMPMONITOR_STOP");
 		    SharpKnocking.Common.Debug.VerboseWrite (
 		        "TcpDumpMonitor::Stop(): Stopping packet capture in "+
 		        Thread.CurrentThread.GetHashCode());
@@ -190,7 +190,7 @@ namespace SharpKnocking.KnockingDaemon.PacketFilter
 		
 		private void KillActions()
 		{
-		    Net20.PrintThreadInformation("TCPDUMPMONITOR_KILLACTIONS");
+		    //Net20.PrintThreadInformation("TCPDUMPMONITOR_KILLACTIONS");
 		    SharpKnocking.Common.Debug.VerboseWrite (
 		        "TcpDumpMonitor::KillActions: Ending tcpdump process");
 		    try

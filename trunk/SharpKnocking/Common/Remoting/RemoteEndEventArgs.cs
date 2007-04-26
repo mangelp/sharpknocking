@@ -59,11 +59,6 @@ namespace SharpKnocking.Common.Remoting
         public RemoteEndEventArgs(object data, RemoteCommandActions action, bool isRequestNotResponse)
             :base()
         {
-            if(data!=null && !(data is ISerializable) && TypeUtil.GetAttribute(typeof(SerializableAttribute), data)==null
-                && !data.GetType().IsValueType)
-                throw new ArgumentException("The data has to implement ISerializable (and the constructor"+
-                                            ") or had set the attribute [Serializable].", "data");
-            
             this.isRequestNotResponse = isRequestNotResponse;
             this.action = action;
             this.data = data;

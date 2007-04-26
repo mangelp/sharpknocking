@@ -32,6 +32,7 @@ namespace SharpKnocking.KnockingDaemon
 	public class KnockingDaemonProcess: IDisposable
 	{	
 	    private Hashtable pendingCalls;
+        private Hashtable acceptedKnockings;
 	    private RemotingCommunicator communicator;
         private NetfilterAccessor accessor;
         private CallSequence[] calls;
@@ -123,8 +124,14 @@ namespace SharpKnocking.KnockingDaemon
 		    this.communicator.LocalPort = RemoteEndService.DaemonPortNumber;
 		    this.communicator.RemoteName = RemoteEndService.ManagerServiceName;
 		    this.communicator.RemotePort = RemoteEndService.ManagerPortNumber;
+            
+            Console.Out.WriteLine("KnockingDaemonProcess:: DAEMON: "+
+                               RemoteEndService.DaemonServiceName+":"+RemoteEndService.DaemonPortNumber+
+                               " MANAGER: "+
+                               RemoteEndService.ManagerServiceName+":"+RemoteEndService.ManagerPortNumber);
 		          
-		    this.pendingCalls  = new Hashtable(20);
+		    this.pendingCalls  = new Hashtable(20); 
+            this.acceptedKnockings = new Hashtable(40); 
 		}
 		
 		/// <summary>
@@ -169,8 +176,6 @@ namespace SharpKnocking.KnockingDaemon
         {
             daemon.running = true;
             
-            Net20.PrintThreadInformation("RUN");
-            
             try
             {
                 //Init rules accessor
@@ -186,7 +191,7 @@ namespace SharpKnocking.KnockingDaemon
                 while(!daemon.die)
                 {
                 	// FIX: Hey, we don't want to eat all CPU cicles.
-                	Thread.Sleep(50);
+                	Thread.Sleep(100);
                 }
             }
             catch(Exception ex)
@@ -208,7 +213,7 @@ namespace SharpKnocking.KnockingDaemon
         /// </summary>
         public void Stop()
         {
-           Net20.PrintThreadInformation("STOP");
+           //Net20.PrintThreadInformation("STOP");
            Debug.VerboseWrite("KnockingDaemonProcess::Stop():"+
                            "Stop requested.");
            this.die = true;
@@ -236,7 +241,7 @@ namespace SharpKnocking.KnockingDaemon
         /// </summary>
         public void HotRestart()
         {
-            Net20.PrintThreadInformation("HOTRESTART");
+            //Net20.PrintThreadInformation("HOTRESTART");
             Debug.VerboseWrite("KnockingDaemonProcess::HotRestart(): Invoked ...");
             this.InternalStopMonitor();
             
@@ -263,7 +268,7 @@ namespace SharpKnocking.KnockingDaemon
                 return;
             }
             
-            Net20.PrintThreadInformation("INTERNAL_STOP_MONITOR");
+            //Net20.PrintThreadInformation("INTERNAL_STOP_MONITOR");
             Debug.VerboseWrite("KnockingDaemonProcess::InternalStopMonitor: "+
                     "Stopping capture processing.");
                     
@@ -292,7 +297,7 @@ namespace SharpKnocking.KnockingDaemon
                 return;
             }
        
-            Net20.PrintThreadInformation("INTERNAL_START_MONITOR");
+            //Net20.PrintThreadInformation("INTERNAL_START_MONITOR");
             Debug.Write("KnockingDaemonProcess:: Initing packet capture process");
            
             try
@@ -336,10 +341,10 @@ namespace SharpKnocking.KnockingDaemon
         	
             if(this.isInteractiveMode)
             {
-            	Debug.VerboseWrite("KnockingDaemonProcess::Asking Doorman for clearance to continue");
-                this.pendingCalls.Add (args.IP+":"+args.Port, null);
                 Debug.VerboseWrite ("KnockingDaemonProcess::OnSequenceDetectedHandler:"
                         +"Sequence requested for accept!");
+                this.pendingCalls.Add (args.IP+":"+args.Port, null);
+            	Debug.VerboseWrite("KnockingDaemonProcess::Asking Doorman for clearance to continue");
                 this.communicator.SendRequest (RemoteCommandActions.AccessRequest, 
                         args.IP + "<>" + args.SerializedSequence);  
             }
@@ -350,7 +355,7 @@ namespace SharpKnocking.KnockingDaemon
         }
         
         private void OnRequestHandler(object sender, RemotingCommunicatorEventArgs args)
-        {                     
+        {
             switch(args.Action)
             {
                 case RemoteCommandActions.Bye:
@@ -374,6 +379,7 @@ namespace SharpKnocking.KnockingDaemon
                     break;
                 case RemoteCommandActions.StartInteractiveMode:
                     this.isInteractiveMode = true;
+                    Debug.VerboseWrite("KnockingDaemonProcess::Activating interactive mode");
                     break;
                 case RemoteCommandActions.Status:
                 case RemoteCommandActions.StatusExtended:
@@ -397,6 +403,9 @@ namespace SharpKnocking.KnockingDaemon
                 case RemoteCommandActions.Accept:
                 case RemoteCommandActions.Deny:
                 
+                    if(!this.isInteractiveMode)
+                        return;
+                    
                     string xml = (string)args.Data;
                     int pos = xml.IndexOf ("<>");
                     string ip;

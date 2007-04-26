@@ -43,6 +43,12 @@ namespace SharpKnocking.Doorman.Remoting
 		    this.communicator.LocalPort = RemoteEndService.ManagerPortNumber;
 		    this.communicator.RemoteName = RemoteEndService.DaemonServiceName;
 		    this.communicator.RemotePort = RemoteEndService.DaemonPortNumber;
+            
+            Debug.VerboseWrite("DaemonCommunication:: DAEMON: "+
+                               RemoteEndService.DaemonServiceName+":"+RemoteEndService.DaemonPortNumber+
+                               " MANAGER: "+
+                               RemoteEndService.ManagerServiceName+":"+RemoteEndService.ManagerPortNumber);
+                               
 		    
 		    this.communicator.RequestReceived += 
 		          new RemotingCommunicatorEventHandler(this.OnRequestHandler);
