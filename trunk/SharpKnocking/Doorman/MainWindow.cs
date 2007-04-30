@@ -390,7 +390,9 @@ namespace SharpKnocking.Doorman
 		
 		private void OnAccessRequested(object sender, AccessRequestEventArgs a)
 		{
-		
+			// We need to do this because the event is due to be 
+			// launched from a thread different from the one is used
+			// by GTK.
 			Gtk.Application.Invoke(sender, a, OnAccessRequestedInvoked);	
 				
 		}
@@ -412,14 +414,14 @@ namespace SharpKnocking.Doorman
 					a.CallSequence.TargetPort,
 					a.SourceIP);
 			
-			// Then we tell the daemon.
+			// Then we tell the daemon what it should do about this. 
 			if(res == ResponseType.Yes)
 			{
-				daemonComm.SendCommand(RemoteCommandActions.Accept);
+				daemonComm.SendCommand(RemoteCommandActions.Accept, a.HitData);
 			}
 			else
 			{
-				daemonComm.SendCommand(RemoteCommandActions.Deny);
+				daemonComm.SendCommand(RemoteCommandActions.Deny, a.HitData);
 			}
 				
 		}

@@ -123,8 +123,9 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		private void OnSequenceDetected(object sender, 
 		                  SequenceDetectorEventArgs args)
 		{			
-			Debug.VerboseWrite("Detected sequence "+
-			         ((SequenceDetector)sender).CallSequence);
+			Debug.VerboseWrite(
+					"Sequence detected "
+					+ ((SequenceDetector)sender).CallSequence);
 		    //Rethrow the event but making this class the owner
 		    this.OnSequenceDetectedEvent(args);	
 		}

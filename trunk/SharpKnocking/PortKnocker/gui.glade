@@ -133,12 +133,53 @@
                     <property name="spacing">6</property>
                     <property name="layout_style">GTK_BUTTONBOX_START</property>
                     <child>
+                      <widget class="GtkButton" id="btnImport">
+                        <property name="visible">True</property>
+                        <property name="tooltip" translatable="yes">Importa una llamada guardada previamente con Doorman</property>
+                        <signal name="clicked" handler="OnBtnImportClicked"/>
+                        <child>
+                          <widget class="GtkAlignment" id="alignment1">
+                            <property name="visible">True</property>
+                            <property name="xscale">0</property>
+                            <child>
+                              <widget class="GtkHBox" id="hbox7">
+                                <property name="visible">True</property>
+                                <property name="spacing">4</property>
+                                <child>
+                                  <widget class="GtkImage" id="image7">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-open</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="label7">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">_Importar</property>
+                                    <property name="use_underline">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkButton" id="btnAdd">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="can_default">True</property>
-                        <property name="relief">GTK_RELIEF_HALF</property>
                         <property name="tooltip" translatable="yes">Permite añadir una nueva llamada</property>
+                        <property name="relief">GTK_RELIEF_HALF</property>
                         <signal name="clicked" handler="OnBtnAddClicked"/>
                         <child>
                           <widget class="GtkAlignment" id="alignment2">
@@ -176,6 +217,9 @@
                           </widget>
                         </child>
                       </widget>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
                     </child>
                     <child>
                       <widget class="GtkButton" id="btnRemove">
@@ -222,7 +266,7 @@
                         </child>
                       </widget>
                       <packing>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                     <child>
@@ -256,50 +300,6 @@
                                   <widget class="GtkLabel" id="label6">
                                     <property name="visible">True</property>
                                     <property name="label" translatable="yes">E_ditar</property>
-                                    <property name="use_underline">True</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                              </widget>
-                            </child>
-                          </widget>
-                        </child>
-                      </widget>
-                      <packing>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkButton" id="btnImport">
-                        <property name="visible">True</property>
-                        <property name="tooltip" translatable="yes">Importa una llamada guardada previamente con Doorman</property>
-                        <signal name="clicked" handler="OnBtnImportClicked"/>
-                        <child>
-                          <widget class="GtkAlignment" id="alignment1">
-                            <property name="visible">True</property>
-                            <property name="xscale">0</property>
-                            <child>
-                              <widget class="GtkHBox" id="hbox7">
-                                <property name="visible">True</property>
-                                <property name="spacing">4</property>
-                                <child>
-                                  <widget class="GtkImage" id="image7">
-                                    <property name="visible">True</property>
-                                    <property name="stock">gtk-open</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkLabel" id="label7">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">_Importar</property>
                                     <property name="use_underline">True</property>
                                   </widget>
                                   <packing>

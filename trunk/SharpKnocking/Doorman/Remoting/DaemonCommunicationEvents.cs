@@ -16,22 +16,11 @@ namespace SharpKnocking.Doorman.Remoting
 	/// </summary>
 	public class AccessRequestEventArgs : EventArgs
 	{
-		private CallSequence call;
+		private CallHitData data;	
 		
-		private string originIP;
-		
-		public AccessRequestEventArgs(string data)
+		public AccessRequestEventArgs(CallHitData data)
 		{
-			// We separate the xml representation of the CallSequence from
-			// the source ip with a <>, which cannot be present in the xml part.
-			
-			Console.WriteLine(data);
-			
-			int idx = data.LastIndexOf("<>");
-			originIP = data.Substring(0,idx);
-			string xml = data.Substring(idx + 2);			
-			
-			call = CallSequence.LoadFromString(xml);
+			this.data = data;
 			
 		}
 		
@@ -42,7 +31,7 @@ namespace SharpKnocking.Doorman.Remoting
 		{
 			get
 			{
-				return call;
+				return data.SequenceHit;
 			}
 		}
 		
@@ -54,7 +43,15 @@ namespace SharpKnocking.Doorman.Remoting
 		{
 			get
 			{
-				return originIP;
+				return data.IpAddress;
+			}
+		}
+		
+		public CallHitData HitData
+		{
+			get
+			{
+				return data;
 			}
 		}
 		

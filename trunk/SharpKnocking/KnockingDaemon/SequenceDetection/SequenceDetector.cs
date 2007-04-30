@@ -107,8 +107,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 					    // object as an xml
 						this.OnSequenceDetectedHelper(
 							sourceAddr, 
-						    this.CallSequence.Store(), 
-						    this.CallSequence.TargetPort);
+						    this.CallSequence);
 					}
 					else
 					{
@@ -155,10 +154,13 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 		
 		#region Private methods
 		
-		private void OnSequenceDetectedHelper(string ip, string seq, int port)
+		private void OnSequenceDetectedHelper(string ip, CallSequence call)
 		{
-		    Debug.VerboseWrite ("SequenceDetector:: Sequence detected for ip "+ip+" and port "+port);
-		    SequenceDetectorEventArgs args = new SequenceDetectorEventArgs(ip, seq, port);
+		    Debug.VerboseWrite (
+		    	"SequenceDetector:: Sequence detected for ip "
+		    	+ ip + " and port " + call.TargetPort);
+		    	
+		    SequenceDetectorEventArgs args = new SequenceDetectorEventArgs(ip, call);
 		    
 			if(SequenceDetected != null)
 				SequenceDetected(this, args);

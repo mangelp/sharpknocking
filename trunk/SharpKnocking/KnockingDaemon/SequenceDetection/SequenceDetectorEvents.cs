@@ -18,11 +18,24 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 	   private string ip;
 	   
 	   /// <summary>
-	   /// Ip address of the packet
+	   /// Ip address of the packets from which the sequence was sent.
 	   /// </summary>
 	   public string IP
 	   {
 	       get { return this.ip;}
+	   }
+	   
+	   private CallSequence sequence;
+	   
+	   /// <summary>
+	   /// The secuence captured.
+	   /// </summary>
+	   public CallSequence Sequence
+	   {
+	   		get
+	   		{
+	   			return this.sequence;
+	   		}
 	   }
 	   
 	   private string serializedSequence;
@@ -50,12 +63,13 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 	   /// Parametrized constructor.
 	   /// </summary>
 	   /// <param name="ip">Ip address that did the knocking</param>
-	   /// <param name="serSeq">CallSequence serialized as an string</param>
-	   public SequenceDetectorEventArgs(string ip, string serSeq, int port)
+	   /// <param name="serSeq">CallSequence serialized as an string</param>	   
+	   public SequenceDetectorEventArgs(string ip, CallSequence seq)
 	   {
 	       this.ip = ip;
-	       this.serializedSequence = serSeq;
-	       this.port = port;
+	       this.sequence = seq;
+	       this.serializedSequence = sequence.Store();	       
+	       this.port = sequence.TargetPort;
 	   }
 	}
 }
