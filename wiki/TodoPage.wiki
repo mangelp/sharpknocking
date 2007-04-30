@@ -31,8 +31,9 @@
   * Netfiler rules editor. A default rule can be configured to be used when the daemon shut downs or to redirect packets from a host that got a valid access.
 
 === SharpKnocking.NetfilterFirewall ===
-  * This class library needs tons of love. Needs refactoring and deep testing. 
-  * It's a big thing that have little use for SharpKnocking. Maybe it should be removed and replaced the functionality that provides with simpler stuff and make it an independent library.
+  * ~~This class library needs tons of love. Needs refactoring and deep testing~~. 
+  * ~~It's a big thing that have little use for SharpKnocking. Maybe it should be removed and replaced the functionality that provides with simpler stuff and make it an independent library~~.
+  * This library is being refactorized in the subproject IptablesNet and in a future it will be replaced with the result of that.
 
 === IptablesNet ===
   * Nothing, because it is still under heavy development for the initial release.
