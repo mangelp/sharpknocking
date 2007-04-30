@@ -5,6 +5,7 @@ using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 
 using SharpKnocking.Common;
+using SharpKnocking.Common.Calls;
 using SharpKnocking.Common.Remoting;
 
 namespace SharpKnocking.Doorman.Remoting
@@ -91,9 +92,7 @@ namespace SharpKnocking.Doorman.Remoting
             this.communicator.SendRequest(RemoteCommandActions.StartInteractiveMode, null);
         }
 		
-		
-		
-		 /// <summary>
+		/// <summary>
         /// Sends a command to the other end of the comunication.
         /// </summary>
         /// <returns>
@@ -101,24 +100,39 @@ namespace SharpKnocking.Doorman.Remoting
         /// </returns>
         public bool SendCommand(RemoteCommandActions action)
         {                
+            return SendCommand(action, null);
+        }
+		
+		/// <summary>
+        /// Sends a command to the other end of the comunication.
+        /// </summary>
+        /// <param name = "data">
+        /// Data attached to the command.
+        /// </param>
+        /// <returns>
+        /// True if the command is sent and false if not.
+        /// </returns>
+        public bool SendCommand(RemoteCommandActions action, object data)
+        {                
             switch(action)
             {
                 case RemoteCommandActions.Hello:                	
                 case RemoteCommandActions.Start:
                     throw new InvalidOperationException("Action not allowed: "+action);
                 case RemoteCommandActions.HotRestart:
-                    this.communicator.SendRequest(action, null);
+                    this.communicator.SendRequest(action, data);
                     break;
                 case RemoteCommandActions.Stop:
-                    this.communicator.SendRequest(action, null);
+                    this.communicator.SendRequest(action, data);
                     this.communicator.UnregisterRemoteEnd();
                     break;
                 case RemoteCommandActions.Status:
                 case RemoteCommandActions.StatusExtended:
-                    this.communicator.SendRequest(action, null);
+                    this.communicator.SendRequest(action, data);
                     break;                
                 default:
-                    this.communicator.SendRequest(action, null);
+                	// TODO Is this the best way to do this?
+                    this.communicator.SendResponse(action, data);
                     break;
             }
             
@@ -133,9 +147,9 @@ namespace SharpKnocking.Doorman.Remoting
 		{
 			if(Hello != null)
 				Hello(this,EventArgs.Empty);
-		}
+		}		
 		
-		private void OnAccessRequestSender(string data)
+		private void OnAccessRequestSender(CallHitData data)
 		{
 			// We take the xml data and then send the event.
 			if(AccessRequest != null)
@@ -153,9 +167,11 @@ namespace SharpKnocking.Doorman.Remoting
 			{
 				case RemoteCommandActions.AccessRequest:
 					Debug.VerboseWrite("Port opening request received");
+					// FIX: Change this commentary.
 					// In this case, data is a string with the xml serialization
 					// of a CallSequence object and the source ip address.							
-					OnAccessRequestSender(args.Data as String);					
+					//OnAccessRequestSender(args.Data as String);
+					OnAccessRequestSender(args.Data as CallHitData);					
 					
 					break;
 				case RemoteCommandActions.Bye:

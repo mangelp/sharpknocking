@@ -189,8 +189,7 @@ namespace SharpKnocking.KnockingDaemon
                 
                 //Keep the process up
                 while(!daemon.die)
-                {
-                	// FIX: Hey, we don't want to eat all CPU cicles.
+                {                	
                 	Thread.Sleep(100);
                 }
             }
@@ -345,8 +344,11 @@ namespace SharpKnocking.KnockingDaemon
                         +"Sequence requested for accept!");
                 this.pendingCalls.Add (args.IP+":"+args.Port, null);
             	Debug.VerboseWrite("KnockingDaemonProcess::Asking Doorman for clearance to continue");
-                this.communicator.SendRequest (RemoteCommandActions.AccessRequest, 
-                        args.IP + "<>" + args.SerializedSequence);  
+            	
+            	
+                this.communicator.SendRequest (
+                	RemoteCommandActions.AccessRequest,                    
+                    new CallHitData(args.IP, args.Sequence));  
             }
             else
             {
@@ -406,19 +408,15 @@ namespace SharpKnocking.KnockingDaemon
                 	// If knocking daemon isn't in interactive mode,
                 	// we shouldn't have recived this.
                     if(!this.isInteractiveMode)
-                        return;
+                        return;                    
                     
-                    string xml = (string)args.Data;
-                    int pos = xml.IndexOf ("<>");
-                    string ip;
-                    CallSequence seq;
-                    
-                    if(pos >= 0)
+                    Debug.VerboseWrite("Response recived");
+                    if(args.Data is CallHitData)
                     {
-                    	// TODO: Management of the data should be encapsulated
-                    	// FIX: Create class SequenceHitData, and make it serializable.
-                        ip = xml.Substring(0, pos);
-                        seq = CallSequence.LoadFromString (xml.Substring(pos+2));
+                    	Debug.VerboseWrite("Response is CallHitData");
+                    	string ip = (args.Data as CallHitData).IpAddress;
+                    	CallSequence seq = (args.Data as CallHitData).SequenceHit;
+                    	
                         if(!this.pendingCalls.Contains(ip+":"+seq.TargetPort))
                         {
                             Debug.VerboseWrite("KnockingDaemonProcess::OnResponseHandler:"+

@@ -13,6 +13,7 @@ namespace SharpKnocking.Common.Calls
 	/// This class defines the information which is needed to know
 	/// about the call sequences which are used.
 	/// </summary>
+	[Serializable]
 	public class CallSequence
 	{
 		public event EventHandler PackageSent;
@@ -20,7 +21,7 @@ namespace SharpKnocking.Common.Calls
 	    private string address;
 		private string description;
 		
-		private int targetPort;
+		private int targetPort;		
 		
 		private int [] ports;
 		
