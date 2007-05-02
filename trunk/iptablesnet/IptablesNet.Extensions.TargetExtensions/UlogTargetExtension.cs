@@ -3,9 +3,10 @@ using System;
 
 using SharpKnocking.Common;
 
+using IptablesNet.Core.Extensions;
 using IptablesNet.Core.Extensions.ExtendedTarget;
 
-namespace IptablesNet.Extensions.TargetExtensions
+namespace IptablesNet.Extensions.ExtendedTarget
 {
 	
 	/// <summary>
@@ -20,109 +21,201 @@ namespace IptablesNet.Extensions.TargetExtensions
 	{
 		
 		public UlogTargetExtension()
-		  :base(typeof(UlogTargetOptions), "ulog")
+		  :base(typeof(UlogTargetOptions), TargetExtensions.Ulog)
 		{
 		}
-		
-		public override TargetExtensionParameter CreateParameter ()
-		{
-			return new UlogParameter(this);
-		}
-		
-		public override TargetExtensionParameter CreateParameter (string name, string value)
-		{
-		    UlogParameter par = new UlogParameter(this);
-		    
-		    par.Name = name;
-		    par.Value = value;
-		    
-		    return par;
-		}
-		
-		public override Type GetInternalParameterType ()
-		{
-			return typeof(UlogParameter);
-		}
-		
-		public class UlogParameter: TargetExtensionParameter
+        
+        public override TargetExtensionParameter CreateParameter (string paramType)
+        {
+            object obj;
+            if(!TypeUtil.IsAliasName ( typeof(UlogTargetOptions), paramType, out obj))
+                return null;
+            
+            UlogTargetOptions option = (UlogTargetOptions)obj;
+            
+            switch(option)
+            {
+                case UlogTargetOptions.UlogCprange:
+                    return new UlogCprangeParam (this);
+                case UlogTargetOptions.UlogNlgroup:
+                    return new UlogNlgroupParam (this);
+                case UlogTargetOptions.UlogPrefix:
+                    return new UlogPrefixParam (this);
+                case UlogTargetOptions.UlogQthreshold:
+                    return new UlogQthresholdParam (this);
+                default:
+                    throw new ArgumentException ("Not supported option: "+option,"name");
+            }
+        }
+
+		public abstract class UlogParam: TargetExtensionParameter
 		{
 		    public new UlogTargetExtension Owner
 		    {
 		        get { return (UlogTargetExtension)base.Owner; }
-		        set { base.Owner = (TargetExtensionHandler)value;}
 		    }
 		    
 		    private UlogTargetOptions option;
 		    
-		    public UlogTargetOptions Option
+		    public new UlogTargetOptions Option
 		    {
 		        get { return this.option;}
-		        set
-		        {
-		            this.option = value;
-		            this.DisableInternalParsing = true;
-		            this.Name = TypeUtil.GetDefaultAlias(value);
-		            this.DisableInternalParsing = false;
-		        }
 		    }
 		    
-		    public UlogParameter(UlogTargetExtension owner)
-		    :base(owner)
+		    protected UlogParam(UlogTargetExtension owner, UlogTargetOptions option)
+		    :base(owner, option)
 		    {}
-		    
-		    protected override void ParseValue (string value)
-		    {
-		        //We don't set nothing. Whe only check the format.
-		        switch(this.option)
-		        {
-		            case UlogTargetOptions.UlogCprange:
-		            case UlogTargetOptions.UlogQthreshold:
-		                Int32.Parse(value);
-		                break;
-		            case UlogTargetOptions.UlogNlgroup:
-		                int num = Int32.Parse(value);
-		                if(num<1 || num> 32)
-		                    throw new FormatException("The value can't be more"+
-		                        " than 32 or less than 1(default).");
-		                break;
-		            case UlogTargetOptions.UlogPrefix:
-		                if(value==null || value.Length>32)
-		                    throw new FormatException("The value can't have more"+
-		                        " than 32 characters.");
-		                break;
-		        }
-		    }
-		    
-		    protected override void ParseName (string name)
-		    {
-		        object objType = this.Owner.ValidateAndGetParameter(name);
-		        
-		        this.option = (UlogTargetOptions)objType;
-		    }
-		    
-		    /// <summary>
-		    /// Returns the value of the parameter as an int
-		    /// </summary>
-		    /// <remarks>
-		    /// This methods returns an int if the parameter value is of type
-		    /// int. If the value can't be converted to an int or the type of
-		    /// the parameter doesn't is of type int this will throw a
-		    /// FormatException.
-		    /// <remarks>
-		    public int GetValueAsInt()
-		    {
-                if(option == UlogTargetOptions.UlogCprange || 
-                   option == UlogTargetOptions.UlogQthreshold ||
-                   option == UlogTargetOptions.UlogNlgroup)
-                {
-                    int num = Int32.Parse(this.Value);
-                    return num;
-                }
-                else
-                    throw new FormatException("This parameter doesn't have "+
-                        "a value of type int.");
-		    }
-		    
 		}
+        
+        public class UlogNlgroupParam: UlogParam
+        {
+            private int nlgroup;
+            
+            /// <summary>
+            /// Gets/Sets the netlink group where a packet is sent.
+            /// </summary>
+            /// <remarks>
+            /// If the number set is greater than 32 or lower than 1 a value of 
+            /// 32 or 1 (respectively) is assigned.
+            /// </remarks>
+            public int Nlgroup
+            {
+                get { return this.nlgroup;}
+                set {
+                    if(value>=32)
+                        this.nlgroup = 32;
+                    else if(value<1)
+                        this.nlgroup = 1;
+                    else
+                        this.nlgroup = value;
+                }
+            }
+            
+            public UlogNlgroupParam (UlogTargetExtension owner)
+                :base (owner, UlogTargetOptions.UlogNlgroup)
+            {}
+            
+            protected override string GetValuesAsString ()
+            {
+                return this.nlgroup.ToString();
+            }
+
+            public override void SetValues (string value)
+            {
+                this.Nlgroup = Int32.Parse(value);
+            }
+
+        }
+        
+        public class UlogCprangeParam: UlogParam
+        {
+            private int cprange;
+            
+            /// <summary>
+            /// Gets/Sets the netlink group where a packet is sent.
+            /// </summary>
+            /// <remarks>
+            /// If the number set is less than 0 the value assigned is 0
+            /// </remarks>
+            public int Cprange
+            {
+                get { return this.cprange;}
+                set {
+                    if(value<0)
+                        this.cprange = 0;
+                    else
+                        this.cprange = value;
+                }
+            }
+            
+            public UlogCprangeParam (UlogTargetExtension owner)
+                :base (owner, UlogTargetOptions.UlogCprange)
+            {}
+            
+            protected override string GetValuesAsString ()
+            {
+                return this.cprange.ToString();
+            }
+
+            public override void SetValues (string value)
+            {
+                this.Cprange = Int32.Parse(value);
+            }
+        }
+        
+        public class UlogPrefixParam: UlogParam
+        {
+            private string prefix;
+            
+            /// <summary>
+            /// Gets/Sets the netlink group where a packet is sent.
+            /// </summary>
+            /// <remarks>
+            /// If the string assigned has more than 32 characters its truncated.
+            /// </remarks>
+            public string Prefix
+            {
+                get { return this.prefix;}
+                set {
+                    if(String.IsNullOrEmpty(value))
+                        throw new ArgumentException("Can't be null or empty","value");
+                    
+                    if(value.Length>32)
+                        this.prefix = value.Substring(0,32);
+                    else
+                        this.prefix = value;
+                }
+            }
+            
+            public UlogPrefixParam (UlogTargetExtension owner)
+                :base (owner, UlogTargetOptions.UlogPrefix)
+            {}
+            
+            protected override string GetValuesAsString ()
+            {
+                return this.prefix;
+            }
+
+            public override void SetValues (string value)
+            {
+                this.prefix = value;
+            }
+        }
+        
+        public class UlogQthresholdParam: UlogParam
+        {
+            private int qthreshold;
+            
+            /// <summary>
+            /// Gets/Sets the netlink group where a packet is sent.
+            /// </summary>
+            /// <remarks>
+            /// If the number to set is less than 1 the value of 1 is set.
+            /// </remarks>
+            public int Qthreshold
+            {
+                get { return this.qthreshold;}
+                set {
+                    if(value<1)
+                        this.qthreshold = 1;
+                    else
+                        this.qthreshold = value;
+                }
+            }
+            
+            public UlogQthresholdParam (UlogTargetExtension owner)
+                :base (owner, UlogTargetOptions.UlogQthreshold)
+            {}
+            
+            protected override string GetValuesAsString ()
+            {
+                return this.qthreshold.ToString();
+            }
+
+            public override void SetValues (string value)
+            {
+                this.Qthreshold = Int32.Parse(value);
+            }
+        }
 	}
 }

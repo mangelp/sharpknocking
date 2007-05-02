@@ -36,21 +36,21 @@ namespace IptablesNet.Extensions.Match
 	    }
 	    
 		public IcmpMatchExtension()
-		    :base(typeof(IcmpExtensionOptions), MatchExtensions.Icmp)
+		    :base(typeof(IcmpMatchOptions), MatchExtensions.Icmp)
         {
 		}
         
         public override MatchExtensionParameter CreateParameter (string paramType)
         {
             object val;
-            if(!TypeUtil.IsAliasName (typeof(IcmpExtensionOptions), paramType, out val))
+            if(!TypeUtil.IsAliasName (typeof(IcmpMatchOptions), paramType, out val))
                 return null;
             
-            IcmpExtensionOptions option = (IcmpExtensionOptions)val;
+            IcmpMatchOptions option = (IcmpMatchOptions)val;
             
             switch(option)
             {
-                case IcmpExtensionOptions.IcmpType:
+                case IcmpMatchOptions.IcmpType:
                     return new IcmpTypeParam (this);
                 default:
                     throw new ArgumentException ("Not supported option: "+option,"name");
@@ -69,9 +69,9 @@ namespace IptablesNet.Extensions.Match
                 get { return (IcmpMatchExtension)base.Owner;}
             }
             
-            public new IcmpExtensionOptions Option
+            public new IcmpMatchOptions Option
             {
-                get { return (IcmpExtensionOptions)base.Option;}
+                get { return (IcmpMatchOptions)base.Option;}
             }
             
             private IcmpTypes icmp;
@@ -83,7 +83,7 @@ namespace IptablesNet.Extensions.Match
             }
             
             public IcmpTypeParam(IcmpMatchExtension owner)
-              :base((MatchExtensionHandler)owner, IcmpExtensionOptions.IcmpType)
+              :base((MatchExtensionHandler)owner, IcmpMatchOptions.IcmpType)
             {
                 this.icmp = IcmpTypes.Any;
             }

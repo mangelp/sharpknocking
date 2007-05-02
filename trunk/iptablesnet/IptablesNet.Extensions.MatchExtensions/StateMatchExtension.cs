@@ -13,7 +13,7 @@ namespace IptablesNet.Extensions.Match
 	public class StateMatchExtension: MatchExtensionHandler
 	{
 	    public StateMatchExtension()
-	      :base(typeof(StateExtensionOptions), MatchExtensions.State)
+	      :base(typeof(StateMatchOptions), MatchExtensions.State)
 		{
             
 		}
@@ -95,15 +95,15 @@ namespace IptablesNet.Extensions.Match
         
         public override MatchExtensionParameter CreateParameter (string paramType)
         {
-            object val;
-            if(!TypeUtil.IsAliasName (typeof(StateExtensionOptions), paramType, out val))
+            object val=null;
+            if(!TypeUtil.IsAliasName (typeof(StateMatchOptions), paramType, out val))
                 return null;
             
-            StateExtensionOptions option = (StateExtensionOptions)val;
+            StateMatchOptions option = (StateMatchOptions)val;
             
             switch(option)
             {
-                case StateExtensionOptions.State:
+                case StateMatchOptions.State:
                     return new StateParam (this);
                 default:
                     throw new ArgumentException ("Not supported option: "+option,"name");
@@ -122,9 +122,9 @@ namespace IptablesNet.Extensions.Match
                 get { return (StateMatchExtension)base.Owner;}
             }
             
-            public new StateExtensionOptions Option
+            public new StateMatchOptions Option
             {
-                get { return (StateExtensionOptions)base.Option;}
+                get { return (StateMatchOptions)base.Option;}
             }
             
             private ConnectionStates state;
@@ -136,7 +136,7 @@ namespace IptablesNet.Extensions.Match
             }
             
             public StateParam(StateMatchExtension owner)
-              :base((MatchExtensionHandler)owner, StateExtensionOptions.State)
+              :base((MatchExtensionHandler)owner, StateMatchOptions.State)
             {
                   
             }

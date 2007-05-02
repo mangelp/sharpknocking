@@ -3,41 +3,41 @@ using System;
 
 using SharpKnocking.Common;
 
+using IptablesNet.Core.Extensions;
 using IptablesNet.Core.Extensions.ExtendedTarget;
 
-namespace IptablesNet.Extensions.TargetExtensions
+namespace IptablesNet.Extensions.ExtendedTarget
 {
+    /// <summary>
+    /// Models the Reject target extension
+    /// </summary>
 	public class RejectTargetExtension: TargetExtensionHandler
 	{
 		
 		public RejectTargetExtension()
-		  :base(typeof(RejectTargetOptions), "reject")
+		  :base(typeof(RejectTargetOptions), TargetExtensions.Reject)
 		{
 		}
+        
+        public override TargetExtensionParameter CreateParameter (string paramType)
+        {
+            object obj;
+            
+            if(!TypeUtil.IsAliasName (typeof (RejectTargetOptions), paramType, out obj))
+                return null;
+            
+            RejectTargetOptions option = (RejectTargetOptions)obj;
+            
+            switch(option)
+            {
+                case RejectTargetOptions.RejectWith:
+                    return new RejectParam(this);
+                default:
+                    throw new ArgumentException ("Not supported option: "+option,"name");
+            }
+        }
 		
-		public override TargetExtensionParameter CreateParameter ()
-		{
-			return new RejectParameter(this);
-		}
-		
-		public override TargetExtensionParameter CreateParameter (string name, string value)
-		{
-		    RejectParameter par = new RejectParameter(this);
-		    
-		    par.Name = name;
-		    par.Value = value;
-		    
-		    return par;
-		}
-
-
-		public override Type GetInternalParameterType ()
-		{
-			return typeof(RejectParameter);
-		}
-
-		
-		public class RejectParameter: TargetExtensionParameter
+		public class RejectParam: TargetExtensionParameter
 		{
 		    private RejectIcmpTypes rejectWith;
 		    
@@ -50,29 +50,26 @@ namespace IptablesNet.Extensions.TargetExtensions
 		        set { this.rejectWith = value;}
 		    }
 		    
-		    private RejectTargetOptions option;
-		    
-		    public RejectTargetOptions Option
+		    public new RejectTargetOptions Option
 		    {
-		        get { return this.option;}
-		        set
-		        {
-		            this.option = value;
-		            base.Name = TypeUtil.GetDefaultAlias(value);
-		        }
+		        get { return (RejectTargetOptions)base.Option;}
 		    }
 		    
 		    public new RejectTargetExtension Owner
 		    {
 		        get { return (RejectTargetExtension)base.Owner;}
-		        set { base.Owner = (TargetExtensionHandler)value;}
 		    }
 		    
-		    public RejectParameter(RejectTargetExtension owner)
-		    :base(owner)
+		    public RejectParam(RejectTargetExtension owner)
+		      :base(owner, RejectTargetOptions.RejectWith)
 		    {}
-		    
-            protected override void ParseValue (string value)
+
+            protected override string GetValuesAsString ()
+            {
+                return TypeUtil.GetDefaultAlias(this.rejectWith);
+            }
+            
+            public override void SetValues (string value)
             {
                 object enumValue;
                 
@@ -82,14 +79,9 @@ namespace IptablesNet.Extensions.TargetExtensions
                             " a valid enumeration member of RejectIcmpTypes");
                 }
                 
-                this.rejectWith = (RejectIcmpTypes)enumValue;
+                this.rejectWith = (RejectIcmpTypes)enumValue; 
             }
-            
-            protected override void ParseName (string name)
-            {
-                object objValue = this.Owner.ValidateAndGetParameter(name);
-                this.option = (RejectTargetOptions)objValue;
-            }
+
 
 		    
 		}

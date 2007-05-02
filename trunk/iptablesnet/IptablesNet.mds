@@ -5,32 +5,33 @@
       <Entry build="True" name="IptablesNet.Extensions.MatchExtensions" configuration="Debug" />
       <Entry build="True" name="IptablesNet.Extensions.TargetExtensions" configuration="Debug" />
       <Entry build="True" name="IptablesNet.UI.Console" configuration="Debug" />
-      <Entry build="True" name="IptablesNet.UI.Desktop" configuration="Debug" />
       <Entry build="True" name="IptablesNet.Net" configuration="Debug" />
+      <Entry build="True" name="IptablesNet.UI.Gtk" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="IptablesNet.Core" configuration="Release" />
       <Entry build="True" name="IptablesNet.Extensions.MatchExtensions" configuration="Release" />
       <Entry build="True" name="IptablesNet.Extensions.TargetExtensions" configuration="Release" />
       <Entry build="True" name="IptablesNet.UI.Console" configuration="Release" />
-      <Entry build="True" name="IptablesNet.UI.Desktop" configuration="Release" />
       <Entry build="True" name="IptablesNet.Net" configuration="Release" />
+      <Entry build="True" name="IptablesNet.UI.Gtk" configuration="Release" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="IptablesNet.Core" single="True">
+  <StartMode startupentry="IptablesNet.UI.Gtk" single="True">
     <Execute type="None" entry="IptablesNet.Core" />
     <Execute type="None" entry="IptablesNet.Extensions.MatchExtensions" />
     <Execute type="None" entry="IptablesNet.Extensions.TargetExtensions" />
     <Execute type="None" entry="IptablesNet.UI.Console" />
     <Execute type="None" entry="IptablesNet.UI.Desktop" />
     <Execute type="None" entry="IptablesNet.Net" />
+    <Execute type="None" entry="IptablesNet.UI.Gtk" />
   </StartMode>
   <Entries>
     <Entry filename="./IptablesNet.Core/IptablesNet.Core.mdp" />
     <Entry filename="./IptablesNet.Extensions.MatchExtensions/IptablesNet.Extensions.MatchExtensions.mdp" />
     <Entry filename="./IptablesNet.Extensions.TargetExtensions/IptablesNet.Extensions.TargetExtensions.mdp" />
     <Entry filename="./IptablesNet.UI.Console/IptablesNet.UI.Console.mdp" />
-    <Entry filename="./IptablesNet.UI.Desktop/IptablesNet.UI.Desktop.mdp" />
     <Entry filename="./IptablesNet.Net/IptablesNet.Net.mdp" />
+    <Entry filename="./IptablesNet.UI.Gtk/IptablesNet.UI.Gtk.mdp" />
   </Entries>
 </Combine>
