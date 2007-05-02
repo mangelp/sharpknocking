@@ -1,10 +1,24 @@
 <?xml version="1.0"?>
-<UserCombinePreferences filename="/home/mangelp/projects/IptablesNet/IptablesNet.mds">
+<UserCombinePreferences filename="/home/mangelp/projects/sharpknocking/iptablesnet/IptablesNet.mds">
   <Files />
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
-        <Node expanded="True" />
+        <Node expanded="True">
+          <Node name="IptablesNet.Core" expanded="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="IptablesNet.Extensions.MatchExtensions" expanded="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="IptablesNet.Extensions.TargetExtensions" expanded="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="IptablesNet.Net" expanded="True">
+            <Node name="References" expanded="True" selected="True" />
+          </Node>
+          <Node name="IptablesNet.UI.Gtk" expanded="True" />
+        </Node>
       </TreeView>
     </ViewMemento>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ClassPad">

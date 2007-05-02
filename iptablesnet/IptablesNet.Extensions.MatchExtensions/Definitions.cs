@@ -29,21 +29,21 @@ namespace IptablesNet.Extensions.Match
 	    Related=8
 	}
 	
-	public enum IcmpExtensionOptions
+	public enum IcmpMatchOptions
 	{
 	    //No need to None 
 	    [AliasAttribute("icmp-type")]
 	    IcmpType
 	}
 	
-	public enum StateExtensionOptions
+	public enum StateMatchOptions
 	{
 	    //No need to None 
 	    [AliasAttribute("state")]
 	    State
 	}
 	
-	public enum UdpExtensionOptions
+	public enum UdpMatchOptions
 	{
 	    //Default value. Not-valid for iptables but usefull.
 	    None=0,
@@ -53,7 +53,7 @@ namespace IptablesNet.Extensions.Match
 	    DestinationPort
 	}
 	
-	public enum TcpExtensionOptions
+	public enum TcpMatchOptions
 	{
 	    //Default value. Not-valid for iptables but usefull.
 	    None=0,

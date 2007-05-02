@@ -2,7 +2,7 @@
 using System;
 using SharpKnocking.Common;
 
-namespace IptablesNet.Extensions.TargetExtensions
+namespace IptablesNet.Extensions.ExtendedTarget
 {
     public enum BalanceTargetOptions
     {

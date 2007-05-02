@@ -16,7 +16,7 @@ namespace IptablesNet.Extensions.Match
 	{
 		
 		public UdpMatchExtension()
-		  :base(typeof(UdpExtensionOptions), MatchExtensions.Udp)
+		  :base(typeof(UdpMatchOptions), MatchExtensions.Udp)
 		{
 		}
 		
@@ -24,28 +24,28 @@ namespace IptablesNet.Extensions.Match
 		{
 			object type;
 			
-			if(!TypeUtil.IsAliasName ( typeof(UdpExtensionOptions), par, out type))
+			if(!TypeUtil.IsAliasName ( typeof(UdpMatchOptions), par, out type))
 				return null;
 			
-			UdpExtensionOptions option = (UdpExtensionOptions)type;
+			UdpMatchOptions option = (UdpMatchOptions)type;
 			
 			return this.CreateParameter (option);
 		}
 			                       
-        public UdpParam CreateParameter(UdpExtensionOptions option)
+        public UdpParam CreateParameter(UdpMatchOptions option)
         {
 			switch (option)
 			{
-				case UdpExtensionOptions.SourcePort:
+				case UdpMatchOptions.SourcePort:
 					return new UdpSourceParam (this);
-                case UdpExtensionOptions.DestinationPort:
+                case UdpMatchOptions.DestinationPort:
                     return new UdpDestinationParam (this);
                 default:
                     throw new ArgumentException ("Invalid option type: "+option);
 			}
         }
         
-        public UdpParam CreateParameter(UdpExtensionOptions option, string value)
+        public UdpParam CreateParameter(UdpMatchOptions option, string value)
         {
 			UdpParam par = this.CreateParameter(option);
             if(par!=null)
@@ -60,12 +60,12 @@ namespace IptablesNet.Extensions.Match
                 get { return (UdpMatchExtension)base.Owner;}
             }
 			
-			public new UdpExtensionOptions Option
+			public new UdpMatchOptions Option
 			{
-				get { return (UdpExtensionOptions)base.Option;}
+				get { return (UdpMatchOptions)base.Option;}
 			}
             
-            protected UdpParam(UdpMatchExtension owner, UdpExtensionOptions option)
+            protected UdpParam(UdpMatchExtension owner, UdpMatchOptions option)
                 :base((MatchExtensionHandler)owner, option)
             {}
         }
@@ -85,12 +85,12 @@ namespace IptablesNet.Extensions.Match
             }
 			
 			public UdpSourceParam(UdpMatchExtension handler)
-				:base(handler, UdpExtensionOptions.SourcePort)
+				:base(handler, UdpMatchOptions.SourcePort)
 			{
 				
 			}
 			
-			protected UdpSourceParam(UdpMatchExtension handler, UdpExtensionOptions paramType)
+			protected UdpSourceParam(UdpMatchExtension handler, UdpMatchOptions paramType)
 				:base(handler, paramType)
 			{
 				
@@ -114,7 +114,7 @@ namespace IptablesNet.Extensions.Match
 		public class UdpDestinationParam: UdpSourceParam
 		{
 			public UdpDestinationParam(UdpMatchExtension owner)
-				:base(owner, UdpExtensionOptions.DestinationPort)
+				:base(owner, UdpMatchOptions.DestinationPort)
 			{
 				
 			}

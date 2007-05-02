@@ -20,7 +20,7 @@ namespace IptablesNet.Extensions.Match
 	{
         
 		public TcpMatchExtension()
-		  :base(typeof(TcpExtensionOptions), MatchExtensions.Tcp)
+		  :base(typeof(TcpMatchOptions), MatchExtensions.Tcp)
 		{
 		
 		}
@@ -28,34 +28,34 @@ namespace IptablesNet.Extensions.Match
         public override MatchExtensionParameter CreateParameter ( string name )
         {
             object val;
-            if(!TypeUtil.IsAliasName (typeof(TcpExtensionOptions), name, out val))
+            if(!TypeUtil.IsAliasName (typeof(TcpMatchOptions), name, out val))
                 return null;
             
-            TcpExtensionOptions option = (TcpExtensionOptions)val;
+            TcpMatchOptions option = (TcpMatchOptions)val;
             
             return this.CreateParameter (option);
         }
         
-        public TcpParam CreateParameter (TcpExtensionOptions option)
+        public TcpParam CreateParameter (TcpMatchOptions option)
         {
             switch(option)
             {
-                case TcpExtensionOptions.DestinationPort:
+                case TcpMatchOptions.DestinationPort:
                     return new TcpDestinationParam (this);
-                case TcpExtensionOptions.SourcePort:
+                case TcpMatchOptions.SourcePort:
                     return new TcpSourceParam (this);
-                case TcpExtensionOptions.Syn:
+                case TcpMatchOptions.Syn:
                     return new TcpSynParam (this);
-                case TcpExtensionOptions.TcpFlags:
+                case TcpMatchOptions.TcpFlags:
                     return new TcpFlagsParam (this);
-                case TcpExtensionOptions.TcpOption:
+                case TcpMatchOptions.TcpOption:
                     return new TcpOptionParam (this);
                 default:
                     throw new ArgumentException ("Not supported option: "+option,"name");
             }
         }
         
-        public TcpParam CreateParameter (TcpExtensionOptions option, string value)
+        public TcpParam CreateParameter (TcpMatchOptions option, string value)
         {
             TcpParam par = this.CreateParameter (option);
             if(par!=null)
@@ -81,9 +81,9 @@ namespace IptablesNet.Extensions.Match
                 get { return (TcpMatchExtension)base.Owner;}
             }
 			
-			public new TcpExtensionOptions Option
+			public new TcpMatchOptions Option
 			{
-				get { return (TcpExtensionOptions)base.Option;}
+				get { return (TcpMatchOptions)base.Option;}
 			}
 			
 			public TcpParam(TcpMatchExtension handler, object paramType)
@@ -110,7 +110,7 @@ namespace IptablesNet.Extensions.Match
             }
             
             public TcpSourceParam(TcpMatchExtension owner)
-              :base(owner, TcpExtensionOptions.SourcePort)
+              :base(owner, TcpMatchOptions.SourcePort)
             {
             }
 			
@@ -139,7 +139,7 @@ namespace IptablesNet.Extensions.Match
 		public class TcpDestinationParam: TcpSourceParam
 		{
 			public TcpDestinationParam(TcpMatchExtension owner)
-				:base(owner, TcpExtensionOptions.DestinationPort)
+				:base(owner, TcpMatchOptions.DestinationPort)
 			{
 				
 			}
@@ -172,7 +172,7 @@ namespace IptablesNet.Extensions.Match
             }
 			
 			public TcpFlagsParam (TcpMatchExtension owner)
-				:base(owner, TcpExtensionOptions.TcpFlags)
+				:base(owner, TcpMatchOptions.TcpFlags)
 			{}
             
             private string GetFlagsString (TcpFlags flags)
@@ -239,7 +239,7 @@ namespace IptablesNet.Extensions.Match
 		public class TcpSynParam: TcpParam
 		{
 			public TcpSynParam(TcpMatchExtension owner)
-				:base(owner, TcpExtensionOptions.Syn)
+				:base(owner, TcpMatchOptions.Syn)
 			{}
             
             protected override string GetValuesAsString ()
@@ -266,7 +266,7 @@ namespace IptablesNet.Extensions.Match
             }
 			
 			public TcpOptionParam(TcpMatchExtension owner)
-				:base(owner, TcpExtensionOptions.Syn)
+				:base(owner, TcpMatchOptions.Syn)
 			{}
             
             protected override string GetValuesAsString ()
