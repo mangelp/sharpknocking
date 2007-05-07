@@ -5,19 +5,11 @@
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
         <Node expanded="True">
-          <Node name="IptablesNet.Core" expanded="True">
-            <Node name="References" expanded="True" />
+          <Node name="IptablesNet.UI.Gtk" expanded="True">
+            <Node name="UserInterface" expanded="True" />
+            <Node name="MainWindow.cs" expanded="False" selected="True" />
           </Node>
-          <Node name="IptablesNet.Extensions.MatchExtensions" expanded="True">
-            <Node name="References" expanded="True" />
-          </Node>
-          <Node name="IptablesNet.Extensions.TargetExtensions" expanded="True">
-            <Node name="References" expanded="True" />
-          </Node>
-          <Node name="IptablesNet.Net" expanded="True">
-            <Node name="References" expanded="True" selected="True" />
-          </Node>
-          <Node name="IptablesNet.UI.Gtk" expanded="True" />
+          <Node name="Packages" expanded="True" />
         </Node>
       </TreeView>
     </ViewMemento>
