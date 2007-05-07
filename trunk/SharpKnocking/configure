@@ -645,18 +645,8 @@ GLADE_SHARP_20_CFLAGS
 GLADE_SHARP_20_LIBS
 ENABLE_DEBUG_TRUE
 ENABLE_DEBUG_FALSE
-COMMON_DEBUG_LIB
-COMMONWIDGETS_DEBUG_LIB
-NETFILTERFIREWALL_DEBUG_LIB
-DEBUG_CONFIG_LIBRARIES
-DEBUG_CONFIG_LIBS
 ENABLE_RELEASE_TRUE
 ENABLE_RELEASE_FALSE
-COMMON_RELEASE_LIB
-COMMONWIDGETS_RELEASE_LIB
-NETFILTERFIREWALL_RELEASE_LIB
-RELEASE_CONFIG_LIBRARIES
-RELEASE_CONFIG_LIBS
 LIBOBJS
 LTLIBOBJS'
 ac_subst_files=''
@@ -2852,16 +2842,6 @@ else
 fi
 
 if test "x$enable_debug" = "xyes" ; then
-	COMMON_DEBUG_LIB='SharpKnocking.Common.dll'
-
-	COMMONWIDGETS_DEBUG_LIB='CommonWidgets.dll'
-
-	NETFILTERFIREWALL_DEBUG_LIB='NetfilterFirewall.dll'
-
-	DEBUG_CONFIG_LIBRARIES=' ${pkglibdir}/SharpKnocking.Common.dll ${pkglibdir}/CommonWidgets.dll ${pkglibdir}/NetfilterFirewall.dll'
-	DEBUG_CONFIG_LIBS=' -r:${pkglibdir}/SharpKnocking.Common.dll -r:${pkglibdir}/CommonWidgets.dll -r:${pkglibdir}/NetfilterFirewall.dll'
-
-
 	CONFIG_REQUESTED="yes"
 fi
 # Check whether --enable-release was given.
@@ -2882,29 +2862,9 @@ else
 fi
 
 if test "x$enable_release" = "xyes" ; then
-	COMMON_RELEASE_LIB='SharpKnocking.Common.dll'
-
-	COMMONWIDGETS_RELEASE_LIB='CommonWidgets.dll'
-
-	NETFILTERFIREWALL_RELEASE_LIB='NetfilterFirewall.dll'
-
-	RELEASE_CONFIG_LIBRARIES=' ${pkglibdir}/SharpKnocking.Common.dll ${pkglibdir}/CommonWidgets.dll ${pkglibdir}/NetfilterFirewall.dll'
-	RELEASE_CONFIG_LIBS=' -r:${pkglibdir}/SharpKnocking.Common.dll -r:${pkglibdir}/CommonWidgets.dll -r:${pkglibdir}/NetfilterFirewall.dll'
-
-
 	CONFIG_REQUESTED="yes"
 fi
 if test -z "$CONFIG_REQUESTED" ; then
-	COMMON_DEBUG_LIB='SharpKnocking.Common.dll'
-
-	COMMONWIDGETS_DEBUG_LIB='CommonWidgets.dll'
-
-	NETFILTERFIREWALL_DEBUG_LIB='NetfilterFirewall.dll'
-
-	DEBUG_CONFIG_LIBRARIES=' ${pkglibdir}/SharpKnocking.Common.dll ${pkglibdir}/CommonWidgets.dll ${pkglibdir}/NetfilterFirewall.dll'
-	DEBUG_CONFIG_LIBS=' -r:${pkglibdir}/SharpKnocking.Common.dll -r:${pkglibdir}/CommonWidgets.dll -r:${pkglibdir}/NetfilterFirewall.dll'
-
-
 
 
 if true; then
@@ -2918,7 +2878,7 @@ fi
 fi
 
 
-ac_config_files="$ac_config_files ./CommonWidgets/SharpKnocking.CommonWidgets.pc ./Common/SharpKnocking.Common.pc ./PortKnocker/SharpKnocking.PortKnocker.pc ./PortKnocker/Makefile ./KnockingDaemon/Makefile ./Doorman/SharpKnocking.Doorman.pc ./KnockingDaemonControl/knockingdaemoncontrol ./KnockingDaemon/SharpKnocking.KnockingDaemon.pc ./NetfilterFirewall/Makefile ./KnockingDaemonControl/Makefile ./PortKnocker/portknocker ./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc ./Doorman/doorman ./Makefile sharpknocking.pc ./CommonWidgets/Makefile ./Common/Makefile ./Doorman/Makefile ./NetfilterFirewall/SharpKnocking.NetfilterFirewall.pc ./KnockingDaemon/knockingdaemon"
+ac_config_files="$ac_config_files ./CommonWidgets/commonwidgets.pc ./KnockingDaemonControl/knockingdaemoncontrol ./NetfilterFirewall/netfilterfirewall.pc ./Doorman/Makefile ./KnockingDaemon/knockingdaemon ./PortKnocker/Makefile ./NetfilterFirewall/Makefile sharpknocking.pc ./Common/common.pc ./KnockingDaemonControl/Makefile ./PortKnocker/portknocker ./Makefile ./Doorman/doorman ./KnockingDaemon/Makefile ./Common/Makefile ./CommonWidgets/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -3510,26 +3470,22 @@ cat >>$CONFIG_STATUS <<\_ACEOF
 for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
-    "./CommonWidgets/SharpKnocking.CommonWidgets.pc") CONFIG_FILES="$CONFIG_FILES ./CommonWidgets/SharpKnocking.CommonWidgets.pc" ;;
-    "./Common/SharpKnocking.Common.pc") CONFIG_FILES="$CONFIG_FILES ./Common/SharpKnocking.Common.pc" ;;
-    "./PortKnocker/SharpKnocking.PortKnocker.pc") CONFIG_FILES="$CONFIG_FILES ./PortKnocker/SharpKnocking.PortKnocker.pc" ;;
-    "./PortKnocker/Makefile") CONFIG_FILES="$CONFIG_FILES ./PortKnocker/Makefile" ;;
-    "./KnockingDaemon/Makefile") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemon/Makefile" ;;
-    "./Doorman/SharpKnocking.Doorman.pc") CONFIG_FILES="$CONFIG_FILES ./Doorman/SharpKnocking.Doorman.pc" ;;
+    "./CommonWidgets/commonwidgets.pc") CONFIG_FILES="$CONFIG_FILES ./CommonWidgets/commonwidgets.pc" ;;
     "./KnockingDaemonControl/knockingdaemoncontrol") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemonControl/knockingdaemoncontrol" ;;
-    "./KnockingDaemon/SharpKnocking.KnockingDaemon.pc") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemon/SharpKnocking.KnockingDaemon.pc" ;;
+    "./NetfilterFirewall/netfilterfirewall.pc") CONFIG_FILES="$CONFIG_FILES ./NetfilterFirewall/netfilterfirewall.pc" ;;
+    "./Doorman/Makefile") CONFIG_FILES="$CONFIG_FILES ./Doorman/Makefile" ;;
+    "./KnockingDaemon/knockingdaemon") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemon/knockingdaemon" ;;
+    "./PortKnocker/Makefile") CONFIG_FILES="$CONFIG_FILES ./PortKnocker/Makefile" ;;
     "./NetfilterFirewall/Makefile") CONFIG_FILES="$CONFIG_FILES ./NetfilterFirewall/Makefile" ;;
+    "sharpknocking.pc") CONFIG_FILES="$CONFIG_FILES sharpknocking.pc" ;;
+    "./Common/common.pc") CONFIG_FILES="$CONFIG_FILES ./Common/common.pc" ;;
     "./KnockingDaemonControl/Makefile") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemonControl/Makefile" ;;
     "./PortKnocker/portknocker") CONFIG_FILES="$CONFIG_FILES ./PortKnocker/portknocker" ;;
-    "./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemonControl/SharpKnocking.KnockingDaemonControl.pc" ;;
-    "./Doorman/doorman") CONFIG_FILES="$CONFIG_FILES ./Doorman/doorman" ;;
     "./Makefile") CONFIG_FILES="$CONFIG_FILES ./Makefile" ;;
-    "sharpknocking.pc") CONFIG_FILES="$CONFIG_FILES sharpknocking.pc" ;;
-    "./CommonWidgets/Makefile") CONFIG_FILES="$CONFIG_FILES ./CommonWidgets/Makefile" ;;
+    "./Doorman/doorman") CONFIG_FILES="$CONFIG_FILES ./Doorman/doorman" ;;
+    "./KnockingDaemon/Makefile") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemon/Makefile" ;;
     "./Common/Makefile") CONFIG_FILES="$CONFIG_FILES ./Common/Makefile" ;;
-    "./Doorman/Makefile") CONFIG_FILES="$CONFIG_FILES ./Doorman/Makefile" ;;
-    "./NetfilterFirewall/SharpKnocking.NetfilterFirewall.pc") CONFIG_FILES="$CONFIG_FILES ./NetfilterFirewall/SharpKnocking.NetfilterFirewall.pc" ;;
-    "./KnockingDaemon/knockingdaemon") CONFIG_FILES="$CONFIG_FILES ./KnockingDaemon/knockingdaemon" ;;
+    "./CommonWidgets/Makefile") CONFIG_FILES="$CONFIG_FILES ./CommonWidgets/Makefile" ;;
 
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
@@ -3659,23 +3615,13 @@ GLADE_SHARP_20_CFLAGS!$GLADE_SHARP_20_CFLAGS$ac_delim
 GLADE_SHARP_20_LIBS!$GLADE_SHARP_20_LIBS$ac_delim
 ENABLE_DEBUG_TRUE!$ENABLE_DEBUG_TRUE$ac_delim
 ENABLE_DEBUG_FALSE!$ENABLE_DEBUG_FALSE$ac_delim
-COMMON_DEBUG_LIB!$COMMON_DEBUG_LIB$ac_delim
-COMMONWIDGETS_DEBUG_LIB!$COMMONWIDGETS_DEBUG_LIB$ac_delim
-NETFILTERFIREWALL_DEBUG_LIB!$NETFILTERFIREWALL_DEBUG_LIB$ac_delim
-DEBUG_CONFIG_LIBRARIES!$DEBUG_CONFIG_LIBRARIES$ac_delim
-DEBUG_CONFIG_LIBS!$DEBUG_CONFIG_LIBS$ac_delim
 ENABLE_RELEASE_TRUE!$ENABLE_RELEASE_TRUE$ac_delim
 ENABLE_RELEASE_FALSE!$ENABLE_RELEASE_FALSE$ac_delim
-COMMON_RELEASE_LIB!$COMMON_RELEASE_LIB$ac_delim
-COMMONWIDGETS_RELEASE_LIB!$COMMONWIDGETS_RELEASE_LIB$ac_delim
-NETFILTERFIREWALL_RELEASE_LIB!$NETFILTERFIREWALL_RELEASE_LIB$ac_delim
-RELEASE_CONFIG_LIBRARIES!$RELEASE_CONFIG_LIBRARIES$ac_delim
-RELEASE_CONFIG_LIBS!$RELEASE_CONFIG_LIBS$ac_delim
 LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 83; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 73; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
