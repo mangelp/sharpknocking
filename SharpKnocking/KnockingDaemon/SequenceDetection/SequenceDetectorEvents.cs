@@ -63,7 +63,7 @@ namespace SharpKnocking.KnockingDaemon.SequenceDetection
 	   /// Parametrized constructor.
 	   /// </summary>
 	   /// <param name="ip">Ip address that did the knocking</param>
-	   /// <param name="serSeq">CallSequence serialized as an string</param>	   
+	   /// <param name="seq">CallSequence serialized as an string</param>	   
 	   public SequenceDetectorEventArgs(string ip, CallSequence seq)
 	   {
 	       this.ip = ip;

@@ -18,8 +18,8 @@ DIRECTORIES ESTRUCTURE
 
 - Doc 
    Documentation directory. Examples and Api docs.
-- ManagedSource
-   Project Solution.
+- SharpKocking
+   Project Solution. This is the code for the main applicatons.
    Source code written in c# using monodevelop.
         - Common
             Subproject.
@@ -37,11 +37,34 @@ DIRECTORIES ESTRUCTURE
         - NetfilterFirewall
             Subproject.
             Approach to work against iptables command-line utility using a object-oriented
-			way.
+			way. This subproject is getting moved to a library called IptablesNet
         - PortKnocker
             Subproject.
             Client application to perform the knocking that grants access to a
             hidden service in the target machine.
+- IptablesNet
+	Root directory for the IptablesNet subproject. Is a major rewrite of the library used to handle the 
+	rules in the firewall through the iptables command.
+		- IptablesNet.Core
+			Subproject. 
+			Core classes.
+		- IptablesNet.MatchExtensions
+			Subproject.
+			Implementation of the extensions for matching packets.
+		- IptablesNet.TargetExtensions
+			Subproject.
+			Implementation of the extension for new tarjets.
+		- IptablesNet.Net
+			Subproject.
+			Network related classes library.
+		- IptablesNet.UI.Conole
+			Subproject.
+			Console interface for the library.
+		- IptablesNet.UI.Gtk
+			Subproject.
+			Graphic desktop interface application for the library.
+		- lib
+			Aditional Library directory
 - Tests
    Samples and testing scripts.
 

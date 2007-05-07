@@ -1,21 +1,15 @@
-By default the binaries are under /usr/local/sharpknocking/bin or 
-/opt/sharpknocking/bin and some scripts are placed under /bin to launch the 
-daemon and graphical applications.
+This project has support for autotools so you can do the traditional configure-make-make install dance.
 
 INSTALLING INSTRUCTIONS
 
-To install first execute install.sh as root. This will copy all the binaries
-to the correct folder updating an existing installation if required. It also 
-adds the group and user sharpknocking to your system.
-Then you have to update the sudoers file to give permission for the user
-sharpknocking to access as root, without requiring password, the commands 
-iptables, iptables-save and iptables-restore.
+You need first to follow the instructions to get it compiled. Then go to the SharpKnocking directory in the
+root of the sources and type this command as root:
 
-To uninstall first execute uninstall.sh as root. This will delete all the
-binaries, scripts, the user and the group sharpknocking but the user preferences
-are keept.
-Then you have to update the sudoers file to remove any references to the user
-or group sharpknocking since it doesn't exist anymore.
+	#make install
+
+To unisntall go to the same directory and type this:
+
+	#make unisntall
 
 COMPILING INSTRUCTIONS
 
@@ -28,11 +22,37 @@ Or try with the daily sources tarball (generated automatically):
     https://forja.rediris.es/tarballs.php?group_id=129
 
 Then you will need a working installation of at least mono 1.2.3 with gtk# 
-libraries and monodevelop 0.13.
+libraries 2.10 and monodevelop 0.13.
 Simply open the solution file ManagedSource.mds with monodevelop and select 
 "build solution" from the build menu and you will get the build.
 
-We try to keep the svn sources as stable as we can but expect compiling issues 
-often.
+If you prefer to build it by console you can use the traditional steps:
 
-time.
+	#./configure --prefix={YourPrefix}
+	#make
+
+GTK-SHARP-2.10 REQUIRED!
+
+You must have gtk-sharp version 2.10 to get the sources compiled. If you don't have it search the net for a 
+package and install it. Once you have it installed you must set/update de enviroment variable called 
+PKG_CONFIG_PATH prepending it with the path of the directory where the .pc files for the libraries are.
+For example, if i built gtk-sharp from sources and i installed it under /usr/local prefix i do:
+
+	#export PKG_CONFIG_PATH=/usr/local/lib:$PKG_CONFIG_PATH
+
+And then i can compile the sources. You may need to set some extra enviroment variable depending on the type
+of setup for mono you have.
+
+WARNING - PROJECT NOT IN PRODUCTION
+
+We try to keep the svn sources as stable as we can but expect compiling issues often as this is a very new
+project and we haven't reached a 1.0 version yet.
+
+WIKI
+
+We maintain a wiki with all the related information about the project. If you have questions or want to do a
+bug report this is the best source to look:
+
+http://code.google.con/p/sharpknocking
+
+You can also download the latest develoment version from the subversion at google or the latest stable package.
