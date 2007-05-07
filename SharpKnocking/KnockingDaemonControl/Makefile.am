@@ -20,14 +20,14 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ./bin/Release
 endif
 
-PROGRAMFILES = \
-	SharpKnocking.Common.dll \
-	SharpKnocking.Common.dll.mdb  
 BINARIES = \
-	knockingdaemoncontrol  
+	$(KNOCKINGDAEMONCONTROL)  
+PROGRAMFILES = \
+	$(SHARPKNOCKING_COMMON_DLL) \
+	$(SHARPKNOCKING_COMMON_DLL_MDB)  
 
 	
-all: $(ASSEMBLY)
+all: $(ASSEMBLY) $(BINARIES) $(PROGRAMFILES) 
 
 FILES = \
 	./Main.cs \
@@ -38,9 +38,7 @@ DATA_FILES =
 RESOURCES = 
 
 EXTRAS = \
-	SharpKnocking.Common.dll \
-	SharpKnocking.Common.dll.mdb \
-	knockingdaemoncontrol.in 
+	./knockingdaemoncontrol.in 
 
 REFERENCES =  \
 	-r:System \
@@ -49,9 +47,25 @@ REFERENCES =  \
 
 DLL_REFERENCES = 
 
+SHARPKNOCKING_COMMON_DLL = $(BUILD_DIR)/SharpKnocking.Common.dll
+$(SHARPKNOCKING_COMMON_DLL): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll
+	mkdir -p $(BUILD_DIR)
+	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll $(SHARPKNOCKING_COMMON_DLL)
+
+SHARPKNOCKING_COMMON_DLL_MDB = $(BUILD_DIR)/SharpKnocking.Common.dll.mdb
+$(SHARPKNOCKING_COMMON_DLL_MDB): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb
+	mkdir -p $(BUILD_DIR)
+	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb $(SHARPKNOCKING_COMMON_DLL_MDB)
+
+KNOCKINGDAEMONCONTROL = $(BUILD_DIR)/knockingdaemoncontrol
+$(KNOCKINGDAEMONCONTROL): knockingdaemoncontrol
+	mkdir -p $(BUILD_DIR)
+	cp knockingdaemoncontrol $(KNOCKINGDAEMONCONTROL)
+
+
+
 $(ASSEMBLY) $(ASSEMBLY).mdb: $(build_sources) $(build_resources) $(build_datafiles) 
 	mkdir -p $(dir $(ASSEMBLY))		
-
 	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$@ -target:$(COMPILE_TARGET) $(build_sources) $(build_resources_embed) $(build_references_ref)
 
 include $(top_srcdir)/Makefile.include
