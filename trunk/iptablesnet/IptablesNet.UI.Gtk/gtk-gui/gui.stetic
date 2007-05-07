@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stetic-interface>
+  <widget class="Gtk.Window" id="MainWindow" design-size="518 379">
+    <action-group name="Default">
+      <action id="NewFile">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">New file</property>
+        <property name="ShortLabel" translatable="yes">New file</property>
+        <property name="StockId">gtk-new</property>
+      </action>
+      <action id="OpenFile">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Open file</property>
+        <property name="ShortLabel" translatable="yes">Open file</property>
+        <property name="StockId">gtk-open</property>
+      </action>
+      <action id="SaveToFile">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Save to file</property>
+        <property name="ShortLabel" translatable="yes">Save to file</property>
+        <property name="StockId">gtk-save</property>
+      </action>
+      <action id="ApplyCurrentToFirewall">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Apply current to firewall</property>
+        <property name="ShortLabel" translatable="yes">Apply current to firewall</property>
+        <property name="StockId">gtk-apply</property>
+      </action>
+      <action id="Configure">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Configure</property>
+        <property name="ShortLabel" translatable="yes">Configure</property>
+        <property name="StockId">gtk-properties</property>
+      </action>
+      <action id="quit">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes" />
+        <property name="StockId">gtk-quit</property>
+      </action>
+      <action id="File">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">File</property>
+        <property name="ShortLabel" translatable="yes">File</property>
+      </action>
+      <action id="Nuevo">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Nuevo</property>
+        <property name="ShortLabel" translatable="yes">_Nuevo</property>
+        <property name="StockId">gtk-new</property>
+      </action>
+      <action id="Abrir">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Abrir</property>
+        <property name="ShortLabel" translatable="yes">_Abrir</property>
+        <property name="StockId">gtk-open</property>
+      </action>
+      <action id="Guardar">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Guardar</property>
+        <property name="ShortLabel" translatable="yes">_Guardar</property>
+        <property name="StockId">gtk-save</property>
+      </action>
+      <action id="Export">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">Export</property>
+        <property name="ShortLabel" translatable="yes">Export</property>
+      </action>
+      <action id="Salir">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">_Salir</property>
+        <property name="ShortLabel" translatable="yes">_Salir</property>
+        <property name="StockId">gtk-quit</property>
+      </action>
+      <action id="ToXml">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">To xml</property>
+        <property name="ShortLabel" translatable="yes">To xml</property>
+      </action>
+      <action id="ToIptablesSaveFormat">
+        <property name="Type">Action</property>
+        <property name="Label" translatable="yes">To iptables-save format</property>
+        <property name="ShortLabel" translatable="yes">To iptables-save format</property>
+      </action>
+    </action-group>
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">MainWindow</property>
+    <property name="Icon">stock:stock_smiley-6 Menu</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <property name="BorderWidth">2</property>
+    <signal name="DeleteEvent" handler="OnDeleteEvent" />
+    <child>
+      <widget class="Gtk.VBox" id="vbox3">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.MenuBar" id="menubar1">
+            <property name="MemberName" />
+            <node name="menubar1" type="Menubar">
+              <node type="Menu" action="File">
+                <node type="Menuitem" action="Nuevo" />
+                <node type="Menuitem" action="Abrir" />
+                <node type="Menuitem" action="Guardar" />
+                <node type="Separator" />
+                <node type="Menu" action="Export">
+                  <node type="Menuitem" action="ToXml" />
+                  <node type="Menuitem" action="ToIptablesSaveFormat" />
+                </node>
+                <node type="Separator" />
+                <node type="Menuitem" action="Salir" />
+              </node>
+            </node>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.Toolbar" id="toolbar1">
+            <property name="MemberName" />
+            <property name="Tooltip" translatable="yes">New rule file</property>
+            <property name="ShowArrow">False</property>
+            <property name="ButtonStyle">Icons</property>
+            <property name="IconSize">SmallToolbar</property>
+            <node name="toolbar1" type="Menubar">
+              <node type="Toolitem" action="NewFile" />
+              <node type="Toolitem" action="OpenFile" />
+              <node type="Toolitem" action="SaveToFile" />
+              <node type="Separator" />
+              <node type="Toolitem" action="Configure" />
+              <node type="Separator" />
+              <node type="Toolitem" action="ApplyCurrentToFirewall" />
+            </node>
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HBox" id="hbox2">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.TreeView" id="treeview2">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="RulesHint">True</property>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.VButtonBox" id="vbuttonbox1">
+                <property name="MemberName" />
+                <property name="Spacing">6</property>
+                <property name="BorderWidth">2</property>
+                <property name="Size">3</property>
+                <property name="LayoutStyle">Start</property>
+                <child>
+                  <widget class="Gtk.Button" id="button3">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="UseStock">True</property>
+                    <property name="Type">StockItem</property>
+                    <property name="StockId">gtk-add</property>
+                    <property name="IsDialogButton">False</property>
+                    <property name="label">gtk-add</property>
+                  </widget>
+                  <packing>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="button4">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="UseStock">True</property>
+                    <property name="Type">StockItem</property>
+                    <property name="StockId">gtk-remove</property>
+                    <property name="IsDialogButton">False</property>
+                    <property name="label">gtk-remove</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Button" id="button6">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="UseStock">True</property>
+                    <property name="Type">StockItem</property>
+                    <property name="StockId">gtk-edit</property>
+                    <property name="IsDialogButton">False</property>
+                    <property name="label">gtk-edit</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</stetic-interface>

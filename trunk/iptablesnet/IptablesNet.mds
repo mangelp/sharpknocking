@@ -1,4 +1,4 @@
-<Combine name="IptablesNet" fileversion="2.0">
+<Combine name="IptablesNet" fileversion="2.0" outputpath="./build/bin/" MakePkgConfig="False" MakeLibPC="True">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="IptablesNet.Core" configuration="Debug" />
@@ -7,6 +7,7 @@
       <Entry build="True" name="IptablesNet.UI.Console" configuration="Debug" />
       <Entry build="True" name="IptablesNet.Net" configuration="Debug" />
       <Entry build="True" name="IptablesNet.UI.Gtk" configuration="Debug" />
+      <Entry build="True" name="Packages" configuration="" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="IptablesNet.Core" configuration="Release" />
@@ -15,6 +16,7 @@
       <Entry build="True" name="IptablesNet.UI.Console" configuration="Release" />
       <Entry build="True" name="IptablesNet.Net" configuration="Release" />
       <Entry build="True" name="IptablesNet.UI.Gtk" configuration="Release" />
+      <Entry build="True" name="Packages" configuration="" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="IptablesNet.UI.Gtk" single="True">
@@ -22,10 +24,11 @@
     <Execute type="None" entry="IptablesNet.Extensions.MatchExtensions" />
     <Execute type="None" entry="IptablesNet.Extensions.TargetExtensions" />
     <Execute type="None" entry="IptablesNet.UI.Console" />
-    <Execute type="None" entry="IptablesNet.UI.Desktop" />
     <Execute type="None" entry="IptablesNet.Net" />
     <Execute type="None" entry="IptablesNet.UI.Gtk" />
+    <Execute type="None" entry="Packages" />
   </StartMode>
+  <Deployment.LinuxDeployData scriptName="iptablesnet" />
   <Entries>
     <Entry filename="./IptablesNet.Core/IptablesNet.Core.mdp" />
     <Entry filename="./IptablesNet.Extensions.MatchExtensions/IptablesNet.Extensions.MatchExtensions.mdp" />
@@ -33,5 +36,6 @@
     <Entry filename="./IptablesNet.UI.Console/IptablesNet.UI.Console.mdp" />
     <Entry filename="./IptablesNet.Net/IptablesNet.Net.mdp" />
     <Entry filename="./IptablesNet.UI.Gtk/IptablesNet.UI.Gtk.mdp" />
+    <Entry filename="./Packages.mdse" />
   </Entries>
 </Combine>
