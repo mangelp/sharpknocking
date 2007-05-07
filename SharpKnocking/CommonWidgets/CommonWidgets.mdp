@@ -52,6 +52,6 @@
     <AsmRefVar />
     <ProjectRefVar />
   </MonoDevelop.Autotools.MakefileInfo>
-  <GtkDesignInfo partialTypes="True" isWidgetLibrary="True" />
   <Deployment.LinuxDeployData scriptName="commonwidgets" />
+  <GtkDesignInfo partialTypes="True" isWidgetLibrary="True" />
 </Project>

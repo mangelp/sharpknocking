@@ -60,10 +60,9 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(pkglibdir)"
+am__installdirs = "$(DESTDIR)$(pkgconfigdir)"
 pkgconfigDATA_INSTALL = $(INSTALL_DATA)
-pkglibDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(pkgconfig_DATA) $(pkglib_DATA)
+DATA = $(pkgconfig_DATA)
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = Common CommonWidgets Doorman NetfilterFirewall \
@@ -79,19 +78,13 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run aclocal-1.9
-AMTAR = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run tar
-AUTOCONF = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run automake-1.9
+ACLOCAL = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run aclocal-1.9
+AMTAR = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run tar
+AUTOCONF = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run automake-1.9
 AWK = gawk
-COMMONWIDGETS_DEBUG_LIB = CommonWidgets.dll
-COMMONWIDGETS_RELEASE_LIB = 
-COMMON_DEBUG_LIB = SharpKnocking.Common.dll
-COMMON_RELEASE_LIB = 
 CYGPATH_W = echo
-DEBUG_CONFIG_LIBRARIES =  ${pkglibdir}/SharpKnocking.Common.dll ${pkglibdir}/CommonWidgets.dll ${pkglibdir}/NetfilterFirewall.dll
-DEBUG_CONFIG_LIBS =  -r:${pkglibdir}/SharpKnocking.Common.dll -r:${pkglibdir}/CommonWidgets.dll -r:${pkglibdir}/NetfilterFirewall.dll
 DEFS = -DPACKAGE_NAME=\"SharpKnocking\" -DPACKAGE_TARNAME=\"sharpknocking\" -DPACKAGE_VERSION=\"0.1\" -DPACKAGE_STRING=\"SharpKnocking\ 0.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"sharpknocking\" -DVERSION=\"0.1\"
 ECHO_C = 
 ECHO_N = -n
@@ -100,13 +93,13 @@ ENABLE_DEBUG_FALSE = #
 ENABLE_DEBUG_TRUE = 
 ENABLE_RELEASE_FALSE = 
 ENABLE_RELEASE_TRUE = #
-GLADE_SHARP_20_CFLAGS = -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/glade-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/pango-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/atk-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/gdk-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/gtk-api.xml  
-GLADE_SHARP_20_LIBS = -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glade-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/pango-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/atk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gdk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gtk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
+GLADE_SHARP_20_CFLAGS = -I:/usr/lib/pkgconfig/../../share/gapi-2.0/glade-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/pango-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/atk-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/gdk-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/gtk-api.xml  
+GLADE_SHARP_20_LIBS = -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glade-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/pango-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/atk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gdk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gtk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
 GLIB_SHARP_20_CFLAGS =  
-GLIB_SHARP_20_LIBS = -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
-GMCS = /opt/mono-1.2.3.1/bin/gmcs
-GTK_SHARP_20_CFLAGS = -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/pango-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/atk-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/gdk-api.xml -I:/usr/local/lib/pkgconfig/../../share/gapi-2.0/gtk-api.xml  
-GTK_SHARP_20_LIBS = -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/pango-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/atk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gdk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gtk-sharp.dll -r:/usr/local/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
+GLIB_SHARP_20_LIBS = -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
+GMCS = /usr/bin/gmcs
+GTK_SHARP_20_CFLAGS = -I:/usr/lib/pkgconfig/../../share/gapi-2.0/pango-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/atk-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/gdk-api.xml -I:/usr/lib/pkgconfig/../../share/gapi-2.0/gtk-api.xml  
+GTK_SHARP_20_LIBS = -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/pango-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/atk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gdk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/gtk-sharp.dll -r:/usr/lib/pkgconfig/../../lib/mono/gtk-sharp-2.0/glib-sharp.dll  
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
@@ -114,10 +107,8 @@ INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run makeinfo
-MCS = /opt/mono-1.2.3.1/bin/mcs
-NETFILTERFIREWALL_DEBUG_LIB = NetfilterFirewall.dll
-NETFILTERFIREWALL_RELEASE_LIB = 
+MAKEINFO = ${SHELL} /home/luis/programacion/csl-csknocking-g/SharpKnocking/missing --run makeinfo
+MCS = /usr/bin/mcs
 PACKAGE = sharpknocking
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = SharpKnocking
@@ -125,9 +116,7 @@ PACKAGE_STRING = SharpKnocking 0.1
 PACKAGE_TARNAME = sharpknocking
 PACKAGE_VERSION = 0.1
 PATH_SEPARATOR = :
-PKG_CONFIG = /opt/mono-1.2.3.1/bin/pkg-config
-RELEASE_CONFIG_LIBRARIES = 
-RELEASE_CONFIG_LIBS = 
+PKG_CONFIG = /usr/bin/pkg-config
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
@@ -146,7 +135,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = /home/mangelp/projects/sharpknocking/SharpKnocking/install-sh
+install_sh = /home/luis/programacion/csl-csknocking-g/SharpKnocking/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -166,12 +155,10 @@ target_alias =
 #Warning: This is an automatically generated file, do not edit!
 SUBDIRS = Common CommonWidgets Doorman NetfilterFirewall KnockingDaemonControl PortKnocker KnockingDaemon
 #SUBDIRS = Common CommonWidgets Doorman NetfilterFirewall KnockingDaemonControl PortKnocker KnockingDaemon
-pkglib_DATA = $(DLL_REFERENCES)
 pkgconfig_DATA = sharpknocking.pc
 pkgconfigdir = $(libdir)/pkgconfig
-DLL_REFERENCES = 
 DISTCLEANFILES = sharpknocking.pc
-EXTRA_DIST = sharpknocking.pc.in $(DLL_REFERENCES)
+EXTRA_DIST = sharpknocking.pc.in 
 all: all-recursive
 
 .SUFFIXES:
@@ -227,23 +214,6 @@ uninstall-pkgconfigDATA:
 	  f=$(am__strip_dir) \
 	  echo " rm -f '$(DESTDIR)$(pkgconfigdir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(pkgconfigdir)/$$f"; \
-	done
-install-pkglibDATA: $(pkglib_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(pkglibdir)" || $(mkdir_p) "$(DESTDIR)$(pkglibdir)"
-	@list='$(pkglib_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(pkglibDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(pkglibdir)/$$f'"; \
-	  $(pkglibDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(pkglibdir)/$$f"; \
-	done
-
-uninstall-pkglibDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(pkglib_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(pkglibdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(pkglibdir)/$$f"; \
 	done
 
 # This directory's subdirectories are mostly independent; you can cd
@@ -525,7 +495,7 @@ check: check-recursive
 all-am: Makefile $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(pkglibdir)"; do \
+	for dir in "$(DESTDIR)$(pkgconfigdir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-recursive
@@ -574,7 +544,7 @@ info-am:
 
 install-data-am: install-pkgconfigDATA
 
-install-exec-am: install-pkglibDATA
+install-exec-am:
 
 install-info: install-info-recursive
 
@@ -600,8 +570,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-pkgconfigDATA \
-	uninstall-pkglibDATA
+uninstall-am: uninstall-info-am uninstall-pkgconfigDATA
 
 uninstall-info: uninstall-info-recursive
 
@@ -613,13 +582,12 @@ uninstall-info: uninstall-info-recursive
 	distuninstallcheck dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-exec \
 	install-exec-am install-info install-info-am install-man \
-	install-pkgconfigDATA install-pkglibDATA install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-generic \
-	mostlyclean-recursive pdf pdf-am ps ps-am tags tags-recursive \
-	uninstall uninstall-am uninstall-info-am \
-	uninstall-pkgconfigDATA uninstall-pkglibDATA
+	install-pkgconfigDATA install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive \
+	mostlyclean mostlyclean-generic mostlyclean-recursive pdf \
+	pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
+	uninstall-info-am uninstall-pkgconfigDATA
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

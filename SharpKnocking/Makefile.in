@@ -60,10 +60,9 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(pkglibdir)"
+am__installdirs = "$(DESTDIR)$(pkgconfigdir)"
 pkgconfigDATA_INSTALL = $(INSTALL_DATA)
-pkglibDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(pkgconfig_DATA) $(pkglib_DATA)
+DATA = $(pkgconfig_DATA)
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = Common CommonWidgets Doorman NetfilterFirewall \
@@ -85,13 +84,7 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
-COMMONWIDGETS_DEBUG_LIB = @COMMONWIDGETS_DEBUG_LIB@
-COMMONWIDGETS_RELEASE_LIB = @COMMONWIDGETS_RELEASE_LIB@
-COMMON_DEBUG_LIB = @COMMON_DEBUG_LIB@
-COMMON_RELEASE_LIB = @COMMON_RELEASE_LIB@
 CYGPATH_W = @CYGPATH_W@
-DEBUG_CONFIG_LIBRARIES = @DEBUG_CONFIG_LIBRARIES@
-DEBUG_CONFIG_LIBS = @DEBUG_CONFIG_LIBS@
 DEFS = @DEFS@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
@@ -116,8 +109,6 @@ LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MCS = @MCS@
-NETFILTERFIREWALL_DEBUG_LIB = @NETFILTERFIREWALL_DEBUG_LIB@
-NETFILTERFIREWALL_RELEASE_LIB = @NETFILTERFIREWALL_RELEASE_LIB@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
 PACKAGE_NAME = @PACKAGE_NAME@
@@ -126,8 +117,6 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
-RELEASE_CONFIG_LIBRARIES = @RELEASE_CONFIG_LIBRARIES@
-RELEASE_CONFIG_LIBS = @RELEASE_CONFIG_LIBS@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
@@ -166,12 +155,10 @@ target_alias = @target_alias@
 #Warning: This is an automatically generated file, do not edit!
 @ENABLE_DEBUG_TRUE@SUBDIRS = Common CommonWidgets Doorman NetfilterFirewall KnockingDaemonControl PortKnocker KnockingDaemon
 @ENABLE_RELEASE_TRUE@SUBDIRS = Common CommonWidgets Doorman NetfilterFirewall KnockingDaemonControl PortKnocker KnockingDaemon
-pkglib_DATA = $(DLL_REFERENCES)
 pkgconfig_DATA = sharpknocking.pc
 pkgconfigdir = $(libdir)/pkgconfig
-DLL_REFERENCES = 
 DISTCLEANFILES = sharpknocking.pc
-EXTRA_DIST = sharpknocking.pc.in $(DLL_REFERENCES)
+EXTRA_DIST = sharpknocking.pc.in 
 all: all-recursive
 
 .SUFFIXES:
@@ -227,23 +214,6 @@ uninstall-pkgconfigDATA:
 	  f=$(am__strip_dir) \
 	  echo " rm -f '$(DESTDIR)$(pkgconfigdir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(pkgconfigdir)/$$f"; \
-	done
-install-pkglibDATA: $(pkglib_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(pkglibdir)" || $(mkdir_p) "$(DESTDIR)$(pkglibdir)"
-	@list='$(pkglib_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(pkglibDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(pkglibdir)/$$f'"; \
-	  $(pkglibDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(pkglibdir)/$$f"; \
-	done
-
-uninstall-pkglibDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(pkglib_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(pkglibdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(pkglibdir)/$$f"; \
 	done
 
 # This directory's subdirectories are mostly independent; you can cd
@@ -525,7 +495,7 @@ check: check-recursive
 all-am: Makefile $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(pkgconfigdir)" "$(DESTDIR)$(pkglibdir)"; do \
+	for dir in "$(DESTDIR)$(pkgconfigdir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-recursive
@@ -574,7 +544,7 @@ info-am:
 
 install-data-am: install-pkgconfigDATA
 
-install-exec-am: install-pkglibDATA
+install-exec-am:
 
 install-info: install-info-recursive
 
@@ -600,8 +570,7 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-pkgconfigDATA \
-	uninstall-pkglibDATA
+uninstall-am: uninstall-info-am uninstall-pkgconfigDATA
 
 uninstall-info: uninstall-info-recursive
 
@@ -613,13 +582,12 @@ uninstall-info: uninstall-info-recursive
 	distuninstallcheck dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-exec \
 	install-exec-am install-info install-info-am install-man \
-	install-pkgconfigDATA install-pkglibDATA install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-generic \
-	mostlyclean-recursive pdf pdf-am ps ps-am tags tags-recursive \
-	uninstall uninstall-am uninstall-info-am \
-	uninstall-pkgconfigDATA uninstall-pkglibDATA
+	install-pkgconfigDATA install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive \
+	mostlyclean mostlyclean-generic mostlyclean-recursive pdf \
+	pdf-am ps ps-am tags tags-recursive uninstall uninstall-am \
+	uninstall-info-am uninstall-pkgconfigDATA
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
