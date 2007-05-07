@@ -1,7 +1,7 @@
 #summary Todo list of features
 #labels Featured
 
-== Full feature list for next versions ==
+== Full pending feature list for next versions ==
 
 === KnockingDaemon ===
   * Protect only a range of ports and let the rest open to the net and/or redirect them to an existing chain in the firewall.
@@ -22,6 +22,7 @@
 === PortKnocker ===
   * Add support to check if the last authentication if still valid.
   * Winforms version to use it on windows and make it more portable for default windows setups.
+  * Prepare a bundle of required libraries including the minimal set of mono binaries required to run the app from another system. Today usb memories are cheaper than ever and a 15-30 MB bundle should fit without problems.
 
 === Doorman ===
   * ~~Interactive mode from Doorman~~.
@@ -39,5 +40,5 @@
   * Nothing, because it is still under heavy development for the initial release.
 
 === Misc ===
-  * Review some files: README, INSTALL, TODO, ...
+  * Review some files: ~~README, INSTALL~~, TODO, ...
   * To improve security we must think about encription, pdu format, authentication process, protocols allowed, actions allowed, bugs, exploits, ...
