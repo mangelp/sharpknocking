@@ -1,9 +1,3 @@
 #!/bin/sh
 
-prefix="@prefix@"
-exec_prefix="@exec_prefix@"
-libdir="@libdir@/@PACKAGE@"
-
-cd ${libdir}
-
-exec mono  "KnockingDaemon.exe" "$@"
+exec mono "@prefix@/lib/@PACKAGE@/KnockingDaemon.exe"

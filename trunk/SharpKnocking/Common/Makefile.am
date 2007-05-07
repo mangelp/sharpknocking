@@ -6,7 +6,6 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG
 ASSEMBLY = ./bin/Debug/SharpKnocking.Common.dll
 COMPILE_TARGET = library
-PC_FILES_IN = SharpKnocking.Common.pc.in
 PROJECT_REFERENCES = 
 BUILD_DIR = ./bin/Debug
 endif
@@ -15,13 +14,15 @@ ASSEMBLY_COMPILER_COMMAND = mcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4
 ASSEMBLY = ./bin/Release/SharpKnocking.Common.dll
 COMPILE_TARGET = library
-PC_FILES_IN = SharpKnocking.Common.pc.in
 PROJECT_REFERENCES = 
 BUILD_DIR = ./bin/Release
 endif
 
+LINUX_PKGCONFIG = \
+	$(COMMON_PC)  
+
 	
-all: $(ASSEMBLY)
+all: $(ASSEMBLY) $(LINUX_PKGCONFIG) 
 
 FILES = \
 	./TypeUtil.cs \
@@ -43,13 +44,15 @@ FILES = \
 	./Remoting/RemoteManager.cs \
 	./Remoting/RemoteDaemon.cs \
 	./Remoting/RemotingCommunicator.cs \
-	./Remoting/RemotingCommunicatorEvents.cs 
+	./Remoting/RemotingCommunicatorEvents.cs \
+	./Calls/CallHitData.cs 
 
 DATA_FILES = 
 
 RESOURCES = 
 
-EXTRAS = 
+EXTRAS = \
+	./common.pc.in 
 
 REFERENCES =  \
 	-r:System \
@@ -60,9 +63,15 @@ REFERENCES =  \
 
 DLL_REFERENCES = 
 
+COMMON_PC = $(BUILD_DIR)/common.pc
+$(COMMON_PC): common.pc
+	mkdir -p $(BUILD_DIR)
+	cp common.pc $(COMMON_PC)
+
+
+
 $(ASSEMBLY) $(ASSEMBLY).mdb: $(build_sources) $(build_resources) $(build_datafiles) 
 	mkdir -p $(dir $(ASSEMBLY))		
-
 	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$@ -target:$(COMPILE_TARGET) $(build_sources) $(build_resources_embed) $(build_references_ref)
 
 include $(top_srcdir)/Makefile.include

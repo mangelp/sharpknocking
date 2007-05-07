@@ -21,13 +21,13 @@ BUILD_DIR = ./bin/Release
 endif
 
 PROGRAMFILES = \
-	SharpKnocking.Common.dll \
-	SharpKnocking.Common.dll.mdb  
+	$(SHARPKNOCKING_COMMON_DLL) \
+	$(SHARPKNOCKING_COMMON_DLL_MDB)  
 LINUX_PKGCONFIG = \
-	commonwidgets.pc  
+	$(COMMONWIDGETS_PC)  
 
 	
-all: $(ASSEMBLY)
+all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 FILES = \
 	./ImageResources.cs \
@@ -49,9 +49,7 @@ RESOURCES = \
 	./resources/sharpknocking96.png 
 
 EXTRAS = \
-	SharpKnocking.Common.dll \
-	SharpKnocking.Common.dll.mdb \
-	commonwidgets.pc.in 
+	./commonwidgets.pc.in 
 
 REFERENCES =  \
 	-r:System \
@@ -61,9 +59,25 @@ REFERENCES =  \
 
 DLL_REFERENCES = 
 
+SHARPKNOCKING_COMMON_DLL = $(BUILD_DIR)/SharpKnocking.Common.dll
+$(SHARPKNOCKING_COMMON_DLL): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll
+	mkdir -p $(BUILD_DIR)
+	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll $(SHARPKNOCKING_COMMON_DLL)
+
+SHARPKNOCKING_COMMON_DLL_MDB = $(BUILD_DIR)/SharpKnocking.Common.dll.mdb
+$(SHARPKNOCKING_COMMON_DLL_MDB): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb
+	mkdir -p $(BUILD_DIR)
+	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb $(SHARPKNOCKING_COMMON_DLL_MDB)
+
+COMMONWIDGETS_PC = $(BUILD_DIR)/commonwidgets.pc
+$(COMMONWIDGETS_PC): commonwidgets.pc
+	mkdir -p $(BUILD_DIR)
+	cp commonwidgets.pc $(COMMONWIDGETS_PC)
+
+
+
 $(ASSEMBLY) $(ASSEMBLY).mdb: $(build_sources) $(build_resources) $(build_datafiles) 
 	mkdir -p $(dir $(ASSEMBLY))		
-
 	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$@ -target:$(COMPILE_TARGET) $(build_sources) $(build_resources_embed) $(build_references_ref)
 
 include $(top_srcdir)/Makefile.include
