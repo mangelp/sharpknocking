@@ -113,6 +113,7 @@ namespace SharpKnocking.KnockingDaemon
               
             try
             {
+            	
                 //Run the communication daemon
                 Debug.Write("Instantiating communication daemon");
                 KnockingDaemonProcess.Run(daemon);

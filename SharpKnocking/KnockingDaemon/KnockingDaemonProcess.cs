@@ -175,21 +175,22 @@ namespace SharpKnocking.KnockingDaemon
         public static void Run(KnockingDaemonProcess daemon)
         {
             daemon.running = true;
-            
+           
             try
             {
                 //Init rules accessor
                 daemon.accessor.Init();
-
+				 
                 //Init communication
                 daemon.communicator.Init();
-                
+                 
                 //Init packet monitor
                 daemon.InternalStartMonitor();
-                
+                 
                 //Keep the process up
                 while(!daemon.die)
-                {                	
+                {        
+                	    	
                 	Thread.Sleep(100);
                 }
             }
@@ -205,6 +206,7 @@ namespace SharpKnocking.KnockingDaemon
             daemon.InternalStopMonitor();
             
             Debug.VerboseWrite("KnockingDaemonProcess::Run(): Exiting");
+           
         }
         
         /// <summary> 
