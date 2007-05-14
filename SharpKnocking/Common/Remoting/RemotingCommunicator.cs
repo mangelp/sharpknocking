@@ -136,6 +136,7 @@ namespace SharpKnocking.Common.Remoting
         /// </summary>
         public void Init()
         {
+        	
             if(	this.localPort == 0 
             	|| this.remotePort == 0
             	|| Net20.StringIsNullOrEmpty(this.localName ) 
@@ -147,10 +148,14 @@ namespace SharpKnocking.Common.Remoting
             }
            
                                 
-            Debug.VerboseWrite("RemoteEndCommunicator: Registering remoting object with uri " +this.localUri);
-			
+            Debug.VerboseWrite("RemoteEndCommunicator: Registering remoting object with uri " +this.localUri,VerbosityLevels.Normal);
+			 
+			 try{
             this.channel = new TcpChannel(this.localPort);
-            
+            }catch(Exception e)
+            {
+            	Console.WriteLine(e);
+            }
             ChannelServices.RegisterChannel(this.channel);
             
             this.localEnd = (RemoteEnd)Activator.CreateInstance (this.localType);

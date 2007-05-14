@@ -180,10 +180,12 @@ namespace SharpKnocking.KnockingDaemon
             {
                 //Init rules accessor
                 daemon.accessor.Init();
-				 
+				
+				
+				
                 //Init communication
                 daemon.communicator.Init();
-                 
+                
                 //Init packet monitor
                 daemon.InternalStartMonitor();
                  
