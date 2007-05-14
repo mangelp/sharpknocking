@@ -89,7 +89,7 @@ namespace IptablesNet.Core
 	    {
 	        get
 	        {
-	            return this.rules;    
+	            return this.rules;
 	        }
 	    }
 	    

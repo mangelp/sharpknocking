@@ -1,15 +1,13 @@
 <?xml version="1.0"?>
-<UserCombinePreferences filename="/home/mangelp/projects/sharpknocking/iptablesnet/IptablesNet.mds">
+<UserCombinePreferences filename="/home/mangelp/Projects/sharpknocking/IptablesNet/IptablesNet.mds">
   <Files />
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
         <Node expanded="True">
-          <Node name="IptablesNet.UI.Gtk" expanded="True">
-            <Node name="UserInterface" expanded="True" />
-            <Node name="MainWindow.cs" expanded="False" selected="True" />
+          <Node name="IptablesNet.Core" expanded="True">
+            <Node name="NetfilterRuleSet.cs" expanded="False" selected="True" />
           </Node>
-          <Node name="Packages" expanded="True" />
         </Node>
       </TreeView>
     </ViewMemento>

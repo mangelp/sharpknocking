@@ -1,8 +1,10 @@
 
 using System;
-using System.Collections;
 using System.IO;
 using System.Text;
+using System.Collections;
+using System.Collections.Generic;
+
 using SharpKnocking.Common;
 
 using IptablesNet.Core.Commands;
@@ -10,12 +12,11 @@ using IptablesNet.Core.Options;
 
 namespace IptablesNet.Core
 {
-	
     /// <summary>
-    /// Models the methods to load iptables configuration data in the format
-    /// of the output of the command iptables-save.
-    /// It stores the data as a hierarchical tree where the tables are the
-    /// roots and the rules are the leafs.
+    /// Models all the operations to store all the rules for all the tables in 
+    /// the ip_tables module. 
+    /// The rules can be added from the iptables-save output or programmatically
+    /// using the provided methods. 
     /// </summary>
 	public class NetfilterRuleSet
 	{
@@ -23,21 +24,22 @@ namespace IptablesNet.Core
 	    
 	    /// <summary>
 	    /// Gets if there have been loaded some configuration data and if it
-	    /// is valid. If this flag is false there is no rules in this storage.
+	    /// is valid. If this flag is false there is no rules in this storage or
+	    /// if there is some rules, these rules are invalid.
         /// </summary>
 	    public bool IsSafe
 	    {
 	        get {return this.isSafe;}    
 	    }
 	    
-	    private ArrayList tables;
+	    private List<NetfilterTable> tables;
 	    
 	    /// <summary>
-        /// Array of the iptables tables found in the config. 
+        /// Array of the tables found in the config. 
         /// </summary>
 	    public NetfilterTable[] Tables
 	    {
-	        get {return (NetfilterTable[])this.tables.ToArray();}    
+	        get {return this.tables.ToArray();}    
 	    }
 	    
         /// <summary>
@@ -45,7 +47,7 @@ namespace IptablesNet.Core
         /// </summary>
 		public NetfilterRuleSet()
 		{
-		    this.tables = new ArrayList();
+		    this.tables = new List<NetfilterTable>();
             this.InitEmptySet();
 		}
 		
@@ -124,10 +126,10 @@ namespace IptablesNet.Core
 		    
 		    string line;
 		    
-		    NetfilterTable lastTable=null;
-		    NetfilterChain lastChain=null;
-		    NetfilterRule rule=null;
+		    NetfilterTable lastTable = null;
+		    NetfilterChain lastChain = null;
 		    PacketTables tableType;
+			GenericCommand gCmd = null;
 		    
 		    //Now process each line until COMMIT
 		    for(int i=0;i<lines.Length;i++)
@@ -168,9 +170,8 @@ namespace IptablesNet.Core
 		            
 		            lastTable.AddChain(lastChain);
 		        }
-		        else if(NetfilterRule.IsRule(line))
+		        else if(GenericCommand.CanBeACommand (line))
 		        {
-		            
 		            if(Net20.StringIsNullOrEmpty(line))
 		            {
 		                Console.Out.WriteLine("Invalid chain in line: "+line+
@@ -188,14 +189,14 @@ namespace IptablesNet.Core
 		            
 		            //Use the rule parser to build a NetfilterRule instance
 		            //from the line.
-		            rule = RuleParser.GetRule(line, lastTable);
+		            gCmd = RuleParser.GetCommand(line, lastTable);
 		            
-		            if(rule!=null)
+		            if(gCmd!=null && gCmd.Rule != null)
 		            {
                         Debug.VerboseWrite("Adding to chain '"+
-                                           lastChain.CurrentName+"' rule '"+
-                                           rule+"'", VerbosityLevels.Insane);
-		                lastChain.Rules.Add(rule);
+                                           lastChain.CurrentName+"' command '"+
+                                           gCmd+"'", VerbosityLevels.Insane);
+		                lastChain.Rules.Add (gCmd.Rule);
 		            }
 		            else
 		            {
@@ -204,7 +205,7 @@ namespace IptablesNet.Core
 		                return;    
 		            }
 		            
-		            Debug.Write("Found rule: "+rule);
+		            Debug.Write("Found rule: "+gCmd.Rule);
 		                
 		        }
 		        else
@@ -213,7 +214,7 @@ namespace IptablesNet.Core
 		        }
 		    }
 		    
-		    //Mark the config as good one.
+		    //Mark the current set of rules as a good one.
 		    this.isSafe = true;
 		}
 		
@@ -284,86 +285,88 @@ namespace IptablesNet.Core
         /// <remarks>
         /// The actions are limited to those that changes chains or rules.
         /// </remarks>
-        public void ExecRule(NetfilterRule rule)
+        /// <param name="cmd">Command to exec with the rule</param>
+        /// <param name="rule">Rule as a parameter to the command</param>
+        public void Exec(GenericCommand cmd, NetfilterRule rule)
         {
             Debug.VerboseWrite("NetfilterRuleSet.ExecRule: "+rule, VerbosityLevels.Insane);
-            Debug.VerboseWrite("NetFilterRuleSet.ExecRule: "+rule.Command.CommandType);
+            Debug.VerboseWrite("NetFilterRuleSet.ExecRule: "+cmd);
             NetfilterTable table = this.GetDefaultTable();
             NetfilterChain chain = null;
             int pos = 0;
             
-            switch(rule.Command.CommandType)
+            switch(cmd.CommandType)
             {
                 case RuleCommands.NewChain:
                     //Creates the chain.
                     chain = new NetfilterChain(table);
                     chain.Chain = BuiltInChains.None;
-                    chain.Name = rule.Command.ChainName;
+                    chain.Name = cmd.ChainName;
                     table.AddChain(chain);
                     break;
                 case RuleCommands.FlushChain:
                     //Clears all the rules from the chain
-                    chain = table.FindChain(rule.Command.ChainName);
+                    chain = table.FindChain(cmd.ChainName);
                     if(chain==null)
                         throw new InvalidOperationException("The chain "+
-                                    rule.Command.ChainName+
+                                    cmd.ChainName+
                                     " doesn't exist in table "+table.Type);
                     chain.Rules.Clear();
                     break;
                 case RuleCommands.DeleteChain:
                     //Removes a chain if it is empty and is not a built-in one
-                    pos = table.IndexOfChain(rule.Command.ChainName);
+                    pos = table.IndexOfChain(cmd.ChainName);
                     if(pos>-1)
                         chain = table.Chains[pos];
                 
                     if(chain==null)
                         throw new InvalidOperationException("The chain "+
-                                    rule.Command.ChainName+
+                                    cmd.ChainName+
                                     " doesn't exist in table "+table.Type);
                     else if(chain.IsBuiltIn)
                         throw new InvalidOperationException("Can't delete "+
-                                    " built-in chain "+rule.Command.ChainName);
+                                    " built-in chain "+cmd.ChainName);
                     else if(chain.Rules.Count>0)
                         throw new InvalidOperationException("Can't delete "+
-                                    " chain "+rule.Command.ChainName+
+                                    " chain "+cmd.ChainName+
                                     ". Its not empty");
                 
                     table.RemoveChain(pos);
                     break;
                 case RuleCommands.AppendRule:
                     //Adds a rule to a chain
-                    chain = table.FindChain(rule.Command.ChainName);
+                    chain = table.FindChain(cmd.ChainName);
                 
                     if(chain==null)
                         throw new InvalidOperationException("The chain "+
-                                    rule.Command.ChainName+
+                                    cmd.ChainName+
                                     " doesn't exist in table "+table.Type);
                     
                     chain.Rules.Add(rule);
                     break;
                 case RuleCommands.DeleteRule:
                     //Removes a rule from a chain
-                    chain = table.FindChain(rule.Command.ChainName);
+                    chain = table.FindChain(cmd.ChainName);
                 
                     if(chain==null)
                         throw new InvalidOperationException("The chain "+
-                                    rule.Command.ChainName+
+                                    cmd.ChainName+
                                     " doesn't exist in table "+table.Type);
                 
-                    DeleteRuleCommand delCmd = (DeleteRuleCommand)rule.Command;
+                    DeleteRuleCommand delCmd = (DeleteRuleCommand)cmd;
                     chain.Rules.RemoveAt(delCmd.RuleNum-1);
                     break;
                 case RuleCommands.InsertRule:
                     Debug.VerboseWrite("NetfilterRuleSet.ExecRule: Inserting rule");
                     //Inserts a rule into a chain
-                    chain = table.FindChain(rule.Command.ChainName);
+                    chain = table.FindChain(cmd.ChainName);
                 
                     if(chain==null)
                         throw new InvalidOperationException("The chain "+
-                                    rule.Command.ChainName+
+                                    cmd.ChainName+
                                     " doesn't exist in table "+table.Type);
                 
-                    InsertRuleCommand insCmd = (InsertRuleCommand)rule.Command;
+                    InsertRuleCommand insCmd = (InsertRuleCommand)cmd;
                     Debug.VerboseWrite("NetfilterRuleSet.ExecRule: Inserting rule in list at "+insCmd.RuleNum);
                     chain.Rules.Insert(insCmd.RuleNum-1, rule);
                     break;

@@ -62,11 +62,6 @@ namespace IptablesNet.Core
 		        rule.ParentChain.Rules.Remove(rule);
 		    }
             
-            if(rule.Command.CommandType!= RuleCommands.AppendRule)
-                throw new InvalidOperationException(
-                         "Can't add a rule that have a command different from"+
-                         " AppendRuleCommand");
-		    
 		    this.List.Add(rule);
 		    
 		    rule.ParentChain = this.parentChain;
@@ -82,10 +77,6 @@ namespace IptablesNet.Core
 		
 		public void Remove(NetfilterRule rule)
 		{
-            if(rule.Command.CommandType != RuleCommands.DeleteRule)
-                throw new InvalidOperationException(
-                            "Can't remove a rule with a command diferent from"+
-                            " RemoveRuleCommand");
 		    this.List.Remove(rule);
 		    rule.ParentChain = null;
 		}
@@ -99,12 +90,7 @@ namespace IptablesNet.Core
         /// Inserts a rule in the list. 
         /// </summary>
 		public void Insert(int index, NetfilterRule rule)
-		{
-            if(rule.Command.CommandType != RuleCommands.InsertRule)
-                throw new InvalidOperationException(
-                            "Can't remove a rule with a command diferent from"+
-                            " InsertRuleCommand");
-            
+		{   
 		    if(rule.ParentChain!=null)
 		        rule.ParentChain.Rules.Remove(rule);
 		    

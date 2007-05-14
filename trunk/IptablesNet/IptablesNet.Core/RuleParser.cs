@@ -19,16 +19,18 @@ namespace IptablesNet.Core
 	{
 	    
 	    /// <summary>
-	    /// Builds a rule from the string.
+	    /// Builds a command from the string. This also parses every parameter
+		/// like the rule.
 	    /// </summary>
-	    public static NetfilterRule GetRule(string line, NetfilterTable table)
+	    public static GenericCommand GetCommand(string line, NetfilterTable table)
 	    {
 	        
-	        if(!NetfilterRule.IsRule(line))
+	        if(!GenericCommand.CanBeACommand (line))
 	            return null;
 	        
 	        NetfilterRule rule= new NetfilterRule();
 	        GenericOption option=null;
+			GenericCommand gCmd = null;
 	        SimpleParameter currParam;
 	        
 	        try
@@ -48,36 +50,28 @@ namespace IptablesNet.Core
 	                {
 	                    Debug.VerboseWrite("GetRule: IsCommand: "+currParam);
 	                    
-	                    if(rule.Command !=null)
-	                    {
-	                        throw new DuplicateElementException("Can't have two"
-                                             +" commands in the same line");
-	                    }
-	                    else
-	                    {
-	                        Exception ex = null;
-	                        GenericCommand cmd=null;
-	                        
-	                        if(!IptablesCommandFactory.TryGetCommand(currParam,
-                                out cmd, out ex))
-                            {
-                                Debug.Write("Error while trying to create command."+
-                                            " "+ex.Message);
-                                Debug.VerboseWrite("RuleParser: "+ex);
-                            }
-                            
-                            rule.Command = cmd;
-	                        
-	                        if(rule.Command==null)
-	                        {
-	                            Debug.Write("Null command built but it was"+
-                                            " previously detected. "
-                                            +"\nRule parsing broken");
-	                            return null;
-	                        }
-	                        
-	                        Debug.VerboseWrite("GetRule: GotCommand: "+rule.Command);
-	                    }
+                        Exception ex = null;
+                        gCmd=null;
+                        
+                        if(!IptablesCommandFactory.TryGetCommand(currParam,
+                           out gCmd, out ex))
+                       {
+                           Debug.Write("Error while trying to create command."+
+                                       " "+ex.Message);
+                           Debug.VerboseWrite("RuleParser: "+ex);
+                       }
+                        
+                        if(gCmd==null)
+                        {
+                            Debug.Write("Null command built but it was"+
+                                       " previously detected. "
+                                       +"\nRule parsing broken");
+                            return null;
+                        }
+                        
+                        Debug.VerboseWrite("GetRule: GotCommand: "+gCmd);
+						
+						//FIXME: What we should do now with the command?!
 	                }
 	                else if(GenericOption.IsOption(currParam.Name))
 	                {
@@ -164,7 +158,8 @@ namespace IptablesNet.Core
 	        if(rule==null)
 	            Debug.VerboseWrite("Can't create a rule from line: "+line);
 	        
-	        return rule;
+			gCmd.Rule = rule;
+	        return gCmd;
 	    }
 	    
 	    
