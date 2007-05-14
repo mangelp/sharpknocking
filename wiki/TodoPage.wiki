@@ -18,6 +18,8 @@
   * Remote control program to query daemon information and do start/stop operations.
   * When doing a restart in the daemon all rules must be removed.
   * There is a [http://www.chrishowie.com/ wrapper]([https://layla.chrishowie.com/svn/pcap-sharp svn repo]) for libpcap done in c#. Can we get any benefits of using it instead of a tcpdump process?
+  * Add a script to the init.d so this can be integrated within the rest of services in the machine.
+  * The packet capture method (we use a process with tcpdump) can be improved, we should refactor things like this...
 
 === PortKnocker ===
   * Add support to check if the last authentication if still valid.
@@ -30,6 +32,7 @@
   * Remote administration mode.
   * Improve security measures.
   * Netfiler rules editor. A default rule can be configured to be used when the daemon shut downs or to redirect packets from a host that got a valid access.
+  * When creating sequences with a random number of port show an option to select only those ports over 1024.
 
 === SharpKnocking.NetfilterFirewall ===
   * ~~This class library needs tons of love. Needs refactoring and deep testing~~. 
