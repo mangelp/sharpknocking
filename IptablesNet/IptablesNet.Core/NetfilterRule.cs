@@ -25,7 +25,7 @@ namespace IptablesNet.Core
 	/// to load explicitly the extension and then you can access the extension
 	/// handler from the list and add the options to the extension handler object.
 	/// </remarks>
-	public class NetfilterRule
+	public class NetfilterRule: IComparable <NetfilterRule>
 	{
 	    private NetfilterChain parentChain;
 	    
@@ -41,22 +41,6 @@ namespace IptablesNet.Core
 	    {
 	        get {return this.parentChain;}
 	        set {this.parentChain = value;}
-	    }
-	    
-	    private GenericCommand command;
-	    
-	    /// <summary>
-	    /// Command for the rule.
-	    /// </summary>
-	    /// <remarks>
-	    /// Each rule must have only one command.<br/>
-	    /// Depending on the type of command the rule can have a set of
-	    /// options (extended or not) that is the real specification for the rule.
-	    /// </remarks>
-	    public GenericCommand Command
-	    {
-	        get { return this.command;}
-	        set { this.command = value;}
 	    }
 	    
 	    private List<MatchExtensionHandler> loadedExtensions;
@@ -270,30 +254,18 @@ namespace IptablesNet.Core
 		    return null;
 		}
 		
-		/// <summary>
-		/// Gets if the line can be a rule candidate. 
-		/// </summary>
-		/// <remarks>
-		/// This only checks if the line starts with a -. So this check is poor
-		/// and only useful when reading lines in iptables config format (the
-        /// same format as iptables-save output)
-        /// </summary>
-		public static bool IsRule(string line)
-		{
-		    line = line.Trim();
-		    
-		    if(line.StartsWith("-"))
-		    {
-		        return true;
-		    }
-		    
-		    return false;
-		}
+		//---------------------------------------------------
+		// IComparable<T> implementation and overrides of ToString, Equals and
+		// GetHashCode.
 		
 		public override string ToString ()
 		{
 		    StringBuilder stb = new StringBuilder();
-		    stb.Append(this.command+" ");
+			// FIXME: The rule doesn't have now the reference to the command. We
+			// should fix the generation of the string as this brokes it, and the
+			// generated string isn't in the correct format now. 
+			//-------
+			//stb.Append(this.command+" ");
 		    
 		    for(int i=0;i<this.options.Count;i++)
 		    {
@@ -306,6 +278,29 @@ namespace IptablesNet.Core
 		    }
 		    
 		    return stb.ToString();
+		}
+		
+		public override bool Equals (object o)
+		{
+			if(!(o is NetfilterRule) || o == null)
+				return false;
+			
+			string strThis = this.ToString ();
+			return strThis.Equals(o.ToString(), StringComparison.InvariantCultureIgnoreCase);
+		}
+
+		public override int GetHashCode ()
+		{
+			return this.ToString ().GetHashCode ();
+		}
+		
+		public int CompareTo (NetfilterRule rule)
+		{
+			if(rule==null)
+				throw new ArgumentNullException ("rule");
+				
+			string strThis = this.ToString ();
+			return strThis.CompareTo (rule.ToString());
 		}
 
 	}

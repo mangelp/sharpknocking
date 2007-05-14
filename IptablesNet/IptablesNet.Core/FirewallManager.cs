@@ -154,25 +154,22 @@ namespace IptablesNet.Core
             delCmd.ChainName = "INPUT";
             delCmd.RuleNum = 1;
             
-            rule.Command = delCmd;
             FirewallManager.instance.ApplyRule(rule);
-            this.ruleSet.ExecRule(rule);
+            this.ruleSet.Exec(delCmd, rule);
             
             rule = new NetfilterRule();
             FlushChainCommand fCmd = new FlushChainCommand();
             fCmd.ChainName = this.chainName;
             
-            rule.Command = fCmd;
             FirewallManager.instance.ApplyRule(rule);
-            this.ruleSet.ExecRule(rule);
+            this.ruleSet.Exec(fCmd, rule);
             
             rule = new NetfilterRule();
             DeleteChainCommand dCmd = new DeleteChainCommand();
             dCmd.ChainName = this.chainName;
             
-            rule.Command = dCmd;
             FirewallManager.instance.ApplyRule(rule);
-            this.ruleSet.ExecRule(rule);
+            this.ruleSet.Exec(dCmd, rule);
         }
         
         /// <summary>
@@ -190,6 +187,7 @@ namespace IptablesNet.Core
             Debug.VerboseWrite("Adding SharpKnocking chain");
             NetfilterRule rule = null;
             JumpOption jopt = null;
+			GenericCommand gcmd = null;
             
             if(this.ruleSet.FindChain(this.chainName)!=null)
             {
@@ -198,8 +196,7 @@ namespace IptablesNet.Core
                 rule = new NetfilterRule();
                 FlushChainCommand cmd = new FlushChainCommand();
                 cmd.ChainName = this.chainName;
-                //Set in the rule
-                rule.Command = cmd;
+                gcmd = cmd;
             }
             else
             {
@@ -212,13 +209,11 @@ namespace IptablesNet.Core
                 //Create new chain command
                 NewChainCommand cmd = new NewChainCommand();
                 cmd.ChainName = this.chainName;
-                //Set in the rule
-                rule.Command = cmd;
                 
                 //Execute
                 FirewallManager.instance.ApplyRule(rule);
                 //Execute in default table named filter
-                this.ruleSet.ExecRule(rule);
+                this.ruleSet.Exec(cmd, rule);
                    
                 //Create insert rule to redirect INPUT packets to our chain
                 rule = new NetfilterRule();
@@ -229,7 +224,7 @@ namespace IptablesNet.Core
                 iCmd.RuleNum = 1;
                 iCmd.ChainName = "INPUT";
                 
-                rule.Command = iCmd;
+                gcmd = iCmd;
                 
                 //Create jump option to redirect to our chain
                 jopt = new JumpOption();
@@ -244,7 +239,7 @@ namespace IptablesNet.Core
            //Execute
            FirewallManager.instance.ApplyRule(rule);
            //Execute in default table named filter
-           this.ruleSet.ExecRule(rule);
+           this.ruleSet.Exec(gcmd, rule);
             
             //Create rule
             rule = new NetfilterRule();
@@ -253,7 +248,7 @@ namespace IptablesNet.Core
             AppendRuleCommand acmd = new AppendRuleCommand();
             acmd.ChainName = this.chainName;
             //Set in the rule
-            rule.Command = acmd;
+            gcmd = acmd;
             
             //Create option to accept loopback traffic
             InInterfaceOption inOpt = new InInterfaceOption();
@@ -270,7 +265,7 @@ namespace IptablesNet.Core
             //Execute
             FirewallManager.instance.ApplyRule(rule);
             //Execute in default table named filter
-            this.ruleSet.ExecRule(rule);
+            this.ruleSet.Exec(gcmd, rule);
             
             //Create rule to accept new or related connections
             rule = new NetfilterRule();
@@ -279,7 +274,7 @@ namespace IptablesNet.Core
             acmd = new AppendRuleCommand();
             acmd.ChainName = this.chainName;
             //set in the rule
-            rule.Command = acmd;
+            gcmd = acmd;
             
             //Load state extension with -m option
             MatchExtensionOption meop = new MatchExtensionOption();
@@ -299,7 +294,7 @@ namespace IptablesNet.Core
             //Execute
             FirewallManager.instance.ApplyRule(rule);
             //Execute in default table named filter
-            this.ruleSet.ExecRule(rule);
+            this.ruleSet.Exec(gcmd, rule);
              
             //Create rule to drop anything else
             rule = new NetfilterRule();
@@ -308,7 +303,7 @@ namespace IptablesNet.Core
             acmd = new AppendRuleCommand();
             acmd.ChainName = this.chainName;
             //Set in the rule
-            rule.Command = acmd;
+            gcmd = acmd;
              
             //Create jump option with drop target for all non-matching packets
             //if there is no previous chain.
@@ -320,7 +315,7 @@ namespace IptablesNet.Core
             //Execute
             FirewallManager.instance.ApplyRule(rule);
             //Execute in default table named filter
-            this.ruleSet.ExecRule(rule);
+            this.ruleSet.Exec(gcmd, rule);
         }
 
         /// <summary>
@@ -343,6 +338,8 @@ namespace IptablesNet.Core
                                              
             Debug.VerboseWrite ("FirewallManager::GrantAccess: Creating new rule");
             
+			GenericCommand gcmd = null;
+			
             //Create rule
             NetfilterRule rule = new NetfilterRule();
             //Create command
@@ -350,8 +347,8 @@ namespace IptablesNet.Core
             //Just insert after the rule that keeps outgoing connections working
             cmd.RuleNum = 3;
             cmd.ChainName = this.chainName;
-            //Set command in rule
-            rule.Command = cmd;
+            //Set command to execute
+            gcmd = cmd;
             //Create option
             SourceOption sop = new SourceOption();
             sop.Address = IpAddressRange.Parse(ipAddr);
@@ -401,7 +398,7 @@ namespace IptablesNet.Core
             //Execute
             FirewallManager.instance.ApplyRule(rule);
             //Execute in default table named filter
-            this.ruleSet.ExecRule(rule);
+            this.ruleSet.Exec(gcmd, rule);
             
             Debug.VerboseWrite ("FirewallManager::GrantAccess: Done!");
             return rule;

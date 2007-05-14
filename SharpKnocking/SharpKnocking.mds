@@ -13,6 +13,7 @@
       <Entry build="True" name="Doorman" configuration="Debug" />
       <Entry build="True" name="NetfilterFirewall" configuration="Debug" />
       <Entry build="True" name="KnockingDaemonControl" configuration="Debug" />
+      <Entry build="True" name="IptablesNet" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="PortKnocker" configuration="Release" />
@@ -22,6 +23,7 @@
       <Entry build="True" name="Doorman" configuration="Release" />
       <Entry build="True" name="NetfilterFirewall" configuration="Release" />
       <Entry build="True" name="KnockingDaemonControl" configuration="Release" />
+      <Entry build="True" name="IptablesNet" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="PortKnocker" single="True">
@@ -33,6 +35,7 @@
     <Execute type="None" entry="Doorman" />
     <Execute type="None" entry="NetfilterFirewall" />
     <Execute type="None" entry="KnockingDaemonControl" />
+    <Execute type="None" entry="IptablesNet" />
   </StartMode>
   <Entries>
     <Entry filename="./PortKnocker/PortKnocker.mdp" />
@@ -42,5 +45,6 @@
     <Entry filename="./Doorman/Doorman.mdp" />
     <Entry filename="./NetfilterFirewall/NetfilterFirewall.mdp" />
     <Entry filename="./KnockingDaemonControl/KnockingDaemonControl.mdp" />
+    <Entry filename="../IptablesNet/IptablesNet.mds" />
   </Entries>
 </Combine>

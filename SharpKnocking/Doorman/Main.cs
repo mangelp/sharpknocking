@@ -46,7 +46,11 @@ namespace SharpKnocking.Doorman
                 {
                     PrintHelpMessage();
                 }
-                
+				else
+				{
+					Console.Out.WriteLine ("Invalid argument or argument number. Use -h option for help");
+					return 6;
+				}
                	
 		    }
 		
@@ -73,6 +77,7 @@ namespace SharpKnocking.Doorman
             Console.Out.WriteLine ("Doorman manager for the SharpKnocking suite.");
             Console.Out.WriteLine ("Released under LGPL terms.");
             Console.Out.WriteLine ("(c)2007 Luís Roman Gutierrez y Miguel Ángel Pérez Valencia"); 
+			Console.Out.WriteLine ("Url: http://code.google.com/p/SharpKnocking");
             Console.Out.WriteLine ("Commands: --dbg, -v, -vv, -vvv, -h, --help");
             Console.Out.WriteLine ("     --dbg, -v, -vv, -vvv: The first activates debuggin and the rest the level of");
             Console.Out.WriteLine ("       detail (more 'v' means more verbose).");

@@ -36,7 +36,12 @@ namespace IptablesNet.Core.Commands
 		
 		/// <summary>
 		/// Gets/Sets the rule related to this command.
-		/// </summary>
+		/// </summary
+		/// <remarks>
+		/// The most of the times the rule is a parameter with the command. If
+		/// this property returns null is because the command doesn't require
+		/// a rule or because it haven't been set.
+		/// </remarks>
 		public NetfilterRule Rule
 		{
 			get { return this.rule;}
@@ -117,6 +122,26 @@ namespace IptablesNet.Core.Commands
 	            }
 	        }
 	    }
+		
+		/// <summary>
+		/// Gets if the line can be a rule candidate. 
+		/// </summary>
+		/// <remarks>
+		/// This only checks if the line starts with a -. So this check is poor
+		/// and only useful when reading lines in iptables config format (the
+        /// same format as iptables-save output)
+        /// </summary>
+		public static bool CanBeACommand(string line)
+		{
+		    line = line.Trim();
+		    
+		    if(line.StartsWith("-"))
+		    {
+		        return true;
+		    }
+		    
+		    return false;
+		}
 		
 		/// <summary>
 		/// Gets if the option name (parameter name without '-') matches one

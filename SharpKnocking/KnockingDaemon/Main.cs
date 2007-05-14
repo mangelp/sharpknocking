@@ -24,6 +24,7 @@ namespace SharpKnocking.KnockingDaemon
     /// 3- Unmanaged exception thrown.
     /// 4- Tried to run without root permissions.
     /// 5- WTF
+	/// 6 - Invalid argument number or arguments not valid
     /// </remarks>
 	class MainClass
 	{
@@ -82,6 +83,11 @@ namespace SharpKnocking.KnockingDaemon
                     PrintHelpMessage();
                     return 0;
                 }
+				else
+				{
+					Console.Out.WriteLine ("Invalid argument or argument number. Use -h option for help");
+					return 6;
+				}
                 
 		    }
 		    
@@ -136,13 +142,14 @@ namespace SharpKnocking.KnockingDaemon
             Console.Out.WriteLine ("KnockingDaemon service for the SharpKnocking suite.");
             Console.Out.WriteLine ("Released under LGPL terms.");
             Console.Out.WriteLine ("(c)2007 Luís Roman Gutierrez y Miguel Ángel Pérez Valencia"); 
+			Console.Out.WriteLine ("Url: http://code.google.com/p/SharpKnocking");
             Console.Out.WriteLine ("Commands: --nofwmodify, --nocapture, --dbg, -v, -vv, -vvv, -h, --help, --cfg, --dry");
-            Console.Out.WriteLine ("     --dbg, -v, -vv, -vvv: The first activates debuggin and the rest the level of");
-            Console.Out.WriteLine ("       detail (more 'v' means more verbose).");
-            Console.Out.WriteLine ("     --nocapture: Don't start the capture thread. This makes daemon unusable");
+            Console.Out.WriteLine ("     --dbg, -v, -vv, -vvv: The first activates debugging and the rest the level of");
+            Console.Out.WriteLine ("       detail (more 'v' means more verbose) and is optional.");
+            Console.Out.WriteLine ("     --nocapture: Don't start the capture process. This makes daemon unusable");
             Console.Out.WriteLine ("     --nofwmodify: Don't modify current rule set. This makes daemon unusable");
             Console.Out.WriteLine ("     --cfg: The next argument must be a valid iptables configuration file that");
-            Console.Out.WriteLine ("       will be loaded.");
+            Console.Out.WriteLine ("       will be loaded (used for debugging purposses).");
         }
 	}
 }
