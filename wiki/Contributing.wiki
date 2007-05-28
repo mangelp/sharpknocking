@@ -4,7 +4,7 @@
 
 I think that the fact that you are reading this page is enough to be a potential contributor :D, but for the sake of project's sanity (and mental sanity of devs) you should know some things:
 
-  * C# coding experience (almost 6 months)
+  * C# coding experience
   * Basic knowledge about software patterns (What they are, what they are for, use of the most common ones, ...)
 
 There are also some things where any knowledge will be well considered:
