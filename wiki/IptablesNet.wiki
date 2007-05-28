@@ -17,10 +17,9 @@ A good tip is that the iptables-save can be used to issues commands on demand ju
 
 == Objetives ==
 
-The main objetive is to provide a object-oriented approach to every option but with some limitations. In the long term it should be easily extensible throught new targets and matches extensions and we should provide an api to do so.
+The main objetive is to provide a library to handle rules with in a object-oriented way. This means that every option and extension (match or target) must have the correspondent implementation object so it can be used with our library.
 
 Another important thing is a good and intuitive UI to mess with the rules easily.
 
 ~~The initial version will be uploaded and integrated into svn tree in some weeks.~~
 There is now some code in the svn under the directory IptablesNet.
-
