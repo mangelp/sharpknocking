@@ -4,7 +4,7 @@
 
 This project was born to participate in a open source contest in the University of Seville where we get it to the second position in the Systems category :D
 
-Our main goal is to provide a suite of programs that will help to increase the security for a user computer with a low security knowledge or with no enoug time to care about it.
+Our main goal is to provide a suite of programs that will help to increase the security for a user computer with a low security knowledge or with no enough time to care about it.
 
 == Why another port knocking implementation? ==
 
