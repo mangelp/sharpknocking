@@ -3,10 +3,11 @@ using System;
 using System.Text;
 using System.Collections;
 
-using SharpKnocking.Common;
-
 using IptablesNet.Core.Extensions;
 using IptablesNet.Core.Extensions.ExtendedMatch;
+
+using Developer.Common.Net;
+using Developer.Common.Types;
 
 namespace IptablesNet.Extensions.Match
 {
@@ -47,7 +48,7 @@ namespace IptablesNet.Extensions.Match
         {
             result = ConnectionStates.None;
             
-            string[] list = Net20.StringSplit(type, true, ',');
+            string[] list = StringUtil.Split(type, true, ',');
             
             if(list.Length==0)
             {
@@ -67,10 +68,7 @@ namespace IptablesNet.Extensions.Match
                     result = state | result; 
                 }
                 else
-                {
-                    Debug.VerboseWrite("Not a valid connection state: "+list[i]);
                     return false;
-                }
             }
             
             return true;
@@ -85,7 +83,7 @@ namespace IptablesNet.Extensions.Match
             state = ConnectionStates.None;
             object oObj=null;
             
-            if(!TypeUtil.IsAliasName(typeof(ConnectionStates), type, out oObj))
+            if(!AliasUtil.IsAliasName(typeof(ConnectionStates), type, out oObj))
                 return false;
             
             state = (ConnectionStates)oObj;
@@ -96,7 +94,7 @@ namespace IptablesNet.Extensions.Match
         public override MatchExtensionParameter CreateParameter (string paramType)
         {
             object val=null;
-            if(!TypeUtil.IsAliasName (typeof(StateMatchOptions), paramType, out val))
+            if(!AliasUtil.IsAliasName (typeof(StateMatchOptions), paramType, out val))
                 return null;
             
             StateMatchOptions option = (StateMatchOptions)val;
@@ -148,14 +146,14 @@ namespace IptablesNet.Extensions.Match
             
             public override void SetValues (string value)
             {
-                object obj;
-                string[] list = Net20.StringSplit (value, true, ',');
+                object obj=null;
+                string[] list = StringUtil.Split (value, true, ',');
                 
                 ConnectionStates state = ConnectionStates.None;
                 
                 for(int i=0;i<list.Length;i++){
                     
-                    if(TypeUtil.IsAliasName(typeof(ConnectionStates), list[i], out obj))
+                    if(AliasUtil.IsAliasName(typeof(ConnectionStates), list[i], out obj))
                     {
                         this.state = (ConnectionStates)obj;
                     }

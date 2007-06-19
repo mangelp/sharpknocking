@@ -1,7 +1,7 @@
 
 using System;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 namespace IptablesNet.Core
 {
@@ -34,7 +34,7 @@ namespace IptablesNet.Core
 		{
 		    object obj;
 		    
-		    if(TypeUtil.IsAliasName(typeof(RuleTargets), name, out obj))
+		    if(AliasUtil.IsAliasName(typeof(RuleTargets), name, out obj))
 		        return true;
 		    
 		    return false;
@@ -44,7 +44,7 @@ namespace IptablesNet.Core
 		{
 		    object obj;
 		    
-		    if(TypeUtil.IsAliasName(typeof(BuiltInChains), name, out obj))
+		    if(AliasUtil.IsAliasName(typeof(BuiltInChains), name, out obj))
 		        return true;
 		    
 		    return false;

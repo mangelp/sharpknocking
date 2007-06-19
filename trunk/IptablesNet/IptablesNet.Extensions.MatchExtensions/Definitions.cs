@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 namespace IptablesNet.Extensions.Match
 {

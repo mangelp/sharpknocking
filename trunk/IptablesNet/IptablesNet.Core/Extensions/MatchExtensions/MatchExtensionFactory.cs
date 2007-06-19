@@ -3,8 +3,6 @@ using System;
 using System.Reflection;
 using System.IO;
 
-using SharpKnocking.Common;
-
 using IptablesNet.Core.Extensions;
 
 namespace IptablesNet.Core.Extensions.ExtendedMatch
@@ -75,10 +73,7 @@ namespace IptablesNet.Core.Extensions.ExtendedMatch
        	/// </returns>
        	public static Type GetExtensionType(string typeName)
        	{
-            Debug.VerboseWrite("Calling MatchExtension constructor for type '"+
-                               typeName+"'");
-            
-            if(Net20.StringIsNullOrEmpty(typeName))
+            if(String.IsNullOrEmpty(typeName))
                 throw new ArgumentException("The name for the type can't be null"+
                                             " or empty", "typeName");
             
@@ -97,24 +92,12 @@ namespace IptablesNet.Core.Extensions.ExtendedMatch
                                 Path.DirectorySeparatorChar+typeName+
                                 "MatchExtension.dll";
        	        
-       	        Debug.VerboseWrite("MatchExtensionFactory: Can't find type: "+fullName);
-       	        
-       	        Debug.VerboseWrite(
-       	             "MatchExtensionFactory:Triying to load assembly: "+asmName);
-       	        
        	        //Try to load the assembly
        	        Assembly asm = Assembly.LoadFrom(asmName);
        	    
 
        	        if(asm!=null)
-       	        {
-       	            Debug.VerboseWrite("MatchExtensionFactory: Assembly loaded");
        	            theType = asm.GetType(typeName, false, true);
-       	        }
-       	        else
-       	        {
-       	            Debug.VerboseWrite("MatchExtensionFactory: Assembly not loaded :(");    
-       	        }
        	    }
        	    
        	    return theType;
@@ -153,11 +136,6 @@ namespace IptablesNet.Core.Extensions.ExtendedMatch
        	    {
        	        result =
        	            (MatchExtensionHandler)Activator.CreateInstance(theType);        
-       	    }
-       	    else
-       	    {
-       	        Debug.Write("MatchExtensionFactory: The match extension '"+
-       	                    mExtension.ToString().ToLower()+"' can't be loaded");
        	    }
        	    
        	    return result;

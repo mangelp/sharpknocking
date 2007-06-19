@@ -1,11 +1,11 @@
 
 using System;
 using System.Collections;
-using SharpKnocking.Common;
 
 using IptablesNet.Core.Extensions;
 using IptablesNet.Core.Extensions.ExtendedMatch;
 
+using Developer.Common.Types;
 
 namespace IptablesNet.Core.Options
 {
@@ -19,7 +19,7 @@ namespace IptablesNet.Core.Options
 		{
 			get 
 			{
-				string def = TypeUtil.GetDefaultAlias (this.optionType);
+				string def = AliasUtil.GetDefaultAlias (this.optionType);
 				if(def!=null && def.Length > 1)
 					return true;
 				
@@ -93,12 +93,12 @@ namespace IptablesNet.Core.Options
 		
 		public override string GetDefaultAlias()
 		{
-			return TypeUtil.GetDefaultAlias (this.optionType);
+			return AliasUtil.GetDefaultAlias (this.optionType);
 		}
 		
 		public override bool IsAlias(string name)
 		{
-			return TypeUtil.IsAliasName (this.optionType, name);
+			return AliasUtil.IsAliasName (this.optionType, name);
 		}
 		
 		/// <summary>
@@ -136,7 +136,7 @@ namespace IptablesNet.Core.Options
 	        
 	        foreach(object obj in arr)
 	        {
-	            aliases = TypeUtil.GetAliases(obj);
+	            aliases = AliasUtil.GetAliases(obj);
 	            
 	            for(int i=0;i<aliases.Length;i++)
 	            {

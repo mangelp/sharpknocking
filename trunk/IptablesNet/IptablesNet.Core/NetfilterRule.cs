@@ -4,7 +4,6 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
-using SharpKnocking.Common;
 using IptablesNet.Core;
 using IptablesNet.Core.Options;
 using IptablesNet.Core.Commands;
@@ -97,7 +96,6 @@ namespace IptablesNet.Core
 		{
 		    if(args.Item.HasImplicitExtension)
 		    {
-		        Debug.VerboseWrite("NetfilterRule:: Option added with implicit extension: "+args.Item);
     		    //Exit if the implicit extension type have been loaded
     		    if(this.IsExtensionHandlerLoaded(args.Item.ExtensionType))
     		        return;
@@ -106,7 +104,6 @@ namespace IptablesNet.Core
 		    }
 		    else if(args.Item is MatchExtensionOption)
 		    {
-		        Debug.VerboseWrite("NetfilterRule:: Option added with explicit extension: "+args.Item);
 		        //If it's this option we load the extension
 				//FIXME: GOT BROKEN!
 //		        Type t = MatchExtensionFactory.GetExtensionType(args.Item.Value);
@@ -121,11 +118,9 @@ namespace IptablesNet.Core
 		
 		private void LoadExtensionHandler(Type extHandlerType)
 		{
-		    Debug.VerboseWrite("NetfilterRule: Loading extension handler: "+extHandlerType.Name);
             //Load the implicit extension
             MatchExtensionHandler handler = MatchExtensionFactory.GetExtension(
                                                     extHandlerType);
-		    Debug.VerboseWrite("NetfilterRule: Adding the current list ");
             //Add to the list
             this.loadedExtensions.Add(handler);
 		}
@@ -202,9 +197,7 @@ namespace IptablesNet.Core
 		/// parameter or there is no extension target loaded it returns null.
 		/// </remarks>
 		public TargetExtensionHandler FindTargetExtensionHandler(string paramName)
-		{
-            Debug.VerboseWrite("Searching target extension handler for: "+paramName);
-            
+		{            
 		    if(this.jumpOption!=null &&
 		             this.jumpOption.HasOptionNamed(paramName))
 		    {
@@ -224,31 +217,15 @@ namespace IptablesNet.Core
 		/// </returns>
 		public MatchExtensionHandler FindMatchExtensionHandlerFor(string paramName)
 		{
-		    Debug.VerboseWrite("FindMatchExtensionHandlerFor: Searching for a extension with a "
-	                             +paramName+" option over "
-	                             +this.loadedExtensions.Count
-	                             +" extensions",
-  		                         VerbosityLevels.Insane);
-		    
 		    MatchExtensionHandler handler;
 		    
 		    for(int i=0;i<this.loadedExtensions.Count;i++)
 		    {
 		        
 		        handler = this.loadedExtensions[i];
-		        
-		        Debug.VerboseWrite("FindMatchExtensionHandlerFor: Testing at "+i
-		                               +" on "+handler.ExtensionName
-                                     , VerbosityLevels.Insane);
 
 		        if(handler.IsSupportedParam(paramName))
-		        {
-		            Debug.VerboseWrite("FindMatchExtensionHandlerFor: Supporting extension found! "
-                                     +handler.ExtensionName,
-                                     VerbosityLevels.Insane);
-		            
                     return handler;
-		        }
 		    }
 		    
 		    return null;

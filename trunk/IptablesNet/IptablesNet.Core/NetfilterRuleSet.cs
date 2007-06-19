@@ -5,8 +5,6 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
-using SharpKnocking.Common;
-
 using IptablesNet.Core.Commands;
 using IptablesNet.Core.Options;
 
@@ -58,7 +56,6 @@ namespace IptablesNet.Core
         /// </summary>
 		public void LoadFromFile(string fileName)
 		{
-		    Debug.Write("Loading iptables rules from file: "+fileName+"");
 		    this.isSafe = false;
 		    
 		    if(!File.Exists(fileName))
@@ -134,7 +131,6 @@ namespace IptablesNet.Core
 		    //Now process each line until COMMIT
 		    for(int i=0;i<lines.Length;i++)
 		    {
-		        Debug.Write("Processing Line: "+lines[i]);
 		        line = lines[i].Trim();
 		        
 		        if(line==null || line.Length==0 || line.StartsWith("#"))
@@ -152,65 +148,35 @@ namespace IptablesNet.Core
 		            lastTable.Type = tableType;
 		            
 		            if(lastTable == null)
-		            {
-		                Debug.Write("Invalid table specification: "
-		                               +line+". Parsing broken");
 		                return;
-		            }
 		            
 		            this.tables.Add(lastTable);
 		            
-		            Debug.Write("Found table: "+lastTable);
 		        }
 		        else if(NetfilterChain.IsChain(line))
 		        {
 		            lastChain = NetfilterChain.Parse(line, lastTable);
 		            
-		            Debug.Write("Found chain: "+lastChain+". Adding to table "+lastTable.Type);
-		            
 		            lastTable.AddChain(lastChain);
 		        }
 		        else if(GenericCommand.CanBeACommand (line))
 		        {
-		            if(Net20.StringIsNullOrEmpty(line))
-		            {
-		                Console.Out.WriteLine("Invalid chain in line: "+line+
-		                                      ". Parsing broken");
+		            if(String.IsNullOrEmpty(line))
 		                return;
-		            }
 
 		            //No chain found. Can't continue.
 		            if(lastTable==null)
-		            {
-		                Debug.Write("There is no chain table. "+
-		                                      "Parsing broken.");
 		                return;
-		            }
 		            
 		            //Use the rule parser to build a NetfilterRule instance
 		            //from the line.
 		            gCmd = RuleParser.GetCommand(line, lastTable);
 		            
 		            if(gCmd!=null && gCmd.Rule != null)
-		            {
-                        Debug.VerboseWrite("Adding to chain '"+
-                                           lastChain.CurrentName+"' command '"+
-                                           gCmd+"'", VerbosityLevels.Insane);
 		                lastChain.Rules.Add (gCmd.Rule);
-		            }
 		            else
-		            {
-		                Debug.Write("Can't get a rule from "+line+
-		                                      ". Parsing broken");
 		                return;    
-		            }
-		            
-		            Debug.Write("Found rule: "+gCmd.Rule);
 		                
-		        }
-		        else
-		        {
-		            Debug.Write("Doen't know how to handle the line: "+line);    
 		        }
 		    }
 		    
@@ -231,10 +197,7 @@ namespace IptablesNet.Core
 		    NetfilterChain result = null;
 		    
 		    foreach(NetfilterTable table in this.tables)
-		    {
-		        Debug.VerboseWrite("NetfilterRuleSet.FindChain: Searching "+table.Type,
-                            VerbosityLevels.Insane);
-		            
+			{
 		        result = table.FindChain(name);
 		        
 		        if(result!=null)
@@ -286,11 +249,8 @@ namespace IptablesNet.Core
         /// The actions are limited to those that changes chains or rules.
         /// </remarks>
         /// <param name="cmd">Command to exec with the rule</param>
-        /// <param name="rule">Rule as a parameter to the command</param>
-        public void Exec(GenericCommand cmd, NetfilterRule rule)
+        public void Exec(GenericCommand cmd)
         {
-            Debug.VerboseWrite("NetfilterRuleSet.ExecRule: "+rule, VerbosityLevels.Insane);
-            Debug.VerboseWrite("NetFilterRuleSet.ExecRule: "+cmd);
             NetfilterTable table = this.GetDefaultTable();
             NetfilterChain chain = null;
             int pos = 0;
@@ -342,7 +302,7 @@ namespace IptablesNet.Core
                                     cmd.ChainName+
                                     " doesn't exist in table "+table.Type);
                     
-                    chain.Rules.Add(rule);
+                    chain.Rules.Add(cmd.Rule);
                     break;
                 case RuleCommands.DeleteRule:
                     //Removes a rule from a chain
@@ -357,7 +317,6 @@ namespace IptablesNet.Core
                     chain.Rules.RemoveAt(delCmd.RuleNum-1);
                     break;
                 case RuleCommands.InsertRule:
-                    Debug.VerboseWrite("NetfilterRuleSet.ExecRule: Inserting rule");
                     //Inserts a rule into a chain
                     chain = table.FindChain(cmd.ChainName);
                 
@@ -367,8 +326,7 @@ namespace IptablesNet.Core
                                     " doesn't exist in table "+table.Type);
                 
                     InsertRuleCommand insCmd = (InsertRuleCommand)cmd;
-                    Debug.VerboseWrite("NetfilterRuleSet.ExecRule: Inserting rule in list at "+insCmd.RuleNum);
-                    chain.Rules.Insert(insCmd.RuleNum-1, rule);
+                    chain.Rules.Insert(insCmd.RuleNum-1, cmd.Rule);
                     break;
                 default:
                     //Every other thing is not implemented and must not be used.
@@ -406,7 +364,6 @@ namespace IptablesNet.Core
                 try
                 {
                     string currRuleSet = this.SaveToString();
-                    Debug.VerboseWrite("Saving set:\n"+currRuleSet, VerbosityLevels.Insane);
                     // Create a file to write to.
                     using (StreamWriter sw = File.CreateText(fileName)) 
                     {

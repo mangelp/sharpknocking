@@ -1,7 +1,7 @@
 
 using System;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 namespace IptablesNet.Core.Extensions
 {
@@ -86,12 +86,12 @@ namespace IptablesNet.Core.Extensions
 		
 		public override bool IsAlias (string name)
 		{
-			return TypeUtil.IsAliasName (this.enumValue, name);
+			return AliasUtil.IsAliasName (this.enumValue, name);
 		}
 			
 		public override string GetDefaultAlias ()
 		{
-			return TypeUtil.GetDefaultAlias(this.enumValue);
+			return AliasUtil.GetDefaultAlias(this.enumValue);
 		}
 	}
 }

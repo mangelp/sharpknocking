@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 namespace IptablesNet.Core.Extensions
 {
@@ -25,7 +25,7 @@ namespace IptablesNet.Core.Extensions
 	        {
 				foreach( T handler in this.adapted)
 				{
-					if(TypeUtil.IsAliasName (extType, handler.ExtensionName))
+					if(AliasUtil.IsAliasName (extType, handler.ExtensionName))
 						return handler;
 				}
 				

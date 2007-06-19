@@ -1,10 +1,10 @@
 
 using System;
 
-using IptablesNet.Net;
 using IptablesNet.Core;
 
-using SharpKnocking.Common;
+using Developer.Common.Net;
+using Developer.Common.Types;
 
 
 namespace IptablesNet.Core.Options
@@ -40,7 +40,7 @@ namespace IptablesNet.Core.Options
 		    object obj;
 		    errStr=String.Empty;
 		    
-		    if(TypeUtil.IsAliasName(typeof(ProtocolType), strVal, out obj))
+		    if(AliasUtil.IsAliasName(typeof(ProtocolType), strVal, out obj))
 		    {
 		        this.protocol = (ProtocolType)obj;
 		        return true;
@@ -52,7 +52,7 @@ namespace IptablesNet.Core.Options
 		
 		protected override string GetValuesAsString()
 		{
-			return TypeUtil.GetDefaultAlias (this.protocol);
+			return AliasUtil.GetDefaultAlias (this.protocol);
 		}
 	}
 }

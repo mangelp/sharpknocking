@@ -1,7 +1,7 @@
 
 using System;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 namespace IptablesNet.Core.Commands
 {
@@ -76,7 +76,7 @@ namespace IptablesNet.Core.Commands
 	        GenericCommand res=null;
 	        RuleCommands type = GenericCommand.GetCommandType(param.Name);
 	        
-	        string[] parts = Net20.StringSplit(param.Value, true, ' ');
+	        string[] parts = StringUtil.Split(param.Value, true, ' ');
 	        
 	        //Create the instance for the concrete object
 	        Type objType = Type.GetType(currentNamespace+"."+type.ToString()+"Command",

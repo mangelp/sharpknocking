@@ -2,8 +2,6 @@
 using System;
 using System.Text;
 
-using SharpKnocking.Common;
-
 namespace IptablesNet.Core.Commands
 {
 	/// <summary>

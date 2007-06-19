@@ -3,7 +3,7 @@ using System;
 using System.Text;
 using System.Collections;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 namespace IptablesNet.Core
 {
@@ -102,7 +102,7 @@ namespace IptablesNet.Core
 		    {
 		        next = (NetfilterChain)this.chains[i];
 		        
-		        if(Net20.StringEquals(next.CurrentName, name, true))
+		        if(String.Equals(next.CurrentName, name, StringComparison.InvariantCultureIgnoreCase))
 		            return i;
 		    }
 		    
@@ -120,7 +120,7 @@ namespace IptablesNet.Core
 		    {
 		        next = (NetfilterChain)this.chains[i];
 		        
-		        if(Net20.StringEquals(next.CurrentName, name, true))
+		        if(String.Equals(next.CurrentName, name, StringComparison.InvariantCultureIgnoreCase))
 		            return next;
 		    }
 		    
@@ -170,10 +170,6 @@ namespace IptablesNet.Core
 		        {
 		            table = (PacketTables)obj;
 		            return true;
-		        }
-		        else
-		        {
-		            Debug.Write("Line has not a valid table: "+line);
 		        }
 		    }
 		    

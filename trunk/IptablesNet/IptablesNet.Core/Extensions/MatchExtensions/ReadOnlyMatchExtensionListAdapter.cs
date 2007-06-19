@@ -3,8 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using SharpKnocking.Common;
-
 using IptablesNet.Core;
 using IptablesNet.Core.Extensions;
 

@@ -1,7 +1,6 @@
 
 using System;
 using System.Collections;
-using SharpKnocking.Common;
 
 namespace IptablesNet.Core.Options
 {

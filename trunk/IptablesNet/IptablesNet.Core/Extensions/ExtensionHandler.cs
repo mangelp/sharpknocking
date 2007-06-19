@@ -4,10 +4,10 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
-using SharpKnocking.Common;
-
 using IptablesNet.Core;
 using IptablesNet.Core.Util;
+
+using Developer.Common.Types;
 
 namespace IptablesNet.Core.Extensions
 {
@@ -102,7 +102,7 @@ namespace IptablesNet.Core.Extensions
 			
 	        this.parameters = new List<TParam>();
 			this.handlerType = handlerType;
-	        this.extensionName = TypeUtil.GetDefaultAlias (this.handlerType);
+	        this.extensionName = AliasUtil.GetDefaultAlias (this.handlerType);
 			this.enumType = enumType;
 	    }
 	    
@@ -220,7 +220,7 @@ namespace IptablesNet.Core.Extensions
 		public bool IsSupportedParam (string paramName)
 		{
 			object val;
-			return TypeUtil.IsAliasName (this.enumType, paramName, out val);
+			return AliasUtil.IsAliasName (this.enumType, paramName, out val);
 		}
             
 		public virtual TParam CreateParameter(string paramType, string value)

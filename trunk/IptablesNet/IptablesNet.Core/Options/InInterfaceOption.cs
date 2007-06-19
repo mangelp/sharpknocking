@@ -1,7 +1,6 @@
 
 using System;
 
-using SharpKnocking.Common;
 using IptablesNet.Core;
 
 namespace IptablesNet.Core.Options
@@ -30,7 +29,7 @@ namespace IptablesNet.Core.Options
 		
 		public override bool TryReadValues (string strVal, out string errStr)
 		{
-		    if(!Net20.StringIsNullOrEmpty(strVal))
+		    if(!String.IsNullOrEmpty(strVal))
 		    {
 		        this.iface = strVal;
 		        errStr=String.Empty;

@@ -1,10 +1,10 @@
 
 using System;
 
-using SharpKnocking.Common;
-
 using IptablesNet.Core;
 using IptablesNet.Core.Extensions;
+
+using Developer.Common.Types;
 
 namespace IptablesNet.Core.Options
 {
@@ -58,7 +58,7 @@ namespace IptablesNet.Core.Options
 		    object obj;
 		    
 		    //This conversion only supports builtIn extensions
-		    if(TypeUtil.IsAliasName(typeof(MatchExtensions), strVal, out obj))
+		    if(AliasUtil.IsAliasName(typeof(MatchExtensions), strVal, out obj))
 		    {
 		        this.extension = (MatchExtensions)obj;
 		        errStr = String.Empty;
@@ -74,7 +74,7 @@ namespace IptablesNet.Core.Options
 			if(this.extension == MatchExtensions.CustomExtension)
 				return this.customExtension;
 
-			return TypeUtil.GetDefaultAlias (this.extension);
+			return AliasUtil.GetDefaultAlias (this.extension);
 		}
 	}
 }

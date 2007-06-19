@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 namespace IptablesNet.Core.Util
 {
@@ -44,7 +44,7 @@ namespace IptablesNet.Core.Util
 	        
 	        foreach(object obj in arr)
 	        {
-	            aliases = TypeUtil.GetAliases(obj);
+	            aliases = AliasUtil.GetAliases(obj);
 	            
 	            for(int i=0;i<aliases.Length;i++)
 	            {

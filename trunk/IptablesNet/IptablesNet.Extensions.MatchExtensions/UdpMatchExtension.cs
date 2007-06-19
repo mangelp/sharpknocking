@@ -2,12 +2,11 @@
 using System;
 using System.Collections;
 
-using SharpKnocking.Common;
-using SharpKnocking.Common.Net;
-
-using IptablesNet.Net;
 using IptablesNet.Core.Extensions;
 using IptablesNet.Core.Extensions.ExtendedMatch;
+
+using Developer.Common.Types;
+using Developer.Common.Net;
 
 namespace IptablesNet.Extensions.Match
 {
@@ -24,7 +23,7 @@ namespace IptablesNet.Extensions.Match
 		{
 			object type;
 			
-			if(!TypeUtil.IsAliasName ( typeof(UdpMatchOptions), par, out type))
+			if(!AliasUtil.IsAliasName ( typeof(UdpMatchOptions), par, out type))
 				return null;
 			
 			UdpMatchOptions option = (UdpMatchOptions)type;

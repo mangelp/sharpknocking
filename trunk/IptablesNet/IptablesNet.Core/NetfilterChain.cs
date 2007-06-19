@@ -3,7 +3,7 @@ using System;
 using System.Text;
 using System.Collections;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 namespace IptablesNet.Core
 {
@@ -164,7 +164,7 @@ namespace IptablesNet.Core
 		    
 		    NetfilterChain result = new NetfilterChain(table);
 		    
-		    string[] parts = Net20.StringSplit(line, true,':',' ');
+		    string[] parts = StringUtil.Split(line, true,':',' ');
 		    
 //		    if(Debug.DebugEnabled)
 //		    {
@@ -177,14 +177,12 @@ namespace IptablesNet.Core
 		    //First check if the table is builtin to get default target or not
 		    if(IsBuiltinChain(parts[0], out result.chain))
 		    {
-		        Debug.Write("Found builtin chain");
 		        result.defaultTarget =
 		            (RuleTargets)TypeUtil.GetEnumValue(typeof(RuleTargets),
 		                                                          parts[1]);
 		    }
 		    else
 		    {
-		        Debug.Write("Found user defined chain");
 		        //Is not predefined. Grab the name
 		        result.name = parts[0];
 		    }

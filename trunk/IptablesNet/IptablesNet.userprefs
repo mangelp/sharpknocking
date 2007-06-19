@@ -1,35 +1,40 @@
 <?xml version="1.0"?>
 <UserCombinePreferences filename="/home/mangelp/Projects/sharpknocking/IptablesNet/IptablesNet.mds">
-  <Files />
+  <Files>
+    <File filename="./IptablesNet.Core/Iptables/SimpleIptablesCommandWrapper.cs" />
+    <File filename="./IptablesNet.Core/Iptables/IptablesTransaction.cs" />
+    <File filename="./IptablesNet.Core/FirewallManager.cs" />
+    <File filename="./IptablesNet.Core/Commands/GenericCommand.cs" />
+    <File filename="./IptablesNet.Core/NetfilterRuleSet.cs" />
+    <File filename="./IptablesNet.Core/Iptables/AdvancedIptablesCommandWrapper.cs" />
+    <File filename="./IptablesNet.Core/Util/CircularList.cs" />
+    <File filename="./IptablesNet.Core/Util/SystemProcess.cs" />
+  </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
         <Node expanded="True">
           <Node name="IptablesNet.Core" expanded="True">
-            <Node name="NetfilterRuleSet.cs" expanded="False" selected="True" />
+            <Node name="Commands" expanded="True" />
+            <Node name="Iptables" expanded="True">
+              <Option id="ShowAllFiles" value="True" />
+              <Option id="ShowVersionControlOverlays" value="True" />
+              <Option id="ShowCodeBehindFiles" value="False" />
+              <Option id="ShowCodeBehindClasses" value="False" />
+              <Node name="AdvancedIptablesCommandWrapper.cs" expanded="False" selected="True" />
+            </Node>
+            <Node name="Util" expanded="True" />
           </Node>
         </Node>
       </TreeView>
     </ViewMemento>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ClassPad">
       <TreeView>
-        <Node expanded="True" selected="True">
-          <Node name="IptablesNet.Core" expanded="True" />
-          <Node name="IptablesNet.Extensions.MatchExtensions" expanded="True">
-            <Node name="IptablesNet" expanded="True">
-              <Node name="Extensions" expanded="True" />
-            </Node>
-          </Node>
-          <Node name="IptablesNet.Extensions.TargetExtensions" expanded="True">
-            <Node name="IptablesNet" expanded="True" />
-          </Node>
-        </Node>
+        <Node expanded="True" />
       </TreeView>
     </ViewMemento>
     <ViewMemento Id="MonoDevelop.NUnit.TestPad">
-      <TreeView>
-        <Node expanded="False" />
-      </TreeView>
+      <TreeView />
     </ViewMemento>
     <ViewMemento Id="MonoQuery.DatabasePad">
       <TreeView>
@@ -40,7 +45,7 @@
   <Properties>
     <Properties>
       <Property key="ActiveConfiguration" value="Debug" />
-      <Property key="ActiveWindow" value="" />
+      <Property key="ActiveWindow" value="/home/mangelp/Projects/sharpknocking/IptablesNet/IptablesNet.Core/Iptables/AdvancedIptablesCommandWrapper.cs" />
     </Properties>
   </Properties>
 </UserCombinePreferences>
