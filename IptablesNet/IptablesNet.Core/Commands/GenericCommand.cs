@@ -3,9 +3,9 @@ using System;
 using System.Text;
 using System.Collections;
 
-using SharpKnocking.Common;
-
 using IptablesNet.Core;
+
+using Developer.Common.Types;
 
 namespace IptablesNet.Core.Commands
 {
@@ -83,7 +83,7 @@ namespace IptablesNet.Core.Commands
 		{
 			get 
 			{
-				string def = TypeUtil.GetDefaultAlias (this.commandType);
+				string def = AliasUtil.GetDefaultAlias (this.commandType);
 				if(def!=null && def.Length > 1)
 					return true;
 				
@@ -114,7 +114,7 @@ namespace IptablesNet.Core.Commands
 	        
 	        foreach(object obj in arr)
 	        {
-	            aliases = TypeUtil.GetAliases(obj);
+	            aliases = AliasUtil.GetAliases(obj);
 	            
 	            for(int i=0;i<aliases.Length;i++)
 	            {
@@ -198,18 +198,18 @@ namespace IptablesNet.Core.Commands
 		
 		public override string GetDefaultAlias()
 		{
-			return TypeUtil.GetDefaultAlias(this.commandType);
+			return AliasUtil.GetDefaultAlias(this.commandType);
 		}
 		
 		public override bool IsAlias(string name)
 		{
-			return TypeUtil.IsAliasName(this.commandType, name);
+			return AliasUtil.IsAliasName(this.commandType, name);
 		}
 		
 		public override string ToString()
 		{
 			StringBuilder builder = new StringBuilder();
-		    string result = TypeUtil.GetDefaultAlias(this.commandType);
+		    string result = AliasUtil.GetDefaultAlias(this.commandType);
             
             if(this.IsLongFormat)
                 builder.Append("--"+result);

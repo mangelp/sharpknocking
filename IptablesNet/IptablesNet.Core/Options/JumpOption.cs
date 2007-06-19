@@ -1,9 +1,10 @@
 
 using System;
 
-using SharpKnocking.Common;
 using IptablesNet.Core;
 using IptablesNet.Core.Extensions.ExtendedTarget;
+
+using Developer.Common.Types;
 
 namespace IptablesNet.Core.Options
 { 
@@ -128,29 +129,23 @@ namespace IptablesNet.Core.Options
 		
 		public override bool TryReadValues (string strVal, out string errStr)
 		{
-		    Debug.VerboseWrite("JumpOption.TryReadValues: Reading from '"
-		                       +strVal+"'");
-		    
-		    if(Net20.StringIsNullOrEmpty(strVal))
-		    {
-		        errStr="Value can't be null or empty";
-                Debug.VerboseWrite("JumpOption.TryReadValues: Empt or null value.");
+		    if(String.IsNullOrEmpty(strVal))
+			{
+				errStr = "The string is null or empty";
 		        return false;
-		    }
+			}
 		    
 		    errStr=String.Empty;
 		    
 		    object obj;
 		    
-		    if( TypeUtil.IsAliasName(typeof(RuleTargets), strVal, out obj))
+		    if( AliasUtil.IsAliasName(typeof(RuleTargets), strVal, out obj))
 		    {
-                Debug.VerboseWrite("JumpOption.TryReadValues: Found RuleTargets enum");
 		        this.Target = (RuleTargets)obj;
 		        
 		        if(this.Target == RuleTargets.CustomTarget)
 		        {
 		            errStr="CustomTarget is an invalid target!";
-                    Debug.VerboseWrite("JumpOption.TryReadValues: Invalid target.");
 		            return false;
 		        }
                 
@@ -166,8 +161,6 @@ namespace IptablesNet.Core.Options
                 
                 if(this.extension==null)
                     throw new IptablesException("Can't create object for "+strVal);
-                
-                Debug.VerboseWrite("JumpOption.TryReadValues: Found target extension "+this.extension);
             }
 		    else
 		    {
@@ -175,7 +168,6 @@ namespace IptablesNet.Core.Options
 	            //The only custom target supported is user-defined chain
 	            this.customTarget = CustomRuleTargets.UserDefinedChain;
 	            this.customTargetName = strVal;
-                Debug.VerboseWrite("JumpOption.TryReadValues: Found custom target");
 		    }
 		    
 		    return true;
@@ -192,8 +184,6 @@ namespace IptablesNet.Core.Options
 		/// </returns>
 		public bool HasOptionNamed(string paramName)
 		{
-            Debug.VerboseWrite("HasOptionNamed("+paramName+")");
-            
 		    if(this.extension==null)
 		        return false;
 		    
@@ -203,11 +193,6 @@ namespace IptablesNet.Core.Options
 		protected override string GetValuesAsString()
 		{
             string str = String.Empty;
-                
-            Debug.VerboseWrite("JumpOption: Converting to string ("+
-                               this.target+","+this.customTarget+","+
-                               this.customTargetName+","+this.extension+")",
-                               VerbosityLevels.Insane);
             
             if(this.target == RuleTargets.CustomTarget)
             {
@@ -218,7 +203,7 @@ namespace IptablesNet.Core.Options
             }
             else
             {
-                str=TypeUtil.GetDefaultAlias(this.target);
+                str=AliasUtil.GetDefaultAlias(this.target);
             }
             
             return str;

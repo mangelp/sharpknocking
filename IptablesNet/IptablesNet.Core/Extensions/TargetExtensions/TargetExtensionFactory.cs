@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Reflection;
 
-using SharpKnocking.Common;
 using IptablesNet.Core;
 
 namespace IptablesNet.Core.Extensions.ExtendedTarget
@@ -74,7 +73,7 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
        	/// </returns>
        	public static Type GetExtensionType(string typeName)
        	{
-            if(Net20.StringIsNullOrEmpty(typeName))
+            if(String.IsNullOrEmpty(typeName))
                 throw new ArgumentException("The name of the type can't be null"+
                                             " or empty", "typeName");
             
@@ -93,24 +92,11 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
        	        string asmName = assemblySearchPath+
                                 Path.DirectorySeparatorChar+typeName+
                                 "TargetExtension.dll";
-       	        
-       	        Debug.VerboseWrite("TargetExtensionFactory: Can't find type: "+fullName);
-       	        
-       	        Debug.VerboseWrite(
-       	             "TargetExtensionFactory:Triying to load assembly: "+asmName);
-       	        
        	        //Try to load the assembly
        	        Assembly asm = Assembly.LoadFrom(asmName);
        	    
        	        if(asm!=null)
-       	        {
-       	            Debug.VerboseWrite("TargetExtensionFactory: Assembly loaded");
        	            theType = asm.GetType(typeName, false, true);
-       	        }
-       	        else
-       	        {
-       	            Debug.VerboseWrite("TargetExtensionFactory: Assembly not loaded :(");    
-       	        }
        	    }
        	    
        	    return theType;
@@ -131,11 +117,8 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
        	        Type extensionType = TargetExtensionFactory.GetExtensionType(name);
        	        return (TargetExtensionHandler)Activator.CreateInstance(extensionType);
        	    }
-       	    catch(Exception ex)
+       	    catch(Exception)
        	    {
-       	        Debug.Write("TargetExtensionFactory.GetExtension: Exception while creating TargetExtensionHandler instance."+
-       	                    "Returning null"+
-       	                    "\n"+ex);
        	        return null;
        	    }
        	}

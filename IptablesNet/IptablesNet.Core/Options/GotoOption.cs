@@ -1,7 +1,6 @@
 
 using System;
 
-using SharpKnocking.Common;
 using IptablesNet.Core;
 
 namespace IptablesNet.Core.Options
@@ -19,7 +18,7 @@ namespace IptablesNet.Core.Options
 	        get{ return this.chainName;}
 	        set
 	        {
-	            if(Net20.StringIsNullOrEmpty(value))
+	            if(String.IsNullOrEmpty(value))
 	                throw new ArgumentException("The value can't be null or empty");
 	            
 	            this.chainName = value;
@@ -33,7 +32,7 @@ namespace IptablesNet.Core.Options
 		
 		public override bool TryReadValues(string strVal, out string errStr)
 		{
-		    if(Net20.StringIsNullOrEmpty(strVal))
+		    if(String.IsNullOrEmpty(strVal))
 		    {
 		        errStr = "The input string is null or empty";
 		        return false;

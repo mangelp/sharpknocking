@@ -1,7 +1,7 @@
 
 using System;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 using IptablesNet.Core.Extensions;
 using IptablesNet.Core.Extensions.ExtendedTarget;
@@ -27,8 +27,8 @@ namespace IptablesNet.Extensions.ExtendedTarget
         
         public override TargetExtensionParameter CreateParameter (string paramType)
         {
-            object obj;
-            if(!TypeUtil.IsAliasName ( typeof(UlogTargetOptions), paramType, out obj))
+            object obj=null;
+            if(!AliasUtil.IsAliasName ( typeof(UlogTargetOptions), paramType, out obj))
                 return null;
             
             UlogTargetOptions option = (UlogTargetOptions)obj;

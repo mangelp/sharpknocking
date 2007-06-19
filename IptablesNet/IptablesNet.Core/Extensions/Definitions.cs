@@ -1,7 +1,7 @@
 
 using System;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 namespace IptablesNet.Core.Extensions
 {

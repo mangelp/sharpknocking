@@ -3,12 +3,11 @@ using System;
 using System.Text;
 using System.Collections;
 
-using SharpKnocking.Common;
-using SharpKnocking.Common.Net;
-
-using IptablesNet.Net;
 using IptablesNet.Core.Extensions;
 using IptablesNet.Core.Extensions.ExtendedMatch;
+
+using Developer.Common.Net;
+using Developer.Common.Types;
 
 namespace IptablesNet.Extensions.Match
 {
@@ -27,8 +26,8 @@ namespace IptablesNet.Extensions.Match
         
         public override MatchExtensionParameter CreateParameter ( string name )
         {
-            object val;
-            if(!TypeUtil.IsAliasName (typeof(TcpMatchOptions), name, out val))
+            object val = null;
+            if(!AliasUtil.IsAliasName (typeof(TcpMatchOptions), name, out val))
                 return null;
             
             TcpMatchOptions option = (TcpMatchOptions)val;
@@ -199,7 +198,7 @@ namespace IptablesNet.Extensions.Match
             
             private TcpFlags GetFlagsEnum (string flags)
             {
-		        string[] list = Net20.StringSplit (flags, true, ',');
+		        string[] list = StringUtil.Split (flags, true, ',');
                 object obj;
                 
 		        TcpFlags curFlag = TcpFlags.None; 

@@ -2,12 +2,12 @@
 using System;
 using System.Collections;
 
-using SharpKnocking.Common;
-
-using IptablesNet.Net;
 using IptablesNet.Core.Util;
 using IptablesNet.Core.Extensions;
 using IptablesNet.Core.Extensions.ExtendedMatch;
+
+using Developer.Common.Net;
+using Developer.Common.Types;
 
 namespace IptablesNet.Extensions.Match
 {
@@ -42,8 +42,8 @@ namespace IptablesNet.Extensions.Match
         
         public override MatchExtensionParameter CreateParameter (string paramType)
         {
-            object val;
-            if(!TypeUtil.IsAliasName (typeof(IcmpMatchOptions), paramType, out val))
+            object val=null;
+            if(!AliasUtil.IsAliasName (typeof(IcmpMatchOptions), paramType, out val))
                 return null;
             
             IcmpMatchOptions option = (IcmpMatchOptions)val;

@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 
-using SharpKnocking.Common;
 using IptablesNet.Core;
 
 namespace IptablesNet.Core.Extensions.ExtendedMatch

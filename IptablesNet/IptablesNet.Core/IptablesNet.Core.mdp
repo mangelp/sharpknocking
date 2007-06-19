@@ -17,8 +17,6 @@
     <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="./Definitions.cs" subtype="Code" buildaction="Compile" />
     <File name="./DuplicateElementExcepcion.cs" subtype="Code" buildaction="Compile" />
-    <File name="./FirewallManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./IpTablesCmd.cs" subtype="Code" buildaction="Compile" />
     <File name="./IptablesNet.Core.mdp" subtype="Code" buildaction="Nothing" />
     <File name="./NetfilterChain.cs" subtype="Code" buildaction="Compile" />
     <File name="./IptablesException.cs" subtype="Code" buildaction="Compile" />
@@ -77,12 +75,20 @@
     <File name="./Extensions/ReadOnlyListAdapter.cs" subtype="Code" buildaction="Compile" />
     <File name="./Extensions/TargetExtensions/TargetExtensionHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="./Extensions/MatchExtensions/MatchExtensionHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Iptables" subtype="Directory" buildaction="Compile" />
+    <File name="./Iptables/IFirewallAdapter.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Iptables/IFirewallCommandTransaction.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Iptables/Definitions.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Iptables/SimpleIptablesCommandWrapper.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Iptables/AdvancedIptablesCommandWrapper.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Util/SystemProcess.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Util/CircularList.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
-    <ProjectReference type="Project" localcopy="True" refto="IptablesNet.Net" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
+    <ProjectReference type="Project" localcopy="True" refto="Developer.Common.Unix" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Assembly" localcopy="True" refto="../lib/SharpKnocking.Common.dll" />
   </References>
   <Deployment.LinuxDeployData scriptName="iptablesnet.core" />
 </Project>

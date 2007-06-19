@@ -1,7 +1,7 @@
 
 using System;
 
-using SharpKnocking.Common;
+using Developer.Common.Types;
 
 using IptablesNet.Core.Extensions;
 using IptablesNet.Core.Extensions.ExtendedTarget;
@@ -21,9 +21,9 @@ namespace IptablesNet.Extensions.ExtendedTarget
         
         public override TargetExtensionParameter CreateParameter (string paramType)
         {
-            object obj;
+            object obj=null;
             
-            if(!TypeUtil.IsAliasName (typeof (RejectTargetOptions), paramType, out obj))
+            if(!AliasUtil.IsAliasName (typeof (RejectTargetOptions), paramType, out obj))
                 return null;
             
             RejectTargetOptions option = (RejectTargetOptions)obj;
@@ -66,14 +66,14 @@ namespace IptablesNet.Extensions.ExtendedTarget
 
             protected override string GetValuesAsString ()
             {
-                return TypeUtil.GetDefaultAlias(this.rejectWith);
+                return AliasUtil.GetDefaultAlias(this.rejectWith);
             }
             
             public override void SetValues (string value)
             {
-                object enumValue;
+                object enumValue = null;
                 
-                if(!TypeUtil.IsAliasName(typeof(RejectIcmpTypes), value, out enumValue))
+                if(!AliasUtil.IsAliasName(typeof(RejectIcmpTypes), value, out enumValue))
                 {
                     throw new FormatException("The value for --reject-with option is not"+
                             " a valid enumeration member of RejectIcmpTypes");
