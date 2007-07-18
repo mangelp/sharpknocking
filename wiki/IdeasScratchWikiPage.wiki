@@ -1,7 +1,7 @@
 #summary Some ideas about how to do certain things, what we need or something else
 #labels Phase-Requirements
 
-== Packet capture options ==
+= Packet capture options =
 
 We would like to have more than one packet capture method so we can compare implementations or swith between them at will.
 
@@ -26,6 +26,5 @@ There is also a utility library to help when working with netlink sockets called
 
 *3.3- QUEUE:*
 Don't ask me, but i vaguely remember have read something about that this was deprecated due that with NFQUEUE we have support for ipv6 (and ipv4) and with QUEUE we only have ipv4.
-
 
 
