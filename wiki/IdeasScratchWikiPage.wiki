@@ -1,15 +1,31 @@
-#summary One-sentence summary of this page.
+#summary Some ideas about how to do certain things, what we need or something else
 #labels Phase-Requirements
 
-= Introduction =
+== Packet capture options ==
 
-Add your content here.
+We would like to have more than one packet capture method so we can compare implementations or swith between them at will.
+
+===1- Tcpdum.===
+We still have the prototype version of the capturer method, but once we get some updates into the knocking sequence we must update or remove it.
+
+===2- Libpcap.===
+There is a managed libpacp library wrapper called [http://www.chrishowie.com/pcap-sharp/ libpcap-sharp] that looks like it can do the job. We must try it.
+
+===3- Iptables targets===
+There are some targets that logs packets from the firewall so we can work with them in user-space:
+
+*3.1- ULOG:*
+It can multicast the packets to userspace throught a netlink socket. The userspace processes can subscribe and receive the packets. This is how our daemon can get the packets and analize it. 
+This target has the advantage that we can control the packets logged with rules so we can reduce the global amount of packets that the daemon has to process and then have a better performance.
+There is a userspace tool called ulogd to log the packets to a text file or a database.
+
+*3.2- NFQUEUE:*
+This requires a newer kernel and is an extension of the QUEUE target. Allows to put the packets to a queue identified by a 16-bit number. This looks like the same that ULOG but the options of the target are different.
+I think that once we have the ULOG target we should try this too. But we need to develop the userspace tool to read the packets directly from netlink socket; maybe we will need a glue c library that does the work and a c# wrapper. 
+There is also a utility library to help when working with netlink sockets called libnl that is included in the distros (fc6 comes with 1.0pre5) and that can simplify the task.
+
+*3.3- QUEUE:*
+Don't ask me, but i vaguely remember have read something about that this was deprecated due that with NFQUEUE we have support for ipv6 (and ipv4) and with QUEUE we only have ipv4.
 
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
 
