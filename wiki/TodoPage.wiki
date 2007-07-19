@@ -50,3 +50,4 @@
   * To improve security we must think about encription, pdu format, authentication process, protocols allowed, actions allowed, bugs, exploits, ...
   * We need a roadmap!
   * Ipv6 support, now it only works throught ipv4.
+  * Design documentation. 
