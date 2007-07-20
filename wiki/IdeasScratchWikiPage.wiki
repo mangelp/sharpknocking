@@ -79,11 +79,39 @@ This Suite uses TCP packets to send data and commands to the server. It encrypts
 Uses an ecrypted string to send the knock sequence instead of sending a sequence of udp or tcp packets. 
 
 From the sourceforge page: 
-        _Encryption of the knock string is performed with RC4 using a secret key 
+        _(...)Encryption of the knock string is performed with RC4 using a secret key 
         derived from a Diffie-Hellman key agreement.  The entire process takes 
-        3 UDP packets._
+        3 UDP packets.(...)_
   * Year: 2004
   * Language: C
   * [http://cryptknock.sourceforge.net/ WEB]
   * [http://cryptknock.sourceforge.net/README.txt README]
   * [http://cryptknock.sourceforge.net/cryptknock-1.0.1.tar.gz DOWNLOAD]
+
+*3- The Doorman*
+Protects services running behind tcp ports:
+
+       _(...)This particular implementation deviates a bit from his original proposal, in 
+       that the doorman watches for only a single UDP packet.   To get the doorman to open
+       up, the packet must contain an MD5 hash which correctly hashes a shared secret,
+       salted with a 32-bit random number, the identifying user or group-name, and the
+       requested service port-number.(...)_ 
+  * Year: 2005
+  * Language: perl
+  * [http://doorman.sourceforge.net/ WEB]
+  * [http://doorman.sourceforge.net/doormand_8.html MANPAGE of daemon]
+  * [http://doorman.sourceforge.net/knock_1.html MANPAGE of client]
+  * [http://sourceforge.net/project/showfiles.php?group_id=92394&release_id=257407 DOWNLOAD]
+
+*4- fwknop*
+Uses a single packet to authenticate the knocking but it relies in a more modern concept called Single Port Authorization(SPA).
+
+  * Year: 2007 (Still alive)
+  * Language: Perl
+  * [http://www.cipherdyne.org/fwknop/ WEB]
+  * [http://www.cipherdyne.org/fwknop/docs/ DOC]
+  * [http://www.cipherdyne.org/fwknop/download/ DOWNLOAD]
+
+Related interesting things:
+  * [http://www.cipherdyne.org/blog/2006/11/book-announcement-linux-firewalls-attack-detection-and-response.html "Linux Firewalls: Attack Detection and Response"]
+  * [http://www.cipherdyne.org/fwknop/docs/SPA.html Paper about SPA]
