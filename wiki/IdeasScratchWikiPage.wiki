@@ -66,3 +66,24 @@ Maybe we should ban sequences, but that converts it in a good way of doing DOS a
 = Other implementations =
 
 We must look seriously at the existing implementations.
+
+*1- Advanced !PortKnocking Suite*
+This Suite uses TCP packets to send data and commands to the server. It encrypts data using DES.
+  * Year: 2004
+  * Language: Perl
+  * [http://www.iv2-technologies.com/~rbidou/ WEB] 
+  * [http://www.iv2-technologies.com/~rbidou/apk.README.html README] 
+  * [http://www.iv2-technologies.com/~rbidou/apk-1.0.tar.gz DOWNLOAD]
+
+*2- Cryptknock*
+Uses an ecrypted string to send the knock sequence instead of sending a sequence of udp or tcp packets. 
+
+From the sourceforge page: 
+        _Encryption of the knock string is performed with RC4 using a secret key 
+        derived from a Diffie-Hellman key agreement.  The entire process takes 
+        3 UDP packets._
+  * Year: 2004
+  * Language: C
+  * [http://cryptknock.sourceforge.net/ WEB]
+  * [http://cryptknock.sourceforge.net/README.txt README]
+  * [http://cryptknock.sourceforge.net/cryptknock-1.0.1.tar.gz DOWNLOAD]
