@@ -5,7 +5,6 @@
 
 = Packet capture options =
 
-
 We would like to have more than one packet capture method so we are able to compare those methods or swith between them at will.
 
 ===1- Tcpdum.===
@@ -56,4 +55,14 @@ Maybe we should ban sequences, but that converts it in a good way of doing DOS a
 
 8- Detect brute force attacks and ban attackers.
 
-9- Give sequences and users and id that will identify them and maybe a pin code to add a little more security
+9- Give sequences and users and id that will identify them and maybe a pin code to add a little more security.
+
+10- The user can sign the data in the knocks with his private key so the server can check his identity (it must have the public key for the user, of course).
+
+11- We can require from the user a random rumber to identify the knocking attemp, that number should be sent with his user id and the sequence id. When the knocking sequence starts to come in the packets will be sorted by that number so we can track how many connection attemps is doing a user.
+
+12- The data can be encrypted and signed in the client and then sent in pieces along with the knocking sequence. Then we must have a mechanism to know what packets have real data and the order to assemble the pieces to get the data back (once unencrypted and checked the sign).
+
+= Other implementations =
+
+We must look seriously at the existing implementations.
