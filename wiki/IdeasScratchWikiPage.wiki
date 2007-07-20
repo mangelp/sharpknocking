@@ -63,6 +63,8 @@ Maybe we should ban sequences, but that converts it in a good way of doing DOS a
 
 12- The data can be encrypted and signed in the client and then sent in pieces along with the knocking sequence. Then we must have a mechanism to know what packets have real data and the order to assemble the pieces to get the data back (once unencrypted and checked the sign).
 
+13- Use one-time passwords.
+
 = Other implementations =
 
 We must look seriously at the existing implementations.
