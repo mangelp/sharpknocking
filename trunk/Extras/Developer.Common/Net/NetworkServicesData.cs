@@ -13,7 +13,7 @@ namespace Developer.Common.Net
 	/// memory
 	/// </summary>
 	/// <remarks>
-	/// Based in the class PortInverseResolver written by luis <luisgz@gmail.com>. 
+	/// Based in the class PortInverseResolver written by Luis Román. 
 	/// </remarks>
 	public class NetworkServicesData
 	{
@@ -22,12 +22,16 @@ namespace Developer.Common.Net
 		static NetworkServicesData()
 		{
 			//There are almot 9000 lines in the /etc/services file under fc6 so
-			//is a good idea to start the dictionary with this size
+			//is a good idea to start the dictionary with this initial capacity.
 			dictionary = new Dictionary<string,NetworkService>(9000);
 			LoadData();
 		}
 		
 		#region Public methods
+		/// <summary>
+		/// Loads the data from the file /etc/services. This is the common path across
+		/// distros but spect and exception if someone moved the file in his distro.
+		/// </summary>
 		private static void LoadData()
 		{
 			using(StreamReader reader = new StreamReader("/etc/services"))
