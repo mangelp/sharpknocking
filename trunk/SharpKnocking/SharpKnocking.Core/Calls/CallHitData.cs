@@ -1,9 +1,6 @@
-
 using System;
 
-
-
-namespace SharpKnocking.Common.Calls
+namespace SharpKnocking.Core.Calls
 {	
 
 	/// <summary>

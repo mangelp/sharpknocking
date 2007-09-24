@@ -2,10 +2,7 @@
 using System;
 using System.Collections;
 
-using SharpKnocking.Common;
-using SharpKnocking.Common.Calls;
-
-namespace SharpKnocking.Common
+namespace SharpKnocking.Core.Calls
 {
 	
 	/// <summary>

@@ -3,12 +3,7 @@ using System;
 using System.Net;
 using System.Collections;
 
-using SharpKnocking.Common;
-using SharpKnocking.Common.Calls;
-using SharpKnocking.KnockingDaemon.PacketFilter;
-
-
-namespace SharpKnocking.Common.Calls
+namespace SharpKnocking.Core.Calls
 {
 	
 	/// <summary>
@@ -21,9 +16,9 @@ namespace SharpKnocking.Common.Calls
 		
 		private CallSequence sequence;
 		
-		//NOTE: There is a severe limitation. There is not a timeout logic that
-		//will delete entries when they become old so the hashtable will grow 
-		//for ever until the daemon is restarted.
+		//FIXME: mangelp. There is a severe limitation. There is not a timeout 
+		//logic that will delete entries when they become old so the hashtable 
+		//will grow for ever until the daemon is restarted.
 		
 		//Number of ports in sequence touched
 		private Hashtable hitsTable;

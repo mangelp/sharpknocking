@@ -1,8 +1,7 @@
 
 using System;
-using SharpKnocking.Common.Calls;
 
-namespace SharpKnocking.Common.Calls
+namespace SharpKnocking.Core.Calls
 {
     /// <summary>
     /// Delegate for events related to sequence detection

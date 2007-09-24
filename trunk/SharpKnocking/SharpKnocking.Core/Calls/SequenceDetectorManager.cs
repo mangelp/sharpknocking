@@ -2,11 +2,7 @@
 using System;
 using System.Collections;
 
-using SharpKnocking.Common;
-using SharpKnocking.Common.Calls;
-using SharpKnocking.KnockingDaemon.PacketFilter;
-
-namespace SharpKnocking.Common.Calls
+namespace SharpKnocking.Core.Calls
 {
 	
 	/// <summary>

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Net.Sockets;
 using System.Xml.Serialization;
 
-namespace SharpKnocking.Common.Calls
+namespace SharpKnocking.Core.Calls
 {
 	
 	/// <summary>
@@ -166,7 +166,7 @@ namespace SharpKnocking.Common.Calls
 		public bool PerformCall()
 		{		
 			// We create a socket.
-			Socket sock = new Socket(AddressFamily.InterNetwork,
+			Socket sock = new Socket(AddressFamilyInterNetwork,
 									 SocketType.Dgram,
 									 ProtocolType.Udp);
 			
