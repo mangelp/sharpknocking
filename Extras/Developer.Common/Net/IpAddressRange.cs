@@ -7,6 +7,7 @@ namespace Developer.Common.Net
     /// <summary>
     /// Implementation that allows to specify a ip-address and network mask
     /// </summary>
+	[Obsolete("Will be removed in a future. Use an IpV4RawAddress or IpV6RawAddress structures instead")]
 	public class IpAddressRange: IPAddress
 	{
 	    

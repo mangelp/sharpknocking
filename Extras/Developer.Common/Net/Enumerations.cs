@@ -5,6 +5,9 @@ using Developer.Common.Types;
 
 namespace Developer.Common.Net
 {
+	//TODO: The enumeration constants of TcpFlags and IcmpTypes should be commented
+	//with the meaning of the flag/icmptype.
+	
     /// <summary>
     /// Tcp flags.
     /// </summary>
@@ -13,7 +16,7 @@ namespace Developer.Common.Net
     {
         /// <summary>
         /// Default Value. No flags. This value is not real and is only for
-        /// initializing and making or operations over it. Don't use it directly.
+        /// initialization. Don't use it directly, methods won't accept it.
         /// </summary>
         None=0,
         SYN=1,

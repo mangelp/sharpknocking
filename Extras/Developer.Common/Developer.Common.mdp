@@ -31,6 +31,7 @@
     <File name="./Net/IpAddressRange.cs" subtype="Code" buildaction="Compile" />
     <File name="./Net/NetMask.cs" subtype="Code" buildaction="Compile" />
     <File name="./Types/StringUtil.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Net/SKIpEndPoint.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

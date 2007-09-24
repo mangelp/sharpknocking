@@ -7,8 +7,8 @@ namespace Developer.Common.Net
 {
 	
     /// <summary>
-    /// Types of protocols. Extracted from /etc/protocols.
-    /// See http://www.iana.org/assignments/protocol-numbers 
+    /// Types of protocols. Extracted from /etc/protocols and from 
+	/// http://www.iana.org/assignments/protocol-numbers.  
     /// </summary>
     public enum ProtocolType
     {

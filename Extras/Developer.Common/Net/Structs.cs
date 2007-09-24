@@ -1,12 +1,19 @@
-// /home/mangelp/Projects/sharpknocking/SharpKnocking/Common/Net/Structs.cs created with MonoDevelop at 12:51 12/06/2007 by mangelp 
+// SharpKnocking/Common/Net/Structs.cs created with MonoDevelop at 12:51 12/06/2007 by mangelp 
 //
 //This project is released under the terms of the LGPL V2. See the file lgpl.txt for details.
 //(c) 2007 SharpKnocking projects and authors (see AUTHORS).
 
 using System;
+using System.Net;
+using System.Collections;
+using System.Net.Sockets;
+using System.Collections.Generic;
 
 namespace Developer.Common.Net
 {
+	/// <summary>
+	/// Represents a network service like those in /etc/services
+	/// </summary>
 	public struct NetworkService
 	{
 		public static readonly NetworkService Empty = new NetworkService();
@@ -27,31 +34,17 @@ namespace Developer.Common.Net
 	}
 	
 	/// <summary>
-	/// Structure for ipv4 sharpknocking packets
+	/// Ip end point structure
 	/// </summary>
-	public struct SkIpV4Packet
+	/// <remarks>
+	/// This is already defined in System.Net!
+	/// TODO: Delete this and use what the framework provides.
+	/// </remarks>
+	public struct IpEndPoint
 	{
-		public IPv4RawAddress Address;
-		
-		public UInt16 SourcePort;
-		public UInt16 DestinationPort;
-		
-		public ProtocolType Protocol;
-		public byte[] Payload;
-	}
-	
-	/// <summary>
-	/// Structure for ipv6 sharpknocking packets
-	/// </summary>
-	public struct SkIpV6Packet
-	{
-		public IPv6RawAddress Address;
-		
-		public UInt16 SourcePort;
-		public UInt16 DestinationPort;
-		
-		public ProtocolType Protocol;
-		public byte[] Payload;
+		public int Length;
+		public byte[] Addr;
+		public UInt16 TargetPort;
 	}
 	
 	/// <summary>
@@ -67,12 +60,42 @@ namespace Developer.Common.Net
 		/// <summary>
 		/// IP address (4 bytes)
 		/// </summary>
-		public byte[] Address;
+		private byte[] address;
+		
+		/// <summary>
+		/// Gets/Sets the address bytes (4 bytes).
+		/// </summary>
+		public byte[] Address
+		{
+			get {return this.address;}
+			set {
+				
+				if(value.Length!=4)
+					throw new ArgumentException("The address must be 4 bytes long","value");
+				
+				this.address = value;
+			}
+		}
 		
 		/// <summary>
 		/// Mask (4bytes)
 		/// </summary>
-		public byte[] Mask;
+		private byte[] mask;
+		
+		/// <summary>
+		/// Gets/Sets the mask bytes (4 bytes)
+		/// </summary>
+		public byte[] Mask
+		{
+			get {return this.mask;}
+			set {
+				
+				if(value.Length!=4)
+					throw new ArgumentException("The mask must be 4 bytes long","value");
+				
+				this.mask = value;
+			}
+		}
 		
 		/// <summary>
 		/// Returns if there is a valid mask defined
@@ -179,6 +202,101 @@ namespace Developer.Common.Net
 			}
 			return Convert.ToByte(num);
 		}
+		
+		public SocketAddress AsSocketAddress()
+		{
+			SocketAddress sa = new SocketAddress(AddressFamily.InterNetwork, this.Address.Length);
+			for(int i=0;i<this.Address.Length;i++)
+				sa[i]=this.Address[i];
+			
+			return sa;
+		}
+		
+		/// <summary>
+		/// Converts a string that represents 4 octects separated by dots to an
+		/// array.
+		/// </summary>
+		public static byte[] ExtractOctects(string octectsAsString)
+		{
+			if(String.IsNullOrEmpty(octectsAsString))
+				throw new ArgumentException("The argument can't be null or empty string","octectsAsString");
+			else if(octectsAsString[0]=='.')
+				throw new FormatException("The first octect is empty!. Empty octects not allowed");
+			
+			int pos = 0;
+			int lastPos = 0;
+			List<byte> result = new List<byte>();
+			
+			while(pos>=0){
+				pos = octectsAsString.IndexOf('.',lastPos);
+				if(pos==lastPos)
+					throw new FormatException("Found empty octect!. Empty octects not allowed");
+				if(pos>=0)
+				{ //Get all bytes but the last one
+					result.Add(Byte.Parse(octectsAsString.Substring(lastPos, pos - lastPos)));
+					pos++;
+					lastPos = pos;
+				}
+				else
+				{ // Get the last byte
+					result.Add(Byte.Parse(octectsAsString.Substring(lastPos)));
+				}
+			}
+			return result.ToArray();					                                                
+		}
+		
+		/// <summary>
+		/// Parses an string as an IPv4 address. It allows mask specification.
+		/// </summary>
+		/// <remarks>
+		/// The formats allowed are:
+		/// - A.A.A.A/M.M.M.M
+		/// - A.A.A.A/M
+		/// - A.A.A.A
+		/// Where every letter between dots are values from 0 to 255 (an octect)
+		/// </remarks>
+		public static IPv4RawAddress Parse(string addr)
+		{
+			if(String.IsNullOrEmpty(addr))
+				throw new ArgumentException("Can't parse an empty or null string","addr");
+			
+			addr = addr.Trim();
+		    int pos = addr.IndexOf('/');
+		    
+		    IPv4RawAddress result = new IPv4RawAddress();
+
+	   	    if(pos>=0)
+  	        {
+				byte[] byteArr = ExtractOctects(addr.Substring(0,pos));
+				
+				if(byteArr.Length!=4)
+					throw new FormatException("The IPv4 address must have 4 octects");
+				
+				result.address = byteArr;
+				byteArr = ExtractOctects(addr.Substring(pos+1));
+				
+				//If we have only one byte is a short mask specification with the number
+				//of consecutive bits in the mask. IE: 192.168.1.1/17 so the mask is
+				//255.255.128.0
+				if(byteArr.Length==1)
+					result.SetMask(Convert.ToInt32(byteArr[0]));
+				else if(byteArr.Length==4)
+					result.mask = byteArr;
+				else
+					throw new FormatException("The mask has an invalid format. It can be an octect or 4 octects separated by dots.");
+	        }
+	        else
+	        {
+				byte[] byteArr = ExtractOctects(addr.Substring(0,pos));
+				
+				if(byteArr.Length!=4)
+					throw new FormatException("The IPv4 address must have 4 octects");
+				
+				result.address = byteArr;
+	        }
+		     
+		    return result;
+		}
 	}
 	
 	/// <summary>
@@ -188,9 +306,6 @@ namespace Developer.Common.Net
 	{
 		
 	}
-	
-	
-	
 	
 	 /// <summary>
     /// Defines a port range that at least can be a range of 1 port.
@@ -228,36 +343,43 @@ namespace Developer.Common.Net
             get { return this.endPort;}
         }
         
+		/// <summary>
+		/// Initializes a new range with only one port
+		/// </summary>
         public PortRange(short port)
         {
             this.startPort = port;
-            this.endPort = Int16.MaxValue;
+            this.endPort = port;
         }
         
+		/// <summary>
+		/// Initializes a new range with a start port and an end port
+		/// </summary>
         public PortRange(short start, short end)
         {
             if(start<0)
-                this.startPort = 0;
-            else
-                this.startPort = start;
-            
-            if(end<0)
-                this.endPort = Int16.MaxValue;
-            else
-                this.endPort = end;
-            
-            if(end < start)
-            {
-                this.startPort = end;
-                this.endPort = start;
-            }
+                throw new ArgumentException("Bad port number: "+start,"start");
+            else if(end<0)
+                throw new ArgumentException("Bad port number: "+end,"end");
+            else if(end < start)
+				throw new ArgumentException("The start port must be lesser or equal than the end port","start, end");
+			
+			this.startPort = start;
+			this.endPort = end;
         }
         
+		/// <summary>
+		/// Returns an string that represents the port range and with the format
+		/// needed to be parsed by the <b>Parse</b> method.
+		/// </summary>
         public override string ToString ()
         {
             return startPort+":"+endPort;
         }
 		
+		/// <summary>
+		/// Compares two port ranges and returs true if they are the same range
+		/// </summary>
 		public override bool Equals (object o)
 		{
 			 if(!(o is PortRange))
@@ -284,8 +406,9 @@ namespace Developer.Common.Net
 		/// A single integer can be a valid range and also two integers separated by
 		/// the ':' character.
 		/// Ej: 
-		/// 5    => Port range from 5 to 5 (only one port)
-		/// 5:24 => Port range from 5 to 25
+		/// 5    => Port range from 5 to 5 (only one port) is the same as specifying 5:5
+		/// 5:24 => Port range from 5 to 24
+		/// :4   => Port range from 0 to 4. Is the same as specifying 0:4
 		/// </remarks>
         public static PortRange Parse (string range)
         {
@@ -301,6 +424,7 @@ namespace Developer.Common.Net
                                                    "parse to integer. Data: "+range);
                 }
                 endp = Int16.MaxValue;
+				startp = endp;
             } else if (pos == 0) {
                 //Only last port
                 if (!Int16.TryParse(range.Substring(1), out endp)){
