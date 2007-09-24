@@ -15,6 +15,11 @@ namespace IptablesNet.Core.Options
 	/// </summary>
 	public abstract class GenericOption: NegableParameter
 	{
+		/// <summary>
+		/// Returns true if the option is in long format (-- prefix) or false if it
+		/// is in short format (- prefix).
+		/// </summary>
+		/// <value>True of false</value>
 		public override bool IsLongFormat
 		{
 			get 
@@ -67,6 +72,7 @@ namespace IptablesNet.Core.Options
 	    /// Returns the type for the implicit extension if this option has
 	    /// a implicit extension.
 	    /// </summary>
+		/// <value>Type of the implicit extension this option has.</value>
 	    public virtual Type ExtensionType
 	    {
 	       get {  return this.extensionType; }

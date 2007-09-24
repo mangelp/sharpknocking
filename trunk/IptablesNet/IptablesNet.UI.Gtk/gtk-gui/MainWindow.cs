@@ -12,15 +12,15 @@
 
 public partial class MainWindow {
     
-    private Gtk.Action @new;
+    private Gtk.Action NewFile;
     
-    private Gtk.Action open;
+    private Gtk.Action OpenFile;
     
-    private Gtk.Action save;
+    private Gtk.Action SaveToFile;
     
-    private Gtk.Action apply;
+    private Gtk.Action ApplyChangesToFirewall;
     
-    private Gtk.Action properties;
+    private Gtk.Action Configure;
     
     private Gtk.Action quit;
     
@@ -50,21 +50,34 @@ public partial class MainWindow {
     
     private Gtk.TreeView treeview2;
     
+    private Gtk.VButtonBox vbuttonbox1;
+    
+    private Gtk.Button button3;
+    
+    private Gtk.Button button4;
+    
+    private Gtk.Button button6;
+    
     protected virtual void Build() {
         Stetic.Gui.Initialize();
         // Widget MainWindow
         Gtk.UIManager w1 = new Gtk.UIManager();
         Gtk.ActionGroup w2 = new Gtk.ActionGroup("Default");
-        this.@new = new Gtk.Action("new", null, null, "gtk-new");
-        w2.Add(this.@new, null);
-        this.open = new Gtk.Action("open", null, null, "gtk-open");
-        w2.Add(this.open, null);
-        this.save = new Gtk.Action("save", null, null, "gtk-save");
-        w2.Add(this.save, null);
-        this.apply = new Gtk.Action("apply", null, null, "gtk-apply");
-        w2.Add(this.apply, null);
-        this.properties = new Gtk.Action("properties", null, null, "gtk-properties");
-        w2.Add(this.properties, null);
+        this.NewFile = new Gtk.Action("NewFile", Mono.Unix.Catalog.GetString("New file"), Mono.Unix.Catalog.GetString("Create a new firewall rules definition file"), "gtk-new");
+        this.NewFile.ShortLabel = Mono.Unix.Catalog.GetString("New file");
+        w2.Add(this.NewFile, null);
+        this.OpenFile = new Gtk.Action("OpenFile", Mono.Unix.Catalog.GetString("Open file"), Mono.Unix.Catalog.GetString("Open a firewall rule definition file"), "gtk-open");
+        this.OpenFile.ShortLabel = Mono.Unix.Catalog.GetString("Open file");
+        w2.Add(this.OpenFile, null);
+        this.SaveToFile = new Gtk.Action("SaveToFile", Mono.Unix.Catalog.GetString("Save to file"), Mono.Unix.Catalog.GetString("Save changes to a file"), "gtk-save");
+        this.SaveToFile.ShortLabel = Mono.Unix.Catalog.GetString("Save to file");
+        w2.Add(this.SaveToFile, null);
+        this.ApplyChangesToFirewall = new Gtk.Action("ApplyChangesToFirewall", Mono.Unix.Catalog.GetString("Apply changes to firewall"), Mono.Unix.Catalog.GetString("Apply changes to firewall."), "gtk-apply");
+        this.ApplyChangesToFirewall.ShortLabel = Mono.Unix.Catalog.GetString("Apply changes");
+        w2.Add(this.ApplyChangesToFirewall, null);
+        this.Configure = new Gtk.Action("Configure", Mono.Unix.Catalog.GetString("Configure"), Mono.Unix.Catalog.GetString("Configure the application"), "gtk-properties");
+        this.Configure.ShortLabel = Mono.Unix.Catalog.GetString("Configure");
+        w2.Add(this.Configure, null);
         this.quit = new Gtk.Action("quit", null, null, "gtk-quit");
         w2.Add(this.quit, null);
         this.File = new Gtk.Action("File", Mono.Unix.Catalog.GetString("File"), null, null);
@@ -95,7 +108,7 @@ public partial class MainWindow {
         this.AddAccelGroup(w1.AccelGroup);
         this.Name = "MainWindow";
         this.Title = Mono.Unix.Catalog.GetString("MainWindow");
-        this.Icon = Gtk.IconTheme.Default.LoadIcon("stock_smiley-6", 16, 0);
+        this.Icon = Stetic.IconLoader.LoadIcon("stock_smiley-6", 16);
         this.WindowPosition = ((Gtk.WindowPosition)(4));
         this.BorderWidth = ((uint)(2));
         // Container child MainWindow.Gtk.Container+ContainerChild
@@ -103,7 +116,7 @@ public partial class MainWindow {
         this.vbox3.Name = "vbox3";
         this.vbox3.Spacing = 6;
         // Container child vbox3.Gtk.Box+BoxChild
-        w1.AddUiFromString("<ui><menubar name='menubar1'><menu action='File'><menuitem action='Nuevo'/><menuitem action='Abrir'/><menuitem action='Guardar'/><menu action='Export'><menuitem action='ToXml'/><menuitem action='ToIptablesSaveFormat'/></menu><menuitem action='Salir'/></menu></menubar></ui>");
+        w1.AddUiFromString("<ui><menubar name='menubar1'><menu action='File'><menuitem action='Nuevo'/><menuitem action='Abrir'/><menuitem action='Guardar'/><separator/><menu action='Export'><menuitem action='ToXml'/><menuitem action='ToIptablesSaveFormat'/></menu><separator/><menuitem action='Salir'/></menu></menubar></ui>");
         this.menubar1 = ((Gtk.MenuBar)(w1.GetWidget("/menubar1")));
         this.menubar1.Name = "menubar1";
         this.vbox3.Add(this.menubar1);
@@ -112,17 +125,19 @@ public partial class MainWindow {
         w3.Expand = false;
         w3.Fill = false;
         // Container child vbox3.Gtk.Box+BoxChild
-        w1.AddUiFromString("<ui><toolbar name='toolbar1'><toolitem action='new'/><toolitem action='open'/><toolitem action='save'/><toolitem action='apply'/><toolitem action='properties'/><toolitem action='quit'/></toolbar></ui>");
+        w1.AddUiFromString("<ui><toolbar name='toolbar1'><toolitem action='NewFile'/><toolitem action='OpenFile'/><toolitem action='SaveToFile'/><separator/><toolitem action='Configure'/><separator/><toolitem action='ApplyChangesToFirewall'/></toolbar></ui>");
         this.toolbar1 = ((Gtk.Toolbar)(w1.GetWidget("/toolbar1")));
+        Gtk.Tooltips w4 = new Gtk.Tooltips();
+        w4.SetTip(this.toolbar1, "New rule file", "New rule file");
         this.toolbar1.Name = "toolbar1";
         this.toolbar1.ShowArrow = false;
         this.toolbar1.ToolbarStyle = ((Gtk.ToolbarStyle)(0));
         this.toolbar1.IconSize = ((Gtk.IconSize)(2));
         this.vbox3.Add(this.toolbar1);
-        Gtk.Box.BoxChild w4 = ((Gtk.Box.BoxChild)(this.vbox3[this.toolbar1]));
-        w4.Position = 1;
-        w4.Expand = false;
-        w4.Fill = false;
+        Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.vbox3[this.toolbar1]));
+        w5.Position = 1;
+        w5.Expand = false;
+        w5.Fill = false;
         // Container child vbox3.Gtk.Box+BoxChild
         this.hbox2 = new Gtk.HBox();
         this.hbox2.Name = "hbox2";
@@ -131,18 +146,65 @@ public partial class MainWindow {
         this.treeview2 = new Gtk.TreeView();
         this.treeview2.CanFocus = true;
         this.treeview2.Name = "treeview2";
+        this.treeview2.RulesHint = true;
         this.hbox2.Add(this.treeview2);
-        Gtk.Box.BoxChild w5 = ((Gtk.Box.BoxChild)(this.hbox2[this.treeview2]));
-        w5.Position = 0;
+        Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.hbox2[this.treeview2]));
+        w6.Position = 0;
+        // Container child hbox2.Gtk.Box+BoxChild
+        this.vbuttonbox1 = new Gtk.VButtonBox();
+        this.vbuttonbox1.Name = "vbuttonbox1";
+        this.vbuttonbox1.Spacing = 6;
+        this.vbuttonbox1.BorderWidth = ((uint)(2));
+        this.vbuttonbox1.LayoutStyle = ((Gtk.ButtonBoxStyle)(3));
+        // Container child vbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
+        this.button3 = new Gtk.Button();
+        this.button3.CanFocus = true;
+        this.button3.Name = "button3";
+        this.button3.UseStock = true;
+        this.button3.UseUnderline = true;
+        this.button3.Label = "gtk-add";
+        this.vbuttonbox1.Add(this.button3);
+        Gtk.ButtonBox.ButtonBoxChild w7 = ((Gtk.ButtonBox.ButtonBoxChild)(this.vbuttonbox1[this.button3]));
+        w7.Expand = false;
+        w7.Fill = false;
+        // Container child vbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
+        this.button4 = new Gtk.Button();
+        this.button4.CanFocus = true;
+        this.button4.Name = "button4";
+        this.button4.UseStock = true;
+        this.button4.UseUnderline = true;
+        this.button4.Label = "gtk-remove";
+        this.vbuttonbox1.Add(this.button4);
+        Gtk.ButtonBox.ButtonBoxChild w8 = ((Gtk.ButtonBox.ButtonBoxChild)(this.vbuttonbox1[this.button4]));
+        w8.Position = 1;
+        w8.Expand = false;
+        w8.Fill = false;
+        // Container child vbuttonbox1.Gtk.ButtonBox+ButtonBoxChild
+        this.button6 = new Gtk.Button();
+        this.button6.CanFocus = true;
+        this.button6.Name = "button6";
+        this.button6.UseStock = true;
+        this.button6.UseUnderline = true;
+        this.button6.Label = "gtk-edit";
+        this.vbuttonbox1.Add(this.button6);
+        Gtk.ButtonBox.ButtonBoxChild w9 = ((Gtk.ButtonBox.ButtonBoxChild)(this.vbuttonbox1[this.button6]));
+        w9.Position = 2;
+        w9.Expand = false;
+        w9.Fill = false;
+        this.hbox2.Add(this.vbuttonbox1);
+        Gtk.Box.BoxChild w10 = ((Gtk.Box.BoxChild)(this.hbox2[this.vbuttonbox1]));
+        w10.Position = 1;
+        w10.Expand = false;
+        w10.Fill = false;
         this.vbox3.Add(this.hbox2);
-        Gtk.Box.BoxChild w6 = ((Gtk.Box.BoxChild)(this.vbox3[this.hbox2]));
-        w6.Position = 2;
+        Gtk.Box.BoxChild w11 = ((Gtk.Box.BoxChild)(this.vbox3[this.hbox2]));
+        w11.Position = 2;
         this.Add(this.vbox3);
         if ((this.Child != null)) {
             this.Child.ShowAll();
         }
         this.DefaultWidth = 518;
-        this.DefaultHeight = 300;
+        this.DefaultHeight = 379;
         this.Show();
         this.DeleteEvent += new Gtk.DeleteEventHandler(this.OnDeleteEvent);
     }

@@ -12,11 +12,10 @@ namespace IptablesNet.Core.Commands
 	
 	/// <summary>
 	/// Models all the parameters for the command part of the rule.
-	/// After the command can follow a rule specification but the rule
-	/// specification is not part of this object.
 	/// </summary>
 	/// <remarks>
-	/// The client must initialize all the parameters required for each
+	/// This object includes a reference to the rule being executed.
+	/// The client code must initialize all the parameters required for each
 	/// concrete command. No further tests are performed over the correctness
 	/// of the values.
 	/// </remarks>

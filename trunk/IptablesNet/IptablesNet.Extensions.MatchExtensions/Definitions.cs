@@ -15,7 +15,7 @@ namespace IptablesNet.Extensions.Match
 	    //connection.
 	    [AliasAttribute("INVALID")]
 	    Invalid=1,
-	    //The packet has created a new connection or is from a connection which
+	    //The packet has started a new connection or is from a connection which
 	    //packets have been seen in only one direction
 	    [AliasAttribute("NEW")]
 	    New=2,
@@ -31,40 +31,61 @@ namespace IptablesNet.Extensions.Match
 	
 	public enum IcmpMatchOptions
 	{
-	    //No need to None 
+	    //No need of None 
 	    [AliasAttribute("icmp-type")]
 	    IcmpType
 	}
 	
 	public enum StateMatchOptions
 	{
-	    //No need to None 
+	    //No need of None 
 	    [AliasAttribute("state")]
 	    State
 	}
 	
 	public enum UdpMatchOptions
 	{
-	    //Default value. Not-valid for iptables but usefull.
+	    //Default value for initialization. Not valid for use.
 	    None=0,
+		/// <summary>
+		/// Match source port for the packet.
+		/// </summary>
 	    [AliasAttribute("source-port","sport")]
 	    SourcePort,
+		/// <summary>
+		/// Match destination port for the packet
+		/// </summary>
 	    [AliasAttribute("destination-port","dport")]
 	    DestinationPort
 	}
 	
 	public enum TcpMatchOptions
 	{
-	    //Default value. Not-valid for iptables but usefull.
+	    //Default value for initialization. Not valid for use.
 	    None=0,
+		/// <summary>
+		/// Match source port for the packet.
+		/// </summary>
 	    [AliasAttribute("source-port","sport")]
 	    SourcePort,
+		/// <summary>
+		/// Match destination port for the packet
+		/// </summary>
 	    [AliasAttribute("destination-port","dport")]
 	    DestinationPort,
+		/// <summary>
+		/// Match tcp flags
+		/// </summary>
 	    [AliasAttribute("tcp-flags")]
 	    TcpFlags,
+		/// <summary>
+		/// Match syn flag
+		/// </summary>
 	    [AliasAttribute("syn")]
 	    Syn,
+		/// <summary>
+		/// Match tcp option flags
+		/// </summary>
 	    [AliasAttribute("tcp-option")]
 	    TcpOption
 	    //This option is in the man page but not shown with the command

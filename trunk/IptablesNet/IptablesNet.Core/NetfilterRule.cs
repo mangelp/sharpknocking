@@ -76,7 +76,7 @@ namespace IptablesNet.Core
 	            return this.options;
 	        }
 	    }
-	    
+
 	    private JumpOption jumpOption;
 	    
 	    /// <summary>
@@ -92,11 +92,22 @@ namespace IptablesNet.Core
 		    this.options.ItemsCleared += new EventHandler(this.ItemsClearedHandler);
 		}
 		
+		/// <summary>
+		/// Handles the event produced when new items are added to a chain.
+		/// </summary>
+		/// <param name="obj">Object that produced the event handled.</param>
+		/// <param name="args">Arguments of the event</param>
+		/// <remarks>
+		/// When a item is added it is needed to check the type, if the item is an extension
+		/// we will need to load the extension to know how to handle it and check if the values
+		/// are properly set.
+		/// </remarks>
 		private void ItemAddedHandler(object obj, ListChangedEventArgs<GenericOption> args)
 		{
+			//We have to load the concrete handler for each extension
 		    if(args.Item.HasImplicitExtension)
 		    {
-    		    //Exit if the implicit extension type have been loaded
+				//If it is loaded exit, if not load it
     		    if(this.IsExtensionHandlerLoaded(args.Item.ExtensionType))
     		        return;
     		    
@@ -104,10 +115,8 @@ namespace IptablesNet.Core
 		    }
 		    else if(args.Item is MatchExtensionOption)
 		    {
-		        //If it's this option we load the extension
-				//FIXME: GOT BROKEN!
-//		        Type t = MatchExtensionFactory.GetExtensionType(args.Item.Value);
-//		        this.LoadExtensionHandler(t);
+		        //If it is an extension we load the extension handler
+		        this.LoadExtensionHandler(args.Item.ExtensionType);
 		    }
 		    else if(args.Item is JumpOption)
 		    {

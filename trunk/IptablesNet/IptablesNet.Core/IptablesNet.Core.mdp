@@ -76,13 +76,14 @@
     <File name="./Extensions/TargetExtensions/TargetExtensionHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="./Extensions/MatchExtensions/MatchExtensionHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="./Iptables" subtype="Directory" buildaction="Compile" />
-    <File name="./Iptables/IFirewallAdapter.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Iptables/IFirewallCommandTransaction.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Iptables/IIptablesAdapter.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Iptables/IIptablesCommandTransaction.cs" subtype="Code" buildaction="Compile" />
     <File name="./Iptables/Definitions.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Iptables/SimpleIptablesCommandWrapper.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Iptables/AdvancedIptablesCommandWrapper.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Iptables/SimpleIptablesWrapper.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Iptables/AdvancedIptablesWrapper.cs" subtype="Code" buildaction="Compile" />
     <File name="./Util/SystemProcess.cs" subtype="Code" buildaction="Compile" />
     <File name="./Util/CircularList.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Iptables/IIptablesCommand.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
