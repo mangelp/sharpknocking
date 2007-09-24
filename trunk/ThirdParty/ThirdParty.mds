@@ -1,0 +1,10 @@
+<Combine name="ThirdParty" fileversion="2.0">
+  <Configurations>
+    <Configuration name="Debug" ctype="CombineConfiguration" />
+    <Configuration name="Release" ctype="CombineConfiguration" />
+  </Configurations>
+  <StartMode startupentry="pcap-sharp" single="True">
+    <Execute type="None" entry="pcap-sharp" />
+  </StartMode>
+  <Entries />
+</Combine>
