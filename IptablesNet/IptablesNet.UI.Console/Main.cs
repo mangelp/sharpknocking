@@ -7,7 +7,7 @@ namespace IptablesNet.UI.Console
 	{
 		public static void Main(string[] args)
 		{
-			System.Console.WriteLine("Hello World!");
+			Console.Out.Writeline("Test for IptablesNet");
 		}
 	}
 }

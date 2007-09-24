@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <stetic-interface>
+  <configuration>
+    <images-root-path>../</images-root-path>
+  </configuration>
   <widget class="Gtk.Window" id="MainWindow" design-size="518 379">
     <action-group name="Default">
       <action id="NewFile">
@@ -7,30 +10,35 @@
         <property name="Label" translatable="yes">New file</property>
         <property name="ShortLabel" translatable="yes">New file</property>
         <property name="StockId">gtk-new</property>
+        <property name="Tooltip" translatable="yes">Create a new firewall rules definition file</property>
       </action>
       <action id="OpenFile">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Open file</property>
         <property name="ShortLabel" translatable="yes">Open file</property>
         <property name="StockId">gtk-open</property>
+        <property name="Tooltip" translatable="yes">Open a firewall rule definition file</property>
       </action>
       <action id="SaveToFile">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Save to file</property>
         <property name="ShortLabel" translatable="yes">Save to file</property>
         <property name="StockId">gtk-save</property>
+        <property name="Tooltip" translatable="yes">Save changes to a file</property>
       </action>
-      <action id="ApplyCurrentToFirewall">
+      <action id="ApplyChangesToFirewall">
         <property name="Type">Action</property>
-        <property name="Label" translatable="yes">Apply current to firewall</property>
-        <property name="ShortLabel" translatable="yes">Apply current to firewall</property>
+        <property name="Label" translatable="yes">Apply changes to firewall</property>
+        <property name="ShortLabel" translatable="yes">Apply changes</property>
         <property name="StockId">gtk-apply</property>
+        <property name="Tooltip" translatable="yes">Apply changes to firewall.</property>
       </action>
       <action id="Configure">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">Configure</property>
         <property name="ShortLabel" translatable="yes">Configure</property>
         <property name="StockId">gtk-properties</property>
+        <property name="Tooltip" translatable="yes">Configure the application</property>
       </action>
       <action id="quit">
         <property name="Type">Action</property>
@@ -131,7 +139,7 @@
               <node type="Separator" />
               <node type="Toolitem" action="Configure" />
               <node type="Separator" />
-              <node type="Toolitem" action="ApplyCurrentToFirewall" />
+              <node type="Toolitem" action="ApplyChangesToFirewall" />
             </node>
           </widget>
           <packing>
@@ -150,6 +158,7 @@
                 <property name="MemberName" />
                 <property name="CanFocus">True</property>
                 <property name="RulesHint">True</property>
+                <property name="HeadersClickable">True</property>
               </widget>
               <packing>
                 <property name="Position">0</property>

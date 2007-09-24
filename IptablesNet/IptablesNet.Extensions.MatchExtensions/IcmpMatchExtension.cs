@@ -13,7 +13,7 @@ namespace IptablesNet.Extensions.Match
 {
     
     /// <summary>
-    /// Implements the icmp extension.
+    /// Implements the icmp match extension.
     /// </summary>
 	public class IcmpMatchExtension: MatchExtensionHandler
 	{
@@ -35,6 +35,9 @@ namespace IptablesNet.Extensions.Match
 	        icmpTypeNameCache.FillFromEnum(typeof(IcmpTypes));
 	    }
 	    
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
 		public IcmpMatchExtension()
 		    :base(typeof(IcmpMatchOptions), MatchExtensions.Icmp)
         {
@@ -57,6 +60,10 @@ namespace IptablesNet.Extensions.Match
             }
         }
         
+		/// <summary>
+		/// Create a new parameter. As there is only one parameter type for this extension
+		/// this method don't require parameters.
+		/// </summary>
         public IcmpTypeParam CreateParam ()
         {
             return new IcmpTypeParam(this);

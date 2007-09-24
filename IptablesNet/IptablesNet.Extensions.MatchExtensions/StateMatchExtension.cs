@@ -178,7 +178,7 @@ namespace IptablesNet.Extensions.Match
                     if((value & states) == value)
                         sb.Append(value+",");
                 }
-                
+                //Remove the ',' character in the end
                 sb.Remove(sb.Length-1, 1);
                 return sb.ToString();
             }
