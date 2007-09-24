@@ -1,9 +1,10 @@
-This project has support for autotools so you can do the traditional configure-make-make install dance.
+This project has support for autotools so you can do the traditional 
+configure-make-install dance.
 
 INSTALLING INSTRUCTIONS
 
-You need first to follow the instructions to get it compiled. Then go to the SharpKnocking directory in the
-root of the sources and type this command as root:
+You need first to follow the instructions to get it compiled. Then go to the 
+SharpKnocking directory in the root of the sources and type this command as root:
 
 	#make install
 
@@ -33,20 +34,25 @@ If you prefer to build it by console you can use the traditional steps:
 
 GTK-SHARP-2.10 REQUIRED!
 
-You must have gtk-sharp version 2.10 to get the sources compiled. If you don't have it search the net for a 
-package and install it. Once you have it installed you must set/update de enviroment variable called 
-PKG_CONFIG_PATH prepending it with the path of the directory where the .pc files for the libraries are.
-For example, if i built gtk-sharp from sources and i installed it under /usr/local prefix i do:
+You must have gtk-sharp version 2.10 to get the sources compiled. If you don't have it
+search the net for a package and install it. Once you have it installed you must 
+set/update de enviroment variable called 
+PKG_CONFIG_PATH prepending it with the path of the directory where the .pc files for 
+the libraries are.
+For example, if i built gtk-sharp from sources and i installed it under /usr/local 
+prefix i do:
 
 	#export PKG_CONFIG_PATH=/usr/local/lib:$PKG_CONFIG_PATH
 
-And then i can compile the sources. You may need to set some extra enviroment variable depending on the type
+And then i can compile the sources. You may need to set some extra enviroment variable 
+depending on the type
 of setup for mono you have.
 
 WARNING - PROJECT NOT IN PRODUCTION
 
-We try to keep the svn sources as stable as we can but expect compiling issues often as this is a very new
-project and we haven't reached a 1.0 version yet.
+We try to keep the svn sources as stable as we can but expect compiling issues often as
+this is a very new project and we haven't reached a 1.0 version yet (at the writting
+time of this note we are in 0.1 :p).
 
 WIKI
 
@@ -55,4 +61,13 @@ bug report this is the best source to look:
 
 http://code.google.con/p/sharpknocking
 
-You can also download the latest develoment version from the subversion at google or the latest stable package.
+You can also download the latest develoment version from the subversion at google or 
+the latest stable package.
+
+MAIL LIST
+
+Yes, we have a mail list, but we write very little to it. You can help us with this
+issue contacting us throught it:
+
+<MailingListUrl>
+

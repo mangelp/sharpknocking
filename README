@@ -11,12 +11,12 @@ LICENSE
      Luis Román Gutiérrez
 	 Miguel Ángel Pérez Valencia
 
- This project is licensed under the LGPL V2 wich can be read in the file 
+ This project is licensed under the LGPL V2 wich can be read in the file
 lgpl.txt in the root of the sources.
 
 DIRECTORIES ESTRUCTURE
 
-- Doc 
+- Doc
    Documentation directory. Examples and Api docs.
 - SharpKocking
    Project Solution. This is the code for the main applicatons.
@@ -24,7 +24,7 @@ DIRECTORIES ESTRUCTURE
         - Common
             Subproject.
             Common functionality used by various subprojects.
-        - CommonWidgets 
+        - CommonWidgets
             Subproject.
             Common ui controls.
         - Doorman
@@ -42,29 +42,40 @@ DIRECTORIES ESTRUCTURE
             Subproject.
             Client application to perform the knocking that grants access to a
             hidden service in the target machine.
-- IptablesNet
-	Root directory for the IptablesNet subproject. Is a major rewrite of the library used to handle the 
-	rules in the firewall through the iptables command.
-		- IptablesNet.Core
-			Subproject. 
-			Core classes.
-		- IptablesNet.MatchExtensions
-			Subproject.
-			Implementation of the extensions for matching packets.
-		- IptablesNet.TargetExtensions
-			Subproject.
-			Implementation of the extension for new tarjets.
-		- IptablesNet.Net
-			Subproject.
-			Network related classes library.
-		- IptablesNet.UI.Conole
-			Subproject.
-			Console interface for the library.
-		- IptablesNet.UI.Gtk
-			Subproject.
-			Graphic desktop interface application for the library.
-		- lib
-			Aditional Library directory
+- ThirdParty
+   Solution
+   Other projects/solutions and code for libraries or other things that are not created by
+   us but that we use modified or not.
+- Library
+   Binary libraries used.
+- Extras
+   Solution
+   Other projects/solutions that sharpknocking uses but that are not a specific part of the
+   project and can have another uses.
+   This should include contribution projects.
+		- IptablesNet
+			Root directory for the IptablesNet subproject. Is a major rewrite of the library
+			used to handle the rules in the firewall through the iptables command.
+				- IptablesNet.Core
+					Subproject.
+					Core classes.
+				- IptablesNet.MatchExtensions
+					Subproject.
+					Implementation of the extensions for matching packets.
+				- IptablesNet.TargetExtensions
+					Subproject.
+					Implementation of the extension for new tarjets.
+				- IptablesNet.Net
+					Subproject.
+					Network related classes library.
+				- IptablesNet.UI.Conole
+					Subproject.
+					Console interface for the library.
+				- IptablesNet.UI.Gtk
+					Subproject.
+					Graphic desktop interface application for the library.
+				- lib
+					Aditional Library directory
 - Tests
    Samples and testing scripts.
 

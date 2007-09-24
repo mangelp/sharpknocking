@@ -13,7 +13,11 @@
       <Entry build="True" name="Doorman" configuration="Debug" />
       <Entry build="True" name="NetfilterFirewall" configuration="Debug" />
       <Entry build="True" name="KnockingDaemonControl" configuration="Debug" />
-      <Entry build="True" name="IptablesNet" configuration="Debug" />
+      <Entry build="True" name="Extras" configuration="" />
+      <Entry build="True" name="SharpKnocking.Core" configuration="Debug" />
+      <Entry build="True" name="SharpKnocking.Daemon" configuration="Debug" />
+      <Entry build="True" name="SharpKnocking.Doorman" configuration="Debug" />
+      <Entry build="True" name="SharpKnocking.Knocker" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="PortKnocker" configuration="Release" />
@@ -23,7 +27,11 @@
       <Entry build="True" name="Doorman" configuration="Release" />
       <Entry build="True" name="NetfilterFirewall" configuration="Release" />
       <Entry build="True" name="KnockingDaemonControl" configuration="Release" />
-      <Entry build="True" name="IptablesNet" configuration="Release" />
+      <Entry build="True" name="Extras" configuration="" />
+      <Entry build="True" name="SharpKnocking.Core" configuration="Release" />
+      <Entry build="True" name="SharpKnocking.Daemon" configuration="Release" />
+      <Entry build="True" name="SharpKnocking.Doorman" configuration="Release" />
+      <Entry build="True" name="SharpKnocking.Knocker" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="PortKnocker" single="True">
@@ -35,7 +43,11 @@
     <Execute type="None" entry="Doorman" />
     <Execute type="None" entry="NetfilterFirewall" />
     <Execute type="None" entry="KnockingDaemonControl" />
-    <Execute type="None" entry="IptablesNet" />
+    <Execute type="None" entry="Extras" />
+    <Execute type="None" entry="SharpKnocking.Core" />
+    <Execute type="None" entry="SharpKnocking.Daemon" />
+    <Execute type="None" entry="SharpKnocking.Doorman" />
+    <Execute type="None" entry="SharpKnocking.Knocker" />
   </StartMode>
   <Entries>
     <Entry filename="./PortKnocker/PortKnocker.mdp" />
@@ -45,6 +57,10 @@
     <Entry filename="./Doorman/Doorman.mdp" />
     <Entry filename="./NetfilterFirewall/NetfilterFirewall.mdp" />
     <Entry filename="./KnockingDaemonControl/KnockingDaemonControl.mdp" />
-    <Entry filename="../IptablesNet/IptablesNet.mds" />
+    <Entry filename="../Extras/Extras.mds" />
+    <Entry filename="./SharpKnocking.Core/SharpKnocking.Core.mdp" />
+    <Entry filename="./SharpKnocking.Daemon/SharpKnocking.Daemon.mdp" />
+    <Entry filename="./SharpKnocking.Doorman/SharpKnocking.Doorman.mdp" />
+    <Entry filename="./SharpKnocking.Knocker/SharpKnocking.Knocker.mdp" />
   </Entries>
 </Combine>
