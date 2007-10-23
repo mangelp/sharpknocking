@@ -40,7 +40,6 @@
     <ProjectReference type="Project" localcopy="True" refto="Common" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
   </References>
-  <Deployment.LinuxDeployData scriptName="commonwidgets" />
   <MonoDevelop.Autotools.MakefileInfo RelativeMakefileName="./Makefile.am">
     <BuildFilesVar />
     <DeployFilesVar />
@@ -50,4 +49,5 @@
     <AsmRefVar />
     <ProjectRefVar />
   </MonoDevelop.Autotools.MakefileInfo>
+  <Deployment.LinuxDeployData scriptName="commonwidgets" />
 </Project>
