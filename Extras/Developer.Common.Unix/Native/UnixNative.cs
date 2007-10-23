@@ -4,7 +4,7 @@ using System.IO;
 using Mono.Unix.Native;
 
     
-namespace Developer.Common.Native.Unix
+namespace Developer.Common.Unix.Native
 {
 	
 	/// <summary>

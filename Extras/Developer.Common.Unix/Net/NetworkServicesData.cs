@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 using Developer.Common.Types;
 
-namespace Developer.Common.Net
+namespace Developer.Common.Unix.Net
 {
 	/// <summary>
-	/// This static class loads the data in the file /etc/services and keep it in
+	/// This static class loads the data in the file /etc/services and keeps it in
 	/// memory
 	/// </summary>
 	/// <remarks>
@@ -21,19 +21,22 @@ namespace Developer.Common.Net
 		
 		static NetworkServicesData()
 		{
-			//There are almot 9000 lines in the /etc/services file under fc6 so
+			//There are almot 9000 lines in the /etc/services file in fc6 so it
 			//is a good idea to start the dictionary with this initial capacity.
 			dictionary = new Dictionary<string,NetworkService>(9000);
 			LoadData();
 		}
 		
-		#region Public methods
 		/// <summary>
 		/// Loads the data from the file /etc/services. This is the common path across
 		/// distros but spect and exception if someone moved the file in his distro.
 		/// </summary>
 		private static void LoadData()
 		{
+			//If the file isn't in the common place we can't do nothing
+			if(!File.Exists("/etc/services"))
+				return;
+			
 			using(StreamReader reader = new StreamReader("/etc/services"))
 			{
 				string line;
@@ -59,7 +62,7 @@ namespace Developer.Common.Net
 						//We found a bad definition. Skip it and continue.
 						continue;
 					
-					if(!AliasUtil.IsAliasName(typeof(ProtocolType),parts[1],out val))
+					if(!AliasUtil.IsAliasName(typeof(Protocols),parts[1],out val))
 						continue;
 					
 					dictionary.Add(ns.Name.ToLower(), ns);
@@ -85,7 +88,5 @@ namespace Developer.Common.Net
 			else
 				return NetworkService.Empty;
 		}
-		
-		#endregion Public methods.
 	}
 }
