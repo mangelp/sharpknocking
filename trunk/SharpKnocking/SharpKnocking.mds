@@ -34,7 +34,7 @@
       <Entry build="True" name="SharpKnocking.Knocker" configuration="Release" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="PortKnocker" single="True">
+  <StartMode startupentry="SharpKnocking.Knocker" single="True">
     <Execute type="None" entry="PortKnocker" />
     <Execute type="None" entry="KnockingDaemon" />
     <Execute type="None" entry="NetfilterFirewall" />
