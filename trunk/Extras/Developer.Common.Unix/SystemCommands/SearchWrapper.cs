@@ -2,9 +2,10 @@
 using System;
 using System.Diagnostics;
 
-namespace Developer.Common.Native.Unix
-{
-	
+using Developer.Common.SystemCommands;
+
+namespace Developer.Common.Unix.SystemCommands
+{	
 	/// <summary>
 	/// This class is used to retrieve a program's system path.
 	/// </summary>
@@ -26,7 +27,7 @@ namespace Developer.Common.Native.Unix
 			p.StartInfo.Arguments = programName;
 			p.StartInfo.UseShellExecute = false;
 			p.StartInfo.RedirectStandardOutput = true;
-			p.Start();			
+			p.Start();
 			
 			string path = String.Empty;
 			path = p.StandardOutput.ReadLine();

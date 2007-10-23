@@ -3,14 +3,19 @@ using System;
 
 using Developer.Common.Types;
 
-namespace Developer.Common.Net
+namespace Developer.Common.Unix.Net
 {
 	
     /// <summary>
     /// Types of protocols. Extracted from /etc/protocols and from 
 	/// http://www.iana.org/assignments/protocol-numbers.  
     /// </summary>
-    public enum ProtocolType
+	/// <remarks>
+	/// This enumeration is an extensive list of protocol types of any type but
+	/// there is another enumeration like this called ProtocolType in
+	/// System.Net.Sockets that only considers the most important ones.
+	/// </remarks>
+    public enum Protocols
     {
         /// <summary>
         /// hop-by-hop options for ipv6

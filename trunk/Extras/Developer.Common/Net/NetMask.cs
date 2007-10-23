@@ -4,9 +4,11 @@ using System.Net;
 
 namespace Developer.Common.Net
 {
+	//TODO: This class must be revised along with SkIpAddress to work with
+	//ipv6 addresses
 	
 	/// <summary>
-	/// Network mask implementation
+	/// Network mask implementation for ip4 addresses
 	/// </summary>
 	public class NetMask
 	{

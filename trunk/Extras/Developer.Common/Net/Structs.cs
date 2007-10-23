@@ -12,42 +12,6 @@ using System.Collections.Generic;
 namespace Developer.Common.Net
 {
 	/// <summary>
-	/// Represents a network service like those in /etc/services
-	/// </summary>
-	public struct NetworkService
-	{
-		public static readonly NetworkService Empty = new NetworkService();
-		
-		public string Name;
-		public ProtocolType Protocol;
-		public UInt16 Port;
-		
-		public override string ToString ()
-		{
-			return Name+"@"+Protocol+"/"+Port;
-		}
-		
-		public override int GetHashCode ()
-		{
-			return this.ToString().GetHashCode();
-		}
-	}
-	
-	/// <summary>
-	/// Ip end point structure
-	/// </summary>
-	/// <remarks>
-	/// This is already defined in System.Net!
-	/// TODO: Delete this and use what the framework provides.
-	/// </remarks>
-	public struct IpEndPoint
-	{
-		public int Length;
-		public byte[] Addr;
-		public UInt16 TargetPort;
-	}
-	
-	/// <summary>
 	/// Raw data struct for ipv4. Stores ip and mask data.
 	/// </summary>
 	public struct IPv4RawAddress
@@ -297,14 +261,6 @@ namespace Developer.Common.Net
 		     
 		    return result;
 		}
-	}
-	
-	/// <summary>
-	/// TODO: Raw data struct for ipv6.
-	/// </summary>
-	public struct IPv6RawAddress
-	{
-		
 	}
 	
 	 /// <summary>

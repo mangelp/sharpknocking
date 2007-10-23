@@ -1,24 +1,33 @@
-<Combine name="Extras" fileversion="2.0">
+<Combine name="Extras" fileversion="2.0" outputpath="./build/bin/">
   <Configurations>
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="IptablesNet" configuration="Debug" />
       <Entry build="True" name="Developer.Common" configuration="Debug" />
       <Entry build="True" name="Developer.Common.Unix" configuration="Debug" />
+      <Entry build="True" name="Developer.Common.Windows" configuration="Debug" />
+      <Entry build="True" name="ExtrasTest" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="IptablesNet" configuration="Release" />
       <Entry build="True" name="Developer.Common" configuration="Release" />
       <Entry build="True" name="Developer.Common.Unix" configuration="Release" />
+      <Entry build="True" name="Developer.Common.Windows" configuration="Release" />
+      <Entry build="True" name="ExtrasTest" configuration="Release" />
     </Configuration>
   </Configurations>
   <StartMode startupentry="IptablesNet" single="True">
     <Execute type="None" entry="IptablesNet" />
     <Execute type="None" entry="Developer.Common" />
     <Execute type="None" entry="Developer.Common.Unix" />
+    <Execute type="None" entry="Developer.Common.Windows" />
+    <Execute type="None" entry="ExtrasTest" />
   </StartMode>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="NoChangeLog" />
   <Entries>
     <Entry filename="../IptablesNet/IptablesNet.mds" />
     <Entry filename="./Developer.Common/Developer.Common.mdp" />
     <Entry filename="./Developer.Common.Unix/Developer.Common.Unix.mdp" />
+    <Entry filename="./Developer.Common.Windows/Developer.Common.Windows.mdp" />
+    <Entry filename="./ExtrasTest/ExtrasTest.mdp" />
   </Entries>
 </Combine>

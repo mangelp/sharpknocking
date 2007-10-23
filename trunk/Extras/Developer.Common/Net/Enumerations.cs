@@ -39,7 +39,7 @@ namespace Developer.Common.Net
     /// Every enumeration member has at least one alias name. The names used
     /// in the commands are the aliased ones
     /// <br/><br/>
-    /// You can obtain this list from iptables using this:
+    /// In linux you can obtain this list from iptables using this:
     ///      iptables -p icmp -h
     /// <br/><br/>
     /// The type numbers and codes are taken from:
@@ -123,7 +123,10 @@ namespace Developer.Common.Net
         AddressMaskRequest=17,
         [AliasAttribute("AddressMaskReply")]
         AddressMaskReply=18,
-        //Default. As 0 is Echo-Reply we assign the max integer value
+		/// <summary>
+		/// Default non-usable value. This value is for initialization
+		/// purposes and must not be used.
+		/// </summary>
 	    [AliasAttribute("any")]
 	    Any=ushort.MaxValue
 	}	
