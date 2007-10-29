@@ -1,4 +1,22 @@
-
+// GenericOption.cs
+//
+//  Copyright (C) 2006 SharpKnocking project
+//  Created by Miguel Angel Pérez, mangelp@gmail.com
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+//
 using System;
 using System.Collections;
 
@@ -84,7 +102,6 @@ namespace IptablesNet.Core.Options
 		public GenericOption(RuleOptions option, MatchExtensions extension)
 		{
 		    this.optionType = option;
-		    
 		    this.SetImplicitExtension(extension);
 		}
 		
@@ -111,18 +128,19 @@ namespace IptablesNet.Core.Options
 		/// Sets the extension that will be loaded implicitly if the current
 		/// option is used.
 		/// </summary>
+		/// <remarks>
+		/// This method will set the flag hasImplicitExtension to true if the
+		/// loading of the extension is successfull. If not the value is left
+		/// as is.
+		/// </remarks>
 		protected void SetImplicitExtension(MatchExtensions extension)
 		{
 		    this.extensionType = MatchExtensionFactory.GetExtensionType(extension);
 		    
 		    if(this.extensionType==null)
-		    {
 		        throw new InvalidOperationException("Can't load the implementation "+
 		                                            "for the extension "+ 
-                                                    extension.ToString().ToLower()+
-                                                    ".");
-		    }
-		    
+                                                    extension.ToString().ToLower()+".");
 		    this.hasImplicitExtension = true;
 		}
 

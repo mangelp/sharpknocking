@@ -1,4 +1,22 @@
-    
+// IptablesOptionFactory.cs
+//
+//  Copyright (C) 2006 SharpKnocking project
+//  Created by Miguel Angel Pérez, mangelp@gmail.com
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+//    
 using System;
 
 using IptablesNet.Core;
@@ -27,13 +45,10 @@ namespace IptablesNet.Core.Options
             ex = null;
             opt = null;
             
-            try
-            {
+            try {
                 opt = IptablesOptionFactory.GetOption(par);
                 return true;
-            }
-            catch(Exception tex)
-            {
+            } catch(Exception tex) {
                 ex = tex;
                 return false;
             }
@@ -48,18 +63,17 @@ namespace IptablesNet.Core.Options
 		    
 		    string typeName = currentNamespace+"."+type+"Option";
 		    
-//		    Debug.VerboseWrite("IptablesOptionFactory.GetOption: Loading Type name "+
-//		                             typeName, VerbosityLevels.Insane);
+//		    Console.WriteLine("IptablesOptionFactory.GetOption: Loading Type name "+
+//		                             typeName);
 		    
 		    Type objType = Type.GetType(typeName, true, false);
 		    
-//		    Debug.VerboseWrite("IptablesOptionFactory.GetOption: Creating object instance "
-//		                             , VerbosityLevels.Insane);
+//		    Console.WriteLine("IptablesOptionFactory.GetOption: Creating object instance ");
 		    
 		    opt = (GenericOption)Activator.CreateInstance(objType);
 		    
-//		    Debug.VerboseWrite("IptablesOptionFactory.GetOption: Setting value "+
-//		                                     generic.Value, VerbosityLevels.Insane);
+//		    Console.WriteLine("IptablesOptionFactory.GetOption: Setting value "+
+//		                                     generic.Value);
 		    string errStr;
 			                   
 		    if (!opt.TryReadValues(generic.Value, out errStr))   

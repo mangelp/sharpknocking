@@ -67,7 +67,7 @@ namespace IptablesNet.Core.Util
 			}
 			else
 			{
-				throw new IptablesException("The key already exists in the name caché: "+name);
+				throw new NetfilterException("The key already exists in the name caché: "+name);
 			}
 		}
 		
@@ -82,7 +82,7 @@ namespace IptablesNet.Core.Util
 			}
 			else
 			{
-				throw new IptablesException("The key doesn't exists in caché: "+name);
+				throw new NetfilterException("The key doesn't exists in caché: "+name);
 			}
 		}
 		

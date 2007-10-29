@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 using IptablesNet.Core.Util;
 
-using Developer.Common.Native.Unix;
+using Developer.Common.Unix.Native;
 
 namespace IptablesNet.Core.Util
 {

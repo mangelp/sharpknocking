@@ -1,13 +1,13 @@
-<Project name="IptablesNet.Extensions.TargetExtensions" fileversion="2.0" Description="Library of target extensions for the rules" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="IptablesNet.Extensions.Targets" fileversion="2.0" Description="Library of target extensions for the rules" DefaultNamespace="IptablesNet.Extensions.Targets" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Debug" assembly="IptablesNet.Extensions.TargetExtensions" />
+      <Output directory="./bin/Debug" assembly="IptablesNet.Extensions.Targets" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Release" assembly="IptablesNet.Extensions.TargetExtensions" />
+      <Output directory="./bin/Release" assembly="IptablesNet.Extensions.Targets" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -18,6 +18,7 @@
     <File name="./UlogTargetExtension.cs" subtype="Code" buildaction="Compile" />
     <File name="./RejectTargetExtension.cs" subtype="Code" buildaction="Compile" />
     <File name="./Definitions.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Changelog.txt" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Project" localcopy="True" refto="IptablesNet.Core" />

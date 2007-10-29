@@ -8,7 +8,7 @@ using IptablesNet.Core.Extensions.ExtendedMatch;
 using Developer.Common.Types;
 using Developer.Common.Net;
 
-namespace IptablesNet.Extensions.Match
+namespace IptablesNet.Extensions.Matches
 {
 	
 	public class UdpMatchExtension: MatchExtensionHandler

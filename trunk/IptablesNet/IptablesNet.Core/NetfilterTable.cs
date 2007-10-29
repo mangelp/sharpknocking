@@ -1,7 +1,25 @@
-
+// NetfilterTable.cs
+//
+//  Copyright (C)  2007 iSharpKnocking project
+//  Created by Miguel Angel Perez, mangelp@gmail.com
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
 using System;
 using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 
 using Developer.Common.Types;
 
@@ -12,75 +30,128 @@ namespace IptablesNet.Core
     /// </summary>
 	public class NetfilterTable
 	{
-	    
-	    private PacketTables type;
+	    private PacketTableType type;
 	    
 	    /// <summary>
         /// Table type 
         /// </summary>
-	    public PacketTables Type
+	    public PacketTableType Type
 	    {
 	        get { return this.type; }
-	        set { this.type = value; }
 	    }
 	    
-	    private ArrayList chains;
+	    private List<NetfilterChain> chains;
 	    
+		/// <summary>
+		/// Chains defined in the table.
+		/// </summary>
+		/// <remarks>
+		/// This list is populated with the default chains for the table upon
+		/// constructor call
+		/// </remarks>
 	    public NetfilterChain[] Chains
 	    {
 	        get
 	        {
-	            NetfilterChain[] result = new NetfilterChain[this.chains.Count];
-	            
-	            for(int i=0;i<result.Length;i++)
-	            {
-	                result[i] = (NetfilterChain)this.chains[i];    
-	            }
-	            
-	            return result;
-	            
+				return this.chains.ToArray();
 	        }
 	    }
 	    
         /// <summary>
-        /// Default constructor. Initializes the type to filter. 
+        /// Default constructor. Initializes the type to filter table and
+		/// default chains. 
         /// </summary>
 		public NetfilterTable()
+			:this(PacketTableType.Filter)
 		{
-		    //Default table
-		    this.type = PacketTables.Filter;
-		    this.chains = new ArrayList();
+		}
+		
+		/// <summary>
+		/// Parametrized constructor. Initializes the table type and default
+		/// chains.
+		/// </summary>
+		public NetfilterTable(PacketTableType type)
+		{
+			this.type = type;
+			this.chains = new List<NetfilterChain>(6);
+			this.AddBuiltInChainsToList();
+		}
+
+		/// <summary>
+		/// Adds the built-in chains to the list
+		/// </summary>
+		protected virtual void AddBuiltInChainsToList()
+		{
+			switch(type)
+			{
+				case PacketTableType.Filter:
+					this.AddDefaultChain(BuiltInChains.Input);
+					this.AddDefaultChain(BuiltInChains.Forward);
+					this.AddDefaultChain(BuiltInChains.Output);
+					break;
+				case PacketTableType.Mangler:
+					this.AddDefaultChain(BuiltInChains.Prerouting);
+					this.AddDefaultChain(BuiltInChains.Output);
+					this.AddDefaultChain(BuiltInChains.Input);
+					this.AddDefaultChain(BuiltInChains.Forward);
+					this.AddDefaultChain(BuiltInChains.Postrouting);
+					break;
+				case PacketTableType.Nat:
+					this.AddDefaultChain(BuiltInChains.Prerouting);
+					this.AddDefaultChain(BuiltInChains.Output);
+					this.AddDefaultChain(BuiltInChains.Postrouting);
+					break;
+				case PacketTableType.Raw:
+					this.AddDefaultChain(BuiltInChains.Prerouting);
+					this.AddDefaultChain(BuiltInChains.Output);
+					break;
+			}			
+		}
+		
+		/// <summary>
+		/// Adds a user-defined chain to the table
+		/// </summary>
+		public void AddChain(string name, RuleTargets defTarget)
+		{
+			NetfilterChain chain = new NetfilterChain(this, name);
+			this.AddChain(chain);
 		}
 		
 	    /// <summary>
-        /// Sets the table type from a string. 
+	    /// Adds a new user-defined chain to the table.
         /// </summary>
-		public bool SetTable(string tableName)
-		{
-		    try
-		    {
-		        this.type = (PacketTables) Enum.Parse(typeof(PacketTables), tableName, false);
-		    }
-		    catch(Exception ex)
-		    {
-		        Console.Out.WriteLine("Bad table name: "+ex.Message+"\nDetails:\n"+ex);
-		        return false;
-		    }
-		    
-		    return true;
-		}
-		
-	    /// <summary>
-	    /// Adds a new chain to the table. The chain must be a user-defined
-	    /// chain or one of the builtin chains for the table.
-        /// </summary>
+		/// <remarks>
+		/// Any try to add a built-in chain will get an ArgumentException.
+		/// <br>
+		/// There is also problems if the user-defined name matches the name of
+		/// any built-in chain or if the parent table of the chain is not the
+		/// current table. In any case an ArgumentException is thrown.
+		/// in result.
+		/// </remarks>
 		public void AddChain(NetfilterChain chain)
 		{
-		    if(this.chains.Contains(chain))
-		        throw new DuplicateElementException("The chain "
-		                    +chain+" have been already added");
-		    
+			PacketTableType tblType = PacketTableType.Filter;
+			
+		    if(chain.IsBuiltIn)
+				throw new ArgumentException("Can't add a built-in chain. Built-in chains are already added", "chain.IsBuiltIn");
+		    else if(NetfilterTable.TryGetTableType(chain.Name, out tblType))
+				throw new ArgumentException("The chain has a name that matches the name of a built-in chain", "chain.Name");
+			else if(chain.ParentTable!=this)
+				throw new ArgumentException("The chain doesn't belong to this table", "chain.ParentTable");
+			else if(this.chains.Contains(chain))
+				throw new ArgumentException("The chain is already in the table", "chain");
+			
 		    this.chains.Add(chain);
+		}
+		
+		/// <summary>
+		/// Adds a default chain of the type specified with a default policy of
+		/// accepting packets
+		/// </summary>
+		protected void AddDefaultChain(BuiltInChains biChain)
+		{
+			NetfilterChain chain = new NetfilterChain(this, biChain, RuleTargets.Accept);
+			this.chains.Add(chain);
 		}
 		
 		/// <summary>
@@ -88,12 +159,19 @@ namespace IptablesNet.Core
         /// </summary>
 		public void RemoveChain(int pos)
 		{
-		    if(this.chains.Count>pos && pos>=0)
-		        this.chains.RemoveAt(pos);
-		    else
+		    if(pos>this.chains.Count || pos<0)
 		        throw new IndexOutOfRangeException();
+			else if(this.chains[pos].IsBuiltIn)
+				throw new InvalidOperationException("Can't remove a built-in chain");
+			this.chains.RemoveAt(pos);
 		}
         
+		/// <summary>
+		/// Gets the position of a chain in the internal array.
+		/// </summary>
+		/// <returns>
+		/// An integer greater than -1 if the chain was found or -1 if not. 
+		/// </returns>
         public int IndexOfChain(string name)
         {
 		    NetfilterChain next;
@@ -114,31 +192,37 @@ namespace IptablesNet.Core
 		/// </summary>
 		public NetfilterChain FindChain(string name)
 		{
-		    NetfilterChain next;
-		    
-		    for(int i=0;i<this.chains.Count;i++)
-		    {
-		        next = (NetfilterChain)this.chains[i];
-		        
-		        if(String.Equals(next.CurrentName, name, StringComparison.InvariantCultureIgnoreCase))
-		            return next;
-		    }
-		    
-		    return null;
+		    int pos = this.IndexOfChain(name);
+			
+			if(pos==-1)
+				return null;
+			
+			return this.chains[pos];
 		}
 		
 		/// <summary>
-		/// Returns a string that represents the table and all the chains and
-		/// all the rules in every chain.
-        /// </summary>
-		public override string ToString()
+		/// Removes all the chains in this table
+		/// </summary>
+		public void Clear()
 		{
-		    StringBuilder sb =
-		        new StringBuilder("*"+this.type.ToString().ToLower());
-            
+			foreach(NetfilterChain chain in this.chains)
+				chain.Clear();
+			this.chains.Clear();
+		}
+		
+		/// <summary>
+		/// Adds the contents of the current table (chains and rules) as strings
+		/// to a string builder.
+		/// </summary>
+		public void AppendContentsTo(StringBuilder sb)
+		{
+			//Start with the table name in lowercase
+		    sb.Append("*"+this.type.ToString().ToLower());
+            //Then add the strings for each chain that will contain all the
+			//rules in these chains
 		    for(int i=0;i<this.chains.Count;i++)
 		    {
-		        sb.Append("\n"+chains[i].ToString());
+		        sb.Append("\n"+this.chains[i].GetChainDefinition());
 		    }
             
             NetfilterChain chain = null;
@@ -147,9 +231,21 @@ namespace IptablesNet.Core
             {
                 chain = (NetfilterChain)chains[i];
                 if(chain.Rules.Count>0)
-                    sb.Append("\n"+chain.GetRulesAsString());
+				{
+					sb.Append('\n');
+                    chain.AppendContentsTo(sb);
+				}
             }
-		    
+		}
+		
+		/// <summary>
+		/// Returns a string that represents the table and all the chains and
+		/// all the rules in every chain.
+        /// </summary>
+		public string GetContentsAsString()
+		{
+		    StringBuilder sb = new StringBuilder();
+			this.AppendContentsTo(sb);
 		    return sb.ToString();
 		}
 		
@@ -157,25 +253,22 @@ namespace IptablesNet.Core
 		/// Gets if the string is a valid table. If it is the enum that matches
 		/// the table is set in the output parameter.
         /// </summary>
-		public static bool IsTable(string line, out PacketTables table)
+		public static bool TryGetTableType(string line, out PacketTableType table)
 		{
 		    line = line.Trim();
+			object obj = null;
 		    
 		    if(line.StartsWith("*"))
-		    {
 		        line = line.Substring(1).Trim();
-		        object obj = TypeUtil.GetEnumValue(typeof(PacketTables), line);
-		        
-		        if(obj!=null)
-		        {
-		            table = (PacketTables)obj;
-		            return true;
-		        }
+			
+			if(!TypeUtil.TryGetEnumValue(typeof(PacketTableType), line, out obj))
+		    {
+			    table = PacketTableType.Filter;
+			    return false;
 		    }
-		    
-		    //Set this by default.
-		    table = PacketTables.Filter;
-		    return false;
+			
+			table = (PacketTableType)obj;
+		    return true;
 		}
 		
 		/// <summary>
@@ -183,13 +276,11 @@ namespace IptablesNet.Core
         /// </summary>
 		public static NetfilterTable Parse(string line)
 		{
-		    NetfilterTable tableObj = new NetfilterTable();
-		    
-		    if(!IsTable(line, out tableObj.type))
+			PacketTableType tp = PacketTableType.Filter;
+		    if(!TryGetTableType(line, out tp))
 		        return null;
 		    
-		    return tableObj;
+		    return new NetfilterTable(tp);
 		}
-		
 	}
 }

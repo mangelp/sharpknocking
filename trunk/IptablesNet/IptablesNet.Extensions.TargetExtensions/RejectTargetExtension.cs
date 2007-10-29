@@ -6,7 +6,7 @@ using Developer.Common.Types;
 using IptablesNet.Core.Extensions;
 using IptablesNet.Core.Extensions.ExtendedTarget;
 
-namespace IptablesNet.Extensions.ExtendedTarget
+namespace IptablesNet.Extensions.Targets
 {
     /// <summary>
     /// Models the Reject target extension

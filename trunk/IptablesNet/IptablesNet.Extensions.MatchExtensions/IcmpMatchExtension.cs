@@ -9,9 +9,8 @@ using IptablesNet.Core.Extensions.ExtendedMatch;
 using Developer.Common.Net;
 using Developer.Common.Types;
 
-namespace IptablesNet.Extensions.Match
+namespace IptablesNet.Extensions.Matches
 {
-    
     /// <summary>
     /// Implements the icmp match extension.
     /// </summary>

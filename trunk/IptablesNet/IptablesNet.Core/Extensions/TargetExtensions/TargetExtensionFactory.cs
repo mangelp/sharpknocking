@@ -3,6 +3,8 @@ using System;
 using System.IO;
 using System.Reflection;
 
+using Developer.Common.Types;
+
 using IptablesNet.Core;
 
 namespace IptablesNet.Core.Extensions.ExtendedTarget
@@ -45,7 +47,7 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
        	    
        	    //TODO: ->mangelp. Having this hard-coded is a bad idea.
        	    assemblySearchPath =
-       	        Path.GetDirectoryName(asm.CodeBase)+Path.DirectorySeparatorChar+"target_extensions";
+       	        Path.GetDirectoryName(asm.CodeBase)+Path.DirectorySeparatorChar;
        	}
        	
        	/// <summmary>
@@ -76,30 +78,40 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
             if(String.IsNullOrEmpty(typeName))
                 throw new ArgumentException("The name of the type can't be null"+
                                             " or empty", "typeName");
-            
-       	    //The name of each class must follow this convention.
-       	    // IptablesNet.Core.Extensions.{EnumName}TargetExtension
+				
+      	    //The full name of each class must follow this convention:
+       	    // IptablesNet.Extensions.Match.{EnumName}TargetExtension
        	    //So here we can build the name automatically
-       	    
-       	    string fullName = TargetExtensionFactory.currentNamespace+
-       	                "."+typeName+"TargetExtension";
-       	    
-       	    //Search case insensitive but don't throw exceptions
-       	    Type theType = Type.GetType(fullName, false, true);
-       	    
-       	    if(theType==null)
-       	    {
-       	        string asmName = assemblySearchPath+
-                                Path.DirectorySeparatorChar+typeName+
-                                "TargetExtension.dll";
-       	        //Try to load the assembly
-       	        Assembly asm = Assembly.LoadFrom(asmName);
-       	    
-       	        if(asm!=null)
-       	            theType = asm.GetType(typeName, false, true);
-       	    }
-       	    
-       	    return theType;
+       	    string fullName = "IptablesNet.Extensions.Targets."+typeName+"TargetExtension";
+			string customAsmName = assemblySearchPath+Path.DirectorySeparatorChar
+					+"IptablesNet.Extensions."+typeName+"Targets.dll";
+			string commonAsmName = assemblySearchPath+Path.DirectorySeparatorChar+
+					"IptablesNet.Extensions.Targets.dll";
+			return AssemblyUtil.TryLoadWithType(fullName, customAsmName, commonAsmName); 
+            
+//       	    //The name of each class must follow this convention.
+//       	    // IptablesNet.Core.Extensions.{EnumName}TargetExtension
+//       	    //So here we can build the name automatically
+//       	    
+//       	    string fullName = TargetExtensionFactory.currentNamespace+
+//       	                "."+typeName+"TargetExtension";
+//       	    
+//       	    //Search case insensitive but don't throw exceptions
+//       	    Type theType = Type.GetType(fullName, false, true);
+//       	    
+//       	    if(theType==null)
+//       	    {
+//       	        string asmName = assemblySearchPath+
+//                                Path.DirectorySeparatorChar+typeName+
+//                                "TargetExtension.dll";
+//       	        //Try to load the assembly
+//       	        Assembly asm = Assembly.LoadFrom(asmName);
+//       	    
+//       	        if(asm!=null)
+//       	            theType = asm.GetType(typeName, false, true);
+//       	    }
+//       	    
+//       	    return theType;
        	}
        	
        	/// <summary>
@@ -112,15 +124,10 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
        	/// </remarks>
        	public static TargetExtensionHandler GetExtension(string name)
        	{
-       	    try
-       	    {
-       	        Type extensionType = TargetExtensionFactory.GetExtensionType(name);
-       	        return (TargetExtensionHandler)Activator.CreateInstance(extensionType);
-       	    }
-       	    catch(Exception)
-       	    {
-       	        return null;
-       	    }
+  	        Type extensionType = TargetExtensionFactory.GetExtensionType(name);
+			if(extensionType==null)
+				throw new InvalidOperationException("Can't get the type for name");
+  	        return (TargetExtensionHandler)Activator.CreateInstance(extensionType);
        	}
        	
        	/// <summary>

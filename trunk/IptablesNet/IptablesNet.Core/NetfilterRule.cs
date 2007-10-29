@@ -104,9 +104,12 @@ namespace IptablesNet.Core
 		/// </remarks>
 		private void ItemAddedHandler(object obj, ListChangedEventArgs<GenericOption> args)
 		{
+			//Console.WriteLine("ItemAdded: "+args.Item.GetType().Name+", "+args.Item.ParentRule);
 			//We have to load the concrete handler for each extension
 		    if(args.Item.HasImplicitExtension)
 		    {
+				if(args.Item.ExtensionType==null)
+					throw new InvalidOperationException("The added item declares to have an implicit extension but no type was found");
 				//If it is loaded exit, if not load it
     		    if(this.IsExtensionHandlerLoaded(args.Item.ExtensionType))
     		        return;
@@ -115,6 +118,8 @@ namespace IptablesNet.Core
 		    }
 		    else if(args.Item is MatchExtensionOption)
 		    {
+				if(args.Item.ExtensionType==null)
+					throw new InvalidOperationException("The added match extension doesn't have a type!");
 		        //If it is an extension we load the extension handler
 		        this.LoadExtensionHandler(args.Item.ExtensionType);
 		    }
@@ -125,11 +130,10 @@ namespace IptablesNet.Core
 		    }
 		}
 		
-		private void LoadExtensionHandler(Type extHandlerType)
-		{
-            //Load the implicit extension
-            MatchExtensionHandler handler = MatchExtensionFactory.GetExtension(
-                                                    extHandlerType);
+		private void LoadExtensionHandler(Type mExtension)
+		{			
+            //Load the extension
+            MatchExtensionHandler handler = MatchExtensionFactory.GetExtension(mExtension);
             //Add to the list
             this.loadedExtensions.Add(handler);
 		}
@@ -182,19 +186,53 @@ namespace IptablesNet.Core
 		}
 		
 		/// <summary>
-		/// Gets if the current extension target can accept a parameter with a 
-		/// given name.
+		/// Checks if the current target extension can handle the parameter and
+		/// returns it
 		/// </summary>
 		/// <remarks>
 		/// The extension targets are specified throught the jump option
 		/// <c>Options.JumpOption</c>
 		/// </remarks>
-		public bool IsTargetExtensionParameter(string paramName)
+		/// <returns>
+		/// True if it can handle the parameter or false if not
+		/// </returns>
+		public bool TryGetTargetExtensionHandler(string paramName, out TargetExtensionHandler handler)
 		{
-		    if(this.jumpOption!=null && this.jumpOption.HasOptionNamed(paramName))
-		      return true;
+			handler = null;
+			
+			//We only have to look at the target and ask him
+		    if(this.jumpOption!=null && this.jumpOption.HasOptionNamed(paramName)) {
+				handler = this.jumpOption.Extension;
+				return true;
+			}
 		    
 		    return false;
+		}
+		
+		/// <summary>
+		/// Tries to get the first match extensin handler object that can handle a specified parameter
+		/// from those loaded into the rule.
+		/// </summary>
+		/// <param name="paramName">
+		/// Name of the parameter
+		/// </param>
+		/// <param name="handler">Handler instance in the rule that can handle the parameter</param>
+		/// <returns>
+		/// True if one handler was found  or false if not
+		/// </returns>
+		public bool TryGetMatchExtensionHandler(string paramName, out MatchExtensionHandler handler)
+		{
+			handler = null;
+			
+			//Look at every extension for one that will support the parameter
+		    for(int i=0;i<this.loadedExtensions.Count;i++) {
+		        handler = this.loadedExtensions[i];
+		        if(handler.IsSupportedParam(paramName))
+                    return true;
+		    }
+			
+		    handler = null;
+			return false;
 		}
 		
 		/// <summary>

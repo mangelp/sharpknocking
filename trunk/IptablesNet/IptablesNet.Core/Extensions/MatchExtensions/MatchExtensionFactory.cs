@@ -1,7 +1,9 @@
 
 using System;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
+
+using Developer.Common.Types;
 
 using IptablesNet.Core.Extensions;
 
@@ -45,7 +47,7 @@ namespace IptablesNet.Core.Extensions.ExtendedMatch
        	    Assembly asm = Assembly.GetExecutingAssembly();
        	    //TODO: ->mangelp. Having this hard-coded is a bad idea.
        	    assemblySearchPath =
-       	        Path.GetDirectoryName(asm.CodeBase)+Path.DirectorySeparatorChar+"match_extensions";
+       	        Path.GetDirectoryName(asm.CodeBase);
        	}
        	
        	/// <summmary>
@@ -76,31 +78,50 @@ namespace IptablesNet.Core.Extensions.ExtendedMatch
             if(String.IsNullOrEmpty(typeName))
                 throw new ArgumentException("The name for the type can't be null"+
                                             " or empty", "typeName");
-            
-       	    //The name of each class must follow this convention.
-       	    // IptablesNet.Core.Extensions.{EnumName}MatchExtension
-       	    //So here we can build the name automatically
-       	    string fullName = MatchExtensionFactory.currentNamespace+
-       	                "."+typeName+"MatchExtension";
-       	    
-       	    //Search case insensitive but don't throw exceptions
-       	    Type theType = Type.GetType(fullName, false, true);
-       	    
-       	    if(theType==null)
-       	    {
-       	        string asmName = assemblySearchPath+
-                                Path.DirectorySeparatorChar+typeName+
-                                "MatchExtension.dll";
-       	        
-       	        //Try to load the assembly
-       	        Assembly asm = Assembly.LoadFrom(asmName);
-       	    
 
-       	        if(asm!=null)
-       	            theType = asm.GetType(typeName, false, true);
-       	    }
+      	    //The full name of each class must follow this convention:
+       	    // IptablesNet.Extensions.Match.{EnumName}MatchExtension
+       	    //So here we can build the name automatically
+       	    string fullName = "IptablesNet.Extensions.Matches."+typeName+"MatchExtension";
+			string customAsmName = assemblySearchPath+Path.DirectorySeparatorChar
+					+"IptablesNet.Extensions."+typeName+"Matches.dll";
+			string commonAsmName = assemblySearchPath+Path.DirectorySeparatorChar+
+					"IptablesNet.Extensions.Matches.dll";
+			return AssemblyUtil.TryLoadWithType(fullName, customAsmName, commonAsmName); 
        	    
-       	    return theType;
+//       	    //Search case insensitive but don't throw exceptions
+//       	    Type theType = Type.GetType(fullName, false, true);
+//       	    
+//			//If it is not in this namespace try in his own namespace and
+//			//assembly
+//       	    if(theType==null) {
+//				fullName = "IptablesNet.Extensions.Match."+typeName+
+//					"MatchExtension";
+//       	        string asmName = assemblySearchPath+Path.DirectorySeparatorChar+typeName+
+//					"MatchExtension.dll";
+//       	        
+//       	        //Try to load an assembly with the name of the extension
+//       	        Assembly asm = AssemblyUtil.TryLoadAssembly(asmName);
+//				//If the assembly loads we try the fullname
+//       	        if(asm!=null)
+//       	            theType = asm.GetType(typeName, false, true);
+//       	    }
+//			
+//			//Now try to find a MatchExtensions.dll in the same directory if the type
+//			//is still missing. This library is supossed to contain the common set
+//			//of match extensions
+//			if( theType == null ) {
+//				fullName = "IptablesNet.Extensions.Match."+typeName+
+//					"MatchExtension";
+//				string asmName = assemblySearchPath+Path.DirectorySeparatorChar+
+//					"MatchExtensions.dll";
+//				Assembly asm = AssemblyUtil.TryLoadAssembly(asmName);
+//				
+//				if(asm!=null)
+//					theType = asm.GetType(typeName, false, true);
+//			}
+//       	    
+//       	    return theType;
        	}
        	
        	/// <summary>
@@ -108,6 +129,8 @@ namespace IptablesNet.Core.Extensions.ExtendedMatch
        	/// </summary>
        	public static MatchExtensionHandler GetExtension(Type extensionType)
        	{
+			if(extensionType == null)
+				throw new ArgumentNullException("extensionType", "The type can't be null");
        	    return (MatchExtensionHandler)Activator.CreateInstance(extensionType);    
        	}
        	
@@ -129,14 +152,10 @@ namespace IptablesNet.Core.Extensions.ExtendedMatch
        	public static MatchExtensionHandler GetExtension(MatchExtensions mExtension)
        	{
        	    MatchExtensionHandler result = null;
-       	    
        	    Type theType = MatchExtensionFactory.GetExtensionType(mExtension);
        	    
        	    if(theType!=null)
-       	    {
-       	        result =
-       	            (MatchExtensionHandler)Activator.CreateInstance(theType);        
-       	    }
+       	        result = (MatchExtensionHandler)Activator.CreateInstance(theType);        
        	    
        	    return result;
        	}
