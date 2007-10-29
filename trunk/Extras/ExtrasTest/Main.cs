@@ -6,11 +6,32 @@ using System.Collections.Generic;
 using Developer.Common.SystemCommands;
 using Developer.Common.Unix.SystemCommands;
 
+using IptablesNet.Core;
+
 namespace ExtrasTest
 {
 	class MainClass
 	{
 		public static void Main(string[] args)
+		{
+			Test2(args);
+		}
+		
+		public static void Test2(string[] args)
+		{
+			NetfilterTableSet ts = new NetfilterTableSet();
+			Console.WriteLine("#################################### Loading "+args[0]);
+			ts.LoadFromFile(args[0]);
+			Console.WriteLine("#################################### Saving "+args[1]);
+			ts.SaveToFile(args[1], false);
+			ts = new NetfilterTableSet();
+			Console.WriteLine("#################################### Loading "+args[1]);
+			ts.LoadFromFile(args[1]);
+			Console.WriteLine("#################################### Saving "+args[1]);
+			ts.SaveToFile(args[1]+".temp", false);
+		}
+		
+		public static void Test1(string[] args)
 		{
 			Console.Out.WriteLine("Searching mono in the path");
 			WhichSysCmd cmd = new WhichSysCmd();
@@ -40,7 +61,7 @@ namespace ExtrasTest
 				Console.Out.WriteLine("Result["+i+"]: "+result[i]);
 			}
 			
-			Console.Out.WriteLine("ExitCode: "+cres.ExitCode);
+			Console.Out.WriteLine("ExitCode: "+cres.ExitCode);		
 		}
 	}
 }
