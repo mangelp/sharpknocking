@@ -21,5 +21,8 @@
     <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
     <ProjectReference type="Project" localcopy="True" refto="Developer.Common.Unix" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Project" localcopy="True" refto="IptablesNet.Core" />
+    <ProjectReference type="Project" localcopy="True" refto="IptablesNet.Extensions.MatchExtensions" />
+    <ProjectReference type="Project" localcopy="True" refto="IptablesNet.Extensions.TargetExtensions" />
   </References>
 </Project>
