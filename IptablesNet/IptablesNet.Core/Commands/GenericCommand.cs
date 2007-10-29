@@ -132,12 +132,13 @@ namespace IptablesNet.Core.Commands
         /// </summary>
 		public static bool CanBeACommand(string line)
 		{
+			if(line==null)
+				return false;
+			
 		    line = line.Trim();
 		    
 		    if(line.StartsWith("-"))
-		    {
 		        return true;
-		    }
 		    
 		    return false;
 		}

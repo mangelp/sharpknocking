@@ -6,6 +6,8 @@ using IptablesNet.Core;
 using Developer.Common.Net;
 using Developer.Common.Types;
 
+using Developer.Common.Unix.Net;
+
 
 namespace IptablesNet.Core.Options
 {
@@ -15,9 +17,9 @@ namespace IptablesNet.Core.Options
 	/// </summary>
 	public class ProtocolOption: GenericOption
 	{   
-	    private ProtocolType protocol;
+	    private Protocols protocol;
 	    
-	    public ProtocolType Protocol
+	    public Protocols Protocol
 	    {
 	        get
 	        {
@@ -40,9 +42,9 @@ namespace IptablesNet.Core.Options
 		    object obj;
 		    errStr=String.Empty;
 		    
-		    if(AliasUtil.IsAliasName(typeof(ProtocolType), strVal, out obj))
+		    if(AliasUtil.IsAliasName(typeof(Protocols), strVal, out obj))
 		    {
-		        this.protocol = (ProtocolType)obj;
+		        this.protocol = (Protocols)obj;
 		        return true;
 		    }
 		    

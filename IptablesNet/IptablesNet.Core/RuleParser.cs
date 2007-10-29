@@ -13,102 +13,97 @@ using Developer.Common.Types;
 
 namespace IptablesNet.Core
 {
-	
     /// <summary>
-    /// Models all the logic needed to build an iptables rule as a instance
+    /// Parser for rule files in the format used by iptables-save.
     /// </summary>
 	public static class RuleParser
 	{
-	    
 	    /// <summary>
 	    /// Builds a command from the string. This also parses every parameter
 		/// like the rule.
 	    /// </summary>
-	    public static GenericCommand GetCommand(string line, NetfilterTable table)
+		/// <param name="curTable">Table where is defined the chain that the
+		/// command affects</param>
+		/// <remarks>
+		/// The line must be in the same format that iptables-save uses for output. So
+		/// any line must start with a command followed by the parameters.
+		/// In this context the real rules are parameters of the command so at the
+		/// end the command will have in her properties everything. 
+		/// </remarks>
+	    public static GenericCommand GetCommand(string line, NetfilterTable curTable)
 	    {
-	        
-	        if(!GenericCommand.CanBeACommand (line))
-	            return null;
-	        
-	        NetfilterRule rule= new NetfilterRule();
+			Console.WriteLine("Processing line: "+line);
+			//If the line doesn't look like a valid command we can't do nothing
+			if(!GenericCommand.CanBeACommand (line))
+				return null;
+			
 	        GenericOption option=null;
 			GenericCommand gCmd = null;
-	        SimpleParameter currParam;
+			Exception ex = null;
+			SimpleParameter currParam;
+			int pos=1;
+			MatchExtensionHandler meh = null;
+			TargetExtensionHandler teh = null;
+			
+            SimpleParameter[] parameters = RuleParser.GetParameterList(line);
+			
+			for(int i=0;i<parameters.Length;i++)
+			{
+				Console.WriteLine("Param["+i+"]: "+parameters[i]);
+			}
+			
+			if(parameters.Length==0)
+				throw new ArgumentException("There are nothing to parse here: "+line);
+			//The first thing must be the command
+			else if(!GenericCommand.IsCommand(parameters[0].Name))
+				throw new FormatException("The line doesn't start with a command");
+			//Try to get the command or throw an exception
+			else if(!IptablesCommandFactory.TryGetCommand(parameters[0], out gCmd, out ex))
+				throw new FormatException("Error while parsing line: "+line, ex);
+			else if(gCmd.MustSpecifyRule && parameters.Length<2)
+				throw new FormatException("Unexpected parameters in line after command: "+line);
+            
+			if(gCmd.MustSpecifyRule)
+			   gCmd.Rule = new NetfilterRule();
+			   
+			//Now we must parse the rest of the parameters and add them to the command
+			while(pos <parameters.Length) {
+				currParam = parameters[pos];
+				Console.WriteLine("Processing["+pos+"-"+(parameters.Length-1)+"]: "+currParam);
+				//Give to the parameter the correct procesing based in the guess
+				//of his type
+				if(GenericOption.IsOption(currParam.Name)) {
+					//If this command doesn't have a rule there can't be more than the 
+					//parameters for the command that where already grouped into the
+					//first SimpleParameter object. So if there is a parameter something
+					//got broken and we must give back an exception
+					if(!gCmd.MustSpecifyRule)
+						throw new FormatException("Found rule where no rule was expected");
+					//We use a factory to build an option object
+					else if(!IptablesOptionFactory.TryGetOption(currParam, out option, out ex)) {
+						throw ex;
+					}
+					Console.WriteLine("Adding option parameter: "+currParam);
+					//Add the option to the rule
+					gCmd.Rule.Options.Add(option);
+				} else if(gCmd.Rule.TryGetMatchExtensionHandler(currParam.Name, out meh)) {
+					Console.WriteLine("Adding a match extension parameter: "+currParam);
+					//The parameter is an option for a match extension. We add to it
+					//TODO: If the name is not a valid parameter we get a null reference exception
+					//check that.
+					meh.AddParameter(currParam.Name, currParam.Value);
+				} else if(gCmd.Rule.TryGetTargetExtensionHandler(currParam.Name, out teh)) {
+					Console.WriteLine("Adding a target extension parameter: "+currParam.Name+", "+currParam.Value);
+					//The parameter is an option or the target extension of the rule
+					//We add to it
+					teh.AddParameter(currParam.Name, currParam.Value);
+				}
+
+                pos++;
+            }
 	        
-	        try
-	        {
-	            SimpleParameter[] parameters = RuleParser.GetParameterList(line);
-	            
-	            int pos=0;
-	            
-	            while(pos <parameters.Length)
-	            {
-	                currParam = parameters[pos];
-	                if(GenericCommand.IsCommand(currParam.Name))
-	                {
-                        Exception ex = null;
-                        gCmd=null;
-                        
-                        IptablesCommandFactory.TryGetCommand(currParam,
-                           out gCmd, out ex);
-                        
-                        if(gCmd==null)
-                            return null;
-						
-						//FIXME: What we should do now with the command?!
-	                }
-	                else if(GenericOption.IsOption(currParam.Name))
-	                {
-	                    Exception ex=null;
-	                    GenericOption opt=null;
-	                    
-	                    IptablesOptionFactory.TryGetOption(currParam,
-                                                           out opt, out ex);
-                        option = opt;
-                                                           
-	                    if(option==null)
-	                        return null;
-	                    
-	                    rule.Options.Add(option);
-	                }
-	                else
-	                {
-	                    //The parameter can be a option for an extension
-	                    MatchExtensionHandler matchHandler =
-	                       rule.FindMatchExtensionHandlerFor(currParam.Name);
-	                    
-	                    //If is null can't be a extension's parameter
-	                    if(matchHandler!=null)
-	                    {
-    	                    //If its not null is correct and we must add it
-    	                    matchHandler.AddParameter(currParam.Name, currParam.Value);
-	                    }
-	                    else
-	                    {   
-	                        TargetExtensionHandler targetHandler =
-	                           rule.FindTargetExtensionHandler(currParam.Name);
-	                        
-	                        //If doesn't is a match extension and if it isn't
-	                        //a target extension we don't know what the hell is.
-	                        if(targetHandler==null)
-	                            return null;
-	                        
-	                        targetHandler.AddParameter(currParam.Name, currParam.Value);
-	                        
-	                    }
-	                }
-	                
-	                pos++;
-	            }
-	        }
-	        catch(Exception)
-	        {
-	            return null;
-	        }
-	        
-			gCmd.Rule = rule;
 	        return gCmd;
-	    }
+		}
 	    
 	    
 	    /// <summary>
@@ -185,7 +180,7 @@ namespace IptablesNet.Core
                              }
 	                         else
 	                         {
-	                             throw new IptablesException("Invalid '!' found");    
+	                             throw new NetfilterException("Invalid '!' found");    
 	                         }
 	                    }
 	                    

@@ -3,7 +3,7 @@ using System;
 
 using Developer.Common.Types;
 
-namespace IptablesNet.Extensions.ExtendedTarget
+namespace IptablesNet.Extensions.Targets
 {
     public enum BalanceTargetOptions
     {

@@ -1,7 +1,7 @@
-// FragmentOption.cs
+// CoreTest.cs
 //
-//  Copyright (C) 2006 SharpKnocking project
-//  Created by Miguel Angel Pérez, mangelp@gmail.com
+//  Copyright (C)  2007 SharpKnocking project
+//  Created by mangelp@gmail.com
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -17,30 +17,22 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
 //
+//
+
 using System;
+using NUnit.Framework;
 
-using IptablesNet.Core;
-
-namespace IptablesNet.Core.Options
+namespace IptablesNet.Core.Tests
 {
 	
 	
-	public class FragmentOption: GenericOption
-	{	    
-		public FragmentOption()
-		  :base(RuleOptions.Fragment)
-		{
-		}
+	[TestFixture()]
+	public class CoreTest
+	{
 		
-		public override bool TryReadValues (string strVal, out string errStr)
+		[Test()]
+		public void TestCase()
 		{
-		    errStr="The fragment option doesn't allow any values";
-		    return false;
-		}
-		
-		protected override string GetValuesAsString()
-		{
-			return String.Empty;
 		}
 	}
 }

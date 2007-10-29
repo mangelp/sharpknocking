@@ -7,7 +7,7 @@ namespace IptablesNet.Core.Commands
 {
 	
 	/// <summary>
-	/// Factory for GenericCommand derived objects.
+	/// Factory for GenericCommand derived objects for iptables
 	/// </summary>
 	public static class IptablesCommandFactory
 	{
@@ -35,30 +35,25 @@ namespace IptablesNet.Core.Commands
 		/// </returns>
 		/// <param name="command">Command built. If built fails can be null</param>
 		/// <param name="foundException">Exception got while building the command</param>
-	    public static bool TryGetCommand(SimpleParameter param,
-	                                          out GenericCommand command,
-	                                          out Exception foundException)
+		public static bool TryGetCommand(SimpleParameter param, 
+		                                 out GenericCommand command,
+		                                 out Exception foundException)
 	    {
-	        foundException = null;
-	        command = null;
-	        
-            try
-            {
-                command = IptablesCommandFactory.GetCommand(param);
-				
+			foundException = null;
+			command = null;
+			
+			try {
+				command = IptablesCommandFactory.GetCommand(param);
 				if(command!=null)
 					return true;
 				else
 					return false;
-            }
-            catch(Exception ex)
-            { 
-                foundException = ex;
+			} catch(Exception ex) { 
+				foundException = ex;
                 return false;
-            }
-       }
-	                                          
-	                                          
+			}
+		}
+
 	    /// <summary>
 		/// Gets a command from a simple parameter. 
 		/// </summary>
@@ -75,56 +70,38 @@ namespace IptablesNet.Core.Commands
 	    {
 	        GenericCommand res=null;
 	        RuleCommands type = GenericCommand.GetCommandType(param.Name);
-	        
 	        string[] parts = StringUtil.Split(param.Value, true, ' ');
-	        
 	        //Create the instance for the concrete object
 	        Type objType = Type.GetType(currentNamespace+"."+type.ToString()+"Command",
                                         true, 
 			                            false);
-	        
 	        res = (GenericCommand)Activator.CreateInstance(objType);
-	        
 	        //Init the values in the object and check things for sanity
-	        
 	        switch(type)
 	        {
 	            case RuleCommands.AppendRule:
-	            
-	                if(parts.Length!=1)
-	                {
-	                    throw new IptablesException("Invalid parameters for "+
+	                if(parts.Length!=1) {
+	                    throw new NetfilterException("Invalid parameters for "+
 	                                           type +" command: "+param.Value);
 	                }
-	                
 	                res.ChainName = parts[0];
-	            
 	                break;
 	            case RuleCommands.DeleteChain:
 	            case RuleCommands.FlushChain:
                 case RuleCommands.ListChain:
                 case RuleCommands.ZeroChain:
-	            
-	                if(parts.Length==1)
-	                {
+	                if(parts.Length==1) {
 	                    res.ChainName = parts[0];
-	                }
-	                else if(parts.Length>1)
-	                {
-	                    throw new IptablesException("Invalid parameters for "+
+	                } else if(parts.Length>1) {
+	                    throw new NetfilterException("Invalid parameters for "+
                               type +" command: "+param.Value);
 	                }
-	                
 	                break;
 	            case RuleCommands.DeleteRule:
 	            case RuleCommands.InsertRule:
-
-	                if(parts.Length==1)
-	                {
+	                if(parts.Length==1) {
 	                    res.ChainName = parts[0];
-	                }
-	                else if(parts.Length==2)
-	                {
+	                } else if(parts.Length==2) {
 	                    res.ChainName = parts[0];
 	                    int ruleNum = Int32.Parse(parts[1]);
 	                    
@@ -132,49 +109,37 @@ namespace IptablesNet.Core.Commands
 	                        ((DeleteRuleCommand)res).RuleNum = ruleNum;
 	                    else if(type == RuleCommands.InsertRule)
 	                        ((InsertRuleCommand)res).RuleNum = ruleNum;
-	                }
-	                else if(parts.Length==0 || parts.Length>2)
-	                {
-                        throw new IptablesException("Invalid parameters for "+
+	                } else if(parts.Length==0 || parts.Length>2) {
+                        throw new NetfilterException("Invalid parameters for "+
                               type +" command: "+param.Value);
 	                }
-	                
 	                break;
 	            case RuleCommands.NewChain:
-	                
-	                if(parts.Length!=1)
-	                {
-                        throw new IptablesException("Invalid parameters for "+
+	                if(parts.Length!=1) {
+                        throw new NetfilterException("Invalid parameters for "+
                               type +" command: "+param.Value);   
 	                }
 	                res.ChainName = parts[0];
 	                break;
 	            case RuleCommands.RenameChain:
-	                
-	                if(parts.Length!=2)
-	                {
-                        throw new IptablesException("Invalid parameters for "+
+	                if(parts.Length!=2) {
+                        throw new NetfilterException("Invalid parameters for "+
                               type +" command: "+param.Value);   
 	                }
-	                
 	                ((RenameChainCommand)res).ChainName = parts[0];
 	                ((RenameChainCommand)res).NewChain = parts[1];
-	                
 	                break;
 	            case RuleCommands.ReplaceRule:
-	                if(parts.Length!=2)
-	                {
-                        throw new IptablesException("Invalid parameters for "+
+	                if(parts.Length!=2) {
+                        throw new NetfilterException("Invalid parameters for "+
                               type +" command: "+param.Value);   
 	                }
-	                
 	                ((ReplaceRuleCommand)res).RuleNum = Int32.Parse(parts[1]);
 	                res.ChainName = parts[0];
 	                break;
 	            case RuleCommands.SetChainPolicy:
-	                if(parts.Length!=2)
-	                {
-                        throw new IptablesException("Invalid parameters for "+
+	                if(parts.Length!=2) {
+                        throw new NetfilterException("Invalid parameters for "+
                               type +" command: "+param.Value);   
 	                }
 	                SetChainPolicyCommand policy = (SetChainPolicyCommand)res;

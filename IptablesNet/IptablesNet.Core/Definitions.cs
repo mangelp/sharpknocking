@@ -1,32 +1,60 @@
-// created on 14/01/2007 at 14:23
-
-// Definitions for iptables
+// Definitions.cs
+//
+//  Copyright (C)  2007 iSharpKnocking project
+//  Created by Miguel Angel Perez, mangelp@gmail.com
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
 
 using System;
 
 using Developer.Common.Types;
 
 namespace IptablesNet.Core
-{
-
-    
+{   
     /// <summary>
     /// Built in chains in iptables. Not all the builtin chains are applicable
     /// to every table. Each table contains a subset of builtin chains.
     /// </summary>
+	/// <remarks>
+	/// <see>PacketTableType for reference of available tables</see> 
+	/// </remarks>
     public enum BuiltInChains:short
     {
-        //If set to this must be a user defined chain.
-        None=0,
-        //Incoming packets chain
+        /// <summary>
+		/// User defined chain. Can be in any table. 
+		/// </summary>
+        UserDefined=0,
+		/// <summary>
+		/// Incoming packets chain. Can be in Filter and Mangler tables.
+		/// </summary>
         Input,
-        //Outcoming packets chain
+        /// <summary>
+		/// Output packets chain. Can be in Nat, Mangler and Raw tables.
+		/// </summary>
         Output,
-        //??
+        /// <summary>
+		/// Forward packets chain. Can be in Filter and Mangler tables.
+		/// </summary>
         Forward,
-        //??
+        /// <summary>
+		/// Prerouting packets chain. Can be in Nat, Mangler and Raw tables.
+		/// </summary>
         Prerouting,
-        //??
+        /// <summary>
+		/// Postrouting packets chain. Can be in Nat and Mangler tables.
+		/// </summary>
         Postrouting
     }
     
@@ -95,7 +123,7 @@ namespace IptablesNet.Core
     /// <summary>
     /// Builtin tables in iptables for packets.
     /// </summary>
-    public enum PacketTables
+    public enum PacketTableType
     { 
         /// <summary>
         /// Default table. Contains built-in chains INPUT, FORWARD and OUTPUT.
@@ -122,7 +150,6 @@ namespace IptablesNet.Core
         Raw
     }
     
-        
     /// <summary>
     /// Commands available
     /// </summary>

@@ -21,7 +21,7 @@ namespace IptablesNet.Core
 
 		}
 		
-		public new T this[int index]
+		public T this[int index]
 		{
 		    get
 		    {
