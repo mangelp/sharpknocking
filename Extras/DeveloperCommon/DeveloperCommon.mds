@@ -1,0 +1,25 @@
+<Combine name="DeveloperCommon" fileversion="2.0" outputpath="build/bin/">
+  <Configurations>
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="Developer.Common" configuration="Debug" />
+      <Entry build="True" name="Developer.Common.Unix" configuration="Debug" />
+      <Entry build="True" name="Developer.Common.Windows" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="Developer.Common" configuration="Release" />
+      <Entry build="True" name="Developer.Common.Unix" configuration="Release" />
+      <Entry build="True" name="Developer.Common.Windows" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="Developer.Common" single="False">
+    <Execute type="None" entry="Developer.Common" />
+    <Execute type="None" entry="Developer.Common.Unix" />
+    <Execute type="None" entry="Developer.Common.Windows" />
+  </StartMode>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInProjectRootDirectory" />
+  <Entries>
+    <Entry filename="../Developer.Common/Developer.Common.mdp" />
+    <Entry filename="../Developer.Common.Unix/Developer.Common.Unix.mdp" />
+    <Entry filename="../Developer.Common.Windows/Developer.Common.Windows.mdp" />
+  </Entries>
+</Combine>
