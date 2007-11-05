@@ -1,38 +1,44 @@
 <Project name="Developer.Common.Unix" fileversion="2.0" DefaultNamespace="Developer.Common.Unix" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Debug" assembly="Developer.Common.Unix" />
+      <CustomCommands>
+        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
+      </CustomCommands>
+      <Output directory="bin/Debug" assemblyKeyFile="." assembly="Developer.Common.Unix" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Release" assembly="Developer.Common.Unix" />
+      <CustomCommands>
+        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
+      </CustomCommands>
+      <Output directory="bin/Release" assembly="Developer.Common.Unix" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Net" subtype="Directory" buildaction="Compile" />
-    <File name="./Net/NetworkServicesData.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Net/Protocols.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Net/Structs.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SystemCommands" subtype="Directory" buildaction="Compile" />
-    <File name="./SystemCommands/SearchWrapper.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SystemCommands/WhichSysCmd.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SystemCommands/IptablesSysCmd.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SystemCommands/LocateSysCmd.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Native" subtype="Directory" buildaction="Compile" />
-    <File name="./Native/UnixNative.cs" subtype="Code" buildaction="Compile" />
-    <File name="./SystemCommands/TextOutputCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Net" subtype="Directory" buildaction="Compile" />
+    <File name="Net/NetworkServicesData.cs" subtype="Code" buildaction="Compile" />
+    <File name="Net/Protocols.cs" subtype="Code" buildaction="Compile" />
+    <File name="Net/Structs.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands" subtype="Directory" buildaction="Compile" />
+    <File name="SystemCommands/SearchWrapper.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/WhichSysCmd.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/IptablesSysCmd.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/LocateSysCmd.cs" subtype="Code" buildaction="Compile" />
+    <File name="Native" subtype="Directory" buildaction="Compile" />
+    <File name="Native/UnixNative.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/TextOutputCommand.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
-    <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
   </References>
   <Deployment.LinuxDeployData scriptName="developer.common.unix" />
-  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInProjectRootDirectory" />
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UseParentPolicy" />
 </Project>
