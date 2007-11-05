@@ -38,7 +38,7 @@ namespace Developer.Common.Types
 		{
 			if(cache.ContainsKey(asmName))
 			{
-				Console.WriteLine("Assembly found in cache: "+asmName);
+				//Console.WriteLine("Assembly found in cache: "+asmName);
 				return cache[asmName];
 			}
 			Assembly asm=null;
