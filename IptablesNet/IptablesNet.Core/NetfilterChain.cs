@@ -198,13 +198,15 @@ namespace IptablesNet.Core
 		/// <summary>
 		/// Gets a string that can be parsed back to a rule list
 		/// </summary>
-        public string GetContentsAsString()
+		/// <param name="iptablesFormat">If true the string is generated usin the format
+		/// required by iptables-restore</param>
+        public string GetContentsAsString(bool iptablesFormat)
         {
             if(this.rules.Count==0)
 		        return String.Empty;
 		    
-		    StringBuilder sb = new StringBuilder(this.rules[0].ToString());
-		    this.AppendContentsTo(sb);
+		    StringBuilder sb = new StringBuilder();
+			this.AppendContentsTo(sb, iptablesFormat);
 		    return sb.ToString();
         }
 		
@@ -222,16 +224,45 @@ namespace IptablesNet.Core
 		/// Appends every rule to the string builder using the overload of the
 		/// ToString methods of the rules.
 		/// </summary>
+		/// <param name="sb">
+		/// A <see cref="StringBuilder"/> where all the rules are going to be added.
+		/// </param>
 		public void AppendContentsTo(StringBuilder sb)
+		{
+			this.AppendContentsTo(sb, false);
+		}
+		
+		/// <summary>
+		/// Appends every rule to the string builder using the overload of the
+		/// ToString methods of the rules.
+		/// </summary>
+		/// <param name="sb">String builder object to append the contents</param>
+		/// <param name="addCommand">If true indicates that a command must be
+		/// added at the start of each rule</param>
+		/// <remarks>
+		/// The flag addCommand is required to have a correct output from this method
+		/// that will be usefull to use with iptables-restore to have this contents
+		/// added to the current rule set.
+		/// </remarks>
+		public void AppendContentsTo(StringBuilder sb, bool iptablesFormat)
 		{
             if(this.rules.Count==0)
 		        return;
+			
+			//We simply have to add the -A with the chain name before each rule
+			//to have it added to the chain by iptables-save
+			if(iptablesFormat)
+				sb.Append("-A "+this.CurrentName+" ");
 			
 			sb.Append(this.rules[0].ToString());
 		    
 		    for(int i=1;i<this.rules.Count;i++)
 		    {
-		        sb.Append("\n"+rules[i].ToString());
+				if(iptablesFormat)
+					sb.Append("\n-A "+this.CurrentName+ " ");
+				else
+					sb.Append("\n");
+				this.rules[i].AppendContentsTo(sb, iptablesFormat);
 		    }
 		}
 		

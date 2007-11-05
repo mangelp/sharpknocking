@@ -72,7 +72,7 @@ namespace IptablesNet.Core
         /// </summary>
         UserDefinedChain=1,
         /// <summary>
-        /// The target is a custom extension. This option is unsupported.
+        /// The target is a custom extension.
         /// </summary>
         CustomExtension=2
     }

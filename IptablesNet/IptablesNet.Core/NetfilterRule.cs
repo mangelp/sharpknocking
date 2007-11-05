@@ -1,3 +1,23 @@
+// NetfilterRule.cs
+//
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by Miguel Angel Perez (mangelp{@}gmail{d0t}com)
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+//
+//
 
 using System;
 using System.Text;
@@ -244,7 +264,7 @@ namespace IptablesNet.Core
 		/// parameter or there is no extension target loaded it returns null.
 		/// </remarks>
 		public TargetExtensionHandler FindTargetExtensionHandler(string paramName)
-		{            
+		{
 		    if(this.jumpOption!=null &&
 		             this.jumpOption.HasOptionNamed(paramName))
 		    {
@@ -268,7 +288,6 @@ namespace IptablesNet.Core
 		    
 		    for(int i=0;i<this.loadedExtensions.Count;i++)
 		    {
-		        
 		        handler = this.loadedExtensions[i];
 
 		        if(handler.IsSupportedParam(paramName))
@@ -278,30 +297,62 @@ namespace IptablesNet.Core
 		    return null;
 		}
 		
+		public MatchExtensionHandler FindMatchExtensionHandler(MatchExtensionOption meo)
+		{
+			for (int i=0;i<this.loadedExtensions.Count;i++) {
+				if(loadedExtensions[i].GetType() == meo.ExtensionType) {
+					return loadedExtensions[i];
+				}
+			}
+			
+			return null;
+		}
+		
+		public void AppendContentsTo(StringBuilder sb, bool iptablesFormat)
+		{
+			Console.WriteLine("** Converting rule to string ** ");
+		    for(int i=0;i<this.options.Count;i++)
+		    {
+				if(this.options[i]==this.jumpOption)
+					continue;
+				else if(this.options[i] is MatchExtensionOption)
+				{
+					//First we print the option and then the parameters
+					sb.Append(this.options[i].ToString()+" ");
+					MatchExtensionHandler handler = this.FindMatchExtensionHandler((MatchExtensionOption)this.options[i]);
+					if(handler!=null)
+					{
+						handler.AppendContentsTo(sb);
+						sb.Append(" ");
+					}
+					Console.WriteLine("MatchExtension: "+this.options[i]+" "+handler);
+				}
+				else
+				{
+					Console.WriteLine("Option: "+this.options[i]);
+					sb.Append(this.options[i].ToString()+" ");
+				}
+		    }
+			
+			Console.WriteLine("Target extension: "+jumpOption);
+			if(jumpOption!=null)
+				sb.Append(this.jumpOption.ToString());
+		}
+		
+		public string GetContentsAsString(bool iptablesFormat)
+		{
+			StringBuilder sb = new StringBuilder();
+			this.AppendContentsTo(sb, iptablesFormat);
+			return sb.ToString();
+		}
+		
 		//---------------------------------------------------
 		// IComparable<T> implementation and overrides of ToString, Equals and
 		// GetHashCode.
-		
+				
 		public override string ToString ()
 		{
-		    StringBuilder stb = new StringBuilder();
-			// FIXME: The rule doesn't have now the reference to the command. We
-			// should fix the generation of the string as this brokes it, and the
-			// generated string isn't in the correct format now. 
-			//-------
-			//stb.Append(this.command+" ");
-		    
-		    for(int i=0;i<this.options.Count;i++)
-		    {
-		        stb.Append(this.options[i]+" ");    
-		    }
-		    
-		    for(int i=0;i<this.loadedExtensions.Count;i++)
-		    {
-		        stb.Append(this.LoadedExtensions[i]+" ");    
-		    }
-		    
-		    return stb.ToString();
+			return this.GetContentsAsString(false);
 		}
 		
 		public override bool Equals (object o)

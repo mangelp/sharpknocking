@@ -1,3 +1,23 @@
+// RuleParser.cs
+//
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by Miguel Angel Perez (mangelp{@}gmail{d0t}com)
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+//
+//
 
 using System;
 using System.Collections;
@@ -32,7 +52,7 @@ namespace IptablesNet.Core
 		/// </remarks>
 	    public static GenericCommand GetCommand(string line, NetfilterTable curTable)
 	    {
-			Console.WriteLine("Processing line: "+line);
+			//Console.WriteLine("Processing line: "+line);
 			//If the line doesn't look like a valid command we can't do nothing
 			if(!GenericCommand.CanBeACommand (line))
 				return null;
@@ -47,10 +67,10 @@ namespace IptablesNet.Core
 			
             SimpleParameter[] parameters = RuleParser.GetParameterList(line);
 			
-			for(int i=0;i<parameters.Length;i++)
-			{
-				Console.WriteLine("Param["+i+"]: "+parameters[i]);
-			}
+//			for(int i=0;i<parameters.Length;i++)
+//			{
+//				Console.WriteLine("Param["+i+"]: "+parameters[i]);
+//			}
 			
 			if(parameters.Length==0)
 				throw new ArgumentException("There are nothing to parse here: "+line);
@@ -69,7 +89,7 @@ namespace IptablesNet.Core
 			//Now we must parse the rest of the parameters and add them to the command
 			while(pos <parameters.Length) {
 				currParam = parameters[pos];
-				Console.WriteLine("Processing["+pos+"-"+(parameters.Length-1)+"]: "+currParam);
+				//Console.WriteLine("Processing["+pos+"-"+(parameters.Length-1)+"]: "+currParam);
 				//Give to the parameter the correct procesing based in the guess
 				//of his type
 				if(GenericOption.IsOption(currParam.Name)) {
@@ -83,17 +103,17 @@ namespace IptablesNet.Core
 					else if(!IptablesOptionFactory.TryGetOption(currParam, out option, out ex)) {
 						throw ex;
 					}
-					Console.WriteLine("Adding option parameter: "+currParam);
+					//Console.WriteLine("Adding option parameter: "+currParam);
 					//Add the option to the rule
 					gCmd.Rule.Options.Add(option);
 				} else if(gCmd.Rule.TryGetMatchExtensionHandler(currParam.Name, out meh)) {
-					Console.WriteLine("Adding a match extension parameter: "+currParam);
+					//Console.WriteLine("Adding a match extension parameter: "+currParam);
 					//The parameter is an option for a match extension. We add to it
 					//TODO: If the name is not a valid parameter we get a null reference exception
 					//check that.
 					meh.AddParameter(currParam.Name, currParam.Value);
 				} else if(gCmd.Rule.TryGetTargetExtensionHandler(currParam.Name, out teh)) {
-					Console.WriteLine("Adding a target extension parameter: "+currParam.Name+", "+currParam.Value);
+					//Console.WriteLine("Adding a target extension parameter: "+currParam.Name+", "+currParam.Value);
 					//The parameter is an option or the target extension of the rule
 					//We add to it
 					teh.AddParameter(currParam.Name, currParam.Value);
