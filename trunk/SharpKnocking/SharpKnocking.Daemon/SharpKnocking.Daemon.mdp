@@ -1,25 +1,30 @@
-<Project name="SharpKnocking.Daemon" fileversion="2.0" Description="Daemon that manages detection of the knocking sequences and the actions done." language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="SharpKnocking.Daemon" fileversion="2.0" Description="Daemon that manages detection of the knocking sequences and the actions done." DefaultNamespace="SharpKnocking.Daemon" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Debug" assembly="SharpKnocking.Daemon" />
+      <CustomCommands>
+        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
+      </CustomCommands>
+      <Output directory="bin/Debug" assembly="SharpKnocking.Daemon" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Release" assembly="SharpKnocking.Daemon" />
+      <CustomCommands>
+        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
+      </CustomCommands>
+      <Output directory="bin/Release" assembly="SharpKnocking.Daemon" />
       <Build debugmode="False" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./Main.cs" subtype="Code" buildaction="Compile" />
-    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Main.cs" subtype="Code" buildaction="Compile" />
+    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <ProjectReference type="Project" localcopy="True" refto="SharpKnocking.Core" />
   </References>
   <Deployment.LinuxDeployData scriptName="skdaemon" />
 </Project>
