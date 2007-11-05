@@ -1,3 +1,23 @@
+// ExtensionHandler.cs
+//
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by mangelp<@>gmail[*]com
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+//
+//
 
 using System;
 using System.Text;
@@ -189,22 +209,24 @@ namespace IptablesNet.Core.Extensions
 	    public override string ToString ()
 	    {
             //Debug.VerboseWrite("TargetExtensionHandler: Converting to string "+this.parameters.Count+" options");
+			return this.GetContentsAsString ();
+		}
+			
+		public virtual void AppendContentsTo(StringBuilder sb)
+		{
+			if(this.parameters.Count>0)
+				sb.Append(this.parameters[0]);
+			for (int i=1;i<this.parameters.Count;i++) {
+				sb.Append(" "+this.parameters[i]);
+			}
+		}
+			
+		public string GetContentsAsString()
+		{
 	        StringBuilder sb = new StringBuilder();
-	        
-	        bool first = true;
-	        
-	        for(int i=0;i<this.parameters.Count;i++)
-	        {
-	            if(!first)
-	                sb.Append(" ");
-	            else
-	                first=false;
-	            
-	            sb.Append(this.parameters[i]);
-	        }
-	        
+	        this.AppendContentsTo (sb);
 	        return sb.ToString();
-	    }
+		}
 		
 		private int IndexOf(string paramName)
 		{

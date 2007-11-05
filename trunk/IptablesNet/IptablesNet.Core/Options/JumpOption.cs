@@ -210,16 +210,19 @@ namespace IptablesNet.Core.Options
 		{
             string str = String.Empty;
             
-            if(this.target == RuleTargets.CustomTarget)
-            {
-               if(this.customTarget == CustomRuleTargets.CustomExtension)
-                    str = this.extension.ToString();
-               else if(this.customTarget == CustomRuleTargets.UserDefinedChain)
-                    str = this.customTargetName;
-            }
-            else
-            {
-                str=AliasUtil.GetDefaultAlias(this.target);
+			if(this.target == RuleTargets.CustomTarget)
+			{
+				//Console.WriteLine("Converting to string: "+this.target+", "+this.customTarget+", "+this.customTargetName+", "+this.extension);
+				//Fix: We must return the list of option parameters, that is the name of the target extension and
+				//all his parameters. This differs from what the match extension does
+				if(this.customTarget == CustomRuleTargets.CustomExtension)
+					str = this.extension.ExtensionName+" "+this.extension.ToString();
+				else if(this.customTarget == CustomRuleTargets.UserDefinedChain)
+					str = this.customTargetName;
+			}
+			else
+			{
+				str=AliasUtil.GetDefaultAlias(this.target);
             }
             
             return str;

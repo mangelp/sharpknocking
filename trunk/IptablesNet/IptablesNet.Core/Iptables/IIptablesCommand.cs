@@ -1,8 +1,7 @@
 // IIptablesCommand.cs
 //
-//  Copyright (C) SharpKnocking Project 2007
-//  Author: Miguel Angel Perez Valencia
-//  For a list of contributors see AUTHORS
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by mangelp<@>gmail[*]com
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
