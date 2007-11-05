@@ -1,60 +1,64 @@
-<Project name="SharpKnocking.Core" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="SharpKnocking.Core" fileversion="2.0" DefaultNamespace="SharpKnocking.Core" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Debug" assembly="SharpKnocking.Core" />
+      <CustomCommands>
+        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
+      </CustomCommands>
+      <Output directory="bin/Debug" assemblyKeyFile="." assembly="SharpKnocking.Core" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Release" assembly="SharpKnocking.Core" />
+      <CustomCommands>
+        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
+      </CustomCommands>
+      <Output directory="bin/Release" assembly="SharpKnocking.Core" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Calls/CallHitData.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Calls/CallSequence.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Calls/CallsLoader.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Calls/SequenceDetector.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Calls/SequenceDetectorEvents.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Calls/SequenceDetectorManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Config/DoormanConfig.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Remoting/Definitions.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Remoting/RemoteDaemon.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Remoting/RemoteEnd.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Remoting/RemoteEndEventArgs.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Remoting/RemoteEndService.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Remoting/RemoteManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Remoting/RemotingCommunicator.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Remoting/RemotingCommunicatorEvents.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking" subtype="Directory" buildaction="Compile" />
-    <File name="./Knocking/KnockingConfigDataSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/KnockActionManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/KnockingRulesDataSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/IKnockAction.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/ServiceAction.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/IptablesAction.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/SystemAction.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/IKnockTracker.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/KnockActionProcessor.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/DefaultKnockTracker.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/IKnockCapturer.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/BaseKnockCapturer.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/IptLogCapturer.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/TcpDumpCapturer.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/SharpPcapCapturer.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Config/DaemonConfigDataSource.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/IKnock.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/Events.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/CapturerFactory.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Knocking/Knocks.cs" subtype="Code" buildaction="Compile" />
+    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Calls/CallHitData.cs" subtype="Code" buildaction="Compile" />
+    <File name="Calls/CallSequence.cs" subtype="Code" buildaction="Compile" />
+    <File name="Calls/CallsLoader.cs" subtype="Code" buildaction="Compile" />
+    <File name="Calls/SequenceDetector.cs" subtype="Code" buildaction="Compile" />
+    <File name="Calls/SequenceDetectorEvents.cs" subtype="Code" buildaction="Compile" />
+    <File name="Calls/SequenceDetectorManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Config/DoormanConfig.cs" subtype="Code" buildaction="Compile" />
+    <File name="Remoting/Definitions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Remoting/RemoteDaemon.cs" subtype="Code" buildaction="Compile" />
+    <File name="Remoting/RemoteEnd.cs" subtype="Code" buildaction="Compile" />
+    <File name="Remoting/RemoteEndEventArgs.cs" subtype="Code" buildaction="Compile" />
+    <File name="Remoting/RemoteEndService.cs" subtype="Code" buildaction="Compile" />
+    <File name="Remoting/RemoteManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Remoting/RemotingCommunicator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Remoting/RemotingCommunicatorEvents.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking" subtype="Directory" buildaction="Compile" />
+    <File name="Knocking/KnockingConfigDataSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/KnockActionManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/KnockingRulesDataSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/IKnockAction.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/ServiceAction.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/IptablesAction.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/SystemAction.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/IKnockTracker.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/KnockActionProcessor.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/DefaultKnockTracker.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/IKnockCapturer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/BaseKnockCapturer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/IptLogCapturer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/TcpDumpCapturer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/SharpPcapCapturer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Config/DaemonConfigDataSource.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/IKnock.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/Events.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/CapturerFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="Knocking/Knocks.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
-    <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
-    <ProjectReference type="Project" localcopy="True" refto="Developer.Common.Unix" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Runtime.Remoting, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
