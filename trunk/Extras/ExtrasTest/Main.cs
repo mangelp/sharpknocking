@@ -23,12 +23,12 @@ namespace ExtrasTest
 			Console.WriteLine("#################################### Loading "+args[0]);
 			ts.LoadFromFile(args[0]);
 			Console.WriteLine("#################################### Saving "+args[1]);
-			ts.SaveToFile(args[1], false);
-			ts = new NetfilterTableSet();
-			Console.WriteLine("#################################### Loading "+args[1]);
-			ts.LoadFromFile(args[1]);
-			Console.WriteLine("#################################### Saving "+args[1]);
-			ts.SaveToFile(args[1]+".temp", false);
+			ts.SaveToFile(args[1], true);
+//			ts = new NetfilterTableSet();
+//			Console.WriteLine("#################################### Loading "+args[1]);
+//			ts.LoadFromFile(args[1]);
+//			Console.WriteLine("#################################### Saving "+args[1]);
+//			ts.SaveToFile(args[1]+".temp", true);
 		}
 		
 		public static void Test1(string[] args)
