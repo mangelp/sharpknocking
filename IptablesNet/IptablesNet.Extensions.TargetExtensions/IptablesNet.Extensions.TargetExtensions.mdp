@@ -1,28 +1,34 @@
 <Project name="IptablesNet.Extensions.Targets" fileversion="2.0" Description="Library of target extensions for the rules" DefaultNamespace="IptablesNet.Extensions.Targets" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Debug" assembly="IptablesNet.Extensions.Targets" />
+      <CustomCommands>
+        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
+      </CustomCommands>
+      <Output directory="bin/Debug" assembly="IptablesNet.Extensions.Targets" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Release" assembly="IptablesNet.Extensions.Targets" />
+      <CustomCommands>
+        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
+      </CustomCommands>
+      <Output directory="bin/Release" assemblyKeyFile="." assembly="IptablesNet.Extensions.Targets" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./UlogTargetExtension.cs" subtype="Code" buildaction="Compile" />
-    <File name="./RejectTargetExtension.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Definitions.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Changelog.txt" subtype="Code" buildaction="Compile" />
+    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="UlogTargetExtension.cs" subtype="Code" buildaction="Compile" />
+    <File name="RejectTargetExtension.cs" subtype="Code" buildaction="Compile" />
+    <File name="Definitions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Changelog.txt" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
-    <ProjectReference type="Project" localcopy="True" refto="IptablesNet.Core" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Project" localcopy="True" refto="IptablesNet.Core" />
     <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
   </References>
   <Deployment.LinuxDeployData scriptName="iptablesnet.extensions.targetextensions" />
