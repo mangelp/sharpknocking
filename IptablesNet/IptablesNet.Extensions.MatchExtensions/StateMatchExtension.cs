@@ -16,7 +16,6 @@ namespace IptablesNet.Extensions.Matches
 	    public StateMatchExtension()
 	      :base(typeof(StateMatchOptions), MatchExtensions.State)
 		{
-            
 		}
 		
 		/// <summary>
@@ -30,12 +29,13 @@ namespace IptablesNet.Extensions.Matches
 		/// </returns>
 		public static ConnectionStates GetStateType(string type)
         {
+			//Console.Out.WriteLine("** Getting state from: "+type);
             ConnectionStates result;
             
             if(StateMatchExtension.TryGetStateType(type, out result))
                 return result;
             
-            return ConnectionStates.None;
+			throw new FormatException("The string is not a valid status");
         }
         
         /// <summary>
@@ -46,6 +46,7 @@ namespace IptablesNet.Extensions.Matches
         /// </remarks>
         public static bool TryGetStateType(string type,out ConnectionStates result)
         {
+			//Console.Out.WriteLine("** Try getting state from: "+type);
             result = ConnectionStates.None;
             
             string[] list = StringUtil.Split(type, true, ',');
@@ -58,7 +59,6 @@ namespace IptablesNet.Extensions.Matches
                 return false;
             }
             
-            result = ConnectionStates.None;
             ConnectionStates state;
             
             for(int i=0;i<list.Length;i++)
@@ -141,21 +141,24 @@ namespace IptablesNet.Extensions.Matches
             
             protected override string GetValuesAsString ()
             {
-                return this.GetStateFlagsString(this.state);
+                return this.GetStateFlagsString(this.state, true);
             }
             
             public override void SetValues (string value)
             {
+				//Console.Out.WriteLine("Getting status values from: "+value);
                 object obj=null;
                 string[] list = StringUtil.Split (value, true, ',');
                 
-                ConnectionStates state = ConnectionStates.None;
+				this.state = ConnectionStates.None;
                 
                 for(int i=0;i<list.Length;i++){
-                    
+					//Console.Out.WriteLine("Is "+list[i]+" a enumeration member?");
                     if(AliasUtil.IsAliasName(typeof(ConnectionStates), list[i], out obj))
                     {
-                        this.state = (ConnectionStates)obj;
+						//Console.Out.WriteLine("Yes: "+obj);
+						this.state = this.state | (ConnectionStates)obj;
+						//Console.Out.WriteLine("After asigning we have: "+this.state);
                     }
                     else
                     {
@@ -164,23 +167,26 @@ namespace IptablesNet.Extensions.Matches
                                                         " to ConnectionStates enum");
                     }
                 }
-                
-                this.state = state;
             }
             
-            private string GetStateFlagsString (ConnectionStates states)
+            private string GetStateFlagsString (ConnectionStates states, bool iptablesFormat)
             {
                 Array values = Enum.GetValues (typeof(ConnectionStates));
                 StringBuilder sb = new StringBuilder();
                 
-                foreach (ConnectionStates value in values)
-                {
-                    if((value & states) == value)
-                        sb.Append(value+",");
+                foreach (ConnectionStates value in values) {
+					//Fix: Exclude the None value as it is 0 matches everytime
+					if( (value & states) == value && value != ConnectionStates.None )
+                        sb.Append(value + ",");
                 }
-                //Remove the ',' character in the end
+				
+                //Remove the ',' character at the end
                 sb.Remove(sb.Length-1, 1);
-                return sb.ToString();
+				
+				if(!iptablesFormat)
+					return sb.ToString();
+				else
+					return sb.ToString().ToUpper();
             }
         }
 

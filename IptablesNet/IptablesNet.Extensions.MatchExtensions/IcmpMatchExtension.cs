@@ -1,3 +1,23 @@
+// IcmpMatchExtension.cs
+//
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by Miguel Angel Perez (mangelp{@}gmail{d0t}com)
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+//
+//
 
 using System;
 using System.Collections;
@@ -97,18 +117,21 @@ namespace IptablesNet.Extensions.Matches
             
             protected override string GetValuesAsString ()
             {
-                int code = (int)this.icmp;
-                //The format is 
-                // - If greater or equal to 100 the last two digits are the subtype
-                //   and the first ones the type
-                // - If less than 100 is simply a type.
-                if(code >= 100){
-                    int subCode = code%100;
-                    code = code/100;
-                    return code+"/"+subCode;
-                } else {
-                    return code.ToString();    
-                }
+				//We usually will prefer text representation than the number
+				return AliasUtil.GetDefaultAlias(this.icmp);
+				//This is no usable but it is interesting to keep it as documentation
+//                int code = (int)this.icmp;
+//                // The format of the number is 
+//                // - If greater or equal to 100 the last two digits are the subtype
+//                //   and the first ones the type
+//                // - If less than 100 is simply a type.
+//                if(code >= 100){
+//                    int subCode = code%100;
+//                    code = code/100;
+//                    return code+"/"+subCode;
+//                } else {
+//                    return code.ToString();    
+//                }
             }
             
             public override void SetValues (string value)

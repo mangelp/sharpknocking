@@ -1,0 +1,6 @@
+2007-11-05  Miguel Angel Perez <mangelp@gmail.com> 
+- Resolved some bugs about getting the rules in iptables-save format.
+- Solved bugs in state extension that gived back an exception when creating the parameters.
+- Updated license headers and namespaces.
+	
+
