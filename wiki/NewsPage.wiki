@@ -18,7 +18,7 @@ This Sunday morning i discovered that our blog only prints this when it is acces
 _ JAWS Fatal Error:_
 _Failed to fetch enabled data for registry_
 
-We still don't know the causes for this but will investigate soon to recover it.
+We still don't know the causes for this but we will recover it soon.
 
 Regards.
 
