@@ -17,3 +17,17 @@ After an entire summer full of work and exams we are back with with renewed idea
 So from now we are going to publish in this page the main news about this project and progress report.
 
 Regards.
+
+
+=== 6/11/2007 ===
+
+*Project blog down*
+
+This Sunday morning i discovered that our blog only prints this when it is accessed:
+
+ JAWS Fatal Error:
+Failed to fetch enabled data for registry
+
+We still don't know the causes for this but will investigate soon to recover it.
+
+Regards.
