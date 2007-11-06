@@ -8,16 +8,6 @@ Here you will find the latest news of this project
 
 = News =
 
-=== 31/10/2007 ===
-
-*We are back!*
-
-After an entire summer full of work and exams we are back with with renewed ideas and code. This year we have submitted again our project to take part in the "Concurso Universitario de Software Libre".
-
-So from now we are going to publish in this page the main news about this project and progress report.
-
-Regards.
-
 
 === 6/11/2007 ===
 
@@ -29,5 +19,15 @@ This Sunday morning i discovered that our blog only prints this when it is acces
 Failed to fetch enabled data for registry
 
 We still don't know the causes for this but will investigate soon to recover it.
+
+Regards.
+
+=== 31/10/2007 ===
+
+*We are back!*
+
+After an entire summer full of work and exams we are back with with renewed ideas and code. This year we have submitted again our project to take part in the "Concurso Universitario de Software Libre".
+
+So from now we are going to publish in this page the main news about this project and progress report.
 
 Regards.
