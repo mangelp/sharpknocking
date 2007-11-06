@@ -15,8 +15,8 @@ Here you will find the latest news of this project
 
 This Sunday morning i discovered that our blog only prints this when it is accessed:
 
- JAWS Fatal Error:
-Failed to fetch enabled data for registry
+_ JAWS Fatal Error:_
+_Failed to fetch enabled data for registry_
 
 We still don't know the causes for this but will investigate soon to recover it.
 
