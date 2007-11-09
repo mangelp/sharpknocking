@@ -43,7 +43,7 @@
   * This library is being refactorized in the subproject IptablesNet and in a future it will be replaced with the result of that.
 
 === IptablesNet ===
-  * Nothing, because it is still under heavy development for the initial release.
+  * Be aware this is going to be called IptablesSharp soon ...
 
 === Misc ===
   * Review some files: ~~README, INSTALL~~, TODO, ...
