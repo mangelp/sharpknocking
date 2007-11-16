@@ -1,0 +1,32 @@
+﻿<UserCombinePreferences version="1.0" filename="/home/mangelp/Projects/sharpknocking/iSharpKnocking/iSharpKnocking.mds">
+  <Files />
+  <Views>
+    <ViewMemento id="ProjectPad">
+      <Node expanded="True">
+        <Node name="Extras" expanded="True">
+          <Node name="DeveloperCommon" expanded="True">
+            <Node name="Developer.Common" expanded="True">
+              <Node name="SystemCommands" expanded="True">
+                <Node name="BaseCommandWrapper.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+          <Node name="IptablesNet" expanded="True" />
+        </Node>
+      </Node>
+    </ViewMemento>
+    <ViewMemento id="ClassPad">
+      <Node expanded="True" />
+    </ViewMemento>
+    <ViewMemento id="ConnectionManagerPad">
+      <Node />
+    </ViewMemento>
+    <ViewMemento id="MonoDevelop.NUnit.TestPad">
+      <Node />
+    </ViewMemento>
+  </Views>
+  <Properties>
+    <Property key="ActiveWindow" value="" />
+    <Property key="ActiveConfiguration" value="Debug" />
+  </Properties>
+</UserCombinePreferences>

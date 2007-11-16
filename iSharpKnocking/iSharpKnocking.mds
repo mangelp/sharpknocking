@@ -1,0 +1,34 @@
+<Combine name="iSharpKnocking" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="Extras" configuration="Debug" />
+      <Entry build="True" name="SharpKnocking.Core" configuration="Debug" />
+      <Entry build="True" name="SharpKnocking.Daemon" configuration="Debug" />
+      <Entry build="True" name="SharpKnocking.Doorman" configuration="Debug" />
+      <Entry build="True" name="SharpKnocking.Knocker" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="Extras" configuration="Release" />
+      <Entry build="True" name="SharpKnocking.Core" configuration="Release" />
+      <Entry build="True" name="SharpKnocking.Daemon" configuration="Release" />
+      <Entry build="True" name="SharpKnocking.Doorman" configuration="Release" />
+      <Entry build="True" name="SharpKnocking.Knocker" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="Extras" single="True">
+    <Execute type="None" entry="Extras" />
+    <Execute type="None" entry="Extras" />
+    <Execute type="None" entry="SharpKnocking.Core" />
+    <Execute type="None" entry="SharpKnocking.Daemon" />
+    <Execute type="None" entry="SharpKnocking.Doorman" />
+    <Execute type="None" entry="SharpKnocking.Knocker" />
+  </StartMode>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInProjectRootDirectory" />
+  <Entries>
+    <Entry filename="../Extras/Extras.mds" />
+    <Entry filename="../SharpKnocking/SharpKnocking.Core/SharpKnocking.Core.mdp" />
+    <Entry filename="../SharpKnocking/SharpKnocking.Daemon/SharpKnocking.Daemon.mdp" />
+    <Entry filename="../SharpKnocking/SharpKnocking.Doorman/SharpKnocking.Doorman.mdp" />
+    <Entry filename="../SharpKnocking/SharpKnocking.Knocker/SharpKnocking.Knocker.mdp" />
+  </Entries>
+</Combine>
