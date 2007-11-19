@@ -26,13 +26,15 @@
     <File name="Net/Protocols.cs" subtype="Code" buildaction="Compile" />
     <File name="Net/Structs.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands" subtype="Directory" buildaction="Compile" />
-    <File name="SystemCommands/SearchWrapper.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/WhichSysCmd.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/IptablesSysCmd.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/LocateSysCmd.cs" subtype="Code" buildaction="Compile" />
     <File name="Native" subtype="Directory" buildaction="Compile" />
     <File name="Native/UnixNative.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/TextOutputCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/IptablesSaveSysCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/IptablesRestoreSysCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/TextInputCommand.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -1,7 +1,7 @@
 // BaseCommandWrapper.cs
 //
-//  Copyright (C)  2007 SharpKnocking project
-//  Created by mangelp@gmail.com
+//  Copyright (C)  2007 iSharpKnocking project
+//  Created by Miguel Angel Perez Valencia, mangelp@gmail.com
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -17,7 +17,6 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
 //
-//
 
 using System;
 using System.Diagnostics;
@@ -29,6 +28,37 @@ namespace Developer.Common.SystemCommands
 {
 	public abstract class BaseCommandWrapper
 	{
+		private Process current;
+		
+		protected Process Current
+		{
+			get { return this.current;}
+			set { this.current = value;}
+		}
+		
+		private bool isAsync;
+		
+		protected bool IsAsync
+		{
+			get { return this.isAsync;}
+			set { this.isAsync = value;}
+		}
+		
+		private List<string> result;
+		
+		protected List<string> Result
+		{
+			get { return this.result;}
+		}
+		
+		private int exitCode;
+		
+		protected int ExitCode
+		{
+			get { return this.exitCode;}
+			set { this.exitCode = value;}
+		}
+		
 		private string name;
 		
 		/// <summary>
@@ -61,6 +91,35 @@ namespace Developer.Common.SystemCommands
 			set {this.args = value;}
 		}
 		
+		public abstract bool CanExec {get;}
+		
+		public abstract bool CanExecAsync {get;}
+		
+		/// <summary>
+		/// Gets if the standard output can be read
+		/// </summary>
+		public abstract bool CanRead {get;}
+		
+		/// <summary>
+		/// Gets if the standard input can be write
+		/// </summary>
+		public abstract bool CanWrite {get;}
+		
+		private bool requiresRoot;
+		
+		/// <summary>
+		/// If true the command requires root permissions to work.
+		/// </summary>
+		/// <remarks>
+		/// This usually means that the program must be executed as root or
+		/// that an autentication process must be set.
+		/// </remarks>
+		public bool RequiresRoot
+		{
+			get {return this.requiresRoot;}
+			set {this.requiresRoot = value;}
+		}
+		
 		private StringDictionary enviroment;
 		
 		/// <summary>
@@ -72,7 +131,7 @@ namespace Developer.Common.SystemCommands
 		public StringDictionary Enviroment
 		{
 			get { return this.enviroment;}
-			set { this.enviroment = value;}
+			protected set { this.enviroment = value;}
 		}
 		
 		/// <summary>
@@ -86,6 +145,13 @@ namespace Developer.Common.SystemCommands
 		{
 			enviroment = new StringDictionary();
 			this.name = name;
+			this.result = new List<string>();
+		}
+		
+		public BaseCommandWrapper(string name, bool requiresRoot)
+			: this(name)
+		{
+			this.requiresRoot = requiresRoot;
 		}
 
 		/// <summary>
@@ -114,6 +180,11 @@ namespace Developer.Common.SystemCommands
 		public abstract void Abort();
 		
 		/// <summary>
+		/// Writes into the the standard input of the process
+		/// </summary>
+		public abstract void Write(string data);
+		
+		/// <summary>
 		/// End of command execution notifier
 		/// </summary>
 		public event EventHandler<CommandEndEventArgs> CommandEnd;
@@ -124,13 +195,18 @@ namespace Developer.Common.SystemCommands
 				this.CommandEnd(this, args);
 		}
 		
-		protected Process GetNewProcess()
+		/// <summary>
+		/// Gets a new process object partially configured to be started.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="Process"/> with the required command name
+		/// </returns>
+		protected virtual Process GetNewProcess()
 		{
 			Process p = new Process();
 			p.StartInfo.FileName = this.name;
 			p.StartInfo.Arguments = this.args;
 			p.StartInfo.UseShellExecute = false;
-			p.StartInfo.RedirectStandardOutput = true;
 			
 			if(this.enviroment.Count>0)
 			{
@@ -143,6 +219,40 @@ namespace Developer.Common.SystemCommands
 				}
 			}
 			return p;
+		}
+
+		protected void OnDataReceivedHandler(object sender, DataReceivedEventArgs args)
+		{
+			//TODO: If the data is being read asynchronously this should output it in the
+			//same way not waiting to have all to output it. We don't know how many data
+			//can be sent
+			result.Add(args.Data);
+		}
+		
+		protected void OnAsyncReadEndHandler(object sender, EventArgs args)
+		{
+			this.OnAsyncReadEnd(false);
+		}
+		
+		protected virtual void OnAsyncReadEnd(bool aborted)
+		{
+			this.current.Close();
+			this.current.WaitForExit();
+			this.exitCode = this.current.ExitCode;
+			this.current = null;
+			
+			CommandResult res = new CommandResult();
+			res.UserData = result;
+			res.Aborted = aborted;
+			res.ExitCode = this.exitCode;
+			CommandEndEventArgs args = new CommandEndEventArgs(res);
+			
+			this.OnCommandEnd(args);
+		}
+		
+		protected virtual void OnAsyncWriteEndHandler(object sender, EventArgs args)
+		{
+			//TODO: How async writes works?
 		}
 	}
 }

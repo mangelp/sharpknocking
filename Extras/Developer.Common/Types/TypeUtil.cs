@@ -1,4 +1,22 @@
-// project created on 22/01/2007 at 22:22
+// TypeUtil.cs
+//
+//  Copyright (C)  2007 iSharpKnocking project
+//  Created by Miguel Angel Perez Valencia, mangelp@gmail.com
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+// Lesser General Public License for more details.
+//
+// You should have received a copy of the GNU Lesser General Public
+// License along with this library; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+
 using System;
 using System.Reflection;
 
@@ -38,7 +56,7 @@ namespace Developer.Common.Types
 				try {
 					enumConst = Enum.Parse(enumType, strVal, true);
 					//Console.WriteLine("Got enum "+enumConst+" from "+value+" as "+value.GetType().Name);
-				} catch (Exception ex) {
+				} catch (Exception) {
 					//Console.Out.WriteLine("\n-- Exception detected: "+ex.Message+" --\n"+ex+"\n-- End of exception --\n");
 					return false;
 				}

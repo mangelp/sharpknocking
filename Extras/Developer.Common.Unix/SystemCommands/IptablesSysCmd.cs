@@ -20,6 +20,9 @@
 //
 
 using System;
+using System.Diagnostics;
+
+using Developer.Common.SystemCommands;
 
 namespace Developer.Common.Unix.SystemCommands
 {
@@ -31,6 +34,8 @@ namespace Developer.Common.Unix.SystemCommands
 	{
 		public IptablesSysCmd()
 		{
+			
 		}
+
 	}
 }

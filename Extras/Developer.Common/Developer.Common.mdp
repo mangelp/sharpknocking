@@ -2,7 +2,7 @@
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
-        <Command type="AfterBuild" name="Copy to library" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}${TargetDir}" />
+        <Command type="AfterBuild" name="Copy to library" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
       </CustomCommands>
       <Output directory="bin/Debug" assembly="Developer.Common" />
       <Build debugmode="True" target="Library" />
@@ -13,7 +13,7 @@
       <CustomCommands>
         <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Release" assembly="Developer.Common" />
+      <Output directory="bin/Release" assemblyKeyFile="." assembly="Developer.Common" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />

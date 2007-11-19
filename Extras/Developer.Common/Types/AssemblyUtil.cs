@@ -20,6 +20,7 @@
 //
 
 using System;
+using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 
@@ -40,8 +41,25 @@ namespace Developer.Common.Types
 			{
 				//Console.WriteLine("Assembly found in cache: "+asmName);
 				return cache[asmName];
-			}
+			} 
+//			else if (!File.Exists(asmName)) 
+//			{
+//				Console.WriteLine ("Assembly file not found: "+asmName);
+//				Console.WriteLine ("Current Directory: "+Directory.GetCurrentDirectory());
+//				if(!Directory.Exists(Path.GetDirectoryName(asmName)))
+//					Console.WriteLine ("The directory does not exists");
+//				else
+//					Console.WriteLine ("The file doesn't exists");
+//				return null;
+//			}
+			
 			Assembly asm=null;
+			
+			if(!File.Exists(asmName))
+			{
+				//Console.WriteLine ("Assembly file not found: "+asmName);
+				return asm;
+			}
 			
 			//Try to load an assembly with the name
 			try {
@@ -50,7 +68,7 @@ namespace Developer.Common.Types
 				cache.Add(asmName, asm);
 				//Console.WriteLine("Assembly loaded");
 			} catch(Exception ex) {
-				//Console.WriteLine("Can't load assembly. Reason: "+ex.Message);
+				Console.WriteLine("Can't load assembly. Reason: "+ex.Message);
 				asm = null;
 			}
 			
