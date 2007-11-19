@@ -1,7 +1,7 @@
-// Enumerations.cs
+// IptablesSaveSysCommand.cs
 //
-//  Copyright (C)  2007 SharpKnocking project
-//  Created by Miguel Angel Perez, mangelp@gmail.com
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by Miguel Angel Perez Valencia (mangelp{aT}gmail[D0T]com)
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -21,7 +21,22 @@
 
 using System;
 
-namespace Developer.Common
-{	
+using Developer.Common.SystemCommands;
 
+namespace Developer.Common.Unix.SystemCommands
+{
+
+	public class IptablesSaveSysCommand: TextOutputCommand
+	{
+		public IptablesSaveSysCommand()
+			:base("iptables-save", true)
+		{
+		}
+		
+		public string GetCurrentRules()
+		{
+			CommandResult res = base.Exec();
+			return (string)res.UserData;
+		}
+	}
 }

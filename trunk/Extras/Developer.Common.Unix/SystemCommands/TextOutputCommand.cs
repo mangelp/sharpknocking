@@ -33,10 +33,25 @@ namespace Developer.Common.Unix.SystemCommands
 	/// </summary>
 	public class TextOutputCommand: BaseCommandWrapper
 	{
-		private Process current;
-		private bool isAsync;
-		private List<string> result;
-		private int exitCode;
+		public override bool CanExec
+		{
+			get { return true; }
+		}
+		
+		public override bool CanExecAsync
+		{
+			get { return true; }
+		}
+		
+		public override bool CanRead
+		{
+			get { return true;}
+		}
+		
+		public override bool CanWrite
+		{
+			get {return false;}
+		}
 		
 		/// <summary>
 		/// Constructor.
@@ -51,31 +66,44 @@ namespace Developer.Common.Unix.SystemCommands
 		{
 		}
 		
+		public TextOutputCommand(string cmdName, bool requiresRoot)
+			:base(cmdName, requiresRoot)
+		{
+			
+		}
+		
+		protected override Process GetNewProcess ()
+		{
+			Process p = base.GetNewProcess ();
+			p.StartInfo.RedirectStandardOutput = true;
+			return p;
+		}
+		
 		public override void Abort ()
 		{
-			if(this.isAsync && !this.current.HasExited)
+			if(this.IsAsync && this.Current!=null && !this.Current.HasExited)
 			{
-				isAsync = false;
-				this.current.CancelOutputRead();
-				this.current.Kill();
+				IsAsync = false;
+				this.Current.CancelOutputRead();
+				this.Current.Kill();
 				this.OnAsyncReadEnd(true);
 			}
 		}
 		
 		public override CommandResult Exec ()
 		{
-			result = new List<string>();
-			current = this.GetNewProcess();
+			this.Result.Clear();
+			this.Current = this.GetNewProcess();
 			
 			try	{
-				current.Start();
+				Current.Start();
 				
-				string str = current.StandardOutput.ReadLine();
+				string str = Current.StandardOutput.ReadLine();
 				//Read lines until null is returned.
 				while(str!=null)
 				{
-					result.Add(str);
-					str = current.StandardOutput.ReadLine();
+					Result.Add(str);
+					str = Current.StandardOutput.ReadLine();
 				}
 			} catch(Exception ex) {
 				Console.Out.WriteLine(ex);
@@ -83,65 +111,51 @@ namespace Developer.Common.Unix.SystemCommands
 			
 			try {
 				//Before requesting the exit code we must await the process to exit
-				current.WaitForExit();
-				this.exitCode = current.ExitCode;
-				current.Close();
-				current = null;
+				Current.WaitForExit();
+				this.ExitCode = Current.ExitCode;
+				Current.Close();
 			} catch (Exception ex) {
 				Console.Out.WriteLine(ex);
+			}
+			finally{
+				Current = null;
 			}
 			
 			CommandResult cres = new CommandResult();
 			cres.Aborted = false;
 			cres.Detail = String.Empty;
-			cres.ExitCode = this.exitCode;
-			cres.UserData = result;
+			cres.ExitCode = this.ExitCode;
+			cres.UserData = Result.ToArray();
+			this.Result.Clear();
 			
 			return cres;
 		}
 		
 		public override void ExecAsync ()
 		{
-			result = new List<string>();
-			current= this.GetNewProcess();
-			current.OutputDataReceived+= new DataReceivedEventHandler(this.OnDataReceivedHandler);
-			current.Exited += new EventHandler(this.OnAsyncReadEndHandler);
+			this.Result.Clear();
+			Current= this.GetNewProcess();
+			Current.OutputDataReceived+= new DataReceivedEventHandler(this.OnDataReceivedHandler);
+			Current.Exited += new EventHandler(this.OnAsyncReadEndHandler);
+			IsAsync = true;
+			this.ExitCode = -1;
 			
 			try {
-				isAsync = true;
-				current.BeginOutputReadLine();
-				current.Start();
+				Current.BeginOutputReadLine();
+				Current.Start();
 			} catch (Exception ex) {
 				Console.Out.WriteLine(ex);
-			} finally {
-				this.exitCode = current.ExitCode;
-				current.Close();
-				current = null;
+				Current.Close();
+				Current = null;
+				IsAsync = false;
 			}
 		}
 		
-		private void OnDataReceivedHandler(object sender, DataReceivedEventArgs args)
+		public override void Write (string data)
 		{
-			result.Add(args.Data);
+			throw new NotSupportedException("Write is not supported");
 		}
-		
-		private void OnAsyncReadEndHandler(object sender, EventArgs args)
-		{
-			this.OnAsyncReadEnd(false);
-		}
-		
-		private void OnAsyncReadEnd(bool aborted)
-		{
-			this.current.Close();
-			this.current = null;
-			
-			CommandResult res = new CommandResult();
-			res.UserData = result;
-			res.Aborted = aborted;
-			res.ExitCode = this.exitCode;
-			CommandEndEventArgs args = new CommandEndEventArgs(res);
-			
-			this.OnCommandEnd(args);
-		}
+
+
 	}
 }
