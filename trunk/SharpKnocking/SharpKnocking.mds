@@ -1,4 +1,4 @@
-<Combine name="SharpKnocking" fileversion="2.0" outputpath="./build/bin/" MakePkgConfig="True" MakeLibPC="True">
+<Combine releaseversion="0.1-i" name="SharpKnocking" fileversion="2.0" description="SharpKnocking project solution" outputpath="build/bin/" MakePkgConfig="True" MakeLibPC="True">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <CustomCommands>
@@ -6,62 +6,42 @@
         <Command type="Custom" name="make install" command="kdesu make install" />
         <Command type="Custom" name="Autogen" command="./autogen.sh" />
       </CustomCommands>
-      <Entry build="True" name="PortKnocker" configuration="Debug" />
-      <Entry build="True" name="KnockingDaemon" configuration="Debug" />
       <Entry build="True" name="Common" configuration="Debug" />
       <Entry build="True" name="CommonWidgets" configuration="Debug" />
       <Entry build="True" name="Doorman" configuration="Debug" />
-      <Entry build="True" name="NetfilterFirewall" configuration="Debug" />
+      <Entry build="True" name="KnockingDaemon" configuration="Debug" />
       <Entry build="True" name="KnockingDaemonControl" configuration="Debug" />
-      <Entry build="True" name="Extras" configuration="" />
-      <Entry build="True" name="SharpKnocking.Core" configuration="Debug" />
-      <Entry build="True" name="SharpKnocking.Daemon" configuration="Debug" />
-      <Entry build="True" name="SharpKnocking.Doorman" configuration="Debug" />
-      <Entry build="True" name="SharpKnocking.Knocker" configuration="Debug" />
+      <Entry build="True" name="NetfilterFirewall" configuration="Debug" />
+      <Entry build="True" name="PortKnocker" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
-      <Entry build="True" name="PortKnocker" configuration="Release" />
-      <Entry build="True" name="KnockingDaemon" configuration="Release" />
       <Entry build="True" name="Common" configuration="Release" />
       <Entry build="True" name="CommonWidgets" configuration="Release" />
       <Entry build="True" name="Doorman" configuration="Release" />
-      <Entry build="True" name="NetfilterFirewall" configuration="Release" />
+      <Entry build="True" name="KnockingDaemon" configuration="Release" />
       <Entry build="True" name="KnockingDaemonControl" configuration="Release" />
-      <Entry build="True" name="Extras" configuration="" />
-      <Entry build="True" name="SharpKnocking.Core" configuration="Release" />
-      <Entry build="True" name="SharpKnocking.Daemon" configuration="Release" />
-      <Entry build="True" name="SharpKnocking.Doorman" configuration="Release" />
-      <Entry build="True" name="SharpKnocking.Knocker" configuration="Release" />
+      <Entry build="True" name="NetfilterFirewall" configuration="Release" />
+      <Entry build="True" name="PortKnocker" configuration="Release" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="SharpKnocking.Knocker" single="True">
-    <Execute type="None" entry="PortKnocker" />
-    <Execute type="None" entry="KnockingDaemon" />
-    <Execute type="None" entry="NetfilterFirewall" />
+  <StartMode startupentry="Common" single="True">
+    <Execute type="None" entry="SharpKnocking.Core" />
     <Execute type="None" entry="Common" />
     <Execute type="None" entry="CommonWidgets" />
     <Execute type="None" entry="Doorman" />
-    <Execute type="None" entry="NetfilterFirewall" />
+    <Execute type="None" entry="KnockingDaemon" />
     <Execute type="None" entry="KnockingDaemonControl" />
-    <Execute type="None" entry="Extras" />
-    <Execute type="None" entry="SharpKnocking.Core" />
-    <Execute type="None" entry="SharpKnocking.Daemon" />
-    <Execute type="None" entry="SharpKnocking.Doorman" />
-    <Execute type="None" entry="SharpKnocking.Knocker" />
+    <Execute type="None" entry="NetfilterFirewall" />
+    <Execute type="None" entry="PortKnocker" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInProjectRootDirectory" />
   <Entries>
-    <Entry filename="./PortKnocker/PortKnocker.mdp" />
-    <Entry filename="./KnockingDaemon/KnockingDaemon.mdp" />
-    <Entry filename="./Common/Common.mdp" />
-    <Entry filename="./CommonWidgets/CommonWidgets.mdp" />
-    <Entry filename="./Doorman/Doorman.mdp" />
-    <Entry filename="./NetfilterFirewall/NetfilterFirewall.mdp" />
-    <Entry filename="./KnockingDaemonControl/KnockingDaemonControl.mdp" />
-    <Entry filename="../Extras/Extras.mds" />
-    <Entry filename="./SharpKnocking.Core/SharpKnocking.Core.mdp" />
-    <Entry filename="./SharpKnocking.Daemon/SharpKnocking.Daemon.mdp" />
-    <Entry filename="./SharpKnocking.Doorman/SharpKnocking.Doorman.mdp" />
-    <Entry filename="./SharpKnocking.Knocker/SharpKnocking.Knocker.mdp" />
+    <Entry filename="Common/Common.mdp" />
+    <Entry filename="CommonWidgets/CommonWidgets.mdp" />
+    <Entry filename="Doorman/Doorman.mdp" />
+    <Entry filename="KnockingDaemon/KnockingDaemon.mdp" />
+    <Entry filename="KnockingDaemonControl/KnockingDaemonControl.mdp" />
+    <Entry filename="NetfilterFirewall/NetfilterFirewall.mdp" />
+    <Entry filename="PortKnocker/PortKnocker.mdp" />
   </Entries>
 </Combine>

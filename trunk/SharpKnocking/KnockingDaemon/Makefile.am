@@ -1,112 +1,110 @@
 
+EXTRA_DIST = 
+
 # Warning: This is an automatically generated file, do not edit!
 
 if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = gmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG "-main:SharpKnocking.KnockingDaemon.MainClass"
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG "-main:SharpKnocking.KnockingDaemon.MainClass"
 
-ASSEMBLY = ./bin/Debug/KnockingDaemon.exe
+ASSEMBLY = bin/Debug/KnockingDaemon.exe
+ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
-	../Common/bin/Debug/SharpKnocking.Common.dll \
 	../NetfilterFirewall/bin/Debug/NetfilterFirewall.dll
-BUILD_DIR = ./bin/Debug
+BUILD_DIR = bin/Debug
+
+NETFILTERFIREWALL_DLL_MDB_SOURCE=../NetfilterFirewall/bin/Debug/NetfilterFirewall.dll.mdb
+NETFILTERFIREWALL_DLL_MDB=$(BUILD_DIR)/NetfilterFirewall.dll.mdb
+NETFILTERFIREWALL_DLL_SOURCE=../NetfilterFirewall/bin/Debug/NetfilterFirewall.dll
+
 endif
+
 if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = gmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4
-ASSEMBLY = ./bin/Release/KnockingDaemon.exe
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ASSEMBLY = bin/Release/KnockingDaemon.exe
+ASSEMBLY_MDB = 
 COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
-	../Common/bin/Release/SharpKnocking.Common.dll \
 	../NetfilterFirewall/bin/Release/NetfilterFirewall.dll
-BUILD_DIR = ./bin/Release
+BUILD_DIR = bin/Release
+
+NETFILTERFIREWALL_DLL_MDB=
+NETFILTERFIREWALL_DLL_SOURCE=../NetfilterFirewall/bin/Release/NetfilterFirewall.dll
+
 endif
+
+
+PROGRAMFILES = \
+	$(NETFILTERFIREWALL_DLL_MDB) \
+	$(NETFILTERFIREWALL_DLL)  
 
 BINARIES = \
 	$(KNOCKINGDAEMON)  
-PROGRAMFILES = \
-	$(SHARPKNOCKING_COMMON_DLL) \
-	$(SHARPKNOCKING_COMMON_DLL_MDB) \
-	$(NETFILTERFIREWALL_DLL) \
-	$(NETFILTERFIREWALL_DLL_MDB) \
-	$(SHARPKNOCKING_COMMON_DLL_1) \
-	$(SHARPKNOCKING_COMMON_DLL_MDB_1)  
+
 
 	
-all: $(ASSEMBLY) $(BINARIES) $(PROGRAMFILES) 
+all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES) 
 
-FILES = \
-	./Main.cs \
-	./AssemblyInfo.cs \
-	./KnockingDaemonProcess.cs \
-	./PacketFilter/TcpdumpMonitor.cs \
-	./PacketFilter/PacketInfo.cs \
-	./PacketFilter/PacketAssembler.cs \
-	./SequenceDetection/SequenceDetectorManager.cs \
-	./SequenceDetection/SequenceDetector.cs \
-	./PacketFilter/PacketFilterEvents.cs \
-	./SequenceDetection/SequenceDetectorEvents.cs \
-	./FirewallAccessor/NetfilterAccessor.cs \
-	./PortInverseResolver.cs \
-	./CallsLoader.cs 
+FILES =  \
+	AssemblyInfo.cs \
+	CallsLoader.cs \
+	FirewallAccessor/NetfilterAccessor.cs \
+	KnockingDaemonProcess.cs \
+	Main.cs \
+	PacketFilter/PacketAssembler.cs \
+	PacketFilter/PacketFilterEvents.cs \
+	PacketFilter/PacketInfo.cs \
+	PacketFilter/TcpdumpMonitor.cs \
+	PortInverseResolver.cs \
+	SequenceDetection/SequenceDetector.cs \
+	SequenceDetection/SequenceDetectorEvents.cs \
+	SequenceDetection/SequenceDetectorManager.cs 
 
 DATA_FILES = 
 
 RESOURCES = 
 
 EXTRAS = \
-	./knockingdaemon.in 
+	knockingdaemon.in 
 
 REFERENCES =  \
+	-r:../NetfilterFirewall/bin/Debug/NetfilterFirewall.dll \
+	-r:Mono.Posix \
 	-r:System \
+	-r:System.Messaging \
 	-r:System.Runtime.Remoting \
 	-r:System.Runtime.Serialization.Formatters.Soap \
-	-r:System.Messaging \
-	-r:System.Security \
-	-r:Mono.Posix
+	-r:System.Security
 
 DLL_REFERENCES = 
 
-SHARPKNOCKING_COMMON_DLL = $(BUILD_DIR)/SharpKnocking.Common.dll
-$(SHARPKNOCKING_COMMON_DLL): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll $(SHARPKNOCKING_COMMON_DLL)
-
-SHARPKNOCKING_COMMON_DLL_MDB = $(BUILD_DIR)/SharpKnocking.Common.dll.mdb
-$(SHARPKNOCKING_COMMON_DLL_MDB): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb $(SHARPKNOCKING_COMMON_DLL_MDB)
-
-NETFILTERFIREWALL_DLL = $(BUILD_DIR)/NetfilterFirewall.dll
-$(NETFILTERFIREWALL_DLL): $(top_builddir)/NetfilterFirewall/bin/Debug/NetfilterFirewall.dll
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/NetfilterFirewall/bin/Debug/NetfilterFirewall.dll $(NETFILTERFIREWALL_DLL)
-
-NETFILTERFIREWALL_DLL_MDB = $(BUILD_DIR)/NetfilterFirewall.dll.mdb
-$(NETFILTERFIREWALL_DLL_MDB): $(top_builddir)/NetfilterFirewall/bin/Debug/NetfilterFirewall.dll.mdb
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/NetfilterFirewall/bin/Debug/NetfilterFirewall.dll.mdb $(NETFILTERFIREWALL_DLL_MDB)
-
-SHARPKNOCKING_COMMON_DLL_1 = $(BUILD_DIR)/SharpKnocking.Common.dll
-$(SHARPKNOCKING_COMMON_DLL_1): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll $(SHARPKNOCKING_COMMON_DLL_1)
-
-SHARPKNOCKING_COMMON_DLL_MDB_1 = $(BUILD_DIR)/SharpKnocking.Common.dll.mdb
-$(SHARPKNOCKING_COMMON_DLL_MDB_1): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb $(SHARPKNOCKING_COMMON_DLL_MDB_1)
-
 KNOCKINGDAEMON = $(BUILD_DIR)/knockingdaemon
+NETFILTERFIREWALL_DLL = $(BUILD_DIR)/NetfilterFirewall.dll
+
+$(NETFILTERFIREWALL_DLL_MDB): $(NETFILTERFIREWALL_DLL_MDB_SOURCE)
+	mkdir -p $(BUILD_DIR)
+	cp '$<' '$@'
+
 $(KNOCKINGDAEMON): knockingdaemon
 	mkdir -p $(BUILD_DIR)
-	cp knockingdaemon $(KNOCKINGDAEMON)
+	cp '$<' '$@'
+
+$(NETFILTERFIREWALL_DLL): $(NETFILTERFIREWALL_DLL_SOURCE)
+	mkdir -p $(BUILD_DIR)
+	cp '$<' '$@'
 
 
 
-$(ASSEMBLY) $(ASSEMBLY).mdb: $(build_sources) $(build_resources) $(build_datafiles) 
-	mkdir -p $(dir $(ASSEMBLY))		
-	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$@ -target:$(COMPILE_TARGET) $(build_sources) $(build_resources_embed) $(build_references_ref)
+$(build_xamlg_list): %.xaml.g.cs: %.xaml
+	xamlg '$<'
+
+$(build_resx_resources) : %.resources: %.resx
+	resgen2 '$<' '$@'
+
+$(ASSEMBLY) $(ASSEMBLY_MDB): $(build_sources) $(build_resources) $(build_datafiles) $(DLL_REFERENCES) $(PROJECT_REFERENCES) $(build_xamlg_list)
+	mkdir -p $(dir $(ASSEMBLY))
+	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$(ASSEMBLY) -target:$(COMPILE_TARGET) $(build_sources_embed) $(build_resources_embed) $(build_references_ref)
 
 include $(top_srcdir)/Makefile.include

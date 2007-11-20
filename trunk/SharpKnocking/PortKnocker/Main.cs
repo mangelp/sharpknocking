@@ -9,7 +9,7 @@ namespace SharpKnocking.PortKnocker
 	public class MainClass
 	{
 	
-		public static void Main (string[] args)
+		public static int Main (string[] args)
 		{
 		    // Here we do parameter processing
 		    for(int i=0; i<args.Length; i++)
@@ -49,7 +49,9 @@ namespace SharpKnocking.PortKnocker
 		    // We start the application.
 		    Application.Init ();
 			new MainWindow ();
-			Application.Run();				
+			Application.Run();		
+			
+			return 0;
 		}
 		
         private static void PrintHelpMessage()

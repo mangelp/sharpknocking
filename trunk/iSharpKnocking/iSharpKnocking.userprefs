@@ -1,18 +1,11 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/mangelp/Projects/sharpknocking/iSharpKnocking/iSharpKnocking.mds">
-  <Files />
+  <Files>
+    <File name="Bienvenido" />
+  </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True">
-        <Node name="Extras" expanded="True">
-          <Node name="DeveloperCommon" expanded="True">
-            <Node name="Developer.Common" expanded="True">
-              <Node name="SystemCommands" expanded="True">
-                <Node name="BaseCommandWrapper.cs" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-          <Node name="IptablesNet" expanded="True" />
-        </Node>
+        <Node name="SharpKnocking.Knocker" selected="True" />
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
@@ -26,7 +19,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="" />
+    <Property key="ActiveWindow" value="Bienvenido" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

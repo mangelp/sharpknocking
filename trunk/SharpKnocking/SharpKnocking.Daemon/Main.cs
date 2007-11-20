@@ -9,6 +9,12 @@ namespace SharpKnocking.Daemon
 {
 	class MainClass
 	{
+		/// <summary>
+		/// Main class
+		/// </summary>
+		/// <param name="args">
+		/// A <see cref="System.String"/>
+		/// </param>
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");

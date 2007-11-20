@@ -73,8 +73,8 @@ namespace SharpKnocking.Core.Calls
 		    string sourceAddr = packet.SourceAddress.ToString().Trim();
 		    Debug.VerboseWrite ("SequenceDetector:: Checking packet for address '"+sourceAddr+"'");
 		    
-			// If we have it we check the number if not we check the first number
-			// and we add if it is correct.
+			// If we have it we check the number if not we check the first number and we 
+			//add if it is correct.
 			if(this.hitsTable.ContainsKey (sourceAddr))
 			{
 			    Debug.VerboseWrite("Existing address "+sourceAddr

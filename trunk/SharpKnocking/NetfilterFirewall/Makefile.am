@@ -1,144 +1,147 @@
 
+EXTRA_DIST = 
+
 # Warning: This is an automatically generated file, do not edit!
 
 if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = mcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG
-ASSEMBLY = ./bin/Debug/NetfilterFirewall.dll
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG
+ASSEMBLY = bin/Debug/NetfilterFirewall.dll
+ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
-PROJECT_REFERENCES =  \
-	../Common/bin/Debug/SharpKnocking.Common.dll
-BUILD_DIR = ./bin/Debug
-endif
-if ENABLE_RELEASE
-ASSEMBLY_COMPILER_COMMAND = mcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4
-ASSEMBLY = ./bin/Release/NetfilterFirewall.dll
-COMPILE_TARGET = library
-PROJECT_REFERENCES =  \
-	../Common/bin/Release/SharpKnocking.Common.dll
-BUILD_DIR = ./bin/Release
+PROJECT_REFERENCES = 
+BUILD_DIR = bin/Debug
+
+
 endif
 
-PROGRAMFILES = \
-	$(SHARPKNOCKING_COMMON_DLL) \
-	$(SHARPKNOCKING_COMMON_DLL_MDB)  
+if ENABLE_RELEASE
+ASSEMBLY_COMPILER_COMMAND = mcs
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ASSEMBLY = bin/Release/NetfilterFirewall.dll
+ASSEMBLY_MDB = 
+COMPILE_TARGET = library
+PROJECT_REFERENCES = 
+BUILD_DIR = bin/Release
+
+
+endif
+
+
 LINUX_PKGCONFIG = \
 	$(NETFILTERFIREWALL_PC)  
 
-	
-all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
-FILES = \
-	./AssemblyInfo.cs \
-	./Definitions.cs \
-	./NetfilterRule.cs \
-	./NetfilterTable.cs \
-	./NetfilterChain.cs \
-	./DuplicateElementExcepcion.cs \
-	./NetfilterException.cs \
-	./NetfilterRuleSet.cs \
-	./RuleParser.cs \
-	./MatchExtensions/TcpMatchExtension.cs \
-	./MatchExtensions/UdpMatchExtension.cs \
-	./MatchExtensions/IcmpMatchExtension.cs \
-	./MatchExtensions/MatchExtensionHandler.cs \
-	./MatchExtensions/MatchExtensionFactory.cs \
-	./MatchExtensions/Definitions.cs \
-	./GenericParameter.cs \
-	./RuleException.cs \
-	./NetfilterRuleList.cs \
-	./MatchExtensions/StateMatchExtension.cs \
-	./GenericParameterList.cs \
-	./GenericParameterListEventArgs.cs \
-	./MatchExtensions/MatchExtensionList.cs \
-	./MatchExtensions/MatchExtensionEventArgs.cs \
-	./MatchExtensions/MatchExtensionParameter.cs \
-	./MatchExtensions/MatchExtensionParameterList.cs \
-	./MatchExtensions/MatchExtensionParameterEventArgs.cs \
-	./Options/ProtocolOption.cs \
-	./Options/SourceOption.cs \
-	./Options/DestinationOption.cs \
-	./Options/JumpOption.cs \
-	./Options/InInterfaceOption.cs \
-	./Options/OutInterfaceOption.cs \
-	./Options/GotoOption.cs \
-	./Options/FragmentOption.cs \
-	./Options/SetCountersOption.cs \
-	./Options/MatchExtensionOption.cs \
-	./Options/GenericOption.cs \
-	./Options/RuleOptionList.cs \
-	./Options/GenericOptionListEventArgs.cs \
-	./Options/RuleOptionFactory.cs \
-	./Commands/GenericCommand.cs \
-	./Commands/RuleCommandFactory.cs \
-	./Commands/AppendRuleCommand.cs \
-	./Commands/DeleteRuleCommand.cs \
-	./Commands/DeleteChainCommand.cs \
-	./Commands/ListChainCommand.cs \
-	./Commands/FlushChainCommand.cs \
-	./Commands/ZeroChainCommand.cs \
-	./Commands/NewChainCommand.cs \
-	./Commands/RenameChainCommand.cs \
-	./Commands/SetChainPolicyCommand.cs \
-	./Commands/InsertRuleCommand.cs \
-	./Commands/ReplaceRuleCommand.cs \
-	./NetfilterTarget.cs \
-	./MatchExtensions/ReadOnlyMatchExtensionListAdapter.cs \
-	./ProtocolTypeEnum.cs \
-	./TargetExtensions/TargetExtensionFactory.cs \
-	./TargetExtensions/TargetExtensionHandler.cs \
-	./TargetExtensions/TargetExtensionList.cs \
-	./TargetExtensions/TargetExtensionParameterList.cs \
-	./TargetExtensions/ReadOnlyTargetExtensionListAdapter.cs \
-	./TargetExtensions/TargetExtensionEventArgs.cs \
-	./TargetExtensions/TargetExtensionParameterEventArgs.cs \
-	./TargetExtensions/Definitions.cs \
-	./TargetExtensions/TargetExtensionParameter.cs \
-	./TargetExtensions/BalanceTargetExtension.cs \
-	./TargetExtensions/ClassifyTargetExtension.cs \
-	./TargetExtensions/ClusterIPTargetExtension.cs \
-	./TargetExtensions/DnatTargetExtension.cs \
-	./TargetExtensions/DscpTargetExtension.cs \
-	./TargetExtensions/EcnTargetExtension.cs \
-	./TargetExtensions/IpMarkTargetExtension.cs \
-	./TargetExtensions/RejectTargetExtension.cs \
-	./TargetExtensions/UlogTargetExtension.cs \
-	./FirewallManager.cs \
-	./IpTablesCmd.cs 
+	
+all: $(ASSEMBLY) $(LINUX_PKGCONFIG) 
+
+FILES =  \
+	AssemblyInfo.cs \
+	Commands/AppendRuleCommand.cs \
+	Commands/DeleteChainCommand.cs \
+	Commands/DeleteRuleCommand.cs \
+	Commands/FlushChainCommand.cs \
+	Commands/GenericCommand.cs \
+	Commands/InsertRuleCommand.cs \
+	Commands/ListChainCommand.cs \
+	Commands/NewChainCommand.cs \
+	Commands/RenameChainCommand.cs \
+	Commands/ReplaceRuleCommand.cs \
+	Commands/RuleCommandFactory.cs \
+	Commands/SetChainPolicyCommand.cs \
+	Commands/ZeroChainCommand.cs \
+	Definitions.cs \
+	DuplicateElementExcepcion.cs \
+	FirewallManager.cs \
+	GenericParameter.cs \
+	GenericParameterList.cs \
+	GenericParameterListEventArgs.cs \
+	IpTablesCmd.cs \
+	MatchExtensions/Definitions.cs \
+	MatchExtensions/IcmpMatchExtension.cs \
+	MatchExtensions/MatchExtensionEventArgs.cs \
+	MatchExtensions/MatchExtensionFactory.cs \
+	MatchExtensions/MatchExtensionHandler.cs \
+	MatchExtensions/MatchExtensionList.cs \
+	MatchExtensions/MatchExtensionParameter.cs \
+	MatchExtensions/MatchExtensionParameterEventArgs.cs \
+	MatchExtensions/MatchExtensionParameterList.cs \
+	MatchExtensions/ReadOnlyMatchExtensionListAdapter.cs \
+	MatchExtensions/StateMatchExtension.cs \
+	MatchExtensions/TcpMatchExtension.cs \
+	MatchExtensions/UdpMatchExtension.cs \
+	NetfilterChain.cs \
+	NetfilterException.cs \
+	NetfilterRule.cs \
+	NetfilterRuleList.cs \
+	NetfilterRuleSet.cs \
+	NetfilterTable.cs \
+	NetfilterTarget.cs \
+	Options/DestinationOption.cs \
+	Options/FragmentOption.cs \
+	Options/GenericOption.cs \
+	Options/GenericOptionListEventArgs.cs \
+	Options/GotoOption.cs \
+	Options/InInterfaceOption.cs \
+	Options/JumpOption.cs \
+	Options/MatchExtensionOption.cs \
+	Options/OutInterfaceOption.cs \
+	Options/ProtocolOption.cs \
+	Options/RuleOptionFactory.cs \
+	Options/RuleOptionList.cs \
+	Options/SetCountersOption.cs \
+	Options/SourceOption.cs \
+	ProtocolTypeEnum.cs \
+	RuleException.cs \
+	RuleParser.cs \
+	TargetExtensions/BalanceTargetExtension.cs \
+	TargetExtensions/ClassifyTargetExtension.cs \
+	TargetExtensions/ClusterIPTargetExtension.cs \
+	TargetExtensions/Definitions.cs \
+	TargetExtensions/DnatTargetExtension.cs \
+	TargetExtensions/DscpTargetExtension.cs \
+	TargetExtensions/EcnTargetExtension.cs \
+	TargetExtensions/IpMarkTargetExtension.cs \
+	TargetExtensions/ReadOnlyTargetExtensionListAdapter.cs \
+	TargetExtensions/RejectTargetExtension.cs \
+	TargetExtensions/TargetExtensionEventArgs.cs \
+	TargetExtensions/TargetExtensionFactory.cs \
+	TargetExtensions/TargetExtensionHandler.cs \
+	TargetExtensions/TargetExtensionList.cs \
+	TargetExtensions/TargetExtensionParameter.cs \
+	TargetExtensions/TargetExtensionParameterEventArgs.cs \
+	TargetExtensions/TargetExtensionParameterList.cs \
+	TargetExtensions/UlogTargetExtension.cs 
 
 DATA_FILES = 
 
 RESOURCES = 
 
 EXTRAS = \
-	./netfilterfirewall.pc.in 
+	netfilterfirewall.pc.in 
 
 REFERENCES =  \
-	-r:System \
-	-r:Mono.Posix
+	-r:Mono.Posix \
+	-r:System
 
 DLL_REFERENCES = 
 
-SHARPKNOCKING_COMMON_DLL = $(BUILD_DIR)/SharpKnocking.Common.dll
-$(SHARPKNOCKING_COMMON_DLL): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll $(SHARPKNOCKING_COMMON_DLL)
-
-SHARPKNOCKING_COMMON_DLL_MDB = $(BUILD_DIR)/SharpKnocking.Common.dll.mdb
-$(SHARPKNOCKING_COMMON_DLL_MDB): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb $(SHARPKNOCKING_COMMON_DLL_MDB)
-
 NETFILTERFIREWALL_PC = $(BUILD_DIR)/netfilterfirewall.pc
+
 $(NETFILTERFIREWALL_PC): netfilterfirewall.pc
 	mkdir -p $(BUILD_DIR)
-	cp netfilterfirewall.pc $(NETFILTERFIREWALL_PC)
+	cp '$<' '$@'
 
 
 
-$(ASSEMBLY) $(ASSEMBLY).mdb: $(build_sources) $(build_resources) $(build_datafiles) 
-	mkdir -p $(dir $(ASSEMBLY))		
-	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$@ -target:$(COMPILE_TARGET) $(build_sources) $(build_resources_embed) $(build_references_ref)
+$(build_xamlg_list): %.xaml.g.cs: %.xaml
+	xamlg '$<'
+
+$(build_resx_resources) : %.resources: %.resx
+	resgen '$<' '$@'
+
+$(ASSEMBLY) $(ASSEMBLY_MDB): $(build_sources) $(build_resources) $(build_datafiles) $(DLL_REFERENCES) $(PROJECT_REFERENCES) $(build_xamlg_list)
+	mkdir -p $(dir $(ASSEMBLY))
+	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$(ASSEMBLY) -target:$(COMPILE_TARGET) $(build_sources_embed) $(build_resources_embed) $(build_references_ref)
 
 include $(top_srcdir)/Makefile.include

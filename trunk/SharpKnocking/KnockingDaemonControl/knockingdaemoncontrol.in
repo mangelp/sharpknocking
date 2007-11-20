@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec mono "@prefix@/lib/@PACKAGE@/KnockingDaemonControl.exe"
+exec mono "@prefix@/lib/@PACKAGE@/KnockingDaemonControl.exe" "$@"

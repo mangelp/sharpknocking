@@ -1,0 +1,9 @@
+<Combine name="IptablesNet" fileversion="2.0" outputpath="build/bin/" MakePkgConfig="False" MakeLibPC="True">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration" />
+    <Configuration name="Release" ctype="CombineConfiguration" />
+  </Configurations>
+  <StartMode single="True" />
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInProjectRootDirectory" />
+  <Entries />
+</Combine>
