@@ -1,0 +1,92 @@
+<Project name="IptablesNet.Core" fileversion="2.0" Description="Core functionality of the iptables net port." language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <CustomCommands>
+        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
+      </CustomCommands>
+      <Output directory="bin/Debug" assemblyKeyFile="." assembly="IptablesNet.Core" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <CustomCommands>
+        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
+      </CustomCommands>
+      <Output directory="bin/Release" assemblyKeyFile="." assembly="IptablesNet.Core" />
+      <Build debugmode="False" target="Library" />
+      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Definitions.cs" subtype="Code" buildaction="Compile" />
+    <File name="DuplicateElementExcepcion.cs" subtype="Code" buildaction="Compile" />
+    <File name="IptablesNet.Core.mdp" subtype="Code" buildaction="Nothing" />
+    <File name="NetfilterChain.cs" subtype="Code" buildaction="Compile" />
+    <File name="NetfilterException.cs" subtype="Code" buildaction="Compile" />
+    <File name="NetfilterRule.cs" subtype="Code" buildaction="Compile" />
+    <File name="NetfilterRuleList.cs" subtype="Code" buildaction="Compile" />
+    <File name="NetfilterTable.cs" subtype="Code" buildaction="Compile" />
+    <File name="RuleException.cs" subtype="Code" buildaction="Compile" />
+    <File name="RuleParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/AppendRuleCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/DeleteChainCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/DeleteRuleCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/FlushChainCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/GenericCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/InsertRuleCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/ListChainCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/NewChainCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/RenameChainCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/ReplaceRuleCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/IptablesCommandFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/SetChainPolicyCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Commands/ZeroChainCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/DestinationOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/FragmentOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/GenericOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/GotoOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/InInterfaceOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/JumpOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/MatchExtensionOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/OutInterfaceOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/ProtocolOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/IptablesOptionFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/RuleOptionList.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/SetCountersOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/SourceOption.cs" subtype="Code" buildaction="Compile" />
+    <File name="AbstractParameter.cs" subtype="Code" buildaction="Compile" />
+    <File name="NegableParameter.cs" subtype="Code" buildaction="Compile" />
+    <File name="SimpleParameter.cs" subtype="Code" buildaction="Compile" />
+    <File name="GenericParameterList.cs" subtype="Code" buildaction="Compile" />
+    <File name="ListChangedEventArgs.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions" subtype="Directory" buildaction="Compile" />
+    <File name="Extensions/MatchExtensions/MatchExtensionFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/MatchExtensions/MatchExtensionParameter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/MatchExtensions/ReadOnlyMatchExtensionListAdapter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/TargetExtensions/ReadOnlyTargetExtensionListAdapter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/TargetExtensions/TargetExtensionFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/TargetExtensions/TargetExtensionParameter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/Definitions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/ExtensionParameter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/IExtensionHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Util" subtype="Directory" buildaction="Compile" />
+    <File name="Util/EnumValueAliasCache.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/ExtensionHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/IExtensionParameter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/ReadOnlyListAdapter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/TargetExtensions/TargetExtensionHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="Extensions/MatchExtensions/MatchExtensionHandler.cs" subtype="Code" buildaction="Compile" />
+    <File name="NetfilterTableSet.cs" subtype="Code" buildaction="Compile" />
+    <File name="IStringConvertibleObject.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
+    <ProjectReference type="Project" localcopy="True" refto="Developer.Common.Unix" />
+    <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
+  </References>
+  <Deployment.LinuxDeployData scriptName="iptablesnet.core" />
+</Project>

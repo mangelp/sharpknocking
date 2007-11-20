@@ -1,107 +1,83 @@
 
+EXTRA_DIST = 
+
 # Warning: This is an automatically generated file, do not edit!
 
 if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = mcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -debug -d:DEBUG
-ASSEMBLY = ./bin/Debug/Doorman.exe
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ -debug -define:DEBUG
+ASSEMBLY = bin/Debug/Doorman.exe
+ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = exe
-PROJECT_REFERENCES =  \
-	../Common/bin/Debug/SharpKnocking.Common.dll \
-	../CommonWidgets/bin/Debug/CommonWidgets.dll
-BUILD_DIR = ./bin/Debug
+PROJECT_REFERENCES = 
+BUILD_DIR = bin/Debug
+
+
 endif
+
 if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = mcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4
-ASSEMBLY = ./bin/Release/Doorman.exe
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+
+ASSEMBLY = bin/Release/Doorman.exe
+ASSEMBLY_MDB = 
 COMPILE_TARGET = exe
-PROJECT_REFERENCES =  \
-	../Common/bin/Release/SharpKnocking.Common.dll \
-	../CommonWidgets/bin/Release/CommonWidgets.dll
-BUILD_DIR = ./bin/Release
+PROJECT_REFERENCES = 
+BUILD_DIR = bin/Release
+
+
 endif
+
 
 BINARIES = \
 	$(DOORMAN)  
-PROGRAMFILES = \
-	$(SHARPKNOCKING_COMMON_DLL) \
-	$(SHARPKNOCKING_COMMON_DLL_MDB) \
-	$(COMMONWIDGETS_DLL) \
-	$(COMMONWIDGETS_DLL_MDB) \
-	$(SHARPKNOCKING_COMMON_DLL_1) \
-	$(SHARPKNOCKING_COMMON_DLL_MDB_1)  
+
 
 	
-all: $(ASSEMBLY) $(BINARIES) $(PROGRAMFILES) 
+all: $(ASSEMBLY) $(BINARIES) 
 
-FILES = \
-	./Main.cs \
-	./MainWindow.cs \
-	./CallNode.cs \
-	./Remoting/DaemonCommunication.cs \
-	./ExportCallFileChooserDialog.cs \
-	./TrayIcon.cs \
-	./Remoting/DaemonCommunicationEvents.cs \
-	./AssemblyInfo.cs 
+FILES =  \
+	AssemblyInfo.cs \
+	CallNode.cs \
+	ExportCallFileChooserDialog.cs \
+	Main.cs \
+	MainWindow.cs \
+	Remoting/DaemonCommunication.cs \
+	Remoting/DaemonCommunicationEvents.cs \
+	TrayIcon.cs 
 
 DATA_FILES = 
 
-RESOURCES = \
-	./gui.glade 
+RESOURCES = gui.glade 
 
 EXTRAS = \
-	./doorman.in 
+	doorman.in 
 
 REFERENCES =  \
-	$(GTK_SHARP_20_LIBS) \
-	$(GLADE_SHARP_20_LIBS) \
-	$(GLIB_SHARP_20_LIBS) \
+	-pkg:glade-sharp-2.0 \
+	-pkg:glib-sharp-2.0 \
+	-pkg:gtk-sharp-2.0 \
 	-r:System \
-	-r:System.Xml \
-	-r:System.Runtime.Remoting
+	-r:System.Runtime.Remoting \
+	-r:System.Xml
 
 DLL_REFERENCES = 
 
-SHARPKNOCKING_COMMON_DLL = $(BUILD_DIR)/SharpKnocking.Common.dll
-$(SHARPKNOCKING_COMMON_DLL): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll $(SHARPKNOCKING_COMMON_DLL)
-
-SHARPKNOCKING_COMMON_DLL_MDB = $(BUILD_DIR)/SharpKnocking.Common.dll.mdb
-$(SHARPKNOCKING_COMMON_DLL_MDB): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb $(SHARPKNOCKING_COMMON_DLL_MDB)
-
-COMMONWIDGETS_DLL = $(BUILD_DIR)/CommonWidgets.dll
-$(COMMONWIDGETS_DLL): $(top_builddir)/CommonWidgets/bin/Debug/CommonWidgets.dll
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/CommonWidgets/bin/Debug/CommonWidgets.dll $(COMMONWIDGETS_DLL)
-
-COMMONWIDGETS_DLL_MDB = $(BUILD_DIR)/CommonWidgets.dll.mdb
-$(COMMONWIDGETS_DLL_MDB): $(top_builddir)/CommonWidgets/bin/Debug/CommonWidgets.dll.mdb
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/CommonWidgets/bin/Debug/CommonWidgets.dll.mdb $(COMMONWIDGETS_DLL_MDB)
-
-SHARPKNOCKING_COMMON_DLL_1 = $(BUILD_DIR)/SharpKnocking.Common.dll
-$(SHARPKNOCKING_COMMON_DLL_1): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll $(SHARPKNOCKING_COMMON_DLL_1)
-
-SHARPKNOCKING_COMMON_DLL_MDB_1 = $(BUILD_DIR)/SharpKnocking.Common.dll.mdb
-$(SHARPKNOCKING_COMMON_DLL_MDB_1): $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb
-	mkdir -p $(BUILD_DIR)
-	cp $(top_builddir)/Common/bin/Debug/SharpKnocking.Common.dll.mdb $(SHARPKNOCKING_COMMON_DLL_MDB_1)
-
 DOORMAN = $(BUILD_DIR)/doorman
+
 $(DOORMAN): doorman
 	mkdir -p $(BUILD_DIR)
-	cp doorman $(DOORMAN)
+	cp '$<' '$@'
 
 
 
-$(ASSEMBLY) $(ASSEMBLY).mdb: $(build_sources) $(build_resources) $(build_datafiles) 
-	mkdir -p $(dir $(ASSEMBLY))		
-	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$@ -target:$(COMPILE_TARGET) $(build_sources) $(build_resources_embed) $(build_references_ref)
+$(build_xamlg_list): %.xaml.g.cs: %.xaml
+	xamlg '$<'
+
+$(build_resx_resources) : %.resources: %.resx
+	resgen '$<' '$@'
+
+$(ASSEMBLY) $(ASSEMBLY_MDB): $(build_sources) $(build_resources) $(build_datafiles) $(DLL_REFERENCES) $(PROJECT_REFERENCES) $(build_xamlg_list)
+	mkdir -p $(dir $(ASSEMBLY))
+	$(ASSEMBLY_COMPILER_COMMAND) $(ASSEMBLY_COMPILER_FLAGS) -out:$(ASSEMBLY) -target:$(COMPILE_TARGET) $(build_sources_embed) $(build_resources_embed) $(build_references_ref)
 
 include $(top_srcdir)/Makefile.include

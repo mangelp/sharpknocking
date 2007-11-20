@@ -16,7 +16,7 @@ namespace SharpKnocking.Doorman
 	public class MainClass
 	{
 		
-		public static void Main(string [] args)
+		public static int Main(string [] args)
 		{
 		    // Here we do parameter processing
 		    for(int i=0; i<args.Length; i++)
@@ -70,6 +70,8 @@ namespace SharpKnocking.Doorman
 				new TrayIcon();	
 				Application.Run();		
 			}
+			
+			return 0;
 		}
 		
         private static void PrintHelpMessage()
