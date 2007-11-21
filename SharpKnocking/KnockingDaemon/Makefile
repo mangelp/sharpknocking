@@ -58,11 +58,11 @@ linuxpkgconfigDATA_INSTALL = $(INSTALL_DATA)
 programfilesDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(linuxpkgconfig_DATA) $(programfiles_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run aclocal-1.10
-AMTAR = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run tar
-AUTOCONF = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run automake-1.10
+ACLOCAL = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run aclocal-1.10
+AMTAR = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run tar
+AUTOCONF = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run automake-1.10
 AWK = gawk
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"SharpKnocking\" -DPACKAGE_TARNAME=\"sharpknocking\" -DPACKAGE_VERSION=\"0.1_i\" -DPACKAGE_STRING=\"SharpKnocking\ 0.1_i\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"sharpknocking\" -DVERSION=\"0.1_i\"
@@ -84,7 +84,7 @@ INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run makeinfo
 MCS = /usr/local/mono-svn/bin/mcs
 MKDIR_P = /bin/mkdir -p
 PACKAGE = sharpknocking
@@ -99,10 +99,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 0.1_i
-abs_builddir = /home/mangelp/Projects/sharpknocking/SharpKnocking/KnockingDaemon
-abs_srcdir = /home/mangelp/Projects/sharpknocking/SharpKnocking/KnockingDaemon
-abs_top_builddir = /home/mangelp/Projects/sharpknocking/SharpKnocking
-abs_top_srcdir = /home/mangelp/Projects/sharpknocking/SharpKnocking
+abs_builddir = /home/mangelp/projects/sharpknocking/SharpKnocking/KnockingDaemon
+abs_srcdir = /home/mangelp/projects/sharpknocking/SharpKnocking/KnockingDaemon
+abs_top_builddir = /home/mangelp/projects/sharpknocking/SharpKnocking
+abs_top_srcdir = /home/mangelp/projects/sharpknocking/SharpKnocking
 am__leading_dot = .
 am__tar = ${AMTAR} chof - "$$tardir"
 am__untar = ${AMTAR} xf -
@@ -118,7 +118,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = $(SHELL) /home/mangelp/Projects/sharpknocking/SharpKnocking/install-sh
+install_sh = $(SHELL) /home/mangelp/projects/sharpknocking/SharpKnocking/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -127,7 +127,7 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr/local/mono-svn
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -173,19 +173,19 @@ BINARIES = \
 	$(KNOCKINGDAEMON)  
 
 FILES = \
-	Main.cs \
 	AssemblyInfo.cs \
-	KnockingDaemonProcess.cs \
-	PacketFilter/TcpdumpMonitor.cs \
-	PacketFilter/PacketInfo.cs \
-	PacketFilter/PacketAssembler.cs \
-	SequenceDetection/SequenceDetectorManager.cs \
-	SequenceDetection/SequenceDetector.cs \
-	PacketFilter/PacketFilterEvents.cs \
-	SequenceDetection/SequenceDetectorEvents.cs \
+	CallsLoader.cs \
 	FirewallAccessor/NetfilterAccessor.cs \
+	KnockingDaemonProcess.cs \
+	Main.cs \
+	PacketFilter/PacketAssembler.cs \
+	PacketFilter/PacketFilterEvents.cs \
+	PacketFilter/PacketInfo.cs \
+	PacketFilter/TcpdumpMonitor.cs \
 	PortInverseResolver.cs \
-	CallsLoader.cs 
+	SequenceDetection/SequenceDetector.cs \
+	SequenceDetection/SequenceDetectorEvents.cs \
+	SequenceDetection/SequenceDetectorManager.cs 
 
 DATA_FILES = 
 RESOURCES = 
@@ -193,12 +193,13 @@ EXTRAS = \
 	knockingdaemon.in 
 
 REFERENCES = \
-	System \
-	System.Runtime.Remoting \
-	System.Runtime.Serialization.Formatters.Soap \
-	System.Messaging \
-	System.Security \
-	Mono.Posix
+	-r:../NetfilterFirewall/bin/Debug/NetfilterFirewall.dll \
+	-r:Mono.Posix \
+	-r:System \
+	-r:System.Messaging \
+	-r:System.Runtime.Remoting \
+	-r:System.Runtime.Serialization.Formatters.Soap \
+	-r:System.Security
 
 DLL_REFERENCES = 
 KNOCKINGDAEMON = $(BUILD_DIR)/knockingdaemon
@@ -226,9 +227,9 @@ CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb $(BINARIES) $(build_resx_resources)
 DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
 pkglib_SCRIPTS = $(ASSEMBLY)
 bin_SCRIPTS = $(BINARIES)
-programfilesdir = /usr/local/mono-svn/lib/sharpknocking
+programfilesdir = /usr/local/lib/sharpknocking
 programfiles_DATA = $(PROGRAMFILES)
-linuxpkgconfigdir = /usr/local/mono-svn/lib/pkgconfig
+linuxpkgconfigdir = /usr/local/lib/pkgconfig
 linuxpkgconfig_DATA = $(LINUX_PKGCONFIG)
 all: all-am
 

@@ -173,19 +173,19 @@ BINARIES = \
 	$(KNOCKINGDAEMON)  
 
 FILES = \
-	Main.cs \
 	AssemblyInfo.cs \
-	KnockingDaemonProcess.cs \
-	PacketFilter/TcpdumpMonitor.cs \
-	PacketFilter/PacketInfo.cs \
-	PacketFilter/PacketAssembler.cs \
-	SequenceDetection/SequenceDetectorManager.cs \
-	SequenceDetection/SequenceDetector.cs \
-	PacketFilter/PacketFilterEvents.cs \
-	SequenceDetection/SequenceDetectorEvents.cs \
+	CallsLoader.cs \
 	FirewallAccessor/NetfilterAccessor.cs \
+	KnockingDaemonProcess.cs \
+	Main.cs \
+	PacketFilter/PacketAssembler.cs \
+	PacketFilter/PacketFilterEvents.cs \
+	PacketFilter/PacketInfo.cs \
+	PacketFilter/TcpdumpMonitor.cs \
 	PortInverseResolver.cs \
-	CallsLoader.cs 
+	SequenceDetection/SequenceDetector.cs \
+	SequenceDetection/SequenceDetectorEvents.cs \
+	SequenceDetection/SequenceDetectorManager.cs 
 
 DATA_FILES = 
 RESOURCES = 
@@ -193,12 +193,13 @@ EXTRAS = \
 	knockingdaemon.in 
 
 REFERENCES = \
-	System \
-	System.Runtime.Remoting \
-	System.Runtime.Serialization.Formatters.Soap \
-	System.Messaging \
-	System.Security \
-	Mono.Posix
+	-r:../NetfilterFirewall/bin/Debug/NetfilterFirewall.dll \
+	-r:Mono.Posix \
+	-r:System \
+	-r:System.Messaging \
+	-r:System.Runtime.Remoting \
+	-r:System.Runtime.Serialization.Formatters.Soap \
+	-r:System.Security
 
 DLL_REFERENCES = 
 KNOCKINGDAEMON = $(BUILD_DIR)/knockingdaemon

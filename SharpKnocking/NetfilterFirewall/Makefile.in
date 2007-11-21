@@ -162,81 +162,81 @@ LINUX_PKGCONFIG = \
 
 FILES = \
 	AssemblyInfo.cs \
-	Definitions.cs \
-	NetfilterRule.cs \
-	NetfilterTable.cs \
-	NetfilterChain.cs \
-	DuplicateElementExcepcion.cs \
-	NetfilterException.cs \
-	NetfilterRuleSet.cs \
-	RuleParser.cs \
-	MatchExtensions/TcpMatchExtension.cs \
-	MatchExtensions/UdpMatchExtension.cs \
-	MatchExtensions/IcmpMatchExtension.cs \
-	MatchExtensions/MatchExtensionHandler.cs \
-	MatchExtensions/MatchExtensionFactory.cs \
-	MatchExtensions/Definitions.cs \
-	GenericParameter.cs \
-	RuleException.cs \
-	NetfilterRuleList.cs \
-	MatchExtensions/StateMatchExtension.cs \
-	GenericParameterList.cs \
-	GenericParameterListEventArgs.cs \
-	MatchExtensions/MatchExtensionList.cs \
-	MatchExtensions/MatchExtensionEventArgs.cs \
-	MatchExtensions/MatchExtensionParameter.cs \
-	MatchExtensions/MatchExtensionParameterList.cs \
-	MatchExtensions/MatchExtensionParameterEventArgs.cs \
-	Options/ProtocolOption.cs \
-	Options/SourceOption.cs \
-	Options/DestinationOption.cs \
-	Options/JumpOption.cs \
-	Options/InInterfaceOption.cs \
-	Options/OutInterfaceOption.cs \
-	Options/GotoOption.cs \
-	Options/FragmentOption.cs \
-	Options/SetCountersOption.cs \
-	Options/MatchExtensionOption.cs \
-	Options/GenericOption.cs \
-	Options/RuleOptionList.cs \
-	Options/GenericOptionListEventArgs.cs \
-	Options/RuleOptionFactory.cs \
-	Commands/GenericCommand.cs \
-	Commands/RuleCommandFactory.cs \
 	Commands/AppendRuleCommand.cs \
-	Commands/DeleteRuleCommand.cs \
 	Commands/DeleteChainCommand.cs \
-	Commands/ListChainCommand.cs \
+	Commands/DeleteRuleCommand.cs \
 	Commands/FlushChainCommand.cs \
-	Commands/ZeroChainCommand.cs \
+	Commands/GenericCommand.cs \
+	Commands/InsertRuleCommand.cs \
+	Commands/ListChainCommand.cs \
 	Commands/NewChainCommand.cs \
 	Commands/RenameChainCommand.cs \
-	Commands/SetChainPolicyCommand.cs \
-	Commands/InsertRuleCommand.cs \
 	Commands/ReplaceRuleCommand.cs \
-	NetfilterTarget.cs \
+	Commands/RuleCommandFactory.cs \
+	Commands/SetChainPolicyCommand.cs \
+	Commands/ZeroChainCommand.cs \
+	Definitions.cs \
+	DuplicateElementExcepcion.cs \
+	FirewallManager.cs \
+	GenericParameter.cs \
+	GenericParameterList.cs \
+	GenericParameterListEventArgs.cs \
+	IpTablesCmd.cs \
+	MatchExtensions/Definitions.cs \
+	MatchExtensions/IcmpMatchExtension.cs \
+	MatchExtensions/MatchExtensionEventArgs.cs \
+	MatchExtensions/MatchExtensionFactory.cs \
+	MatchExtensions/MatchExtensionHandler.cs \
+	MatchExtensions/MatchExtensionList.cs \
+	MatchExtensions/MatchExtensionParameter.cs \
+	MatchExtensions/MatchExtensionParameterEventArgs.cs \
+	MatchExtensions/MatchExtensionParameterList.cs \
 	MatchExtensions/ReadOnlyMatchExtensionListAdapter.cs \
+	MatchExtensions/StateMatchExtension.cs \
+	MatchExtensions/TcpMatchExtension.cs \
+	MatchExtensions/UdpMatchExtension.cs \
+	NetfilterChain.cs \
+	NetfilterException.cs \
+	NetfilterRule.cs \
+	NetfilterRuleList.cs \
+	NetfilterRuleSet.cs \
+	NetfilterTable.cs \
+	NetfilterTarget.cs \
+	Options/DestinationOption.cs \
+	Options/FragmentOption.cs \
+	Options/GenericOption.cs \
+	Options/GenericOptionListEventArgs.cs \
+	Options/GotoOption.cs \
+	Options/InInterfaceOption.cs \
+	Options/JumpOption.cs \
+	Options/MatchExtensionOption.cs \
+	Options/OutInterfaceOption.cs \
+	Options/ProtocolOption.cs \
+	Options/RuleOptionFactory.cs \
+	Options/RuleOptionList.cs \
+	Options/SetCountersOption.cs \
+	Options/SourceOption.cs \
 	ProtocolTypeEnum.cs \
-	TargetExtensions/TargetExtensionFactory.cs \
-	TargetExtensions/TargetExtensionHandler.cs \
-	TargetExtensions/TargetExtensionList.cs \
-	TargetExtensions/TargetExtensionParameterList.cs \
-	TargetExtensions/ReadOnlyTargetExtensionListAdapter.cs \
-	TargetExtensions/TargetExtensionEventArgs.cs \
-	TargetExtensions/TargetExtensionParameterEventArgs.cs \
-	TargetExtensions/Definitions.cs \
-	TargetExtensions/TargetExtensionParameter.cs \
+	RuleException.cs \
+	RuleParser.cs \
 	TargetExtensions/BalanceTargetExtension.cs \
 	TargetExtensions/ClassifyTargetExtension.cs \
 	TargetExtensions/ClusterIPTargetExtension.cs \
+	TargetExtensions/Definitions.cs \
 	TargetExtensions/DnatTargetExtension.cs \
 	TargetExtensions/DscpTargetExtension.cs \
 	TargetExtensions/EcnTargetExtension.cs \
 	TargetExtensions/IpMarkTargetExtension.cs \
+	TargetExtensions/ReadOnlyTargetExtensionListAdapter.cs \
 	TargetExtensions/RejectTargetExtension.cs \
-	TargetExtensions/UlogTargetExtension.cs \
-	FirewallManager.cs \
-	IpTablesCmd.cs 
+	TargetExtensions/TargetExtensionEventArgs.cs \
+	TargetExtensions/TargetExtensionFactory.cs \
+	TargetExtensions/TargetExtensionHandler.cs \
+	TargetExtensions/TargetExtensionList.cs \
+	TargetExtensions/TargetExtensionParameter.cs \
+	TargetExtensions/TargetExtensionParameterEventArgs.cs \
+	TargetExtensions/TargetExtensionParameterList.cs \
+	TargetExtensions/UlogTargetExtension.cs 
 
 DATA_FILES = 
 RESOURCES = 
@@ -244,8 +244,8 @@ EXTRAS = \
 	netfilterfirewall.pc.in 
 
 REFERENCES = \
-	System \
-	Mono.Posix
+	-r:Mono.Posix \
+	-r:System
 
 DLL_REFERENCES = 
 NETFILTERFIREWALL_PC = $(BUILD_DIR)/netfilterfirewall.pc

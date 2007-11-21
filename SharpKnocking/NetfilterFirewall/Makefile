@@ -59,11 +59,11 @@ linuxpkgconfigDATA_INSTALL = $(INSTALL_DATA)
 programfilesDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(linuxpkgconfig_DATA) $(programfiles_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run aclocal-1.10
-AMTAR = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run tar
-AUTOCONF = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run automake-1.10
+ACLOCAL = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run aclocal-1.10
+AMTAR = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run tar
+AUTOCONF = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run automake-1.10
 AWK = gawk
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"SharpKnocking\" -DPACKAGE_TARNAME=\"sharpknocking\" -DPACKAGE_VERSION=\"0.1_i\" -DPACKAGE_STRING=\"SharpKnocking\ 0.1_i\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"sharpknocking\" -DVERSION=\"0.1_i\"
@@ -85,7 +85,7 @@ INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run makeinfo
 MCS = /usr/local/mono-svn/bin/mcs
 MKDIR_P = /bin/mkdir -p
 PACKAGE = sharpknocking
@@ -100,10 +100,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 0.1_i
-abs_builddir = /home/mangelp/Projects/sharpknocking/SharpKnocking/NetfilterFirewall
-abs_srcdir = /home/mangelp/Projects/sharpknocking/SharpKnocking/NetfilterFirewall
-abs_top_builddir = /home/mangelp/Projects/sharpknocking/SharpKnocking
-abs_top_srcdir = /home/mangelp/Projects/sharpknocking/SharpKnocking
+abs_builddir = /home/mangelp/projects/sharpknocking/SharpKnocking/NetfilterFirewall
+abs_srcdir = /home/mangelp/projects/sharpknocking/SharpKnocking/NetfilterFirewall
+abs_top_builddir = /home/mangelp/projects/sharpknocking/SharpKnocking
+abs_top_srcdir = /home/mangelp/projects/sharpknocking/SharpKnocking
 am__leading_dot = .
 am__tar = ${AMTAR} chof - "$$tardir"
 am__untar = ${AMTAR} xf -
@@ -119,7 +119,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = $(SHELL) /home/mangelp/Projects/sharpknocking/SharpKnocking/install-sh
+install_sh = $(SHELL) /home/mangelp/projects/sharpknocking/SharpKnocking/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -128,7 +128,7 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr/local/mono-svn
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -162,81 +162,81 @@ LINUX_PKGCONFIG = \
 
 FILES = \
 	AssemblyInfo.cs \
-	Definitions.cs \
-	NetfilterRule.cs \
-	NetfilterTable.cs \
-	NetfilterChain.cs \
-	DuplicateElementExcepcion.cs \
-	NetfilterException.cs \
-	NetfilterRuleSet.cs \
-	RuleParser.cs \
-	MatchExtensions/TcpMatchExtension.cs \
-	MatchExtensions/UdpMatchExtension.cs \
-	MatchExtensions/IcmpMatchExtension.cs \
-	MatchExtensions/MatchExtensionHandler.cs \
-	MatchExtensions/MatchExtensionFactory.cs \
-	MatchExtensions/Definitions.cs \
-	GenericParameter.cs \
-	RuleException.cs \
-	NetfilterRuleList.cs \
-	MatchExtensions/StateMatchExtension.cs \
-	GenericParameterList.cs \
-	GenericParameterListEventArgs.cs \
-	MatchExtensions/MatchExtensionList.cs \
-	MatchExtensions/MatchExtensionEventArgs.cs \
-	MatchExtensions/MatchExtensionParameter.cs \
-	MatchExtensions/MatchExtensionParameterList.cs \
-	MatchExtensions/MatchExtensionParameterEventArgs.cs \
-	Options/ProtocolOption.cs \
-	Options/SourceOption.cs \
-	Options/DestinationOption.cs \
-	Options/JumpOption.cs \
-	Options/InInterfaceOption.cs \
-	Options/OutInterfaceOption.cs \
-	Options/GotoOption.cs \
-	Options/FragmentOption.cs \
-	Options/SetCountersOption.cs \
-	Options/MatchExtensionOption.cs \
-	Options/GenericOption.cs \
-	Options/RuleOptionList.cs \
-	Options/GenericOptionListEventArgs.cs \
-	Options/RuleOptionFactory.cs \
-	Commands/GenericCommand.cs \
-	Commands/RuleCommandFactory.cs \
 	Commands/AppendRuleCommand.cs \
-	Commands/DeleteRuleCommand.cs \
 	Commands/DeleteChainCommand.cs \
-	Commands/ListChainCommand.cs \
+	Commands/DeleteRuleCommand.cs \
 	Commands/FlushChainCommand.cs \
-	Commands/ZeroChainCommand.cs \
+	Commands/GenericCommand.cs \
+	Commands/InsertRuleCommand.cs \
+	Commands/ListChainCommand.cs \
 	Commands/NewChainCommand.cs \
 	Commands/RenameChainCommand.cs \
-	Commands/SetChainPolicyCommand.cs \
-	Commands/InsertRuleCommand.cs \
 	Commands/ReplaceRuleCommand.cs \
-	NetfilterTarget.cs \
+	Commands/RuleCommandFactory.cs \
+	Commands/SetChainPolicyCommand.cs \
+	Commands/ZeroChainCommand.cs \
+	Definitions.cs \
+	DuplicateElementExcepcion.cs \
+	FirewallManager.cs \
+	GenericParameter.cs \
+	GenericParameterList.cs \
+	GenericParameterListEventArgs.cs \
+	IpTablesCmd.cs \
+	MatchExtensions/Definitions.cs \
+	MatchExtensions/IcmpMatchExtension.cs \
+	MatchExtensions/MatchExtensionEventArgs.cs \
+	MatchExtensions/MatchExtensionFactory.cs \
+	MatchExtensions/MatchExtensionHandler.cs \
+	MatchExtensions/MatchExtensionList.cs \
+	MatchExtensions/MatchExtensionParameter.cs \
+	MatchExtensions/MatchExtensionParameterEventArgs.cs \
+	MatchExtensions/MatchExtensionParameterList.cs \
 	MatchExtensions/ReadOnlyMatchExtensionListAdapter.cs \
+	MatchExtensions/StateMatchExtension.cs \
+	MatchExtensions/TcpMatchExtension.cs \
+	MatchExtensions/UdpMatchExtension.cs \
+	NetfilterChain.cs \
+	NetfilterException.cs \
+	NetfilterRule.cs \
+	NetfilterRuleList.cs \
+	NetfilterRuleSet.cs \
+	NetfilterTable.cs \
+	NetfilterTarget.cs \
+	Options/DestinationOption.cs \
+	Options/FragmentOption.cs \
+	Options/GenericOption.cs \
+	Options/GenericOptionListEventArgs.cs \
+	Options/GotoOption.cs \
+	Options/InInterfaceOption.cs \
+	Options/JumpOption.cs \
+	Options/MatchExtensionOption.cs \
+	Options/OutInterfaceOption.cs \
+	Options/ProtocolOption.cs \
+	Options/RuleOptionFactory.cs \
+	Options/RuleOptionList.cs \
+	Options/SetCountersOption.cs \
+	Options/SourceOption.cs \
 	ProtocolTypeEnum.cs \
-	TargetExtensions/TargetExtensionFactory.cs \
-	TargetExtensions/TargetExtensionHandler.cs \
-	TargetExtensions/TargetExtensionList.cs \
-	TargetExtensions/TargetExtensionParameterList.cs \
-	TargetExtensions/ReadOnlyTargetExtensionListAdapter.cs \
-	TargetExtensions/TargetExtensionEventArgs.cs \
-	TargetExtensions/TargetExtensionParameterEventArgs.cs \
-	TargetExtensions/Definitions.cs \
-	TargetExtensions/TargetExtensionParameter.cs \
+	RuleException.cs \
+	RuleParser.cs \
 	TargetExtensions/BalanceTargetExtension.cs \
 	TargetExtensions/ClassifyTargetExtension.cs \
 	TargetExtensions/ClusterIPTargetExtension.cs \
+	TargetExtensions/Definitions.cs \
 	TargetExtensions/DnatTargetExtension.cs \
 	TargetExtensions/DscpTargetExtension.cs \
 	TargetExtensions/EcnTargetExtension.cs \
 	TargetExtensions/IpMarkTargetExtension.cs \
+	TargetExtensions/ReadOnlyTargetExtensionListAdapter.cs \
 	TargetExtensions/RejectTargetExtension.cs \
-	TargetExtensions/UlogTargetExtension.cs \
-	FirewallManager.cs \
-	IpTablesCmd.cs 
+	TargetExtensions/TargetExtensionEventArgs.cs \
+	TargetExtensions/TargetExtensionFactory.cs \
+	TargetExtensions/TargetExtensionHandler.cs \
+	TargetExtensions/TargetExtensionList.cs \
+	TargetExtensions/TargetExtensionParameter.cs \
+	TargetExtensions/TargetExtensionParameterEventArgs.cs \
+	TargetExtensions/TargetExtensionParameterList.cs \
+	TargetExtensions/UlogTargetExtension.cs 
 
 DATA_FILES = 
 RESOURCES = 
@@ -244,8 +244,8 @@ EXTRAS = \
 	netfilterfirewall.pc.in 
 
 REFERENCES = \
-	System \
-	Mono.Posix
+	-r:Mono.Posix \
+	-r:System
 
 DLL_REFERENCES = 
 NETFILTERFIREWALL_PC = $(BUILD_DIR)/netfilterfirewall.pc
@@ -272,9 +272,9 @@ CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb $(BINARIES) $(build_resx_resources)
 DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
 pkglib_SCRIPTS = $(ASSEMBLY)
 bin_SCRIPTS = $(BINARIES)
-programfilesdir = /usr/local/mono-svn/lib/sharpknocking
+programfilesdir = /usr/local/lib/sharpknocking
 programfiles_DATA = $(PROGRAMFILES)
-linuxpkgconfigdir = /usr/local/mono-svn/lib/pkgconfig
+linuxpkgconfigdir = /usr/local/lib/pkgconfig
 linuxpkgconfig_DATA = $(LINUX_PKGCONFIG)
 all: all-am
 

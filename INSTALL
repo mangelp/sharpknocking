@@ -16,7 +16,7 @@ COMPILING INSTRUCTIONS
 
 First get the latest sources from svn using this command:
 
-    svn checkout https://forja.rediris.es/svn/csl-csknocking
+    svn checkout https://forja.rediris.es/svn/csl2-isknocking
 
 Or try with the daily sources tarball (generated automatically):
 
@@ -56,18 +56,18 @@ time of this note we are in 0.1 :p).
 
 WIKI
 
-We maintain a wiki with all the related information about the project. If you have questions or want to do a
-bug report this is the best source to look:
+We maintain a wiki with all the related information about the project. If you have questions 
+or want to do a bug report this is the best source to look:
 
 http://code.google.con/p/sharpknocking
 
-You can also download the latest develoment version from the subversion at google or 
+You can also download the latest develoment version from the subversion at google code or 
 the latest stable package.
 
 MAIL LIST
 
-Yes, we have a mail list, but we write very little to it. You can help us with this
-issue contacting us throught it:
+Yes, we have a mail list, but we write very little to it. You can help us with this issue 
+contacting us throught it:
 
 <MailingListUrl>
 

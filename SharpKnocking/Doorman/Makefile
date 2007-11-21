@@ -58,11 +58,11 @@ linuxpkgconfigDATA_INSTALL = $(INSTALL_DATA)
 programfilesDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(linuxpkgconfig_DATA) $(programfiles_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run aclocal-1.10
-AMTAR = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run tar
-AUTOCONF = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run automake-1.10
+ACLOCAL = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run aclocal-1.10
+AMTAR = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run tar
+AUTOCONF = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run automake-1.10
 AWK = gawk
 CYGPATH_W = echo
 DEFS = -DPACKAGE_NAME=\"SharpKnocking\" -DPACKAGE_TARNAME=\"sharpknocking\" -DPACKAGE_VERSION=\"0.1_i\" -DPACKAGE_STRING=\"SharpKnocking\ 0.1_i\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE=\"sharpknocking\" -DVERSION=\"0.1_i\"
@@ -84,7 +84,7 @@ INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LIBOBJS = 
 LIBS = 
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/mangelp/Projects/sharpknocking/SharpKnocking/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/mangelp/projects/sharpknocking/SharpKnocking/missing --run makeinfo
 MCS = /usr/local/mono-svn/bin/mcs
 MKDIR_P = /bin/mkdir -p
 PACKAGE = sharpknocking
@@ -99,10 +99,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 VERSION = 0.1_i
-abs_builddir = /home/mangelp/Projects/sharpknocking/SharpKnocking/Doorman
-abs_srcdir = /home/mangelp/Projects/sharpknocking/SharpKnocking/Doorman
-abs_top_builddir = /home/mangelp/Projects/sharpknocking/SharpKnocking
-abs_top_srcdir = /home/mangelp/Projects/sharpknocking/SharpKnocking
+abs_builddir = /home/mangelp/projects/sharpknocking/SharpKnocking/Doorman
+abs_srcdir = /home/mangelp/projects/sharpknocking/SharpKnocking/Doorman
+abs_top_builddir = /home/mangelp/projects/sharpknocking/SharpKnocking
+abs_top_srcdir = /home/mangelp/projects/sharpknocking/SharpKnocking
 am__leading_dot = .
 am__tar = ${AMTAR} chof - "$$tardir"
 am__untar = ${AMTAR} xf -
@@ -118,7 +118,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = $(SHELL) /home/mangelp/Projects/sharpknocking/SharpKnocking/install-sh
+install_sh = $(SHELL) /home/mangelp/projects/sharpknocking/SharpKnocking/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -127,7 +127,7 @@ mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr/local/mono-svn
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -160,29 +160,27 @@ BINARIES = \
 	$(DOORMAN)  
 
 FILES = \
+	AssemblyInfo.cs \
+	CallNode.cs \
+	ExportCallFileChooserDialog.cs \
 	Main.cs \
 	MainWindow.cs \
-	CallNode.cs \
 	Remoting/DaemonCommunication.cs \
-	ExportCallFileChooserDialog.cs \
-	TrayIcon.cs \
 	Remoting/DaemonCommunicationEvents.cs \
-	AssemblyInfo.cs 
+	TrayIcon.cs 
 
 DATA_FILES = 
-RESOURCES = \
-	gui.glade 
-
+RESOURCES = gui.glade 
 EXTRAS = \
 	doorman.in 
 
 REFERENCES = \
-	$(GTK_SHARP_20_LIBS) \
-	$(GLADE_SHARP_20_LIBS) \
-	$(GLIB_SHARP_20_LIBS) \
-	System \
-	System.Xml \
-	System.Runtime.Remoting
+	-pkg:glade-sharp-2.0 \
+	-pkg:glib-sharp-2.0 \
+	-pkg:gtk-sharp-2.0 \
+	-r:System \
+	-r:System.Runtime.Remoting \
+	-r:System.Xml
 
 DLL_REFERENCES = 
 DOORMAN = $(BUILD_DIR)/doorman
@@ -209,9 +207,9 @@ CLEANFILES = $(ASSEMBLY) $(ASSEMBLY).mdb $(BINARIES) $(build_resx_resources)
 DISTCLEANFILES = $(GENERATED_FILES) $(pc_files) $(BUILD_DIR)/*
 pkglib_SCRIPTS = $(ASSEMBLY)
 bin_SCRIPTS = $(BINARIES)
-programfilesdir = /usr/local/mono-svn/lib/sharpknocking
+programfilesdir = /usr/local/lib/sharpknocking
 programfiles_DATA = $(PROGRAMFILES)
-linuxpkgconfigdir = /usr/local/mono-svn/lib/pkgconfig
+linuxpkgconfigdir = /usr/local/lib/pkgconfig
 linuxpkgconfig_DATA = $(LINUX_PKGCONFIG)
 all: all-am
 

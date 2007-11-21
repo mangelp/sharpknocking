@@ -161,8 +161,8 @@ BINARIES = \
 	$(KNOCKINGDAEMONCONTROL)  
 
 FILES = \
-	Main.cs \
-	AssemblyInfo.cs 
+	AssemblyInfo.cs \
+	Main.cs 
 
 DATA_FILES = 
 RESOURCES = 
@@ -170,9 +170,9 @@ EXTRAS = \
 	knockingdaemoncontrol.in 
 
 REFERENCES = \
-	System \
-	System.Runtime.Remoting \
-	System.Runtime.Serialization.Formatters.Soap
+	-r:System \
+	-r:System.Runtime.Remoting \
+	-r:System.Runtime.Serialization.Formatters.Soap
 
 DLL_REFERENCES = 
 KNOCKINGDAEMONCONTROL = $(BUILD_DIR)/knockingdaemoncontrol

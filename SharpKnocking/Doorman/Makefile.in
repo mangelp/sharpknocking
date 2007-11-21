@@ -160,29 +160,27 @@ BINARIES = \
 	$(DOORMAN)  
 
 FILES = \
+	AssemblyInfo.cs \
+	CallNode.cs \
+	ExportCallFileChooserDialog.cs \
 	Main.cs \
 	MainWindow.cs \
-	CallNode.cs \
 	Remoting/DaemonCommunication.cs \
-	ExportCallFileChooserDialog.cs \
-	TrayIcon.cs \
 	Remoting/DaemonCommunicationEvents.cs \
-	AssemblyInfo.cs 
+	TrayIcon.cs 
 
 DATA_FILES = 
-RESOURCES = \
-	gui.glade 
-
+RESOURCES = gui.glade 
 EXTRAS = \
 	doorman.in 
 
 REFERENCES = \
-	$(GTK_SHARP_20_LIBS) \
-	$(GLADE_SHARP_20_LIBS) \
-	$(GLIB_SHARP_20_LIBS) \
-	System \
-	System.Xml \
-	System.Runtime.Remoting
+	-pkg:glade-sharp-2.0 \
+	-pkg:glib-sharp-2.0 \
+	-pkg:gtk-sharp-2.0 \
+	-r:System \
+	-r:System.Runtime.Remoting \
+	-r:System.Xml
 
 DLL_REFERENCES = 
 DOORMAN = $(BUILD_DIR)/doorman
