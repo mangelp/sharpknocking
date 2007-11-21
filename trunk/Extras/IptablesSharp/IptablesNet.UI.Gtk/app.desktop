@@ -1,9 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Type=Application
-Name=IptablesNet.UI.Gtk
-Exec=gtkiptablesnet
-Terminal=false
-GenericName=IptablesNet
-Comment=Gtk interface for IptablesNet
-Categories=Security;
