@@ -1,10 +1,10 @@
-<Project name="SharpKnocking.Core" fileversion="2.0" DefaultNamespace="SharpKnocking.Core" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="iSharpKnocking.Core" fileversion="2.0" DefaultNamespace="iSharpKnocking.Core" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
         <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Debug" assemblyKeyFile="." assembly="SharpKnocking.Core" />
+      <Output directory="bin/Debug" assemblyKeyFile="." assembly="iSharpKnocking.Core" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -13,7 +13,7 @@
       <CustomCommands>
         <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Release" assembly="SharpKnocking.Core" />
+      <Output directory="bin/Release" assembly="iSharpKnocking.Core" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />

@@ -1,10 +1,10 @@
-<Project name="SharpKnocking.Doorman" fileversion="2.0" Description="Server-side manager app for the SharpKnocking suite." DefaultNamespace="SharpKnocking.Doorman" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
+<Project name="iSharpKnocking.Knocker" fileversion="2.0" Description="Client app to comunicate with the daemon on the server." DefaultNamespace="iSharpKnocking.Knocker" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
         <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Debug" assembly="SharpKnocking.Doorman" />
+      <Output directory="bin/Debug" assembly="iSharpKnocking.Knocker" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -13,7 +13,7 @@
       <CustomCommands>
         <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Release" assembly="SharpKnocking.Doorman" />
+      <Output directory="bin/Release" assembly="iSharpKnocking.Knocker" />
       <Build debugmode="False" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -37,6 +37,6 @@
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.4.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=1.0.5000.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
   </References>
-  <Deployment.LinuxDeployData scriptName="skdoorman" />
+  <Deployment.LinuxDeployData scriptName="skknocker" />
   <GtkDesignInfo />
 </Project>

@@ -1,4 +1,4 @@
-<Project name="Developer.Common" fileversion="2.0" Description="Common functionality originally done for the SharpKnocking project &#xA;but that can be usefull for more projects of any kind." DefaultNamespace="Developer.Common" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Developer.Common" fileversion="2.0" Description="Common functionality originally done for the iSharpKnocking project &#xA;but that can be usefull for more projects of any kind." DefaultNamespace="Developer.Common" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
