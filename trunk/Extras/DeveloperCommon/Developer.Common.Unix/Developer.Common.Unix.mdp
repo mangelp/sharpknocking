@@ -2,7 +2,7 @@
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
-        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
+        <Command type="AfterBuild" command="../../../bin/copyToLibrary.sh bin/Debug ../../../Library/Debug" workingdir="${ProjectDir}" />
       </CustomCommands>
       <Output directory="bin/Debug" assemblyKeyFile="." assembly="Developer.Common.Unix" />
       <Build debugmode="True" target="Library" />
@@ -11,7 +11,7 @@
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <CustomCommands>
-        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
+        <Command type="AfterBuild" command="../../../bin/copyToLibrary.sh bin/Release ../../../Library/Release" workingdir="${ProjectDir}" />
       </CustomCommands>
       <Output directory="bin/Release" assembly="Developer.Common.Unix" />
       <Build debugmode="False" target="Library" />

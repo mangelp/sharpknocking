@@ -1,6 +1,7 @@
-// SharpKnocking/SharpKnocking.Core/Calls/Knocks.cs
+// Knocks.cs
 //
-//  Copyright (C) 2007 Luis Román Gutiérrez y Miguel Ángel Pérez Valencia
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by Miguel Angel Perez (mangelp{aT}gmail[D0T]com)
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -19,110 +20,61 @@
 //
 
 using System;
+using System.Net;
 
 using Developer.Common.Net;
 
-namespace SharpKnocking.Core.Knocking
+namespace iSharpKnocking.Core
 {
-	/// <summary>
-	/// Models all the data required for a knock.
-	/// </summary>
-	public struct Knock
+	public class GenericKnock
+	{}
+	
+	public class IpKnock: GenericKnock
 	{
-		/// <summary>
-		/// Protocol type of the packet
-		/// </summary>
-		public ProtocolType Proto;
-		
-		/// <summary>
-		/// Number of sequence for the packet.
-		/// </summary>
-		/// <remarks>
-		/// Sequence numbers should not be consecutive, they must be 
-		/// generated randomly.
-		/// </remarks>
-		public int NumSeq;
-		
-		/// <summary>
-		/// Id of the user who is sending the knock
-		/// </summary>
-		/// <remarks>
-		/// This id has nothing to do with the id of the user in the system.
-		/// The same user can use different knock sequences with different
-		/// user ids.
-		/// </remarks>
-		public short UsId;
-		
-		/// <summary>
-		/// Gets if the UsId is valid.
-		/// </summary>
-		public bool HasUsId;
-		
-		/// <summary>
-		/// Private key code of the user for the sequence to which this knock
-		/// belongs.
-		/// </summary>
-		/// <remarks>
-		/// This key code is required (along with the user id) to identify the 
-		/// sequence to which this knock belongs.
-		/// </remarks>
-		public short UsPk;
-		
-		/// <summary>
-		/// Gets if the UsPk is valid.
-		/// </summary>
-		public bool HasUsPk;
-		
-		/// <summary>
-		/// Data associated with the knock
-		/// </summary>
-		/// <remarks>
-		/// Each nock can have data or not and that data can be a valid data or 
-		/// a random-generated set of bytes.
-		/// The data can be encrypted using a public key from the server and/or
-		/// signed by the user.
-		/// </remarks>
+		public string Src;
+		public string Dst;
+		public string Id;
 		public byte[] Data;
-		
-		/// <summary>
-		/// Gets if there is defined a valid random knock space.
-		/// </summary>
-		public bool HasRandomKnock;
-		
-		/// <summary>
-		/// Random Knocks specification. Determines how to randomize certain
-		/// parts of the knock sequence.
-		/// </summary>
-		/// <remarks>
-		/// The existence of a valid value indicates that after the send/receive
-		/// of this knock a random sequence follows. The end of the sequence is
-		/// detected by the number of sequence. For the random sequence must be
-		/// in a range starting from the sequence of the caller and ending before
-		/// a certain value is reached.
-		/// </remarks>
-		public RandomKnock RandomKnock;
+		public string Hash
+		{
+			get { return String.Empty; }
+		}
 	}
 	
-	public struct RandomKnock
+	public class TcpKnock: IpKnock
 	{
-		/// <summary>
-		/// Maximum number of random knocks
-		/// </summary>
-		public byte Max;
-		
-		/// <summary>
-		/// Minimum number of random knocks
-		/// </summary>
-		public byte Min;
-		
-		/// <summary>
-		/// Minimum number of random bytes
-		/// </summary>
-		public short MinRandomBytes;
-		
-		/// <summary>
-		/// Maximum number of random bytes
-		/// </summary>
-		public short MaxRandomBytes;
+		public int SPort;
+		public int DPort;
+		public int SeqNum;
+		public string Hash
+		{
+			get { return base.Hash+SPort+DPort; }
+		}
+	}
+	
+	public class UdpKnock: IpKnock
+	{
+		public int SPort;
+		public int DPort;
+		public string Hash
+		{
+			get { return base.Hash+SPort+DPort; }
+		}
+	}
+	
+	public class IcmpKnock: IpKnock
+	{
+		public IcmpTypes Type;
+		public string Hash
+		{
+			get { return base.Hash+((int)Type); }
+		}
+	}
+	
+	public struct SkKnock
+	{
+		public int Order;
+		public string Name;
+		public int Id;
 	}
 }

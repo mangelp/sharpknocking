@@ -1,10 +1,10 @@
-<Project name="Developer.Common.Windows" fileversion="2.0" Description="Windows-related stuff" DefaultNamespace="Developer.Common.Windows" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="IptablesSharp.Extensions.Matches" fileversion="2.0" Description="Matching extensions for iptables" DefaultNamespace="IptablesSharp.Extensions.Matches" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
         <Command type="AfterBuild" command="../../../bin/copyToLibrary.sh bin/Debug ../../../Library/Debug" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Debug" assembly="Developer.Common.Windows" />
+      <Output directory="bin/Debug" assemblyKeyFile="." assembly="IptablesSharp.Extensions.Matches" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -13,7 +13,7 @@
       <CustomCommands>
         <Command type="AfterBuild" command="../../../bin/copyToLibrary.sh bin/Release ../../../Library/Release" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Release" assemblyKeyFile="." assembly="Developer.Common.Windows" />
+      <Output directory="bin/Release" assemblyKeyFile="." assembly="IptablesSharp.Extensions.Matches" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -21,9 +21,16 @@
   </Configurations>
   <Contents>
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="UdpMatchExtension.cs" subtype="Code" buildaction="Compile" />
+    <File name="TcpMatchExtension.cs" subtype="Code" buildaction="Compile" />
+    <File name="IcmpMatchExtension.cs" subtype="Code" buildaction="Compile" />
+    <File name="Definitions.cs" subtype="Code" buildaction="Compile" />
+    <File name="StateMatchExtension.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Project" localcopy="True" refto="IptablesSharp.Core" />
     <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
+    <ProjectReference type="Project" localcopy="True" refto="Developer.Common.Unix" />
   </References>
 </Project>

@@ -1,8 +1,7 @@
-// IKnockAction.cs
+// KnockCapturer.cs
 //
-//  Copyright (C) SharpKnocking Project 2007
-//  Author: mangelp[on]gmail*com
-//  For a list of contributors see AUTHORS
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by Miguel Angel Perez (mangelp{aT}gmail[D0T]com)
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -22,11 +21,16 @@
 
 using System;
 
-namespace SharpKnocking.Core.Knocking
+namespace iSharpKnocking.Core
 {
 	
-	
-	public interface IKnockAction
-	{
+	/// <summary>
+	/// Base class for capturers
+	/// </summary>
+	public abstract class KnockCapturer
+	{		
+		protected KnockCapturer()
+		{
+		}
 	}
 }

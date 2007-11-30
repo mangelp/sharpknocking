@@ -1,25 +1,74 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/mangelp/Projects/sharpknocking/iSharpKnocking/iSharpKnocking.mds">
   <Files>
-    <File name="Bienvenido" />
+    <File name="iSharpKnocking.Core/Knocking/Knocks.cs" line="71" column="4" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True">
-        <Node name="SharpKnocking.Knocker" selected="True" />
+        <Node name="Extras" expanded="True">
+          <Node name="DeveloperCommon">
+            <Node name="Developer.Common">
+              <Option id="GroupCodeBehind" value="True" />
+              <Option id="ShowVersionControlOverlays" value="True" />
+              <Option id="ShowAllFiles" value="False" />
+            </Node>
+            <Node name="Developer.Common.Unix">
+              <Option id="GroupCodeBehind" value="True" />
+              <Option id="ShowVersionControlOverlays" value="True" />
+              <Option id="ShowAllFiles" value="False" />
+            </Node>
+            <Node name="Developer.Common.Windows">
+              <Option id="GroupCodeBehind" value="True" />
+              <Option id="ShowVersionControlOverlays" value="True" />
+              <Option id="ShowAllFiles" value="False" />
+            </Node>
+          </Node>
+          <Node name="IptablesSharp">
+            <Node name="IptablesSharp.Core">
+              <Option id="GroupCodeBehind" value="True" />
+              <Option id="ShowVersionControlOverlays" value="True" />
+              <Option id="ShowAllFiles" value="False" />
+            </Node>
+            <Node name="IptablesSharp.Extensions.Matches">
+              <Option id="GroupCodeBehind" value="True" />
+              <Option id="ShowVersionControlOverlays" value="True" />
+              <Option id="ShowAllFiles" value="False" />
+            </Node>
+            <Node name="IptablesSharp.Extensions.Targets">
+              <Option id="GroupCodeBehind" value="True" />
+              <Option id="ShowVersionControlOverlays" value="True" />
+              <Option id="ShowAllFiles" value="False" />
+            </Node>
+          </Node>
+        </Node>
+        <Node name="SharpKnocking" expanded="True">
+          <Node name="KnockingDaemon" expanded="True">
+            <Node name="PacketFilter" expanded="True" />
+          </Node>
+        </Node>
+        <Node name="iSharpKnocking.Core" expanded="True">
+          <Node name="References" expanded="True">
+            <Node name="System.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" selected="True" />
+          </Node>
+          <Node name="Calls" expanded="True" />
+          <Node name="Config" expanded="True" />
+          <Node name="Knocking" expanded="True" />
+        </Node>
+        <Node name="iSharpKnocking.Daemon" expanded="True" />
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
-      <Node expanded="True" />
+      <Node />
     </ViewMemento>
     <ViewMemento id="ConnectionManagerPad">
       <Node />
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
-      <Node />
+      <Node expanded="True" />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="Bienvenido" />
+    <Property key="ActiveWindow" value="/home/mangelp/Projects/sharpknocking/iSharpKnocking/iSharpKnocking.Core/Knocking/Knocks.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
