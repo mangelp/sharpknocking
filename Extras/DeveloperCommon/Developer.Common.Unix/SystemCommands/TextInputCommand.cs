@@ -75,16 +75,19 @@ namespace Developer.Common.Unix.SystemCommands
 		public override void ExecAsync ()
 		{
 			//TODO: Support to this
+			throw new NotImplementedException();
 		}
 		
-		public override void Abort ()
+		public override void Stop ()
 		{
 			//TODO: Support to abort last write
+			throw new NotImplementedException();
 		}
 
 		public override void Write (string data)
 		{
 			//TODO: Support to write to process input
+			throw new NotImplementedException();
 		}
 	}
 }

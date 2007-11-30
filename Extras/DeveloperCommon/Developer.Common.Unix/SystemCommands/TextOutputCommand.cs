@@ -79,7 +79,7 @@ namespace Developer.Common.Unix.SystemCommands
 			return p;
 		}
 		
-		public override void Abort ()
+		public override void Stop ()
 		{
 			if(this.IsAsync && this.Current!=null && !this.Current.HasExited)
 			{

@@ -44,7 +44,7 @@ namespace Developer.Common.SystemCommands
 			}
 		}
 		
-		private Dictionary<string, int> commands;
+		private Dictionary<string, BaseCommandWrapper> commands;
 		
 		private OsInfo osInfo;
 		
@@ -64,7 +64,7 @@ namespace Developer.Common.SystemCommands
 		
 		private SysCommandManager()
 		{
-			commands = new Dictionary<string,int>();
+			commands = new Dictionary<string, BaseCommandWrapper>();
 			osInfo = new OsInfo();
 			osInfo.MonoVersion = (Version)Environment.Version.Clone();
 			osInfo.OsPlatform = Environment.OSVersion.Platform;
@@ -80,6 +80,11 @@ namespace Developer.Common.SystemCommands
 			}
 		}
 		
+		public void AddCommand(string name, BaseCommandWrapper cmd)
+		{
+			commands.Add(name, cmd);
+		}
+		
 		/// <summary>
 		/// Determines if a certain command is running
 		/// </summary>
@@ -90,24 +95,9 @@ namespace Developer.Common.SystemCommands
 		/// A <see cref="System.Boolean"/> that indicates if the command is
 		/// running or not.
 		/// </returns>
-		bool IsCommandRunning(string name)
+		public bool IsCommandRunning(string name)
 		{
-			return false;
-		}
-		
-		/// <summary>
-		/// Terminates a command
-		/// </summary>
-		/// <param name="name">
-		/// A <see cref="System.String"/> with the name of the command to terminate
-		/// </param>
-		/// <returns>
-		/// A <see cref="System.Boolean"/> that indicates if the command was
-		/// successfully terminated.
-		/// </returns>
-		bool TerminateCommand(string name)
-		{
-			return true;
+			return this.commands.ContainsKey(name) && this.commands[name].IsRunning;
 		}
 		
 		/// <summary>
@@ -120,9 +110,12 @@ namespace Developer.Common.SystemCommands
 		/// A <see cref="System.Boolean"/> that indicates if the command was
 		/// successfully killed.
 		/// </returns>
-		bool KillCommand(string name)
+		public void KillCommand(string name)
 		{
-			return true;
+			if(this.commands.ContainsKey(name)) {
+				this.commands[name].Stop();
+				this.commands.Remove(name);
+			}
 		}
 	}
 }

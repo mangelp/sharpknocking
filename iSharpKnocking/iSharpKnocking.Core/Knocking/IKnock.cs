@@ -1,6 +1,7 @@
-// SharpKnocking/SharpKnocking.Core/Network/IPacket.cs
+// IKnock.cs
 //
-//  Copyright (C) 2007 Miguel Ángel Pérez y Luis Román Gutiérrez
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by Miguel Angel Perez (mangelp{aT}gmail[D0T]com)
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -19,22 +20,15 @@
 //
 
 using System;
-using Developer.Common.Net;
 
-namespace SharpKnocking.Core.Knocking
+namespace iSharpKnocking.Core
 {
 	/// <summary>
-	/// Models all the data and operations with a captured packet
+	/// Common operations to implement by all the types of knocks supported
 	/// </summary>
-	/// <remarks>
-	/// </remarks>
 	public interface IKnock
 	{
-		IpEndPoint Source {get;set;}
-		IpEndPoint Target {get;set;}
-		DateTime TimeStamp {get;set;}
+		string SrcKey {get;set;}
 		byte[] Data {get;set;}
-		ProtocolType Type {get;set;}
-		object CustomData {get;set;}
 	}
 }

@@ -1,34 +1,30 @@
-<Project name="IptablesSharp.Extensions.Targets" fileversion="2.0" Description="Library of target extensions for the rules" DefaultNamespace="IptablesSharp.Extensions.Targets" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="iSharpKnocking.Daemon" fileversion="2.0" Description="Daemon that manages detection of the knocking sequences and the actions done." DefaultNamespace="iSharpKnocking.Daemon" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
         <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Debug" assembly="IptablesSharp.Extensions.Targets" />
-      <Build debugmode="True" target="Library" />
-      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <Output directory="bin/Debug" assembly="iSharpKnocking.Daemon" />
+      <Build debugmode="True" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <CustomCommands>
         <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Release" assemblyKeyFile="." assembly="IptablesSharp.Extensions.Targets" />
-      <Build debugmode="False" target="Library" />
-      <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
+      <Output directory="bin/Release" assembly="iSharpKnocking.Daemon" />
+      <Build debugmode="False" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
+    <File name="Main.cs" subtype="Code" buildaction="Compile" />
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="UlogTargetExtension.cs" subtype="Code" buildaction="Compile" />
-    <File name="RejectTargetExtension.cs" subtype="Code" buildaction="Compile" />
-    <File name="Definitions.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <ProjectReference type="Project" localcopy="True" refto="IptablesSharp.Core" />
-    <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
   </References>
-  <Deployment.LinuxDeployData scriptName="iptablesnet.extensions.targetextensions" />
+  <Deployment.LinuxDeployData scriptName="skdaemon" />
 </Project>

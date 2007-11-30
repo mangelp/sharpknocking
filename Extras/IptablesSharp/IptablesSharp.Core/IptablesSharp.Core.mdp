@@ -2,7 +2,7 @@
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
-        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
+        <Command type="AfterBuild" command="../../../bin/copyToLibrary.sh bin/Debug ../../../Library/Debug" workingdir="${ProjectDir}" />
       </CustomCommands>
       <Output directory="bin/Debug" assemblyKeyFile="." assembly="IptablesSharp.Core" />
       <Build debugmode="True" target="Library" />
@@ -11,7 +11,7 @@
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <CustomCommands>
-        <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Release ../../Library/Release" workingdir="${ProjectDir}" />
+        <Command type="AfterBuild" command="../../../bin/copyToLibrary.sh bin/Release ../../../Library/Release" workingdir="${ProjectDir}" />
       </CustomCommands>
       <Output directory="bin/Release" assemblyKeyFile="." assembly="IptablesSharp.Core" />
       <Build debugmode="False" target="Library" />
@@ -85,8 +85,8 @@
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <ProjectReference type="Project" localcopy="True" refto="Developer.Common.Unix" />
     <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
+    <ProjectReference type="Project" localcopy="True" refto="Developer.Common.Unix" />
   </References>
   <Deployment.LinuxDeployData scriptName="iptablesnet.core" />
 </Project>

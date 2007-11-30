@@ -1,8 +1,7 @@
-// KnockingRulesDataSource.cs
+// TcpdumpCapturer.cs
 //
-//  Copyright (C) SharpKnocking Project 2007
-//  Author: mangelp[on]gmail*com
-//  For a list of contributors see AUTHORS
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by Miguel Angel Perez (mangelp{aT}gmail[D0T]com)
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -22,14 +21,19 @@
 
 using System;
 
-namespace SharpKnocking.Core.Knocking
+namespace iSharpKnocking.Core
 {
 	
-	
-	public class KnockingRulesDataSource
+	/// <summary>
+	/// Knock capturer that uses tcpdump command-line tool to access the information
+	/// about imput traffic.
+	/// </summary>
+	/// <remarks>
+	/// Based on the work of Luis Román.
+	/// </remarks>
+	public class TcpdumpCapturer
 	{
-		
-		public KnockingRulesDataSource()
+		public TcpdumpCapturer()
 		{
 		}
 	}

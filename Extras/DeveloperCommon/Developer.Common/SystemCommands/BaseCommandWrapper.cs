@@ -30,22 +30,44 @@ namespace Developer.Common.SystemCommands
 	{
 		private Process current;
 		
-		protected Process Current
+		/// <summary>
+		/// Current Process instance that is being executed.
+		/// </summary>
+		/// <remarks>
+		/// If there is no process running this reference can be null
+		/// </remarks>
+		public Process Current
 		{
 			get { return this.current;}
-			set { this.current = value;}
+			protected set { this.current = value;}
 		}
 		
 		private bool isAsync;
 		
+		/// <summary>
+		/// Indicates if the command is executing or will be executing asynchronously
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="System.String"/>
+		/// </param>
 		protected bool IsAsync
 		{
 			get { return this.isAsync;}
-			set { this.isAsync = value;}
+			set { 
+				if(!this.CanExecAsync)
+					throw new InvalidOperationException("The process can't execute asynchronously");
+				this.isAsync = value;
+			}
 		}
 		
+		//TODO: This result is only useful when we want to process the output of a command
+		//Should this be here or in the StringOutputSysCommand defined in Developer.Common.Unix
+		//assembly?
 		private List<string> result;
 		
+		/// <summary>
+		/// List of strings with the result of the command execution
+		/// </summary>
 		protected List<string> Result
 		{
 			get { return this.result;}
@@ -53,10 +75,13 @@ namespace Developer.Common.SystemCommands
 		
 		private int exitCode;
 		
-		protected int ExitCode
+		/// <summary>
+		/// Exit code of the process if it ended correctly
+		/// </summary>
+		public int ExitCode
 		{
 			get { return this.exitCode;}
-			set { this.exitCode = value;}
+			protected set { this.exitCode = value;}
 		}
 		
 		private string name;
@@ -91,8 +116,17 @@ namespace Developer.Common.SystemCommands
 			set {this.args = value;}
 		}
 		
+		/// <summary>
+		/// Gets if the process can be executed synchronously
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="System.String"/>
+		/// </param>
 		public abstract bool CanExec {get;}
 		
+		/// <summary>
+		/// Gets if the process can be executed asynchronously
+		/// </summary>
 		public abstract bool CanExecAsync {get;}
 		
 		/// <summary>
@@ -117,7 +151,7 @@ namespace Developer.Common.SystemCommands
 		public bool RequiresRoot
 		{
 			get {return this.requiresRoot;}
-			set {this.requiresRoot = value;}
+			protected set {this.requiresRoot = value;}
 		}
 		
 		private StringDictionary enviroment;
@@ -135,6 +169,19 @@ namespace Developer.Common.SystemCommands
 		}
 		
 		/// <summary>
+		/// Gets if the underlying process is running or not
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="System.String"/>
+		/// </param>
+		public bool IsRunning
+		{
+			get {
+				return this.current==null || this.current.HasExited;
+			}
+		}
+		
+		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <remarks>
@@ -148,6 +195,16 @@ namespace Developer.Common.SystemCommands
 			this.result = new List<string>();
 		}
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="System.String"/> with the name of the command to execute
+		/// </param>
+		/// <param name="requiresRoot">
+		/// A <see cref="System.Boolean"/> that indicates if the command requires root privileges
+		/// to work properly
+		/// </param>
 		public BaseCommandWrapper(string name, bool requiresRoot)
 			: this(name)
 		{
@@ -174,10 +231,13 @@ namespace Developer.Common.SystemCommands
 		public abstract void ExecAsync();
 		
 		/// <summary>
-		/// Aborts the executing process. Only works if the execution was started
-		/// with ExecAsync
+		/// Ends the executing process
 		/// </summary>
-		public abstract void Abort();
+		/// <remarks>
+		/// This method is intended to stop the running process by any means and set all
+		/// the required status information in the class.
+		/// </remarks>
+		public abstract void Stop();
 		
 		/// <summary>
 		/// Writes into the the standard input of the process
@@ -189,6 +249,13 @@ namespace Developer.Common.SystemCommands
 		/// </summary>
 		public event EventHandler<CommandEndEventArgs> CommandEnd;
 		
+		/// <summary>
+		/// Sends the CommandEnd event
+		/// </summary>
+		/// <param name="args">
+		/// A <see cref="CommandEndEventArgs"/> with the data for the parameters of the
+		/// event notification.
+		/// </param>
 		protected void OnCommandEnd(CommandEndEventArgs args)
 		{
 			if(this.CommandEnd!=null)
@@ -221,11 +288,20 @@ namespace Developer.Common.SystemCommands
 			return p;
 		}
 
+		/// <summary>
+		/// Handler for the <see cref="BaseCommandWrapper.DataReceived">DataReceived</see> event
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/> which is the reference to the object who sent the event.
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="DataReceivedEventArgs"/> whith the data about the event
+		/// </param>
 		protected void OnDataReceivedHandler(object sender, DataReceivedEventArgs args)
 		{
 			//TODO: If the data is being read asynchronously this should output it in the
 			//same way not waiting to have all to output it. We don't know how many data
-			//can be sent
+			//can be sent and that can cause high memory allocations.
 			result.Add(args.Data);
 		}
 		
@@ -252,7 +328,7 @@ namespace Developer.Common.SystemCommands
 		
 		protected virtual void OnAsyncWriteEndHandler(object sender, EventArgs args)
 		{
-			//TODO: How async writes works?
+			//TODO: How async writes works? Have sense this?
 		}
 	}
 }

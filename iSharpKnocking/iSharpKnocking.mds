@@ -1,33 +1,37 @@
-<Combine name="iSharpKnocking" fileversion="2.0">
+<Combine name="iSharpKnocking" fileversion="2.0" description="iSharpKnocking project" outputpath="build/bin/">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
-      <Entry build="True" name="Extras" configuration="Debug" />
       <Entry build="True" name="iSharpKnocking.Core" configuration="Debug" />
       <Entry build="True" name="iSharpKnocking.Daemon" configuration="Debug" />
-      <Entry build="True" name="iSharpKnocking.Doorman" configuration="Debug" />
       <Entry build="True" name="iSharpKnocking.Knocker" configuration="Debug" />
+      <Entry build="True" name="iSharpKnocking.Doorman" configuration="Debug" />
+      <Entry build="True" name="SharpKnocking" configuration="Debug" />
+      <Entry build="True" name="Extras" configuration="" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
-      <Entry build="True" name="Extras" configuration="Release" />
       <Entry build="True" name="iSharpKnocking.Core" configuration="Release" />
       <Entry build="True" name="iSharpKnocking.Daemon" configuration="Release" />
-      <Entry build="True" name="iSharpKnocking.Doorman" configuration="Release" />
       <Entry build="True" name="iSharpKnocking.Knocker" configuration="Release" />
+      <Entry build="True" name="iSharpKnocking.Doorman" configuration="Release" />
+      <Entry build="True" name="SharpKnocking" configuration="Release" />
+      <Entry build="True" name="Extras" configuration="" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="Extras" single="True">
-    <Execute type="None" entry="Extras" />
+  <StartMode startupentry="iSharpKnocking.Core" single="True">
     <Execute type="None" entry="iSharpKnocking.Core" />
     <Execute type="None" entry="iSharpKnocking.Daemon" />
-    <Execute type="None" entry="iSharpKnocking.Doorman" />
     <Execute type="None" entry="iSharpKnocking.Knocker" />
+    <Execute type="None" entry="iSharpKnocking.Doorman" />
+    <Execute type="None" entry="SharpKnocking" />
+    <Execute type="None" entry="Extras" />
   </StartMode>
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInProjectRootDirectory" />
   <Entries>
-    <Entry filename="../Extras/Extras.mds" />
     <Entry filename="iSharpKnocking.Core/iSharpKnocking.Core.mdp" />
     <Entry filename="iSharpKnocking.Daemon/iSharpKnocking.Daemon.mdp" />
-    <Entry filename="iSharpKnocking.Doorman/iSharpKnocking.Doorman.mdp" />
     <Entry filename="iSharpKnocking.Knocker/iSharpKnocking.Knocker.mdp" />
+    <Entry filename="iSharpKnocking.Doorman/iSharpKnocking.Doorman.mdp" />
+    <Entry filename="../SharpKnocking/SharpKnocking.mds" />
+    <Entry filename="../Extras/Extras.mds" />
   </Entries>
 </Combine>
