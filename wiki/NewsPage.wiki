@@ -8,6 +8,25 @@ Here you will find the latest news of this project
 
 = News =
 
+=== 11/01/2008 ===
+
+*The second open source contest for students in the university of seville*
+
+We have been very busy lately but we are managing to get some free time to spent again in the project.
+
+We, the sharpknocking team, are proud to be again in this contest where we get to the
+final phase the past year with a lot of illusion and ideas but with not too much free time.
+
+You can follow the contest throught the page (spanish): [http://concurso-softwarelibre.us.es/ II Concurso Universitario de software libre]
+
+You can also track our project blog (spanish again): [http://projects.ilikecoffee.net/sharpknocking sharpknocking blog]
+
+You can subscribe to our mailing list: [http://mail.ilikecoffee.net/mailman/listinfo/sharpknocking-devel_ilikecoffee.net sharpknocking-devel]
+
+Regards.
+
+The sharpknocking project team.
+
 === 8/11/2007 ===
 
 *Project blog up*
