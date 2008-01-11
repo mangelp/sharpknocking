@@ -21,7 +21,7 @@ You can follow the contest throught the page (spanish): [http://concurso-softwar
 
 You can also track our project blog (spanish again): [http://projects.ilikecoffee.net/sharpknocking sharpknocking blog]
 
-You can subscribe to our mailing list: [http://mail.ilikecoffee.net/mailman/listinfo/sharpknocking-devel_ilikecoffee.net sharpknocking-devel]
+You can subscribe to our mailing list (feel free to use spanish or english when posting): [http://mail.ilikecoffee.net/mailman/listinfo/sharpknocking-devel_ilikecoffee.net sharpknocking-devel]
 
 Regards.
 
