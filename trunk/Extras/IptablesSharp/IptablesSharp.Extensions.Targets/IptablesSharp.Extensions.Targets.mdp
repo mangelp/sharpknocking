@@ -1,10 +1,10 @@
-<Project name="IptablesSharp.Extensions.Targets" fileversion="2.0" Description="Library of target extensions for the rules" DefaultNamespace="IptablesSharp.Extensions.Targets" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="IptablesSharp.Extensions.Targets" fileversion="2.0" Description="Library of target extensions for IptablesSharp library" DefaultNamespace="IptablesSharp.Extensions.Targets" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
         <Command type="AfterBuild" command="../../../bin/copyToLibrary.sh bin/Debug ../../../Library/Debug" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Debug" assembly="IptablesSharp.Extensions.Targets" />
+      <Output directory="bin/Debug" assemblyKeyFile="." assembly="IptablesSharp.Extensions.Targets" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
       <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
@@ -16,7 +16,7 @@
       <Output directory="bin/Release" assemblyKeyFile="." assembly="IptablesSharp.Extensions.Targets" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="True" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
