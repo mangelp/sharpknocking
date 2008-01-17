@@ -1,4 +1,4 @@
-<Project name="IptablesSharp.Extensions.Matches" fileversion="2.0" Description="Matching extensions for iptables" DefaultNamespace="IptablesSharp.Extensions.Matches" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="IptablesSharp.Extensions.Matches" fileversion="2.0" Description="Matching extensions for IptablesSharp library" DefaultNamespace="IptablesSharp.Extensions.Matches" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
@@ -16,7 +16,7 @@
       <Output directory="bin/Release" assemblyKeyFile="." assembly="IptablesSharp.Extensions.Matches" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="True" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
