@@ -29,7 +29,7 @@ namespace IptablesNet.Core.Extensions
 	/// <summary>
     /// Match extensions. The only supported are: tcp, udp, icmp and state.
     /// </summary>
-    /// <remarsk>
+    /// <remarks>
     /// Each match extension handling must be developed in a separate
     /// class.
     /// </remarks>
@@ -45,7 +45,7 @@ namespace IptablesNet.Core.Extensions
         CustomExtension,
         /// <summary>
         /// Account traffic for all hosts in defined network/netmask
-        /// <summary>
+        /// </summary>
         [Alias("account")]
         Account,
         /// <summary>
@@ -86,26 +86,59 @@ namespace IptablesNet.Core.Extensions
         /// </summary>
         [Alias("connlimit")]
         Connlimit,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("connmark")]
         Connmark,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("conrate")]
         Connrate,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("conntrack")]
         Conntrack,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("dccp")]
         Dccp,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("dscp")]
         Dscp,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("dstlimit")]
         Dstlimit,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("ecn")]
         Ecn,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("esp")]
         Esp,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("fuzzy")]
         Fuzzy,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("hashlimit")]
         Hashlimit,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("helper")]
         Helper,
         /// <summary>
@@ -113,50 +146,119 @@ namespace IptablesNet.Core.Extensions
         /// </summary>
         [Alias("icmp")]
         Icmp,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("iprange")]
         Iprange,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("ipv4options")]
         Ipv4options,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("length")]
         Length,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("limit")]
         Limit,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("mac")]
         Mac,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("mark")]
         Mark,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("mport")]
         Mport,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("multiport")]
         Multiport,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("nth")]
         Nth,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("osf")]
         Osf,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("owner")]
         Owner,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("physdev")]
         Physdev,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("pkttype")]
         Pkttype,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("policy")]
         Policy,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("psd")]
         Psd,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("quota")]
         Quota,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("random")]
         Random,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("realm")]
         Realm,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("recent")]
         Recent,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("sctp")]
         Sctp,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("set")]
         Set,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("state")]
         State,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("string")]
         String,
         /// <summary>
@@ -164,14 +266,29 @@ namespace IptablesNet.Core.Extensions
         /// </summary>
         [Alias("tcp")]
         Tcp,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("tcpmss")]
         Tcpmss,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("time")]
         Time,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("tos")]
         Tos,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("ttl")]
         Ttl,
+		/// <summary>
+		/// 
+		/// </summary>
         [Alias("u32")]
         U32,
         /// <summary>
@@ -179,11 +296,11 @@ namespace IptablesNet.Core.Extensions
         /// </summary>
         [Alias("udp")]
         Udp,
-        [Alias("unclean")]
         /// <summary>
         /// Makes some random sanity checks in the packets. This must have
         /// bugs so don't use it.
         /// </summary>
+        [Alias("unclean")]
         Unclean
     }
     
@@ -193,6 +310,7 @@ namespace IptablesNet.Core.Extensions
     /// <remarks>
     /// Not all the extensions have been implemented. At the time of this writing
     /// there were plans on implementing ulog, log and reject targets.
+	/// </remarks>
     public enum TargetExtensions
     {
         [Alias("BALANCE")]

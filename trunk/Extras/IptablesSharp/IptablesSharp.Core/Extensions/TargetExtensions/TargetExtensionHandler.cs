@@ -49,7 +49,7 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
 	    /// </summary>
 	    /// <param name="enumType"> Type of the enumeration used for the options
 	    /// that this extension supports</param>
-	    /// <param name="name"> Name for the extension.</param>
+	    /// <param name="handlerType"> Type of the extension handler.</param>
 	    /// <remarks>
 	    /// This constructor is protected as it is intended for use in the child 
 		/// classes only, so each one must define their own public constructor.
@@ -84,6 +84,9 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
 	    //cache for decoding names as MatchExtensions enum constants.
 	    private static EnumValueAliasCache optNameCache;
 	    
+		/// <summary>
+		/// Static constructor
+		/// </summary>
 	    static TargetExtensionHandler()
 	    {
 	        //We are going to keep in memory the list of option names

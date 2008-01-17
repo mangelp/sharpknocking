@@ -36,7 +36,15 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
 	/// </remarks>
 	public abstract class TargetExtensionParameter: ExtensionParameter<TargetExtensionHandler>
 	{
-	    
+	    /// <summary>
+	    /// Constructor
+	    /// </summary>
+	    /// <param name="owner">
+	    /// A <see cref="TargetExtensionHandler"/>
+	    /// </param>
+	    /// <param name="enumValue">
+	    /// A <see cref="System.Object"/>
+	    /// </param>
 		public TargetExtensionParameter(TargetExtensionHandler owner, object enumValue)
 		  :base(owner, enumValue)
 		{

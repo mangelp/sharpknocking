@@ -22,22 +22,41 @@ using System;
 
 namespace IptablesNet.Core
 {
-	
-	
-	public class DuplicateElementException: Exception
+	/// <summary>
+	/// Exception thrown when an element is added twice to a collection where all the elements can only appear
+	/// once.
+	/// </summary>
+	public class DuplicatedElementException: Exception
 	{
-		
-		public DuplicateElementException()
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public DuplicatedElementException()
 		    :base()
 		{
 		}
 		
-		public DuplicateElementException(string msg)
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="msg">
+		/// A <see cref="System.String"/>
+		/// </param>
+		public DuplicatedElementException(string msg)
 		    :base(msg)
 		{
 		}
 		
-		public DuplicateElementException(string msg, Exception innerException)
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="msg">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <param name="innerException">
+		/// A <see cref="Exception"/>
+		/// </param>
+		public DuplicatedElementException(string msg, Exception innerException)
 		    :base(msg, innerException)
 		{
 		}

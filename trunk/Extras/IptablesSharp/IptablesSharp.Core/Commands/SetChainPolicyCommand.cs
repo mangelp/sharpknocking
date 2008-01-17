@@ -32,22 +32,37 @@ namespace IptablesNet.Core.Commands
 	{
 	    private string target;
 	    
+		/// <value>
+		/// Target of the policy change
+		/// </value>
 	    public string Target
 	    {
 	        get { return this.target;}
 	        set { this.target = value;}
 	    }
 
+		/// <summary>
+		/// Gets if a rule must be specified for the command
+		/// </summary>
 	    public override bool MustSpecifyRule {
 	    	get { return false; }
 	    }
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
 	    public SetChainPolicyCommand()
 	      :base(RuleCommands.SetChainPolicy)
 		{
 			throw new NotImplementedException ("This command is not implemented properly to be usable");
 		}
 		
+		/// <summary>
+		/// Gets an string that represents the value of the command
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		protected override string GetValueAsString ()
 		{
 			return this.target;

@@ -28,6 +28,9 @@ namespace IptablesNet.Core.Commands
 	/// </summary>
 	public class DeleteChainCommand: GenericCommand
 	{
+		/// <value>
+		/// Gets if the command requires a rule especification
+		/// </value>
 	    public override bool MustSpecifyRule {
 	    	get { return false; }
 	    }
@@ -41,6 +44,12 @@ namespace IptablesNet.Core.Commands
 
 		}
 		
+		/// <summary>
+		/// Returns an string that represents the command
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		protected override string GetValueAsString()
 		{
 			return String.Empty;

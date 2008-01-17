@@ -26,6 +26,7 @@ using System.Collections;
 using IptablesNet.Core;
 
 using Developer.Common.Types;
+using Developer.Common.Options;
 
 namespace IptablesNet.Core.Commands
 {
@@ -54,13 +55,8 @@ namespace IptablesNet.Core.Commands
 		private NetfilterRule rule;
 		
 		/// <summary>
-		/// Gets/Sets the rule related to this command.
-		/// </summary
-		/// <remarks>
-		/// The most of the times the rule is a parameter with the command. If
-		/// this property returns null is because the command doesn't require
-		/// a rule or because it haven't been set.
-		/// </remarks>
+		/// Gets/Sets the rule modified/created/updated by this command
+		/// </summary>
 		public NetfilterRule Rule
 		{
 			get { return this.rule;}
@@ -98,6 +94,9 @@ namespace IptablesNet.Core.Commands
 	        get { return this.commandType;}
 	    }
 		
+		/// <summary>
+		/// Gets if the parameter has long format or not
+		/// </summary>
 		public override bool IsLongFormat
 		{
 			get 
@@ -149,7 +148,7 @@ namespace IptablesNet.Core.Commands
 		/// This only checks if the line starts with a -. So this check is poor
 		/// and only useful when reading lines in iptables config format (the
         /// same format as iptables-save output)
-        /// </summary>
+        /// </remarks>
 		public static bool CanBeACommand(string line)
 		{
 			if(line==null)
@@ -216,16 +215,37 @@ namespace IptablesNet.Core.Commands
 		    this.commandType = commandType;
 		}
 		
+		/// <summary>
+		/// Returns the default alias name for the commmand
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		public override string GetDefaultAlias()
 		{
 			return AliasUtil.GetDefaultAlias(this.commandType);
 		}
 		
+		/// <summary>
+		/// Gets if an string is a valid alias for the command
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
 		public override bool IsAlias(string name)
 		{
 			return AliasUtil.IsAliasName(this.commandType, name);
 		}
 		
+		/// <summary>
+		/// Gets a string that represents the value of the command with his options
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		public override string ToString()
 		{
 			StringBuilder builder = new StringBuilder();

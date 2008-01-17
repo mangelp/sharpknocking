@@ -22,6 +22,7 @@
 using System;
 
 using Developer.Common.Types;
+using Developer.Common.Options;
 
 namespace IptablesNet.Core.Commands
 {
@@ -55,6 +56,7 @@ namespace IptablesNet.Core.Commands
 		/// </returns>
 		/// <param name="command">Command built. If built fails can be null</param>
 		/// <param name="foundException">Exception got while building the command</param>
+		/// <param name="param">Parameter where to try to get the command</param>
 		public static bool TryGetCommand(SimpleParameter param, 
 		                                 out GenericCommand command,
 		                                 out Exception foundException)

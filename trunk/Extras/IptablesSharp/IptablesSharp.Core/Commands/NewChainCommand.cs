@@ -28,6 +28,9 @@ namespace IptablesNet.Core.Commands
 	/// </summary>
 	public class NewChainCommand: GenericCommand
 	{
+		/// <summary>
+		/// Gets if the command requires a rule to be specified
+		/// </summary>
 	    public override bool MustSpecifyRule {
 	    	get { return false; }
 	    }
@@ -40,6 +43,12 @@ namespace IptablesNet.Core.Commands
 		{
 		}
 		
+		/// <summary>
+		/// Gets an string that represents the command
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		protected override string GetValueAsString()
 		{
 			return String.Empty;

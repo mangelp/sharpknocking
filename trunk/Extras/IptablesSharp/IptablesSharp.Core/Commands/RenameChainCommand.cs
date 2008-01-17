@@ -42,16 +42,27 @@ namespace IptablesNet.Core.Commands
 	        set { this.newChain = value;}
 	    }
 	    
+		/// <summary>
+		/// Gets if the command requires a rule to be specified.
+		/// </summary>
 	    public override bool MustSpecifyRule {
 	    	get { return false; }
 	    }
 
-		
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public RenameChainCommand()
 		  :base(RuleCommands.RenameChain)
 		{
 		}
 		
+		/// <summary>
+		/// Returns an string that represents the value of the command
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		protected override string GetValueAsString ()
 		{
 			 return this.newChain;

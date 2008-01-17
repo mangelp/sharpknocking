@@ -27,9 +27,17 @@ using IptablesNet.Core;
 
 namespace IptablesNet.Core.Extensions.ExtendedTarget
 {
-	
+	/// <summary>
+	/// ReadOnly list adapter for lists of targetExtensionHandler type.
+	/// </summary>
 	public class ReadOnlyTargetExtensionListAdapter: ReadOnlyListAdapter<TargetExtensionHandler>
 	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="adapted">
+		/// A <see cref="List`1"/>
+		/// </param>
 		public ReadOnlyTargetExtensionListAdapter(List<TargetExtensionHandler> adapted)
 			:base(adapted)
 		{}

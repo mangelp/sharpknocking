@@ -24,51 +24,110 @@ using System.Collections;
 
 namespace IptablesNet.Core
 {
-	
+	/// <summary>
+	/// Models a list of parameters where each one must be a subtype of SimpleParameter
+	/// </summary>
 	public class GenericParameterList<T>: CollectionBase where T:SimpleParameter
 	{
+		/// <summary>
+		/// Delegate to notify changes in the list
+		/// </summary>
 		public delegate void ListChangedEventHandler(object sender, ListChangedEventArgs<T> args);
 		
+		/// <summary>
+		/// Notifies that a new element have been added to the list
+		/// </summary>
         public event ListChangedEventHandler ItemAdded;
 	    
+		/// <summary>
+		/// Notifies that an existing element have been removed from the list
+		/// </summary>
 	    public event ListChangedEventHandler ItemRemoved;
 	    
+		/// <summary>
+		/// Notifies that all the elements in the list have been erased
+		/// </summary>
 	    public event EventHandler ItemsCleared;
 	    
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public GenericParameterList()
 		  :base()
-		{
-
-		}
+		{}
 		
+		/// <summary>
+		/// Indexer for the class to return elements by its index
+		/// </summary>
 		public T this[int index]
 		{
-		    get
-		    {
+		    get {
 		        return (T)this.List[index];
 		    }
 		}
 		
+		/// <summary>
+		/// Adds a new element to the list
+		/// </summary>
+		/// <param name="option">
+		/// A <see cref="T"/> element to add
+		/// </param>
 		public void Add(T option)
 		{
 		    this.List.Add(option);
 		}
 		
+		/// <summary>
+		/// Gets if an element exists within the list
+		/// </summary>
+		/// <param name="option">
+		/// A <see cref="T"/> to look for in the list
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/> with a value of true if the element
+		/// was in the list or false if not.
+		/// </returns>
 		public bool Contains(T option)
 		{
 		    return this.List.Contains(option);
 		}
 		
+		/// <summary>
+		/// Removes an element of the list
+		/// </summary>
+		/// <param name="option">
+		/// A <see cref="T"/> element to remove
+		/// </param>
 		public void Remove(T option)
 		{
 		    this.List.Remove(option);
 		}
 		
+		/// <summary>
+		/// Gets the zero based position of an element in the list
+		/// </summary>
+		/// <param name="option">
+		/// A <see cref="T"/> to find in the list
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Int32"/> with the position of the element in
+		/// the list or -1 if the element is not found.
+		/// </returns>
 		public int IndexOf(T option)
 		{
 		    return this.List.IndexOf(option);    
 		}
 		
+		/// <summary>
+		/// Gets the zero based position of an element in the list
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="System.String"/> with the name of the option to find
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Int32"/> with the position of the element in
+		/// the list or -1 if the element is not found.
+		/// </returns>
 		public int IndexOf(string name)
 		{
 		    T par;

@@ -28,6 +28,9 @@ namespace IptablesNet.Core.Commands
 	/// </summary>
 	public class FlushChainCommand: GenericCommand
 	{
+		/// <summary>
+		/// Gets if the rule must be specified in the rule
+		/// </summary>
 	    public override bool MustSpecifyRule {
 	    	get { return false; }
 	    }
@@ -40,6 +43,12 @@ namespace IptablesNet.Core.Commands
 		{
 		}
 		
+		/// <summary>
+		/// Returns an string with the value of the command
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		protected override string GetValueAsString()
 		{
 			return String.Empty;

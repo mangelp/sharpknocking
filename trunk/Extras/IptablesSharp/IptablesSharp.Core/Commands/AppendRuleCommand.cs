@@ -38,6 +38,12 @@ namespace IptablesNet.Core.Commands
 		      
 	    }
 		
+		/// <summary>
+		/// Returs an string that represents the value of the command
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		protected override string GetValueAsString()
 		{
 			return String.Empty;
