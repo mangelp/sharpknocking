@@ -1,5 +1,5 @@
 <Combine name="iSharpKnocking" fileversion="2.0" description="iSharpKnocking project" outputpath="build/bin/">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="iSharpKnocking.Core" configuration="Debug" />
       <Entry build="True" name="iSharpKnocking.Daemon" configuration="Debug" />
