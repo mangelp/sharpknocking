@@ -49,12 +49,21 @@ namespace IptablesNet.Core.Commands
 	        }
 	    }
 	    
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public ReplaceRuleCommand()
 		  :base(RuleCommands.ReplaceRule)
 		{
 		    this.ruleNum = 1;
 		}
 		
+		/// <summary>
+		/// Gets an string that represents the command
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		protected override string GetValueAsString ()
 		{
 			return this.ruleNum.ToString();

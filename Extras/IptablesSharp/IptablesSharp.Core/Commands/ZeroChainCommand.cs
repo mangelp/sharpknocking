@@ -24,19 +24,33 @@ using System;
 namespace IptablesNet.Core.Commands
 {
 	
-	
+	/// <summary>
+	/// This class implements the ZeroChain command of iptables
+	/// </summary>
 	public class ZeroChainCommand: GenericCommand
 	{
+		/// <summary>
+		/// Gets if the rule must be specified for the command
+		/// </summary>
 	    public override bool MustSpecifyRule {
 	    	get { return false; }
 	    }
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public ZeroChainCommand()
 		  :base(RuleCommands.ZeroChain)
 		{
 			throw new NotImplementedException ("This command is not implemented properly to be usable");
 		}
-		
+
+		/// <summary>
+		/// Gets a string that represents the command
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		protected override string GetValueAsString()
 		{
 			return String.Empty;

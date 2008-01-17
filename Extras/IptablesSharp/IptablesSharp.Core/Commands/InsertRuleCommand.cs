@@ -50,12 +50,21 @@ namespace IptablesNet.Core.Commands
 	        }
 	    }
 		
+		/// <summary>
+		/// Constructor. Inits a new Insert Rule Command at position 1
+		/// </summary>
 		public InsertRuleCommand()
 		  :base(RuleCommands.InsertRule)
 		{
 		    this.ruleNum = 1;
 		}
 		
+		/// <summary>
+		/// Returns an string that represents the command
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		protected override string GetValueAsString ()
 		{
 			if(this.ruleNum == 1)

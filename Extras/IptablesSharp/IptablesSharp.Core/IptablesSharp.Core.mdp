@@ -1,4 +1,4 @@
-<Project name="IptablesSharp.Core" fileversion="2.0" Description="Core functionality of the iptables net port." language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="IptablesSharp.Core" fileversion="2.0" Description="Core functionality of the iptables c# wrapper library" DefaultNamespace="IptablesSharp.Core" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
@@ -16,13 +16,13 @@
       <Output directory="bin/Release" assemblyKeyFile="." assembly="IptablesSharp.Core" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="True" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Definitions.cs" subtype="Code" buildaction="Compile" />
-    <File name="DuplicateElementExcepcion.cs" subtype="Code" buildaction="Compile" />
+    <File name="DuplicatedElementExcepcion.cs" subtype="Code" buildaction="Compile" />
     <File name="IptablesSharp.Core.mdp" subtype="Code" buildaction="Nothing" />
     <File name="NetfilterChain.cs" subtype="Code" buildaction="Compile" />
     <File name="NetfilterException.cs" subtype="Code" buildaction="Compile" />
@@ -57,11 +57,6 @@
     <File name="Options/RuleOptionList.cs" subtype="Code" buildaction="Compile" />
     <File name="Options/SetCountersOption.cs" subtype="Code" buildaction="Compile" />
     <File name="Options/SourceOption.cs" subtype="Code" buildaction="Compile" />
-    <File name="AbstractParameter.cs" subtype="Code" buildaction="Compile" />
-    <File name="NegableParameter.cs" subtype="Code" buildaction="Compile" />
-    <File name="SimpleParameter.cs" subtype="Code" buildaction="Compile" />
-    <File name="GenericParameterList.cs" subtype="Code" buildaction="Compile" />
-    <File name="ListChangedEventArgs.cs" subtype="Code" buildaction="Compile" />
     <File name="Extensions" subtype="Directory" buildaction="Compile" />
     <File name="Extensions/MatchExtensions/MatchExtensionFactory.cs" subtype="Code" buildaction="Compile" />
     <File name="Extensions/MatchExtensions/MatchExtensionParameter.cs" subtype="Code" buildaction="Compile" />

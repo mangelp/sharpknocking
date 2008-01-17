@@ -37,6 +37,9 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
 	    private static TargetExtensionFactory factory
 	                       = new TargetExtensionFactory();
 
+		/// <summary>
+		/// Gets an instance of the factory.
+		/// </summary>
         public static TargetExtensionFactory Instance
         {
            get { return TargetExtensionFactory.factory;}    
@@ -44,6 +47,9 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
 	    
 	    private static string assemblySearchPath;
 	    
+		/// <summary>
+		/// Gets the search path for the assembly that contains this factory
+		/// </summary>
 	    public static string AssemblySearchPath
 	    {
 	        get
@@ -65,7 +71,7 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
 				Path.GetDirectoryName(asm.Location);
        	}
        	
-       	/// <summmary>
+       	/// <summary>
        	/// Gets the type that implements the extension.
        	/// </summary>
        	/// <returns>
@@ -80,7 +86,7 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
        	/// <summary>
        	/// Gets the type that implements the extension.
        	/// </summary>
-       	/// <param name="typeName>Name of the extension. This must be the same
+       	/// <param name="typeName">Name of the extension. This must be the same
        	/// name that is used to load the extension with the -m option. It is
        	/// case-insensitive for the current implementation of this method.
        	/// </param>

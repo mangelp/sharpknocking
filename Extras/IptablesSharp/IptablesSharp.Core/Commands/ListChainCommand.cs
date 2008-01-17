@@ -29,15 +29,27 @@ namespace IptablesNet.Core.Commands
 	/// </summary>
 	public class ListChainCommand: GenericCommand
 	{
+		/// <summary>
+		/// Gets if the the rule has to be specified for the command
+		/// </summary>
 	    public override bool MustSpecifyRule {
 	    	get { return false; }
 	    }
 	    
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public ListChainCommand()
 		  :base(RuleCommands.ListChain)
 		{
 		}
 		
+		/// <summary>
+		/// Gets an string that represents the command
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		protected override string GetValueAsString()
 		{
 			return String.Empty;
