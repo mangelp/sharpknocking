@@ -19,20 +19,22 @@
 
 
 using System;
+using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Developer.Common.Types
 {
 	
-	
+	/// <summary>
+	/// Utility methods to operate with strings
+	/// </summary>
 	public static class StringUtil
 	{
 		/// <summary>
 	    /// Splits the input string removing empty strings if specified.
 	    /// </summary>
-	    public static string[] Split(string input,
-                                       bool removeEmpty,
-                                       params char[] chars)
+	    public static string[] Split(string input, bool removeEmpty, params char[] chars)
 	    {
 	        //Normal split
 	        string[] result = input.Split(chars);
@@ -61,28 +63,62 @@ namespace Developer.Common.Types
 	    }
 		
 		/// <summary>
-	    /// Compares two strings. It can be a case sensitive comparation or
-	    /// not.
+	    /// Breaks a string into some strings using the spaces as separators
+	    /// </summary>
+	    public static List<string> BreakCommandLine(ref string input)
+	    {
+			List<string> gResult = new List<string>();
+			bool inString = false;
+			bool scapeString = false;
+			int stbLength = 48;
+			StringBuilder stb = new StringBuilder(stbLength);
+	        
+	        //Add to the array list only those not null
+	        for (int i = 0 ; i < input.Length ; i++) {
+	            switch (input[i]) {
+					case '\\':
+						if (inString && input.Length > (i+1) && input[i+1] == '"') { 
+							scapeString = true;
+						}
+						break;
+					case '"' :
+						if (!inString) {
+							inString = true;
+							continue;
+						} else if (inString && !scapeString) {
+							inString = false;
+							continue;
+						}
+						break;
+					case ' ':
+						if (!inString) {
+							gResult.Add(stb.ToString());
+							stb = new StringBuilder(stbLength);
+							continue;
+						}
+						break;
+				}
+				stb.Append(input[i]);
+	        }
+			//Add the current string
+	        gResult.Add(stb.ToString());
+	        return gResult;
+	    }
+		
+		/// <summary>
+	    /// Compares two strings. It can be a case sensitive comparation or not.
 	    /// </summary>
 	    public static bool Equals(string a, string b, bool caseInsensitive)
 	    {
-	        if(a==null && b!=null)
-	        {
+	        if (a==null && b!=null)
 	            return false;
-	        }
-	        else if(a!=null && b==null)
-	        {
+	        else if (a!=null && b==null)
 	            return false;
-	        }
-	        else if(a==null && b== null)
-	        {
+	        else if (a==null && b== null)
 	            return true;
-	        }
-	        else if(caseInsensitive)
-	        {
+	        else if (caseInsensitive)
 	            a = a.ToLower();
 	            b = b.ToLower();
-	        }
 	        
 	        return a==b;
 	    }

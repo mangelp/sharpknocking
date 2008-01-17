@@ -1,4 +1,4 @@
-<Project name="Developer.Common.Unix" fileversion="2.0" DefaultNamespace="Developer.Common.Unix" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Developer.Common.Unix" fileversion="2.0" Description="Unix stuff" DefaultNamespace="Developer.Common.Unix" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
