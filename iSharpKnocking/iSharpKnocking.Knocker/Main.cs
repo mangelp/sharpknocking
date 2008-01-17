@@ -23,16 +23,31 @@
 using System;
 using Gtk;
 
+using Developer.Common.Options;
+
 namespace SharpKnocking.Knocker
 {
 	class MainClass
 	{
 		public static void Main (string[] args)
 		{
+			
+			CmdLineOptionsParser clop = new CmdLineOptionsParser(typeof(MainClass));
+			clop.AddOptionWithMethod("help", "Help", "h");
+			clop.ProcessParameters(args);
+			
 			Application.Init ();
 			MainWindow win = new MainWindow ();
 			win.Show ();
 			Application.Run ();
+		}
+		
+		public static void Help(OptionCallData data)
+		{
+			Console.WriteLine("iSharpKnocking port knocker. (c) 2007,2008 iSharpKnocking project");
+			Console.WriteLine("This application is under heavy development and not fully");
+			Console.WriteLine("functional.");
+			System.Threading.Thread.CurrentThread.Abort();
 		}
 	}
 }

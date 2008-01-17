@@ -29,6 +29,9 @@ namespace iSharpKnocking.Core
 	public class GenericKnock
 	{}
 	
+	/// <summary>
+	///  
+	/// </summary>
 	public class IpKnock: GenericKnock
 	{
 		public string Src;

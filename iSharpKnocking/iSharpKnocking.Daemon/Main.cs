@@ -5,6 +5,9 @@
 // project created on 14/06/2007 at 17:20
 using System;
 
+using Developer.Common;
+using Developer.Common.Options;
+
 namespace SharpKnocking.Daemon
 {
 	class MainClass
@@ -17,7 +20,16 @@ namespace SharpKnocking.Daemon
 		/// </param>
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			CmdLineOptionsParser clop = new CmdLineOptionsParser(typeof(MainClass));
+			clop.AddOptionWithMethod("help", "Help", "h");
+			clop.ProcessParameters(args);
+		}
+		
+		public static void Help(OptionCallData data)
+		{
+			Console.WriteLine("iSharpKnocking knocking daemon. (c) 2008 iSharpKnocking project");
+			Console.WriteLine("This application is under heavy development and not fully");
+			Console.WriteLine("functionall.");
 		}
 	}
 }

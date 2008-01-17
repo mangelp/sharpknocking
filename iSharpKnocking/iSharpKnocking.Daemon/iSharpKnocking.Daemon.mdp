@@ -25,6 +25,8 @@
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../../Library/Debug/Developer.Common.dll" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../../Library/Debug/Developer.Common.Unix.dll" />
   </References>
   <Deployment.LinuxDeployData scriptName="skdaemon" />
 </Project>
