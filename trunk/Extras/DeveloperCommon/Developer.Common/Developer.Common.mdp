@@ -4,10 +4,10 @@
       <CustomCommands>
         <Command type="AfterBuild" name="Copy to library" command="../../../bin/copyToLibrary.sh bin/Debug ../../../Library/Debug" workingdir="${ProjectDir}" />
       </CustomCommands>
-      <Output directory="bin/Debug" assembly="Developer.Common" />
+      <Output directory="bin/Debug" assemblyKeyFile="." assembly="Developer.Common" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="True" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <CustomCommands>

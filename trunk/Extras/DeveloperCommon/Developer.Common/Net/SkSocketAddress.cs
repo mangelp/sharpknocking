@@ -25,15 +25,36 @@ using System.Net.Sockets;
 
 namespace Developer.Common
 {
+	/// <summary>
+	/// Socket address for iSharpKnocking use
+	/// </summary>
+	/// <remarks>
+	/// Experimental. Do not use.
+	/// </remarks>
 	public class SkSocketAddress: System.Net.SocketAddress
 	{
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="family">
+		/// A <see cref="AddressFamily"/>
+		/// </param>
 		public SkSocketAddress(AddressFamily family)
 			:base(family)
 		{
 			
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="family">
+		/// A <see cref="AddressFamily"/>
+		/// </param>
+		/// <param name="size">
+		/// A <see cref="System.Int32"/>
+		/// </param>
 		public SkSocketAddress(AddressFamily family, int size)
 			:base(family, size)
 		{

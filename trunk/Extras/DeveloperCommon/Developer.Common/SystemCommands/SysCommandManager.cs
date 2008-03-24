@@ -80,6 +80,15 @@ namespace Developer.Common.SystemCommands
 			}
 		}
 		
+		/// <summary>
+		/// Adds a command to be managed
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <param name="cmd">
+		/// A <see cref="BaseCommandWrapper"/>
+		/// </param>
 		public void AddCommand(string name, BaseCommandWrapper cmd)
 		{
 			commands.Add(name, cmd);

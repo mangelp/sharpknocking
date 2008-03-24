@@ -67,6 +67,9 @@ namespace Developer.Common.SystemCommands
 		/// </summary>
 		void ExecAsync();
 		
+		/// <summary>
+		/// Event handler for the CommandEnd event
+		/// </summary>
 		event EventHandler<CommandEndEventArgs> CommandEnd;
 	}
 }

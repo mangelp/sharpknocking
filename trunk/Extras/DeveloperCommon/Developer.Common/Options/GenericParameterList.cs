@@ -70,7 +70,7 @@ namespace Developer.Common.Options
 		/// Adds a new element to the list
 		/// </summary>
 		/// <param name="option">
-		/// A <see cref="T"/> element to add
+		/// The element to add
 		/// </param>
 		public void Add(T option)
 		{
@@ -81,7 +81,7 @@ namespace Developer.Common.Options
 		/// Gets if an element exists within the list
 		/// </summary>
 		/// <param name="option">
-		/// A <see cref="T"/> to look for in the list
+		/// The element to look for in the list
 		/// </param>
 		/// <returns>
 		/// A <see cref="System.Boolean"/> with a value of true if the element
@@ -96,7 +96,7 @@ namespace Developer.Common.Options
 		/// Removes an element of the list
 		/// </summary>
 		/// <param name="option">
-		/// A <see cref="T"/> element to remove
+		/// The element to remove
 		/// </param>
 		public void Remove(T option)
 		{
@@ -107,7 +107,7 @@ namespace Developer.Common.Options
 		/// Gets the zero based position of an element in the list
 		/// </summary>
 		/// <param name="option">
-		/// A <see cref="T"/> to find in the list
+		/// The element to find in the list
 		/// </param>
 		/// <returns>
 		/// A <see cref="System.Int32"/> with the position of the element in
@@ -143,6 +143,15 @@ namespace Developer.Common.Options
 		    return -1;
 		}
 		
+		/// <summary>
+		/// Gets if the option named is in the list
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="System.String"/> with the name of the option
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/> true if the name exists or false if not
+		/// </returns>
 		public bool ContainsName(string name)
 		{
 		    if(this.IndexOf (name)==0)
@@ -150,11 +159,26 @@ namespace Developer.Common.Options
 			return false;
 		}
 		
+		/// <summary>
+		/// Inserts an option in the specified position
+		/// </summary>
+		/// <param name="index">
+		/// A <see cref="System.Int32"/> position where to insert
+		/// </param>
+		/// <param name="option">
+		/// The element to insert into the position
+		/// </param>
 		public void Insert(int index, T option)
 		{
 		    this.List.Insert(index, option);
 		}
 		
+		/// <summary>
+		/// Gets an array with all the elements
+		/// </summary>
+		/// <returns>
+		/// An array with all the elements
+		/// </returns>
 		public T[] ToArray()
 		{
 		    T[] arr = new T[this.List.Count];
@@ -167,6 +191,12 @@ namespace Developer.Common.Options
 		    return arr;
 		}
 		
+		/// <summary>
+		/// Sends the event ItemRemoved
+		/// </summary>
+		/// <param name="item">
+		/// Removed item
+		/// </param>
 		protected virtual void OnItemRemoved(T item)
 		{
 		    if(this.ItemRemoved!=null)
@@ -176,6 +206,12 @@ namespace Developer.Common.Options
 		    }
 		}
 		
+		/// <summary>
+		/// Sends the event ItemAdded
+		/// </summary>
+		/// <param name="item">
+		/// Item added
+		/// </param>
 		protected virtual void OnItemAdded(T item)
 		{
 		    if(this.ItemAdded!=null)
@@ -185,6 +221,9 @@ namespace Developer.Common.Options
 		    }  
 		}
 		
+		/// <summary>
+		/// Sends the event ItemsCleared
+		/// </summary>
 		protected virtual void OnItemsCleared()
 		{
 		    if(this.ItemsCleared!=null)
@@ -193,30 +232,58 @@ namespace Developer.Common.Options
 		    }
 		}
 		
+		/// <summary>
+		/// Sends the event ItemsCleared (overrides one method inherited)
+		/// </summary>
 		protected override void OnClearComplete ()
 		{
 			this.OnItemsCleared();
 		}
 
-		
+		/// <summary>
+		/// Sends the event InsertComplete
+		/// </summary>
+		/// <param name="index">
+		/// A <see cref="System.Int32"/> position where the element was inserted
+		/// </param>
+		/// <param name="value">
+		/// A <see cref="System.Object"/> element inserted
+		/// </param>
 		protected override void OnInsertComplete (int index, object value)
 		{
 			this.OnItemAdded((T)value);
 		}
 		
+		/// <summary>
+		/// Sends the event RemoveComplete
+		/// </summary>
+		/// <param name="index">
+		/// A <see cref="System.Int32"/> position where an element was removed
+		/// </param>
+		/// <param name="value">
+		/// A <see cref="System.Object"/> with the element removed
+		/// </param>
 		protected override void OnRemoveComplete (int index, object value)
 		{
 			this.OnItemRemoved((T)value);
 		}
 		
+		/// <summary>
+		/// Sends the event SetComplete
+		/// </summary>
+		/// <param name="index">
+		/// A <see cref="System.Int32"/> position of the item modified
+		/// </param>
+		/// <param name="oldValue">
+		/// A <see cref="System.Object"/> old element
+		/// </param>
+		/// <param name="newValue">
+		/// A <see cref="System.Object"/> new element
+		/// </param>
 		protected override void OnSetComplete (int index, object oldValue, object newValue)
 		{
 		    this.OnItemRemoved((T)oldValue);
 			this.OnItemAdded((T)newValue);
 		}
-
-		
-
-
 	}
 }

@@ -22,8 +22,9 @@ using System;
 
 namespace Developer.Common.Types
 {
-	
-	
+	/// <summary>
+	/// Utility operations to work with attributes
+	/// </summary>
 	public static class AttributeUtil
 	{
 		/// <summary>

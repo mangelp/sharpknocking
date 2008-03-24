@@ -369,6 +369,12 @@ namespace Developer.Common.Net
 			return true;
 		}
 		
+		/// <summary>
+		/// Returns the hash code of the current port range
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.Int32"/>
+		/// </returns>
 		public override int GetHashCode ()
 		{
 			return (startPort+":"+endPort).GetHashCode();

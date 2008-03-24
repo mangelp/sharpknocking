@@ -1,4 +1,4 @@
-// OptionParserException.cs
+// Main.cs
 //
 //  Copyright (C)  2008 iSharpKnocking project
 //  Created by Miguel Angel Perez (mangelp_AT_gmail_DOT_com)
@@ -16,45 +16,37 @@
 //  You should have received a copy of the GNU Lesser General Public
 //  License along with this library; if not, write to the Free Software
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
 using System;
+//using System.Collections;
+//
+using Developer.Common.Options;
 
-namespace Developer.Common.Options
+namespace ExtrasTests
 {
-	
-	/// <summary>
-	/// Exception for problems within the option parser
-	/// </summary>
-	public class OptionParserException: Exception
+	class MainClass
 	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public OptionParserException()
-			:base("Problem found while parsing the command line")
-		{}
+		public static void Main(string[] args)
+		{
+			CmdLineOptionsParser optParser = new CmdLineOptionsParser();
+			optParser.AddOption("help", true, new CmdLineOption.OptionProcesing(Help));
+			optParser.AddOption("n", false, new CmdLineOption.OptionProcesing(Number));
+			optParser.AddOption("file", true, new CmdLineOption.OptionProcesing(File));
+			ble
+		}
 		
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="msg">
-		/// A <see cref="System.String"/> message of the exception
-		/// </param>
-		public OptionParserException(string msg)
-			:base(msg)
-		{}
+		public static void Help()
+		{
+			Console.WriteLine("Found help option: "+par);
+		}
 		
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="msg">
-		/// A <see cref="System.String"/> message of the exception
-		/// </param>
-		/// <param name="innerEx">
-		/// A <see cref="Exception"/> inner exception
-		/// </param>
-		public OptionParserException(string msg, Exception innerEx)
-			:base(msg, innerEx)
-		{}
+		public static void Number()
+		{
+			Console.WriteLine("Found Number option: "+par);		
+		}
+		
+		public static void File()
+		{
+			Console.WriteLine("Found File option: "+par);		
+		}
 	}
 }

@@ -26,24 +26,10 @@ namespace Developer.Common.Options
 	/// </summary>
 	public class OptionCallData
 	{
-		private SimpleParameter parameter;
 		private CmdLineOption sourceOption;
 		private string errorMessage;
 		private bool hasErrors;
 		private bool abortParsing;
-		private int order;
-		
-		/// <summary>
-		/// Gets/Sets the parameter found in the command line
-		/// </summary>
-		public SimpleParameter Parameter {
-			get {
-				return parameter;
-			}
-			set {
-				parameter = value;
-			}
-		}
 
 		/// <summary>
 		/// Gets/Sets the option that matched the parameter
@@ -54,6 +40,32 @@ namespace Developer.Common.Options
 			}
 			set {
 				sourceOption = value;
+			}
+		}
+		
+		/// <summary>
+		/// Return the position of the parameter in the input array of arguments
+		/// </summary>
+		public int Order
+		{
+			get {
+				if (this.sourceOption != null)
+					return this.sourceOption.HitPosition;
+				else
+					return -1;
+			}
+		}
+		
+		/// <summary>
+		/// Return the value of the parameter in the input array of arguments
+		/// </summary>
+		public string Value
+		{
+			get {
+				if (this.sourceOption != null)
+					return this.sourceOption.Parameter.Value;
+				else
+					return String.Empty;
 			}
 		}
 
@@ -93,19 +105,10 @@ namespace Developer.Common.Options
 				abortParsing = value;
 			}
 		}
-
-		/// <summary>
-		/// Gets/Sets the option position in the list of parameters
-		/// </summary>
-		public int Order {
-			get {
-				return order;
-			}
-			set {
-				order = value;
-			}
-		}
 		
+		/// <summary>
+		/// TODO:
+		/// </summary>
 		public OptionCallData()
 		{
 		}
