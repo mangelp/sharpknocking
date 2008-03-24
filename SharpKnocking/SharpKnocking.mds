@@ -1,5 +1,5 @@
 <Combine releaseversion="0.1-i" name="SharpKnocking" fileversion="2.0" description="SharpKnocking project solution" outputpath="build/bin/" MakePkgConfig="True" MakeLibPC="True">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <CustomCommands>
         <Command type="Custom" name="make" command="make" />
