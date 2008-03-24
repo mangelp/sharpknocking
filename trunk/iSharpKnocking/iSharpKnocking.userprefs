@@ -1,34 +1,20 @@
-﻿<UserCombinePreferences version="1.0" filename="/home/mangelp/projects/sharpknocking/iSharpKnocking/iSharpKnocking.mds">
+﻿<UserCombinePreferences version="1.0" filename="/home/mangelp/Projects/sharpknocking/iSharpKnocking/iSharpKnocking.mds">
   <Files>
     <File name="Bienvenido" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Core/Commands/GenericCommand.cs" line="29" column="32" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Core/Extensions/ExtensionParameter.cs" line="25" column="32" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Core/Options/GenericOption.cs" line="29" column="32" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Core/Commands/IptablesCommandFactory.cs" line="91" column="53" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Core/NetfilterRule.cs" line="187" column="61" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Core/Options/IptablesOptionFactory.cs" line="60" column="55" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Core/Options/RuleOptionList.cs" line="24" column="1" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Core/RuleParser.cs" line="33" column="32" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Core/Extensions/Definitions.cs" line="317" column="9" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Core/Commands/DeleteChainCommand.cs" line="19" column="3" />
-    <File name="../Extras/IptablesSharp/IptablesSharp.Extensions.Matches/Definitions.cs" line="30" column="21" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True" />
+      <Node selected="True" />
     </ViewMemento>
     <ViewMemento id="ClassPad">
       <Node expanded="True" />
-    </ViewMemento>
-    <ViewMemento id="ConnectionManagerPad">
-      <Node />
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
       <Node expanded="True" />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/mangelp/projects/sharpknocking/Extras/IptablesSharp/IptablesSharp.Extensions.Matches/Definitions.cs" />
+    <Property key="ActiveWindow" value="Bienvenido" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
