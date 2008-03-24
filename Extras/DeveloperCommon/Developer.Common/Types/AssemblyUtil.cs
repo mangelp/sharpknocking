@@ -26,15 +26,30 @@ using System.Collections.Generic;
 
 namespace Developer.Common.Types
 {
+	/// <summary>
+	/// Utility attributes when working with assemblies
+	/// </summary>
 	public static class AssemblyUtil
 	{
 		private static Dictionary<string, Assembly> cache;
 		
+		/// <summary>
+		/// Static constructor
+		/// </summary>
 		static AssemblyUtil()
 		{
 			cache = new Dictionary<string, Assembly>();
 		}
 		
+		/// <summary>
+		/// Tries to load an assembly
+		/// </summary>
+		/// <param name="asmName">
+		/// A <see cref="System.String"/> assembly path and name
+		/// </param>
+		/// <returns>
+		/// A <see cref="Assembly"/> if the assembly file was found or null if not
+		/// </returns>
 		public static Assembly TryLoadAssembly(string asmName)
 		{
 			if(cache.ContainsKey(asmName))
@@ -75,13 +90,25 @@ namespace Developer.Common.Types
 			return asm;
 		}
 		
+		/// <summary>
+		/// Tries to load a type from a list of assemblies
+		/// </summary>
+		/// <param name="fullTypeName">
+		/// A <see cref="System.String"/> full name of the type
+		/// </param>
+		/// <param name="assemblies">
+		/// A <see cref="System.String"/> list of assemblies to search the type
+		/// </param>
+		/// <returns>
+		/// A <see cref="Type"/> if it was found in an assembly or null if not
+		/// </returns>
 		public static Type TryLoadWithType(string fullTypeName, params string[] assemblies)
 		{
 			//Console.WriteLine("Loading type: "+fullTypeName+", from "+(assemblies.Length+1));
 			Type result = Type.GetType(fullTypeName, false, true);
 			Assembly asm = null;
 			int pos = 0;
-			
+			//While the type is not found go throught the array
 			while(result==null && pos<assemblies.Length)
 			{
 				asm = TryLoadAssembly(assemblies[pos]);

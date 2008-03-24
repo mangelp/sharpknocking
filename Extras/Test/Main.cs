@@ -31,34 +31,32 @@ namespace Test
 		public static void Main(string[] args)
 		{
 			CmdLineOptionsParser clop = new CmdLineOptionsParser(typeof(MainClass));
+			clop.AllowNoOptions = true;
+			clop.DefaultOptionName = "help";
 			clop.AddOptionWithMethod("test", "Testor", "t");
 			clop.AddOptionWithMethod("help", "Helpor", "h");
-			SimpleParameter[] parameters = clop.ProcessParameters(args);
-			int pos = -1;
-			for (int i=0; i<args.Length; i++) {
-				if (args[i] == "--test" || args [i] == "-t") {
-					pos = i+2; 
-					break;
-				}
-			}
+			clop.ProcessParameters(args);
+			CmdLineOption tstOpt = clop["test"];
 			
-			if (pos >= args.Length) {
-				string[] nargs = new string[0];
+			if (tstOpt.WasHit && tstOpt.HasValue) {
+				int length = args.Length - tstOpt.HitPosition - 2;
+				if (length < 0)
+					length = 0;
+				string[] nargs = new string[length];
+				//Console.WriteLine("Copy from "+pos+" "+nargs.Length+" elements over "+args.Length+" elements ");
+				if (length > 0)
+					Array.Copy(args, tstOpt.HitPosition + 2, nargs, 0, length);
 				DoTest(nargs);
 			}
-			else if(pos!=-1) {
-				string[] nargs = new string[args.Length-pos];
-				//Console.WriteLine("Copy from "+pos+" "+nargs.Length+" elements over "+args.Length+" elements ");
-				Array.Copy(args, pos, nargs, 0, nargs.Length);
-				DoTest(nargs);
-			} else
-				Console.WriteLine("No tests specified. Use --help to get usage infIormation");
 		}
 		
 		public static void Testor(OptionCallData data)
 		{
 			data.AbortParsing = true;
-			MainClass.testName = "Test.Test"+data.Parameter.Value;
+			MainClass.testName = "Test.Test"+data.Value;
+			if (!data.SourceOption.HasValue)
+				Console.WriteLine("You must specify a value for the parameter " 
+				                  + data.SourceOption.Parameter.Name);
 		}
 		
 		private static void DoTest(string[] args)
@@ -73,12 +71,15 @@ namespace Test
 				}
 			}
 
-			if (t == null)
+			if (t == null) {
 				Console.WriteLine("Can't load test "+MainClass.testName);
+				return;
+			}
 			
 			ITesteable instance = (ITesteable)Activator.CreateInstance(t);
 			if(instance == null) {
 				Console.WriteLine("Can't create test "+MainClass.testName);
+				return;
 			}
 				
 			try {
@@ -116,14 +117,19 @@ namespace Test
 		public void Test(string[] args)
 		{
 			Console.WriteLine("Testing options static");
-			if(args.Length==0)
-				Console.WriteLine("There are no options. Use -h for help.");
 			CmdLineOptionsParser clop = new CmdLineOptionsParser(this.GetType());
+			clop.DefaultOptionName = "Default";
 			clop.AddOptionWithMethod("help", "Help", "h");
 			clop.AddOption("verbose");
 			clop.AddOptionWithMethod("k", "X", "kill");
 			clop.AddOptionWithMethod("v", "V", "verbosity");
+			clop.AddOptionWithMethod("Default", "DefaultOpt");
 			clop.ProcessParameters(args);
+		}
+		
+		public static void DefaultOpt(OptionCallData data)
+		{
+			Console.WriteLine("There are no options. Use -h for help.");
 		}
 		
 		public static void Help(OptionCallData data)
@@ -132,6 +138,9 @@ namespace Test
 			Console.WriteLine("This app is for test purposses only and doesn't"+
 			                  ". Any functionallity can be tested here, but if"+
 			                  " it is here it will surely be broken.");
+			Console.WriteLine("Options available: ");
+			Console.WriteLine(" -k|--kill: Ends option procesing");
+			Console.WriteLine(" -v|--verbosity: Increases application verbosity");
 			data.AbortParsing = true;
 		}
 		
@@ -145,14 +154,16 @@ namespace Test
 		{
 			int level = 0;
 			
-			if (String.IsNullOrEmpty(data.Parameter.Value)) {
-			    data.ErrorMessage = "The "+data.Parameter.Name+" requires an integer value";
+			if (!data.SourceOption.HasValue) {
+			    Console.WriteLine("The " + data.SourceOption.Parameter.Name + " requires an integer value");
 				data.AbortParsing = true;
-			} else if (!Int32.TryParse( data.Parameter.Value, out level)) {
-			    data.ErrorMessage = "The "+data.Parameter.Name+" requires an integer value";
+			} else if (!Int32.TryParse( data.Value, out level)) {
+			    Console.WriteLine("The " + data.SourceOption.Parameter.Name + " requires an integer value");
 				data.AbortParsing = true;
 			} else {
-				Console.WriteLine("Verbosity set to "+level);
+				Console.WriteLine("Verbosity set to " + 
+				                  (data.SourceOption.Parameter.Not ? "not " : String.Empty)
+				                  + level);
 			}
 		}
 	}
@@ -181,6 +192,9 @@ namespace Test
 			Console.WriteLine("This app is for test purposses only and doesn't"+
 			                  ". Any functionallity can be tested here, but if"+
 			                  " it is here it will surely be broken.");
+			Console.WriteLine("Options available: ");
+			Console.WriteLine(" -k|--kill: Ends option procesing");
+			Console.WriteLine(" -v|--verbosity: Increases application verbosity");
 			data.AbortParsing = true;
 		}
 		
@@ -194,14 +208,16 @@ namespace Test
 		{
 			int level = 0;
 			
-			if (String.IsNullOrEmpty(data.Parameter.Value)) {
-			    data.ErrorMessage = "The "+data.Parameter.Name+" requires an integer value";
+			if (String.IsNullOrEmpty(data.SourceOption.Parameter.Value)) {
+			    data.ErrorMessage = "The "+data.SourceOption.Parameter.Name+" requires an integer value";
 				data.AbortParsing = true;
-			} else if (!Int32.TryParse( data.Parameter.Value, out level)) {
-			    data.ErrorMessage = "The "+data.Parameter.Name+" requires an integer value";
+			} else if (!Int32.TryParse( data.SourceOption.Parameter.Value, out level)) {
+			    data.ErrorMessage = "The "+data.SourceOption.Parameter.Name+" requires an integer value";
 				data.AbortParsing = true;
 			} else {
-				Console.WriteLine("Verbosity set to "+level);
+				Console.WriteLine("Verbosity set to "+ 
+				                  (data.SourceOption.Parameter.Not?" ! ":"")
+				                  +level);
 			}
 		}
 	}

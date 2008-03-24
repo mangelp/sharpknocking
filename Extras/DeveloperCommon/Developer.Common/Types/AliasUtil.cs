@@ -22,6 +22,9 @@ using System;
 
 namespace Developer.Common.Types
 {	
+	/// <summary>
+	/// Utility methods to query the value of the AliasAttribute
+	/// </summary>
 	public static class AliasUtil
 	{
 		/// <summary>

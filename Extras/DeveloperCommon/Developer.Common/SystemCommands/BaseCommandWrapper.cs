@@ -26,6 +26,9 @@ using System.Collections.Specialized;
 
 namespace Developer.Common.SystemCommands
 {
+	/// <summary>
+	/// Base class for executing command-line application throught Process class
+	/// </summary>
 	public abstract class BaseCommandWrapper
 	{
 		private Process current;
@@ -94,7 +97,7 @@ namespace Developer.Common.SystemCommands
 			get {return this.name;}
 		}
 		
-		public string path;
+		private string path;
 		
 		/// <summary>
 		/// Command path if it has got one
@@ -295,7 +298,7 @@ namespace Developer.Common.SystemCommands
 		/// A <see cref="System.Object"/> which is the reference to the object who sent the event.
 		/// </param>
 		/// <param name="args">
-		/// A <see cref="DataReceivedEventArgs"/> whith the data about the event
+		/// A DataReceivedEventArgs whith the data about the event
 		/// </param>
 		protected void OnDataReceivedHandler(object sender, DataReceivedEventArgs args)
 		{
@@ -305,11 +308,26 @@ namespace Developer.Common.SystemCommands
 			result.Add(args.Data);
 		}
 		
+		/// <summary>
+		/// Sends the AsyncReadEnd event with aborted=false
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		protected void OnAsyncReadEndHandler(object sender, EventArgs args)
 		{
 			this.OnAsyncReadEnd(false);
 		}
 		
+		/// <summary>
+		/// Sends the AsyncReadEnd event
+		/// </summary>
+		/// <param name="aborted">
+		/// A <see cref="System.Boolean"/>
+		/// </param>
 		protected virtual void OnAsyncReadEnd(bool aborted)
 		{
 			this.current.Close();
@@ -326,6 +344,15 @@ namespace Developer.Common.SystemCommands
 			this.OnCommandEnd(args);
 		}
 		
+		/// <summary>
+		/// Sends the AsyncWriteEndHandler
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		protected virtual void OnAsyncWriteEndHandler(object sender, EventArgs args)
 		{
 			//TODO: How async writes works? Have sense this?

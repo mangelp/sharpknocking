@@ -34,6 +34,9 @@ namespace Developer.Common
 	/// </remarks>
 	public class SkIpEndPoint: EndPoint
 	{
+		/// <summary>
+		/// Gets if the end point is ipV6 
+		/// </summary>
 		public bool isIpV6
 		{
 			get {return this.addressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6;}
@@ -41,12 +44,18 @@ namespace Developer.Common
 		
 		private byte[] address;
 		
+		/// <summary>
+		/// Gets the address as a set of bytes 
+		/// </summary>
 		public byte[] Address{
 			get { return this.address;}
 		}
 		
 		private System.Net.Sockets.AddressFamily addressFamily;
 		
+		/// <summary>
+		/// Gets the address family 
+		/// </summary>
 		public override System.Net.Sockets.AddressFamily AddressFamily {
 			get { return this.addressFamily; }
 		}
@@ -145,11 +154,26 @@ namespace Developer.Common
 			addr.CopyTo(this.address,0);
 		}
 		
+		/// <summary>
+		/// Creates a new endpoint
+		/// </summary>
+		/// <param name="address">
+		/// A <see cref="SocketAddress"/> to init the new endpoint with
+		/// </param>
+		/// <returns>
+		/// A <see cref="EndPoint"/> with the desired address
+		/// </returns>
 		public override EndPoint Create (SocketAddress address)
 		{
 			return (EndPoint)new SkIpEndPoint(address);
 		}
-			
+		
+		/// <summary>
+		/// Serializes the current address as a SocketAddress
+		/// </summary>
+		/// <returns>
+		/// A <see cref="SocketAddress"/> with the address of the current endpoint
+		/// </returns>
 		public override SocketAddress Serialize ()
 		{
 			SocketAddress sa = new SocketAddress(this.addressFamily, this.address.Length);
@@ -158,6 +182,13 @@ namespace Developer.Common
 			return sa;
 		}
 
+		/// <summary>
+		/// Returns an string representation of the current address
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents the current address of
+		/// the endpoint
+		/// </returns>
 		public override string ToString ()
 		{
 			if(this.isIpV6)

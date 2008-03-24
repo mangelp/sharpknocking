@@ -32,15 +32,24 @@ namespace Developer.Common.Types
 	{
 	    private string[] aliases;
 	    
+		/// <summary>
+		/// Aliases for this attribute name
+		/// </summary>
 	    public string[] Aliases
 	    {
 	        get {return this.aliases;}    
 	    }
 	    
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="aliases">
+		/// A <see cref="System.String"/>
+		/// </param>
 		public AliasAttribute(params string[] aliases)
 		  :base()
 		{
-		        this.aliases = aliases;
+			this.aliases = aliases;
 		}
 		
 		/// <summary>

@@ -23,10 +23,13 @@ namespace Developer.Common.Options
 {
 	
 	/// <summary>
-	/// Option found when parsing a command line
+	/// Option description.
 	/// </summary>
 	public class CmdLineOption: IComparable<CmdLineOption>
 	{
+		/// <summary>
+		/// Delegate to execute every time this option is found
+		/// </summary>
 		private OptionProcessingDelegate procesingDelegate;
 		
 		/// <summary>
@@ -39,6 +42,22 @@ namespace Developer.Common.Options
 			set { this.procesingDelegate = value;}
 		}
 		
+		private bool allowMultiple;
+		
+		/// <summary>
+		/// Gets/Sets if this option can be specified in the command line more than
+		/// one time.
+		/// </summary>
+		public bool AllowMultiple
+		{
+			get {
+				return this.allowMultiple;
+			}
+			set {
+				this.allowMultiple = value;
+			}
+		}
+		
 		private string methodName;
 		
 		/// <summary>
@@ -48,6 +67,29 @@ namespace Developer.Common.Options
 		{
 			get { return this.methodName; }
 			set { this.methodName = value; }
+		}
+		
+		private bool optionalValue;
+		
+		/// <summary>
+		/// Gets if the value to this option is optional
+		/// </summary>
+		public bool OptionalValue
+		{
+			get {
+				return this.optionalValue;
+			}
+		}
+		
+		/// <summary>
+		/// Gets if this option has a value
+		/// </summary>
+		public bool HasValue
+		{
+			get {
+				return this.parameter != null && 
+					!String.IsNullOrEmpty(this.parameter.Value);
+			}
 		}
 		
 		private string name;
@@ -70,6 +112,62 @@ namespace Developer.Common.Options
 			get { return this.isLong; }
 		}
 		
+		private bool wasHit;
+		
+		/// <summary>
+		/// Gets if this option was specified
+		/// </summary>
+		public bool WasHit {
+			get {
+				return wasHit;
+			}
+		}
+		
+		private int hitNumber;
+		
+		/// <summary>
+		/// Gets the number of times this option was specified
+		/// </summary>
+		public int HitNumber {
+			get {
+				return hitNumber;
+			}
+		}
+		
+		private int hitPos;
+		
+		/// <summary>
+		/// Gets the last position where a option was last found
+		/// </summary>
+		public int HitPosition
+		{
+			get {
+				return this.hitPos;
+			}
+		}
+		
+		private SimpleParameter parameter;
+		
+		/// <summary>
+		/// Parameter found in the command line that matches this option.
+		/// This is the last parameter found if there was more than one.
+		/// </summary>
+		public SimpleParameter Parameter
+		{
+			get { return parameter;}
+		}
+		
+		private string[] aliases;
+		
+		/// <summary>
+		/// Array of name aliases
+		/// </summary>
+		public string[] Aliases{
+			get {
+				return this.aliases;
+			}
+		}
+		
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -80,9 +178,13 @@ namespace Developer.Common.Options
 		{
 			if(String.IsNullOrEmpty(name))
 				throw new ArgumentException("The name of the option can't be null or empty");
-			
+			this.aliases = new string[0];
 			this.name = name;
 			this.isLong = name.Length>1;
+			this.optionalValue = false;
+			this.hitNumber = -1;
+			this.hitPos = -1;
+			this.allowMultiple = false;
 			this.procesingDelegate = null;
 			this.methodName = String.Empty;
 		}
@@ -98,38 +200,9 @@ namespace Developer.Common.Options
 		/// is procesed
 		/// </param>
 		public CmdLineOption(string name, OptionProcessingDelegate procesingDelegate)
+			:this(name)
 		{
-			if(String.IsNullOrEmpty(name))
-				throw new ArgumentException("The name of the option can't be null or empty");
-			
-			this.name = name;
-			this.isLong = name.Length>1;
 			this.procesingDelegate = procesingDelegate;
-			this.methodName = String.Empty;
-		}
-		
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="name">
-		/// A <see cref="System.String"/> with the name of the option
-		/// </param>
-		/// <param name="isLong">
-		/// A <see cref="System.Boolean"/> with the type of the option (long/short)
-		/// </param>
-		/// <param name="procesingDelegate">
-		/// A <see cref="OptionProcessingDelegate"/> that will be called when the option
-		/// matches a parameter
-		/// </param>
-		public CmdLineOption(string name, OptionProcessingDelegate procesingDelegate, bool isLong)
-		{
-			if(String.IsNullOrEmpty(name))
-				throw new ArgumentException("The name of the option can't be null or empty");
-			
-			this.name = name;
-			this.isLong = isLong;
-			this.procesingDelegate = procesingDelegate;
-			this.methodName = String.Empty;
 		}
 
 		/// <summary>
@@ -140,37 +213,11 @@ namespace Developer.Common.Options
 		/// </param>
 		/// <param name="method">
 		/// A <see cref="System.String"/> with the name of a method that can handle
-		/// this option when procesed.
+		/// this option when processed.
 		/// </param>
 		public CmdLineOption(string name, string method)
+			:this(name)
 		{
-			if(String.IsNullOrEmpty(name))
-				throw new ArgumentException("The name of the option can't be null or empty");
-			
-			this.name = name;
-			this.isLong = name.Length > 1;
-			this.methodName = method;
-		}
-		
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="name">
-		/// A <see cref="System.String"/> with the name of the option
-		/// </param>
-		/// <param name="method">
-		/// A <see cref="System.String"/> with the name of the method
-		/// </param>
-		/// <param name="isLong">
-		/// A <see cref="System.Boolean"/> with the option type (long/short)
-		/// </param>
-		public CmdLineOption(string name, string method, bool isLong)
-		{
-			if(String.IsNullOrEmpty(name))
-				throw new ArgumentException("The name of the option can't be null or empty");
-			
-			this.name = name;
-			this.isLong = isLong;
 			this.methodName = method;
 		}
 		
@@ -187,6 +234,57 @@ namespace Developer.Common.Options
 		public int CompareTo(CmdLineOption opt)
 		{
 			return this.name.CompareTo(opt.name);
+		}
+		
+		/// <summary>
+		/// Sets the parameter value and it also sets the counter of hit number.
+		/// </summary>
+		/// <param name="sp">
+		/// A <see cref="SimpleParameter"/>
+		/// </param>
+		/// <param name="order">Positon of the parameter in the input array of arguments</param>
+		public void SetParameter(SimpleParameter sp, int order)
+		{
+			this.parameter = sp;
+			this.hitNumber ++;
+			this.wasHit = true;
+			this.hitPos = order;
+			if (this.hitNumber > 1 && !this.allowMultiple)
+				throw new Exception("The option " + this.name + " can't be repeated.");
+		}
+		
+		/// <summary>
+		/// Sets the array as the command aliases
+		/// </summary>
+		/// <param name="aliases">
+		/// A <see cref="System.String"/>
+		/// </param>
+		public void SetAliases(params string[] aliases)
+		{
+			this.aliases = aliases;
+		}
+		
+		/// <summary>
+		/// Determines if the name is an alias of this option
+		/// </summary>
+		/// <param name="names">
+		/// A <see cref="System.String"/> name to check
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/> true if the name is equal to any alias or to
+		/// the option default name
+		/// </returns>
+		public bool IsAlias(params string[] names)
+		{
+			foreach(string name in names) {
+				if (String.Equals(name, this.name))
+					return true;
+				foreach (string str in this.aliases) {
+					if (String.Equals(str, name))
+						return true;
+				}
+			}
+			return false;
 		}
 	}
 }

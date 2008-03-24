@@ -22,33 +22,66 @@ using System;
 
 namespace Developer.Common.SystemCommands
 {
+	/// <summary>
+	/// Arguments for the CommandEnd event
+	/// </summary>
 	public class CommandEndEventArgs: EventArgs
 	{
 		private CommandResult result;
 		
+		/// <summary>
+		/// Result of the command
+		/// </summary>
 		public CommandResult Result
 		{
 			get {return this.result;}
 			set {this.result = value;}
 		}
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="result">
+		/// A <see cref="CommandResult"/>
+		/// </param>
 		public CommandEndEventArgs(CommandResult result)
 		{
 			this.result = result;
 		}
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="exitCode">
+		/// A <see cref="System.Int32"/>
+		/// </param>
 		public CommandEndEventArgs(int exitCode)
 		{
 			result = new CommandResult();
 			result.ExitCode = exitCode;
 		}
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="aborted">
+		/// A <see cref="System.Boolean"/>
+		/// </param>
 		public CommandEndEventArgs(bool aborted)
 		{
 			result = new CommandResult();
 			result.Aborted = aborted;
 		}
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="userData">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="detail">
+		/// A <see cref="System.String"/>
+		/// </param>
 		public CommandEndEventArgs(object userData, string detail)
 		{
 			result = new CommandResult();

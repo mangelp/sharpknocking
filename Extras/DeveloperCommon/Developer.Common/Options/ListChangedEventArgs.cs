@@ -22,16 +22,28 @@ using System;
 
 namespace Developer.Common.Options
 {
+	/// <summary>
+	/// Arguments for the events of the GenericParameterList generic type
+	/// </summary>
 	public class ListChangedEventArgs<T>: EventArgs
 	{
 	    private T item;
 	    
+		/// <summary>
+		/// Element affected
+		/// </summary>
 	    public T Item
 	    {
 	       get { return this.item;}       
 	       set { this.item = value;}
 	    }
 	    
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="item">
+		/// The element affected
+		/// </param>
 		public ListChangedEventArgs(T item)
 		{
 		    this.item = item;
