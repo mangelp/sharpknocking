@@ -8,6 +8,23 @@ Here you will find the latest news of this project
 
 = News =
 
+=== 01/01/2008 ===
+
+*Goodbye and hello*
+
+We have been so busy fighting our current problems in our daily life that we had very little time (sadly) to work in the project. So the decision is taken, we are getting out of the open source contest held in the University of Seville, good luck to all the great projects there.
+
+We want to note that we are not a dead project, but we are working very slowly.
+
+Finally we are also proud to announce our inclusion in the list of server applications in the mono project's page:
+http://www.mono-project.com/Software
+
+Sadly none of us noticed it until today, thanks for it mono-guys!
+
+Regards, 
+
+The sharpknocking project team.
+
 === 11/01/2008 ===
 
 *The second open source contest for students in the university of seville*
