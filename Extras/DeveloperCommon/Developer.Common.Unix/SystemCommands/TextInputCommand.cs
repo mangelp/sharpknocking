@@ -33,11 +33,11 @@ namespace Developer.Common.Unix.SystemCommands
 	public class TextInputCommand: BaseCommandWrapper
 	{
 		public override bool CanExec {
-			get { return false; }
+			get { return true; }
 		}
 
 		public override bool CanExecAsync {
-			get { return true; }
+			get { return false; }
 		}
 
 		public override bool CanRead {
@@ -69,13 +69,13 @@ namespace Developer.Common.Unix.SystemCommands
 
 		public override CommandResult Exec ()
 		{
-			throw new NotSupportedException();
+			//TODO: Support to this
+			throw new NotImplementedException();
 		}
 		
 		public override void ExecAsync ()
 		{
-			//TODO: Support to this
-			throw new NotImplementedException();
+			throw new NotSupportedException();
 		}
 		
 		public override void Stop ()
@@ -86,7 +86,7 @@ namespace Developer.Common.Unix.SystemCommands
 
 		public override void Write (string data)
 		{
-			//TODO: Support to write to process input
+			//TODO: Support to write to process input asynchronously
 			throw new NotImplementedException();
 		}
 	}
