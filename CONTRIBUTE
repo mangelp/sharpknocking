@@ -1,0 +1,7 @@
+You can contribute to this project in several ways:
+- Testing it and reporting bugs. You can find the issue tracker in the google's code page.
+- Resolving bugs. Send the patches to our mailing list.
+- Telling others about the existance of this project.
+
+When contributing patches we encourage you to follow our code conventions that basically are
+the same that the mono project uses for the code of the BCL.

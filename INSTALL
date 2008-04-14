@@ -3,8 +3,8 @@ configure-make-install dance.
 
 INSTALLING INSTRUCTIONS
 
-You need first to follow the instructions to get it compiled. Then go to the 
-SharpKnocking directory in the root of the sources and type this command as root:
+You need first to follow the instructions to build it from sources. Then go to 
+the SharpKnocking directory in the root of the sources and type this command as root:
 
 	#make install
 
@@ -12,19 +12,15 @@ To unisntall go to the same directory and type this:
 
 	#make unisntall
 
-COMPILING INSTRUCTIONS
+BUILDING INSTRUCTIONS
 
 First get the latest sources from svn using this command:
 
-    svn checkout https://forja.rediris.es/svn/csl2-isknocking
-
-Or try with the daily sources tarball (generated automatically):
-
-    https://forja.rediris.es/tarballs.php?group_id=129
+    svn co https://sharpknocking.googlecode.com/svn/trunk
 
 Then you will need a working installation of at least mono 1.2.3 with gtk# 
-libraries 2.10 and monodevelop 0.13.
-Simply open the solution file ManagedSource.mds with monodevelop and select 
+libraries 2.10 and the lastest version monodevelop.
+Simply open the solution file iSharpKnocking.mds with monodevelop and select 
 "build solution" from the build menu and you will get the build.
 
 If you prefer to build it by console you can use the traditional steps:
@@ -34,40 +30,44 @@ If you prefer to build it by console you can use the traditional steps:
 
 GTK-SHARP-2.10 REQUIRED!
 
-You must have gtk-sharp version 2.10 to get the sources compiled. If you don't have it
-search the net for a package and install it. Once you have it installed you must 
-set/update de enviroment variable called 
-PKG_CONFIG_PATH prepending it with the path of the directory where the .pc files for 
-the libraries are.
-For example, if i built gtk-sharp from sources and i installed it under /usr/local 
-prefix i do:
+You must have gtk-sharp version 2.10 or latest to build from sources. If you 
+don't have it google for a package and install it. Once you have it installed 
+you must set/update de enviroment variable called PKG_CONFIG_PATH prepending it
+with the path of the directory where the .pc files for the libraries are.
+
+For example, if I built gtk-sharp from sources and i installed it under 
+/usr/local prefix i do:
 
 	#export PKG_CONFIG_PATH=/usr/local/lib:$PKG_CONFIG_PATH
 
-And then i can compile the sources. You may need to set some extra enviroment variable 
-depending on the type
-of setup for mono you have.
+And then I can compile the sources. You may need to set some extra enviroment 
+variable depending on the type of setup for mono you have.
 
-WARNING - PROJECT NOT IN PRODUCTION
+WARNING - PROJECT NOT FOR PRODUCTION USE!
 
-We try to keep the svn sources as stable as we can but expect compiling issues often as
-this is a very new project and we haven't reached a 1.0 version yet (at the writting
-time of this note we are in 0.1 :p).
+We try to keep the svn sources as stable as we can but expect build issues 
+often as this is a very new project and we haven't reached a 1.0 version yet (at the writting time of this note we are in 0.1 :p).
 
 WIKI
 
-We maintain a wiki with all the related information about the project. If you have questions 
-or want to do a bug report this is the best source to look:
+We maintain a wiki with all the related information about the project in the 
+project page at google's code hosting. If you have questions or want to do a bug
+report this is the best source to look:
 
-http://code.google.con/p/sharpknocking
+  http://code.google.con/p/sharpknocking
 
-You can also download the latest develoment version from the subversion at google code or 
-the latest stable package.
+You can also download the latest develoment version from the subversion at 
+google code or the latest stable package.
 
 MAIL LIST
 
-Yes, we have a mail list, but we write very little to it. You can help us with this issue 
-contacting us throught it:
+Yes, we have a mail list, but we write very little to it. You can help us with 
+this issue contacting us throught it:
 
-<MailingListUrl>
+First join us:
+  http://ilikecoffee.net/mailman/listinfo/sharpknocking-devel_ilikecoffee.net
+
+Then write to us:
+  Sharpknocking-devel@ilikecoffee.net
+
 
