@@ -7,19 +7,27 @@ www.portknocking.org) in c# for every *nix flavour that have a kernel with
 
 -- iSharpKnocking PROJECT --
 
- This project is the evolution and extension of the previous project as a totally new development over our knowledge and code base that aims higher in our feature list to make it a better project.
+ This project is the evolution and extension of the previous project as a 
+complete rewrite from scratch from our knowledge and code base that aims higher
+in our feature list to make it a better project.
 
- iSharpKnocking project developers continue to develop over the sharpKnocking svn and to write in the sharpKnocking blog and wiki. This is more a new way of doing things than a totally new project itself.
+ iSharpKnocking project developers continue to develop over the sharpKnocking 
+svn and to write in the sharpKnocking blog and wiki. This is more a new way of 
+doing things than a totally new project itself. Maybe in a future we would
+rebrand all this stuff when it gets more mature.
 
 -- LICENSE --
 
- (c) 2007 by the authors and members:
-     Luis Román Gutiérrez
-	 Miguel Ángel Pérez Valencia
-	 Diego Campoy Collado
+  (c) 2007/2008 by authors and contributors:
+    Luis Román Gutiérrez
+    Miguel Ángel Pérez Valencia
+    Diego Campoy Collado
 
  This project is licensed under the LGPL V2 wich can be read in the file
-lgpl.txt in the root of the sources and has a preamble in the start of each file.
+ lgpl.txt in the root of the sources and has a preamble in the start of each 
+ file.
+
+ For more details see LICENSE file.
 
 -- DIRECTORIES ESTRUCTURE --
 
@@ -38,7 +46,7 @@ lgpl.txt in the root of the sources and has a preamble in the start of each file
 - SharpKocking
    Old project Solution. This is the code for the main applicatons.
    Source code written in c# using monodevelop for the final of the
-   CUSL.
+   CUSL-2007.
         - Common
             Subproject.
             Common functionality used by various subprojects.
@@ -54,8 +62,9 @@ lgpl.txt in the root of the sources and has a preamble in the start of each file
             incoming connections.
         - NetfilterFirewall
             Subproject.
-            Approach to work against iptables command-line utility using a object-oriented
-			way. This subproject is getting moved to a library called IptablesNet
+            Approach to work against iptables command-line utility using an
+	    object-oriented approach.
+	    This subproject is getting moved to a library called IptablesNet.
         - PortKnocker
             Subproject.
             Client application to perform the knocking that grants access to a
@@ -63,24 +72,21 @@ lgpl.txt in the root of the sources and has a preamble in the start of each file
 - Library
    Binary libraries used.
 - Extras
-   Other projects/solutions that sharpknocking uses but that are not a specific part of the
-   project and can have another uses.
-   This should include contribution projects.
+   Other projects/solutions that sharpknocking uses but that are not a specific
+   part of the project and can have another uses.
+   This should include contribution projects or our own subprojects.
 		- IptablesSharp
-			Is a major rewrite of the library used to handle the rules in the firewall through
-			the iptables command.
-				- IptablesSharp.Core
-					Subproject.
-					Core classes.
-				- IptablesSharp.Extensions.Matches
-					Subproject.
-					Implementation of the extensions for matching packets.
-				- IptablesSharp.Extensions.Targets
-					Subproject.
-					Implementation of the extension for new tarjets.
-				- IptablesSharp.Net
-					Subproject.
-					Network related classes library.
+		  Is a major rewrite of the library used to handle the rules in
+                  the netfilter packet filtering tables through the iptables 
+		  command.
+		  + IptablesSharp.Core
+		    Subproject. Core classes.
+		  + IptablesSharp.Extensions.Matches
+		    Subproject. Support for match extensions.
+		  + IptablesSharp.Extensions.Targets
+		    Subproject. Suppport for target extensions.
+		  + IptablesSharp.Net
+		    Subproject. Network related classes library.
 - Tests
    Samples and testing scripts used in development.
 
@@ -89,3 +95,9 @@ See the file INSTALL
 
 -- Contact --
 See the file CONTACT
+
+-- Developers --
+See DEVELOPERS file
+
+-- Contribute --
+See CONTRIBUTE file

@@ -1,5 +1,5 @@
 <Project name="iSharpKnocking.Core" fileversion="2.0" Description="Core functionality of iSharpKnocking project" DefaultNamespace="iSharpKnocking.Core" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Release">
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
         <Command type="AfterBuild" command="../../bin/copyToLibrary.sh bin/Debug ../../Library/Debug" workingdir="${ProjectDir}" />
