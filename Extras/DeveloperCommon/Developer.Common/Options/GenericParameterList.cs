@@ -214,7 +214,7 @@ namespace Developer.Common.Options
 		/// </param>
 		protected virtual void OnItemAdded(T item)
 		{
-		    if(this.ItemAdded!=null)
+		    if (this.ItemAdded != null)
 		    {
 		        this.ItemAdded(this,
 		                         new ListChangedEventArgs<T>(item));
@@ -226,8 +226,7 @@ namespace Developer.Common.Options
 		/// </summary>
 		protected virtual void OnItemsCleared()
 		{
-		    if(this.ItemsCleared!=null)
-		    {
+		    if (this.ItemsCleared != null) {
 		        this.ItemsCleared(this, EventArgs.Empty);    
 		    }
 		}

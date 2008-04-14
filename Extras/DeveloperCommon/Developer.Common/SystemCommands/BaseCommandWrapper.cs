@@ -57,8 +57,8 @@ namespace Developer.Common.SystemCommands
 		{
 			get { return this.isAsync;}
 			set { 
-				if(!this.CanExecAsync)
-					throw new InvalidOperationException("The process can't execute asynchronously");
+				if(value && !this.CanExecAsync)
+					throw new InvalidOperationException("command process can't execute asynchronously");
 				this.isAsync = value;
 			}
 		}
@@ -180,7 +180,7 @@ namespace Developer.Common.SystemCommands
 		public bool IsRunning
 		{
 			get {
-				return this.current==null || this.current.HasExited;
+				return !(this.current==null || this.current.HasExited);
 			}
 		}
 		
@@ -292,7 +292,7 @@ namespace Developer.Common.SystemCommands
 		}
 
 		/// <summary>
-		/// Handler for the <see cref="BaseCommandWrapper.DataReceived">DataReceived</see> event
+		/// Handler for the DataReceived event
 		/// </summary>
 		/// <param name="sender">
 		/// A <see cref="System.Object"/> which is the reference to the object who sent the event.
@@ -355,7 +355,7 @@ namespace Developer.Common.SystemCommands
 		/// </param>
 		protected virtual void OnAsyncWriteEndHandler(object sender, EventArgs args)
 		{
-			//TODO: How async writes works? Have sense this?
+			//TODO: How will async writes work? Have sense this?
 		}
 	}
 }
