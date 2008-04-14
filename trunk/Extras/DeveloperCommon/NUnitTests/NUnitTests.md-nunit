@@ -1,0 +1,9 @@
+<NUnitAssemblyGroupProject name="NUnitTests" fileversion="2.0">
+  <Configurations active="Default">
+    <Configuration name="Default" ctype="NUnitAssemblyGroupProjectConfiguration">
+      <Assemblies>
+        <Assembly Path="/home/mangelp/projects/sharpknocking/Extras/DeveloperCommon/Tests/bin/Debug/Tests.dll" />
+      </Assemblies>
+    </Configuration>
+  </Configurations>
+</NUnitAssemblyGroupProject>

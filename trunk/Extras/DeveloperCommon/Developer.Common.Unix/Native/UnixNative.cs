@@ -120,6 +120,7 @@ namespace Developer.Common.Unix.Native
 		/// <remarks>
 		/// If it can't handle the signal launches an exception
 		/// </remarks>
+		[Obsolete("Use new Mono.Unix.UnixSignal logic instead")]
         public static void HandleCtrlCSignal(SignalHandler usrHandler)
         {
             SignalHandler handler = Mono.Unix.Native.Stdlib.signal(Signum.SIGINT , usrHandler);
@@ -134,6 +135,7 @@ namespace Developer.Common.Unix.Native
 		/// <remarks>
 		/// If it can't handle the signal launches an exception
 		/// </remarks>
+		[Obsolete("Use new Mono.Unix.UnixSignal logic instead")]
         public static void HandleTermSignal(SignalHandler usrHandler)
         {
             SignalHandler handler = Mono.Unix.Native.Stdlib.signal(Signum.SIGTERM, usrHandler);

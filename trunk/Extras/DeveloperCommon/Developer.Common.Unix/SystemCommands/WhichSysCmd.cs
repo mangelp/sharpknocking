@@ -43,6 +43,5 @@ namespace Developer.Common.Unix.SystemCommands
 			: base("which")
 		{
 		}
-		
 	}
 }
