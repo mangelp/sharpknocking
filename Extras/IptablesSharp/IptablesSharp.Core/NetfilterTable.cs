@@ -26,7 +26,7 @@ using Developer.Common.Types;
 namespace IptablesNet.Core
 {
 	/// <summary>
-	/// IpTables table.
+	/// Netfilter packet table
     /// </summary>
 	public class NetfilterTable
 	{
@@ -82,8 +82,7 @@ namespace IptablesNet.Core
 		/// </summary>
 		protected virtual void AddBuiltInChainsToList()
 		{
-			switch(type)
-			{
+			switch(type) {
 				case PacketTableType.Filter:
 					this.AddDefaultChain(BuiltInChains.Input);
 					this.AddDefaultChain(BuiltInChains.Forward);
@@ -132,14 +131,21 @@ namespace IptablesNet.Core
 		{
 			PacketTableType tblType = PacketTableType.Filter;
 			
-		    if(chain.IsBuiltIn)
-				throw new ArgumentException("Can't add a built-in chain. Built-in chains are already added", "chain.IsBuiltIn");
-		    else if(NetfilterTable.TryGetTableType(chain.Name, out tblType))
-				throw new ArgumentException("The chain has a name that matches the name of a built-in chain", "chain.Name");
-			else if(chain.ParentTable!=this)
-				throw new ArgumentException("The chain doesn't belong to this table", "chain.ParentTable");
-			else if(this.chains.Contains(chain))
+		    if(chain.IsBuiltIn) {
+				throw new ArgumentException(
+				    "Can't add a built-in chain. Built-in chains are already added", "chain.IsBuiltIn");	
+			}
+		    else if(NetfilterTable.TryGetTableType(chain.Name, out tblType)) {
+				throw new ArgumentException(
+				    "The chain has a name that matches the name of a built-in chain", "chain.Name");
+			}
+			else if(chain.ParentTable!=this) {
+				throw new ArgumentException(
+				    "The chain doesn't belong to this table", "chain.ParentTable");
+			}
+			else if(this.chains.Contains(chain)) {
 				throw new ArgumentException("The chain is already in the table", "chain");
+			}
 			
 		    this.chains.Add(chain);
 		}
@@ -160,7 +166,7 @@ namespace IptablesNet.Core
 		public void RemoveChain(int pos)
 		{
 		    if(pos>this.chains.Count || pos<0)
-		        throw new IndexOutOfRangeException();
+		        throw new IndexOutOfRangeException("Index "+pos+" is out of the chain range");
 			else if(this.chains[pos].IsBuiltIn)
 				throw new InvalidOperationException("Can't remove a built-in chain");
 			this.chains.RemoveAt(pos);
@@ -176,10 +182,8 @@ namespace IptablesNet.Core
         {
 		    NetfilterChain next;
 		    
-		    for(int i=0;i<this.chains.Count;i++)
-		    {
+		    for(int i=0;i<this.chains.Count;i++) {
 		        next = (NetfilterChain)this.chains[i];
-		        
 		        if(String.Equals(next.CurrentName, name, StringComparison.InvariantCultureIgnoreCase))
 		            return i;
 		    }
@@ -245,18 +249,15 @@ namespace IptablesNet.Core
 		    sb.Append("*"+this.type.ToString().ToLower());
             //Then add the strings for each chain that will contain all the
 			//rules in these chains
-		    for(int i=0;i<this.chains.Count;i++)
-		    {
+		    for(int i=0;i<this.chains.Count;i++) {
 		        sb.Append("\n"+this.chains[i].GetChainDefinition());
 		    }
             
             NetfilterChain chain = null;
             
-            for(int i=0;i<this.chains.Count;i++)
-            {
+            for(int i=0;i<this.chains.Count;i++) {
                 chain = (NetfilterChain)chains[i];
-                if(chain.Rules.Count>0)
-				{
+                if(chain.Rules.Count>0) {
 					sb.Append('\n');
                     chain.AppendContentsTo(sb, iptablesFormat);
 				}
@@ -286,8 +287,7 @@ namespace IptablesNet.Core
 		    if(line.StartsWith("*"))
 		        line = line.Substring(1).Trim();
 			
-			if(!TypeUtil.TryGetEnumValue(typeof(PacketTableType), line, out obj))
-		    {
+			if(!TypeUtil.TryGetEnumValue(typeof(PacketTableType), line, out obj)) {
 			    table = PacketTableType.Filter;
 			    return false;
 		    }
