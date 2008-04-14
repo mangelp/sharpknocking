@@ -1,3 +1,8 @@
+2008-04-14  Miguel Angel Perez Valencia <mangelp@gmail.com> 
+- Updated some bits (almost comments)
+- Refactorized OptionParsing support as new classes.
+	
+
 2008-01-17  Miguel Angel Perez <mangelp@gmail.com> 
 
 	

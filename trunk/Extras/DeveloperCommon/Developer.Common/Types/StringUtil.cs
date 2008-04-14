@@ -34,11 +34,11 @@ namespace Developer.Common.Types
 		/// <summary>
 	    /// Splits the input string removing empty strings if specified.
 	    /// </summary>
+		[Obsolete("Use String.Split instead")]
 	    public static string[] Split(string input, bool removeEmpty, params char[] chars)
 	    {
 	        //Normal split
 	        string[] result = input.Split(chars);
-	        
 	        if(!removeEmpty)
 	            return result;
 	        
@@ -108,6 +108,7 @@ namespace Developer.Common.Types
 		/// <summary>
 	    /// Compares two strings. It can be a case sensitive comparation or not.
 	    /// </summary>
+		[Obsolete("Use String.Equals instead")]
 	    public static bool Equals(string a, string b, bool caseInsensitive)
 	    {
 	        if (a==null && b!=null)

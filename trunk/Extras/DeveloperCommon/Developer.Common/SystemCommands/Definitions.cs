@@ -31,7 +31,7 @@ namespace Developer.Common.SystemCommands
 		/// System OS version
 		/// </summary>
 		/// <remarks>
-		/// This should be for examble the version of the kernel. IE 2.6.23
+		/// This should be for example the version of the kernel. IE 2.6.23
 		/// </remarks>
 		public Version OsVersion;
 		
@@ -85,7 +85,7 @@ namespace Developer.Common.SystemCommands
 		/// </summary>
 		public string Detail;
 		/// <summary>
-		/// Gets if the command didn't ended as it was killed or aborted
+		/// Gets if the command was killed or aborted
 		/// </summary>
 		public bool Aborted;
 	}

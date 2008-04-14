@@ -55,6 +55,10 @@
     <File name="Options/ListChangedEventArgs.cs" subtype="Code" buildaction="Compile" />
     <File name="Options/Definitions.cs" subtype="Code" buildaction="Compile" />
     <File name="Options/OptionCallData.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/OptionParser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/Option.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/OptionCaller.cs" subtype="Code" buildaction="Compile" />
+    <File name="Options/OptionCallerData.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

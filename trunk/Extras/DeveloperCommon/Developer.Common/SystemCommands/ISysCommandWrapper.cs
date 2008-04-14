@@ -35,7 +35,7 @@ namespace Developer.Common.SystemCommands
 		/// <summary>
 		/// Name of the command 
 		/// </summary>
-		string Name {get;set; }
+		string Name {get;}
 		
 		/// <summary>
 		/// Command path if it has got one
@@ -43,24 +43,14 @@ namespace Developer.Common.SystemCommands
 		string Path {get;set;}
 		
 		/// <summary>
-		/// List of arguments for the command
-		/// </summary>
-		List<object> Args{get;}
-		
-		/// <summary>
 		/// Dictionary with all the enviroment vars required for the command.
 		/// </summary>
 		StringDictionary Enviroment{get;}
 		
 		/// <summary>
-		/// Determines if the command is going to be executed in a separate thread 
-		/// </summary>
-		bool UseThread{get;set;}
-		
-		/// <summary>
 		/// Executes the command with no parameters
 		/// </summary>
-		void Exec();
+		CommandResult Exec();
 		
 		/// <summary>
 		/// Executes the command with no parameters asynchronously
