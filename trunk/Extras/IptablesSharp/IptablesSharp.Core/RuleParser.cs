@@ -35,7 +35,7 @@ using Developer.Common.Options;
 namespace IptablesNet.Core
 {
     /// <summary>
-    /// Parser for rule files in the format used by iptables-save.
+    /// Parser for rule lines in the format of iptables-save command.
     /// </summary>
 	public static class RuleParser
 	{
@@ -68,11 +68,6 @@ namespace IptablesNet.Core
 			
             SimpleParameter[] parameters = RuleParser.GetParameterList(line);
 			
-//			for(int i=0;i<parameters.Length;i++)
-//			{
-//				Console.WriteLine("Param["+i+"]: "+parameters[i]);
-//			}
-			
 			if(parameters.Length==0)
 				throw new ArgumentException("There are nothing to parse here: "+line);
 			//The first thing must be the command
@@ -81,6 +76,7 @@ namespace IptablesNet.Core
 			//Try to get the command or throw an exception
 			else if(!IptablesCommandFactory.TryGetCommand(parameters[0], out gCmd, out ex))
 				throw new FormatException("Error while parsing line: "+line, ex);
+			//With only 2 parameters there is no room for a rule specifcation. Cry if it is required
 			else if(gCmd.MustSpecifyRule && parameters.Length<2)
 				throw new FormatException("Unexpected parameters in line after command: "+line);
             
