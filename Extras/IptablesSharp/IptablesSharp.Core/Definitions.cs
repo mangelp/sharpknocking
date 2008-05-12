@@ -280,5 +280,17 @@ namespace IptablesNet.Core
         [Alias("match", "m")]
         MatchExtension=(short)'m'
     }
+	
+	public enum StringFormatOptions
+	{
+		/// <summary>
+		/// Default formatting
+		/// </summary>
+		Default=0,
+		/// <summary>
+		/// Format compatible with iptables-restore supported format
+		/// </summary>
+		Iptables=1
+	}
 }
  

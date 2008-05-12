@@ -39,6 +39,17 @@ namespace IptablesNet.Core
 		string GetContentsAsString();
 		
 		/// <summary>
+		/// Gets an string with all the contents of the object using a format
+		/// </summary>
+		/// <param name="options">
+		/// A <see cref="StringFormatOptions"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.String"/> formatted
+		/// </returns>
+		string GetContentsAsString(StringFormatOptions options);
+		
+		/// <summary>
 		/// Appends the contents of the object to an string 
 		/// </summary>
 		/// <remarks>
@@ -49,5 +60,16 @@ namespace IptablesNet.Core
 		/// as strings.
 		/// </param>
 		void AppendTo(StringBuilder sb);
+		
+		/// <summary>
+		/// Appends the contents of the object to an string using a format
+		/// </summary>
+		/// <param name="sb">
+		/// A <see cref="StringBuilder"/>
+		/// </param>
+		/// <param name="options">
+		/// A <see cref="StringFormatOptions"/> with the format to use
+		/// </param>
+		void AppendTo(StringBuilder sb, StringFormatOptions options);
 	}
 }

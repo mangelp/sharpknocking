@@ -243,7 +243,7 @@ namespace IptablesNet.Core
 		/// Adds the contents of the current table (chains and rules) as strings
 		/// to a string builder.
 		/// </summary>
-		public void AppendContentsTo(StringBuilder sb, bool iptablesFormat)
+		public void AppendContentsTo(StringBuilder sb, StringFormatOptions options)
 		{
 			//Start with the table name in lowercase
 		    sb.Append("*"+this.type.ToString().ToLower());
@@ -259,7 +259,7 @@ namespace IptablesNet.Core
                 chain = (NetfilterChain)chains[i];
                 if(chain.Rules.Count>0) {
 					sb.Append('\n');
-                    chain.AppendContentsTo(sb, iptablesFormat);
+                    chain.AppendContentsTo(sb, options);
 				}
             }
 		}
@@ -268,10 +268,10 @@ namespace IptablesNet.Core
 		/// Returns a string that represents the table and all the chains and
 		/// all the rules in every chain.
         /// </summary>
-		public string GetContentsAsString(bool iptablesFormat)
+		public string GetContentsAsString(StringFormatOptions options)
 		{
 		    StringBuilder sb = new StringBuilder();
-			this.AppendContentsTo(sb, iptablesFormat);
+			this.AppendContentsTo(sb, options);
 		    return sb.ToString();
 		}
 		

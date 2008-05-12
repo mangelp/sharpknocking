@@ -153,20 +153,20 @@ namespace IptablesNet.Core
 		
 		private void LoadExtensionHandler(Type mExtension)
 		{			
-            //Load the extension
+            //The factory known how to load the extension
             MatchExtensionHandler handler = MatchExtensionFactory.GetExtension(mExtension);
-            //Add to the list
             this.loadedExtensions.Add(handler);
 		}
 		
 		private void UnloadExtensionHandler(Type extType)
 		{
 			int pos=0;
-			
+			//we must find it before removing
 			while(pos<this.loadedExtensions.Count)
 			{
 				if(this.loadedExtensions[pos].GetType()==extType)
 				{
+					//This removes everything as the options belongs to the extension itself
 					this.loadedExtensions.RemoveAt(pos);
 					return;
 				}
@@ -201,8 +201,7 @@ namespace IptablesNet.Core
 		
 		private void ItemsClearedHandler(object obj, EventArgs args)
 		{
-		    //When all the items all cleared we must clear the loaded extensions
-		    //list too.
+		    //When all the items are removed we must remove all the extensions too
 		    this.loadedExtensions.Clear();
 		}
 		
@@ -298,6 +297,15 @@ namespace IptablesNet.Core
 		    return null;
 		}
 		
+		/// <summary>
+		/// Tries to find a match extension handler for an option
+		/// </summary>
+		/// <param name="meo">
+		/// A <see cref="MatchExtensionOption"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="MatchExtensionHandler"/> that owns the option
+		/// </returns>
 		public MatchExtensionHandler FindMatchExtensionHandler(MatchExtensionOption meo)
 		{
 			for (int i=0;i<this.loadedExtensions.Count;i++) {
@@ -309,7 +317,8 @@ namespace IptablesNet.Core
 			return null;
 		}
 		
-		public void AppendContentsTo(StringBuilder sb, bool iptablesFormat)
+		
+		public void AppendContentsTo(StringBuilder sb, StringFormatOptions options)
 		{
 			//Console.WriteLine("** Converting rule to string ** ");
 		    for(int i=0;i<this.options.Count;i++)
@@ -340,10 +349,10 @@ namespace IptablesNet.Core
 				sb.Append(this.jumpOption.ToString());
 		}
 		
-		public string GetContentsAsString(bool iptablesFormat)
+		public string GetContentsAsString(StringFormatOptions options)
 		{
 			StringBuilder sb = new StringBuilder();
-			this.AppendContentsTo(sb, iptablesFormat);
+			this.AppendContentsTo(sb, options);
 			return sb.ToString();
 		}
 		
@@ -353,7 +362,7 @@ namespace IptablesNet.Core
 				
 		public override string ToString ()
 		{
-			return this.GetContentsAsString(false);
+			return this.GetContentsAsString(StringFormatOptions.Default);
 		}
 		
 		public override bool Equals (object o)

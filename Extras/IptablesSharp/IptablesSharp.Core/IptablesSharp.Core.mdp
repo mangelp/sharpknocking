@@ -76,7 +76,6 @@
     <File name="Extensions/MatchExtensions/MatchExtensionHandler.cs" subtype="Code" buildaction="Compile" />
     <File name="NetfilterTableSet.cs" subtype="Code" buildaction="Compile" />
     <File name="IStringConvertibleObject.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommands" subtype="Directory" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

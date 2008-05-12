@@ -27,7 +27,7 @@ namespace IptablesNet.Core
 {
     
     /// <summary>
-    /// List of rules for netfilter
+    /// Models a list of rules and operations to handle them
     /// </summary>
 	public class NetfilterRuleList: CollectionBase 
 	{
@@ -87,6 +87,20 @@ namespace IptablesNet.Core
 		    rule.ParentChain = this.parentChain;
 		}
 		
+		/// <summary>
+		/// Creates a new rule from its string representation
+		/// </summary>
+		/// <param name="rule">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="NetfilterRule"/>
+		/// </returns>
+		public NetfilterRule Add(string rule)
+		{
+			throw new NotImplementedException();
+		}
+		
         /// <summary>
         /// Gets if the list contains a rule
         /// </summary>
@@ -95,15 +109,60 @@ namespace IptablesNet.Core
 		    return this.List.Contains(rule);
 		}
 		
+		/// <summary>
+		/// Gets if a rule exists
+		/// </summary>
+		/// <param name="rule">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		public bool Contains(string rule)
+		{
+			throw new NotImplementedException();
+		}
+		
+		/// <summary>
+		/// Removes all the rules that matches another rule
+		/// </summary>
+		/// <param name="rule">
+		/// A <see cref="NetfilterRule"/>
+		/// </param>
 		public void Remove(NetfilterRule rule)
 		{
 		    this.List.Remove(rule);
 		    rule.ParentChain = null;
 		}
 		
+		/// <summary>
+		/// Removes a rule from its string representation
+		/// </summary>
+		/// <param name="rule">
+		/// A <see cref="System.String"/>
+		/// </param>
+		public void Remove(string rule)
+		{
+			throw new NotImplementedException();
+		}
+		
+		/// <summary>
+		/// Returns the position of a rule
+		/// </summary>
+		/// <param name="rule">
+		/// A <see cref="NetfilterRule"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Int32"/>
+		/// </returns>
 		public int IndexOf(NetfilterRule rule)
 		{
 		    return this.List.IndexOf(rule);    
+		}
+		
+		public int IndexOf(string rule)
+		{
+			throw new NotImplementedException();
 		}
 		
         /// <summary>
@@ -118,6 +177,22 @@ namespace IptablesNet.Core
 		    
 		    rule.ParentChain = this.parentChain;
 		}
-
+		
+		/// <summary>
+		/// Inserts a new rule from its string representation
+		/// </summary>
+		/// <param name="index">
+		/// A <see cref="System.Int32"/>
+		/// </param>
+		/// <param name="rule">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="NetfilterRule"/>
+		/// </returns>
+		public NetfilterRule Insert(int index, string rule)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
