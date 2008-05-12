@@ -28,7 +28,8 @@ using Developer.Common.SystemCommands;
 namespace Developer.Common.Unix.SystemCommands
 {
 	/// <summary>
-	/// Models a command that is mean to process the input as it comes
+	/// Models a command that is mean to process the input as it is written into
+	/// stdin.
 	/// </summary>
 	public class TextInputCommand: BaseCommandWrapper
 	{

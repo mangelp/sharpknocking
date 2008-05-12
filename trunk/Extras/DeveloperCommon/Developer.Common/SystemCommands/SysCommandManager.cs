@@ -19,7 +19,10 @@
 
 
 using System;
+using System.IO;
 using System.Collections.Generic;
+
+using Developer.Common.System;
 
 namespace Developer.Common.SystemCommands
 {
@@ -44,7 +47,7 @@ namespace Developer.Common.SystemCommands
 			}
 		}
 		
-		private Dictionary<string, BaseCommandWrapper> commands;
+		private Dictionary<string, ISysCommandWrapper> commands;
 		
 		private OsInfo osInfo;
 		
@@ -64,34 +67,27 @@ namespace Developer.Common.SystemCommands
 		
 		private SysCommandManager()
 		{
-			commands = new Dictionary<string, BaseCommandWrapper>();
-			osInfo = new OsInfo();
-			osInfo.MonoVersion = (Version)Environment.Version.Clone();
-			osInfo.OsPlatform = Environment.OSVersion.Platform;
-			osInfo.OsVersion = (Version)Environment.OSVersion.Version.Clone();
-			if(osInfo.OsPlatform == PlatformID.Unix)
-			{
-				;
-			}
-			else
-			{
-				osInfo.DistroVersion = Environment.OSVersion.ServicePack.ToString();
-				osInfo.DistroName = "Windows";
-			}
+			commands = new Dictionary<string, ISysCommandWrapper>();
+			osInfo = OsInfo.GetInfo();
 		}
 		
 		/// <summary>
 		/// Adds a command to be managed
 		/// </summary>
-		/// <param name="name">
-		/// A <see cref="System.String"/>
-		/// </param>
 		/// <param name="cmd">
 		/// A <see cref="BaseCommandWrapper"/>
 		/// </param>
-		public void AddCommand(string name, BaseCommandWrapper cmd)
+		public void AddCommand(ISysCommandWrapper cmd)
 		{
-			commands.Add(name, cmd);
+			if (this.commands.ContainsKey(cmd.Name))
+				throw new ArgumentException("A command with the name " + cmd.Name + " already exists");
+			cmd.CommandEnd += new EventHandler<CommandEndEventArgs>(this.commandEndHandler);
+			commands.Add(cmd.Name, cmd);
+		}
+		
+		private void commandEndHandler(object obj, CommandEndEventArgs args)
+		{
+			this.commands.Remove(((ISysCommandWrapper)obj).Name);
 		}
 		
 		/// <summary>
@@ -122,8 +118,19 @@ namespace Developer.Common.SystemCommands
 		public void KillCommand(string name)
 		{
 			if(this.commands.ContainsKey(name)) {
-				this.commands[name].Stop();
+				this.commands[name].Kill();
 				this.commands.Remove(name);
+			}
+		}
+		
+		/// <summary>
+		/// Kills all the commands
+		/// </summary>
+		public void KillAll()
+		{
+			foreach(ISysCommandWrapper cmd in this.commands.Values)
+			{
+				cmd.Kill();
 			}
 		}
 	}

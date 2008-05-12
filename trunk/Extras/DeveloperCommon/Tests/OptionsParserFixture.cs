@@ -36,7 +36,7 @@ namespace Tests
 		public void Initialize()
 		{
 			Console.WriteLine("Initializing");
-			optParse = new OptionParser(this);
+			optParse = new OptionParser();
 			optParse.ShowMessage = true;
 		}
 		
@@ -74,9 +74,20 @@ namespace Tests
 				.SetDescription("Dumb optioneieieieie");
 			optParse.AddOption("HelpHandler", OptionFlags.DefaultOption, "h", "help")
 				.SetDescription("Dumb option helepepepep");
+			optParse.AddOption("Number", OptionFlags.Defaults, "n", "number")
+				.SetDescription("Number of elements")
+				.SetDefaultValue("12")
+				.AddAssertFlag(TypeAssertionFlags.Int);
 			Assert.IsNotNull(optParse.DefaultOption);
 			optParse.ErrorFound += new EventHandler<OptionCallerData>(this.ErrorHandler);
 			optParse.OptionFound += new EventHandler<OptionCallerData>(this.OptionHandler);
+		}
+		
+		[Test]
+		public void CheckDefaultOptionValue()
+		{
+			string val = optParse["number"].GetValue();
+			Assert.AreEqual(val, "12");
 		}
 		
 		[Test]

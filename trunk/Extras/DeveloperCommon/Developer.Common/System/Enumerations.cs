@@ -1,7 +1,6 @@
-// IptablesSysCmd.cs
+// Enumerations.cs
 //
-//  Copyright (C)  2007 SharpKnocking project
-//  Created by Miguel Angel Perez, mangelp@gmail.com
+//  Copyright (C) 2008 [name of author]
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -20,23 +19,45 @@
 //
 
 using System;
-using System.Diagnostics;
 
-using Developer.Common.SystemCommands;
-
-namespace Developer.Common.Unix.SystemCommands
+namespace Developer.Common.System
 {
-	
 	/// <summary>
-	/// Wrapper for the iptables command.
+	/// Describes the set of known *nix clones
 	/// </summary>
-	public class IptablesSysCmd: BaseCommandWrapper
+	public enum UnixPlatform
 	{
-		public IptablesSysCmd()
-			:base("iptables", true)
-		{
-			
-		}
-
+		/// <summary>
+		/// Other
+		/// </summary>
+		Other=0,
+		/// <summary>
+		/// Debian distro
+		/// </summary>
+		Debian=1,
+		/// <summary>
+		/// Fedora
+		/// </summary>
+		Fedora=2,
+		/// <summary>
+		/// Mandriva
+		/// </summary>
+		Mandriva=3,
+		/// <summary>
+		/// OpenBsd
+		/// </summary>
+		OpenBsd=4,
+		/// <summary>
+		/// OpenSolaris
+		/// </summary>
+		OpenSolaris=5,
+		/// <summary>
+		/// Suse
+		/// </summary>
+		Suse=6,
+		/// <summary>
+		/// Ubuntu
+		/// </summary>
+		Ubuntu=7
 	}
 }
