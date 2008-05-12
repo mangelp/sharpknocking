@@ -48,6 +48,11 @@ namespace Developer.Common.SystemCommands
 		StringDictionary Enviroment{get;}
 		
 		/// <summary>
+		/// Returns if the command is still alive
+		/// </summary>
+		bool IsRunning {get;set;}
+		
+		/// <summary>
 		/// Executes the command with no parameters
 		/// </summary>
 		CommandResult Exec();
@@ -61,5 +66,15 @@ namespace Developer.Common.SystemCommands
 		/// Event handler for the CommandEnd event
 		/// </summary>
 		event EventHandler<CommandEndEventArgs> CommandEnd;
+		
+		/// <summary>
+		/// Tries to end the command gracefully
+		/// </summary>
+		void Terminate();
+		
+		/// <summary>
+		/// Ends the command
+		/// </summary>
+		void Kill();
 	}
 }

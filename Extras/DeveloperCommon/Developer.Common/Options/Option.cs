@@ -147,7 +147,7 @@ namespace Developer.Common.Options
 					values[i] = this.parameters[i].Value;
 				}
 				
-				if (values.Length == 0 && this.defaultValue != null)
+				if (values.Length == 0 && this.hasDefaultValue)
 					return new string[]{this.defaultValue};
 				
 				return values;
@@ -170,6 +170,19 @@ namespace Developer.Common.Options
 			}
 			set {
 				this.defaultValue = value;
+				this.hasDefaultValue = value != null;
+			}
+		}
+		
+		private bool hasDefaultValue;
+		
+		/// <summary>
+		/// Gets if the option has a default value
+		/// </summary>
+		public bool HasDefaultValue
+		{
+			get {
+				return this.hasDefaultValue;
 			}
 		}
 		
@@ -183,6 +196,15 @@ namespace Developer.Common.Options
 			get {
 				return this.group;
 			}
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public Option()
+			:this(null)
+		{
+			
 		}
 		
 		/// <summary>
@@ -213,7 +235,7 @@ namespace Developer.Common.Options
 		}
 		
 		/// <summary>
-		/// Adds aliases to this option not erasing previous aliases.
+		/// Adds aliases for the option's name. This will not
 		/// </summary>
 		/// <param name="names">
 		/// A <see cref="System.String"/>
@@ -230,6 +252,7 @@ namespace Developer.Common.Options
 		/// <summary>
 		/// Disables the adding of new aliases to this option using the AddAlias method
 		/// </summary>
+		/// <remarks>This prevents the user to mess with aliases once they are set</remarks>
 		public void DisableAliasAdding()
 		{
 			this.dontAddMoreAliases = true;
@@ -389,6 +412,7 @@ namespace Developer.Common.Options
 		public Option SetDefaultValue(string obj)
 		{
 			this.defaultValue = obj;
+			this.hasDefaultValue = (obj != null);
 			return this;
 		}
 		
@@ -473,23 +497,27 @@ namespace Developer.Common.Options
 		}
 		
 		/// <summary>
-		/// Sets the mehtod name that the caller can use to invoke a method when the 
-		/// option is used
+		/// Sets the method name that the caller can use to invoke a method when the 
+		/// option is used.
 		/// </summary>
 		/// <param name="methodName">
 		/// A <see cref="System.String"/>
 		/// </param>
 		/// <param name="owner">Instance/type of the object that has defined the method</param>
 		/// <remarks>
+		/// 
 		/// If the owner is an instance the method is assumed to be an instance method, but if the
 		/// owner is a type the method is assumed to be an static one.
+		/// The owner can be set also throught the constructor.
 		/// </remarks>
 		/// <returns>
-		/// A <see cref="Option"/>
+		/// The <see cref="Option"/> instance that can be used to call another method
 		/// </returns>
 		public Option SetCallerMethodName(string methodName, object owner)
 		{
 			this.caller.MethodName = methodName;
+			if (owner != null)
+				this.caller.Owner = owner;
 			return this;
 		}
 		

@@ -1,3 +1,9 @@
+2008-05-12  Miguel Angel Perez Valencia <mangelp@gmail.com> 
+- Added static class for custom distro detection.
+- Refactorized code to fill custom running os information.
+- Changed the Iptables command wrapper.
+	
+
 2008-04-14  Miguel Angel Perez Valencia <mangelp@gmail.com> 
 - Unit tests for OptionParser.
 - Minor changes in commands

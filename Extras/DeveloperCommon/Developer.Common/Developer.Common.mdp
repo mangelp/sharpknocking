@@ -29,10 +29,8 @@
     <File name="Types/AliasAttribute.cs" subtype="Code" buildaction="Compile" />
     <File name="Types/AliasUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="Types/AttributeUtil.cs" subtype="Code" buildaction="Compile" />
-    <File name="Net/SkIpAddress.cs" subtype="Code" buildaction="Compile" />
     <File name="Net/NetMask.cs" subtype="Code" buildaction="Compile" />
     <File name="Types/StringUtil.cs" subtype="Code" buildaction="Compile" />
-    <File name="Net/SkIpEndPoint.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands" subtype="Directory" buildaction="Compile" />
     <File name="SystemCommands/ISysCommandWrapper.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/BaseCommandWrapper.cs" subtype="Code" buildaction="Compile" />
@@ -40,7 +38,6 @@
     <File name="SystemCommands/Enumerations.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/Definitions.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/Events.cs" subtype="Code" buildaction="Compile" />
-    <File name="Net/SkSocketAddress.cs" subtype="Code" buildaction="Compile" />
     <File name="Types/AssemblyUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="Debuging/Definitions.cs" subtype="Code" buildaction="Compile" />
     <File name="Debuging/Log.cs" subtype="Code" buildaction="Compile" />
@@ -59,6 +56,9 @@
     <File name="Options/Option.cs" subtype="Code" buildaction="Compile" />
     <File name="Options/OptionCaller.cs" subtype="Code" buildaction="Compile" />
     <File name="Options/OptionCallerData.cs" subtype="Code" buildaction="Compile" />
+    <File name="System/UnixOsDetect.cs" subtype="Code" buildaction="Compile" />
+    <File name="System/Enumerations.cs" subtype="Code" buildaction="Compile" />
+    <File name="System/Definitions.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -23,51 +23,6 @@ using System;
 namespace Developer.Common.SystemCommands
 {
 	/// <summary>
-	/// Data to identify the underliying os and the platform over it runs.
-	/// </summary>
-	public struct OsInfo
-	{
-		/// <summary>
-		/// System OS version
-		/// </summary>
-		/// <remarks>
-		/// This should be for example the version of the kernel. IE 2.6.23
-		/// </remarks>
-		public Version OsVersion;
-		
-		/// <summary>
-		/// System OS kind
-		/// </summary>
-		/// <remarks>
-		/// This should be for examble the type of system. IE: Unix, Win32NT, ...
-		/// </remarks>
-		public PlatformID OsPlatform;
-		
-		/// <summary>
-		/// Version of the mono runtime
-		/// </summary>
-		public Version MonoVersion;
-		
-		/// <summary>
-		/// Distribution version
-		/// </summary>
-		/// <remarks>
-		/// Version for the distribution in case of oses that comes in different
-		/// flavours called "distros". 
-		/// </remarks>
-		public string DistroVersion;
-		
-		/// <summary>
-		/// Distribution name
-		/// </summary>
-		/// <remarks>
-		/// Name for the distribution in case of oses that comes in different
-		/// flavours called "distros". 
-		/// </remarks>
-		public string DistroName;
-	}
-	
-	/// <summary>
 	/// Models the results of a command
 	/// </summary>
 	public struct CommandResult
