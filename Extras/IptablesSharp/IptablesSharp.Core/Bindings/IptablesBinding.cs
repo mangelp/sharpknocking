@@ -1,7 +1,6 @@
-// IExtensionParameter.cs
+// IptablesBinding.cs
 //
-//  Copyright (C) 2007 iSharpKnocking project
-//  Created by mangelp<@>gmail[*]com
+//  Copyright (C) 2008 [name of author]
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -21,29 +20,21 @@
 
 using System;
 
-namespace IptablesSharp.Core
-{	
-	public interface IExtensionParameter
+namespace IptablesSharp.Core.Bindings
+{
+	/// <summary>
+	/// Generic binding to use iptables
+	/// </summary>
+	/// <remarks>
+	/// This binding encapsulates the access to iptables functionality using calls to the
+	/// iptables command or other libraries (if someday a stable api library is released).
+	/// This class instances a concrete binding and then all the work is done by the
+	/// concrete binding.
+	/// </remarks>
+	public class IptablesBinding
 	{
-		void SetValues (string value);
-		
-		/// <summary>
-		/// Parses the value string and fills the properties of the parameter.
-		/// </summary>
-		/// <remarks>
-		/// This method must be implemented and throw FormatException when the
-		/// string cannot be parsed
-		/// </remarks>
-		bool TrySetValues (string value, out string errMsg);
-		
-		/// <summary>
-		/// Returns the default name for the parameter
-		/// </summary>
-		string GetDefaultAlias ();
-
-		/// <summary>
-		/// Returns if a name is a valid alias for the parameter
-		/// </summary>
-		bool IsAlias (string name);
+		public IptablesBinding()
+		{
+		}
 	}
 }

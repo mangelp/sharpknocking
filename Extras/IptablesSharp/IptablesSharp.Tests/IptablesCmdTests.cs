@@ -20,15 +20,20 @@
 
 using System;
 
+using NUnit;
+using NUnit.Core;
+using NUnit.Framework;
+
 namespace IptablesSharp.Tests
 {
 	
-	[TextFixture]
+	[TestFixture]
 	public class IptablesCmdTests
 	{
-		
-		public IptablesCmdTests()
+		[TestFixtureSetup]
+		public void Setup()
 		{
+		
 		}
 	}
 }

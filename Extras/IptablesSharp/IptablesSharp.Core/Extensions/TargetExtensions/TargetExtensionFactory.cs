@@ -25,9 +25,9 @@ using System.Reflection;
 
 using Developer.Common.Types;
 
-using IptablesNet.Core;
+using IptablesSharp.Core;
 
-namespace IptablesNet.Core.Extensions.ExtendedTarget
+namespace IptablesSharp.Core.Extensions.ExtendedTarget
 {
 	/// <summary>
 	/// Factory to build objects derived from TargetExtensionHandler
@@ -101,13 +101,13 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
                                             " or empty", "typeName");
 				
       	    //The full name of each class must follow this convention:
-       	    // IptablesNet.Extensions.Match.{EnumName}TargetExtension
+       	    // IptablesSharp.Extensions.Match.{EnumName}TargetExtension
        	    //So here we can build the name automatically
-       	    string fullName = "IptablesNet.Extensions.Targets."+typeName+"TargetExtension";
+       	    string fullName = "IptablesSharp.Extensions.Targets."+typeName+"TargetExtension";
 			string customAsmName = assemblySearchPath+Path.DirectorySeparatorChar
-					+"IptablesNet.Extensions."+typeName+"Targets.dll";
+					+"IptablesSharp.Extensions."+typeName+"Targets.dll";
 			string commonAsmName = assemblySearchPath+Path.DirectorySeparatorChar+
-					"IptablesNet.Extensions.Targets.dll";
+					"IptablesSharp.Extensions.Targets.dll";
 			return AssemblyUtil.TryLoadWithType(fullName, customAsmName, commonAsmName); 
        	}
        	

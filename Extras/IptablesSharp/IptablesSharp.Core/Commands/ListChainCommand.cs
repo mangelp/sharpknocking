@@ -22,7 +22,7 @@
 using System;
 using System.Text;
 
-namespace IptablesNet.Core.Commands
+namespace IptablesSharp.Core.Commands
 {
 	/// <summary>
 	/// Models the list chain rules command

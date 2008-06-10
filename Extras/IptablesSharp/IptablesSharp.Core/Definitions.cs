@@ -21,7 +21,7 @@ using System;
 
 using Developer.Common.Types;
 
-namespace IptablesNet.Core
+namespace IptablesSharp.Core
 {   
     /// <summary>
     /// Built in chains in iptables. Not all the builtin chains are applicable

@@ -7,11 +7,11 @@ using System.Runtime.CompilerServices;
 // change them to the information which is associated with the assembly
 // you compile.
 
-[assembly: AssemblyTitle("IptablesNet Core library")]
-[assembly: AssemblyDescription("Core logic for IptablesNet")]
+[assembly: AssemblyTitle("IptablesSharp Core library")]
+[assembly: AssemblyDescription("Core logic for IptablesSharp")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("IptablesNet")]
+[assembly: AssemblyProduct("IptablesSharp")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

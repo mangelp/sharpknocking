@@ -18,12 +18,13 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
 //
 using System;
+using System.Net;
 
-using IptablesNet.Core;
+using IptablesSharp.Core;
 
 using Developer.Common.Net;
 
-namespace IptablesNet.Core.Options
+namespace IptablesSharp.Core.Options
 {
 	
 	/// <summary>
@@ -31,12 +32,12 @@ namespace IptablesNet.Core.Options
 	/// </summary>
 	public class DestinationOption: GenericOption
 	{
-	    private SkIpAddress address;
+	    private IPAddress address;
 	    
 	    /// <summary>
 	    /// Destination address range to match
 	    /// </summary>
-	    public SkIpAddress Address
+	    public IPAddress Address
 	    {
 	        get { return this.address;}
 	        set 
@@ -53,10 +54,10 @@ namespace IptablesNet.Core.Options
 		
 		public override bool TryReadValues (string strVal, out string errorStr)
 		{
-		    SkIpAddress range;
+		    IPAddress range;
 		    errorStr = String.Empty;
 		    
-		    if(SkIpAddress.TryParse(strVal, out range))
+		    if(IPAddress.TryParse(strVal, out range))
 		    {
 		        this.address = range;
 		        return true;

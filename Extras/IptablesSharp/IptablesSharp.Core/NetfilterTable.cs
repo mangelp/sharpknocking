@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 using Developer.Common.Types;
 
-namespace IptablesNet.Core
+namespace IptablesSharp.Core
 {
 	/// <summary>
 	/// Netfilter packet table

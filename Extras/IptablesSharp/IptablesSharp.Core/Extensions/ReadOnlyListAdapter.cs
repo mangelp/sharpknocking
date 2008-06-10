@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 using Developer.Common.Types;
 
-namespace IptablesNet.Core.Extensions
+namespace IptablesSharp.Core.Extensions
 {
 	/// <summary>
 	/// Read-only adapter for lists. This adapter allows executing operations over a list

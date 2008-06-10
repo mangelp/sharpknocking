@@ -21,14 +21,14 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-using IptablesNet.Core.Util;
-using IptablesNet.Core.Extensions;
-using IptablesNet.Core.Extensions.ExtendedMatch;
+using IptablesSharp.Core.Util;
+using IptablesSharp.Core.Extensions;
+using IptablesSharp.Core.Extensions.ExtendedMatch;
 
 using Developer.Common.Types;
 using Developer.Common.Options;
 
-namespace IptablesNet.Core.Options
+namespace IptablesSharp.Core.Options
 {
 	
 	/// <summary>

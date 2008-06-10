@@ -7,11 +7,11 @@ using System.Runtime.CompilerServices;
 // change them to the information which is associated with the assembly
 // you compile.
 
-[assembly: AssemblyTitle("IptablesNet target extensions")]
-[assembly: AssemblyDescription("Extensions for target options in IptablesNet")]
+[assembly: AssemblyTitle("IptablesSharp target extensions")]
+[assembly: AssemblyDescription("Extensions for target options in IptablesSharp")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("IptablesNet")]
+[assembly: AssemblyProduct("IptablesSharp")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

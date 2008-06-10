@@ -23,7 +23,7 @@ using System;
 
 using Developer.Common.Types;
 
-namespace IptablesNet.Extensions.Targets
+namespace IptablesSharp.Extensions.Targets
 {
     public enum BalanceTargetOptions
     {

@@ -1,5 +1,5 @@
-<Project name="IptablesSharp.Extensions.Targets" fileversion="2.0" Description="Library of target extensions for IptablesSharp library" DefaultNamespace="IptablesSharp.Extensions.Targets" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Debug">
+<Project name="IptablesSharp.Extensions.Targets" fileversion="2.0" language="C#" DefaultNamespace="IptablesSharp.Extensions.Targets" clr-version="Net_2_0" Description="Library of target extensions for IptablesSharp library" ctype="DotNetProject">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
         <Command type="AfterBuild" command="../../../bin/copyToLibrary.sh bin/Debug ../../../Library/Debug" workingdir="${ProjectDir}" />

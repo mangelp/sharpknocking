@@ -21,7 +21,7 @@
 
 using System;
 
-namespace IptablesNet.Core.Extensions
+namespace IptablesSharp.Core.Extensions
 {
 	public interface IExtensionHandler
 	{

@@ -21,10 +21,10 @@
 
 using System;
 
-using IptablesNet.Core.Util;
-using IptablesNet.Core.Extensions;
+using IptablesSharp.Core.Util;
+using IptablesSharp.Core.Extensions;
 
-namespace IptablesNet.Core.Extensions.ExtendedTarget
+namespace IptablesSharp.Core.Extensions.ExtendedTarget
 {
     /// <summary>
 	/// Base class for all the implementations of a target extension.
@@ -32,7 +32,7 @@ namespace IptablesNet.Core.Extensions.ExtendedTarget
 	/// <remarks>
 	/// When extending this class the names of each class must
 	/// follow this fully qualified scheme:<br/>
-    /// IptablesNet.Core.ExtendedTarget.[EnumName]TargetExtension
+    /// IptablesSharp.Core.ExtendedTarget.[EnumName]TargetExtension
     /// Where [EnumName] must be replaced by the name of the enum that
     /// represents the target extension type used if the extension is one included
     /// with iptables.<br/>

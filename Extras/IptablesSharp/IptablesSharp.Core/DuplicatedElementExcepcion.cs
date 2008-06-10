@@ -20,7 +20,7 @@
 //
 using System;
 
-namespace IptablesNet.Core
+namespace IptablesSharp.Core
 {
 	/// <summary>
 	/// Exception thrown when an element is added twice to a collection where all the elements can only appear
