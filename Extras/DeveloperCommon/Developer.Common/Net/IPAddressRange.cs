@@ -1,7 +1,6 @@
-// IptablesSysCmd.cs
+// IpAddressRange.cs
 //
-//  Copyright (C)  2007 SharpKnocking project
-//  Created by Miguel Angel Perez, mangelp@gmail.com
+//  Copyright (C) 2008 Miguel Angel Perez (mye://mangelp/at/gmail?dot=com)
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -20,22 +19,49 @@
 //
 
 using System;
-using System.Diagnostics;
+using System.Net;
 
-using Developer.Common.SystemCommands;
-
-namespace Developer.Common.Unix.SystemCommands
+namespace Developer.Common.Net
 {
 	
 	/// <summary>
-	/// Wrapper for the iptables command.
+	/// Models a range of ip addresses.
 	/// </summary>
-	public class IptablesSysCmd: TextOutputCommand
+	public class IPAddressRange
 	{
-		public IptablesSysCmd()
-			:base("iptables", true)
+		private IPAddress address;
+		
+		public IPAddress Address {
+			get {
+				return address;
+			}
+			set {
+				address = value;
+			}
+		}
+		
+		private IPAddressMask mask;
+
+		public IPAddressMask Mask {
+			get {
+				return mask;
+			}
+			set {
+				mask = value;
+			}
+		}
+		
+		public IPAddressRange()
+		{}
+		
+		public bool IsInRange(IPAddress addr)
 		{
-			
+			throw new NotImplementedException();
+		}
+		
+		public static IPAddressRange CreateRange(IPAddress start, IPAddress end)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
