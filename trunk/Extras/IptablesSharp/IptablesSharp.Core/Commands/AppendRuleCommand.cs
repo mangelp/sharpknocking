@@ -21,7 +21,7 @@
 
 using System;
 
-namespace IptablesNet.Core.Commands
+namespace IptablesSharp.Core.Commands
 {
 	
 	/// <summary>

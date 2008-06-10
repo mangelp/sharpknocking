@@ -22,7 +22,7 @@
 using System;
 using System.Text;
 
-namespace IptablesNet.Core
+namespace IptablesSharp.Core
 {
 	/// <summary>
 	/// Models methods to convert a object to an string that can be parsed back by the 

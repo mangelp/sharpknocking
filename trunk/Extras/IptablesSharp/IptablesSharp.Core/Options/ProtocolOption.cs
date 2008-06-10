@@ -1,7 +1,7 @@
 
 using System;
 
-using IptablesNet.Core;
+using IptablesSharp.Core;
 
 using Developer.Common.Net;
 using Developer.Common.Types;
@@ -9,7 +9,7 @@ using Developer.Common.Types;
 using Developer.Common.Unix.Net;
 
 
-namespace IptablesNet.Core.Options
+namespace IptablesSharp.Core.Options
 {
 	
 	/// <summary>

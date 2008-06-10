@@ -19,12 +19,12 @@
 //
 using System;
 
-using IptablesNet.Core;
-using IptablesNet.Core.Extensions.ExtendedTarget;
+using IptablesSharp.Core;
+using IptablesSharp.Core.Extensions.ExtendedTarget;
 
 using Developer.Common.Types;
 
-namespace IptablesNet.Core.Options
+namespace IptablesSharp.Core.Options
 { 
 	/// <summary>
 	/// Jump option.

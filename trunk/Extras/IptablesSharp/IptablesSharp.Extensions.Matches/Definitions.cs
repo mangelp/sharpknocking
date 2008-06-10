@@ -24,7 +24,7 @@ using System.ComponentModel;
 
 using Developer.Common.Types;
 
-namespace IptablesNet.Extensions.Matches
+namespace IptablesSharp.Extensions.Matches
 {
 	[FlagsAttribute()]
 	public enum ConnectionStates

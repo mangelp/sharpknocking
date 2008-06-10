@@ -23,12 +23,12 @@ using System;
 using System.Text;
 using System.Collections;
 
-using IptablesNet.Core;
+using IptablesSharp.Core;
 
 using Developer.Common.Types;
 using Developer.Common.Options;
 
-namespace IptablesNet.Core.Commands
+namespace IptablesSharp.Core.Commands
 {
 	
 	/// <summary>

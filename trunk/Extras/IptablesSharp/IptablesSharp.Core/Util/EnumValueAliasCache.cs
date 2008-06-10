@@ -25,7 +25,7 @@ using System.Collections.Generic;
 
 using Developer.Common.Types;
 
-namespace IptablesNet.Core.Util
+namespace IptablesSharp.Core.Util
 {
 	/// <summary>
 	/// Models a cache of enumeration constants stored by alias name

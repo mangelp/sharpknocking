@@ -23,10 +23,10 @@ using System;
 
 using Developer.Common.Types;
 
-using IptablesNet.Core.Extensions;
-using IptablesNet.Core.Extensions.ExtendedTarget;
+using IptablesSharp.Core.Extensions;
+using IptablesSharp.Core.Extensions.ExtendedTarget;
 
-namespace IptablesNet.Extensions.Targets
+namespace IptablesSharp.Extensions.Targets
 {
 	
 	/// <summary>

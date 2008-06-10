@@ -25,9 +25,9 @@ using System.Reflection;
 
 using Developer.Common.Types;
 
-using IptablesNet.Core.Extensions;
+using IptablesSharp.Core.Extensions;
 
-namespace IptablesNet.Core.Extensions.ExtendedMatch
+namespace IptablesSharp.Core.Extensions.ExtendedMatch
 {
     /// <summary>
     /// Defines a factory that creates instances of objects that extends the base
@@ -96,13 +96,13 @@ namespace IptablesNet.Core.Extensions.ExtendedMatch
                                             " or empty", "typeName");
 
       	    //The full name of each class must follow this convention:
-       	    // IptablesNet.Extensions.Match.{EnumName}MatchExtension
+       	    // IptablesSharp.Extensions.Match.{EnumName}MatchExtension
        	    //So here we can build the name automatically
-       	    string fullName = "IptablesNet.Extensions.Matches."+typeName+"MatchExtension";
+       	    string fullName = "IptablesSharp.Extensions.Matches."+typeName+"MatchExtension";
 			string customAsmName = assemblySearchPath+Path.DirectorySeparatorChar
-					+"IptablesNet.Extensions."+typeName+"Matches.dll";
+					+"IptablesSharp.Extensions."+typeName+"Matches.dll";
 			string commonAsmName = assemblySearchPath+Path.DirectorySeparatorChar+
-					"IptablesNet.Extensions.Matches.dll";
+					"IptablesSharp.Extensions.Matches.dll";
 			//Console.WriteLine ("Trying to load "+fullName+" from: \n- "+customAsmName+"\n- "+commonAsmName);
 			return AssemblyUtil.TryLoadWithType(fullName, customAsmName, commonAsmName); 
        	}
@@ -123,7 +123,7 @@ namespace IptablesNet.Core.Extensions.ExtendedMatch
        	/// </summary>
        	/// <remarks>
        	/// The type that is expected to be found is:<br/>
-  	    /// IptablesNet.Core.Extensions.[EnumName]MatchExtension<br/>
+  	    /// IptablesSharp.Core.Extensions.[EnumName]MatchExtension<br/>
   	    /// If it is not found the assembly is expected to load with the name:<br/>
         /// [EnumName]Extension.dll<br/>
         /// In a subdirectory called extensions in the same directory where the

@@ -21,11 +21,11 @@
 
 using System;
 
-using IptablesNet.Core.Util;
-using IptablesNet.Core.Extensions;
+using IptablesSharp.Core.Util;
+using IptablesSharp.Core.Extensions;
 
 
-namespace IptablesNet.Core.Extensions.ExtendedMatch
+namespace IptablesSharp.Core.Extensions.ExtendedMatch
 {
 	/// <summary>
 	/// Base class for all the implementations of a match extension.
@@ -33,7 +33,7 @@ namespace IptablesNet.Core.Extensions.ExtendedMatch
 	/// <remarks>
 	/// When extending this class the names of each class must
 	/// follow this fully qualified scheme:<br/>
-    /// IptablesNet.Core.ExtendedMatch.[EnumName]MatchExtension
+    /// IptablesSharp.Core.ExtendedMatch.[EnumName]MatchExtension
     /// Where [EnumName] must be replaced by the name of the enum that
     /// represents the match extension type used if the extension is one included
     /// with iptables.<br/>

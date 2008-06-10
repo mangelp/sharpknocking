@@ -21,9 +21,9 @@
 
 using System;
 
-using IptablesNet.Core;
+using IptablesSharp.Core;
 
-namespace IptablesNet.Core.Commands
+namespace IptablesSharp.Core.Commands
 {
 	/// <summary>
 	/// Models the set chain policy command.

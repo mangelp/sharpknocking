@@ -22,14 +22,14 @@
 using System;
 using System.Collections;
 
-using IptablesNet.Core.Util;
-using IptablesNet.Core.Extensions;
-using IptablesNet.Core.Extensions.ExtendedMatch;
+using IptablesSharp.Core.Util;
+using IptablesSharp.Core.Extensions;
+using IptablesSharp.Core.Extensions.ExtendedMatch;
 
 using Developer.Common.Net;
 using Developer.Common.Types;
 
-namespace IptablesNet.Extensions.Matches
+namespace IptablesSharp.Extensions.Matches
 {
     /// <summary>
     /// Implements the icmp match extension.

@@ -19,9 +19,9 @@
 //
 using System;
 
-using IptablesNet.Core;
+using IptablesSharp.Core;
 
-namespace IptablesNet.Core.Options
+namespace IptablesSharp.Core.Options
 {
 	
 	/// <summary>

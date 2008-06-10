@@ -22,13 +22,13 @@ using System;
 using System.Text;
 using System.Collections;
 
-using IptablesNet.Core.Extensions;
-using IptablesNet.Core.Extensions.ExtendedMatch;
+using IptablesSharp.Core.Extensions;
+using IptablesSharp.Core.Extensions.ExtendedMatch;
 
 using Developer.Common.Net;
 using Developer.Common.Types;
 
-namespace IptablesNet.Extensions.Matches
+namespace IptablesSharp.Extensions.Matches
 {
 	public class StateMatchExtension: MatchExtensionHandler
 	{

@@ -25,9 +25,9 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
-using IptablesNet.Core.Commands;
+using IptablesSharp.Core.Commands;
 
-namespace IptablesNet.Core
+namespace IptablesSharp.Core
 {
 	/// <summary>
 	/// This class models the entire set of existing tables in netfilter.

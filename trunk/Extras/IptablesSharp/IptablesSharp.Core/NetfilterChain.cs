@@ -23,7 +23,7 @@ using System.Collections;
 
 using Developer.Common.Types;
 
-namespace IptablesNet.Core
+namespace IptablesSharp.Core
 {
     
 	/// <summary>

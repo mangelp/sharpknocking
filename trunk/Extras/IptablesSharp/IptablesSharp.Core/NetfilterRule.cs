@@ -24,15 +24,15 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
-using IptablesNet.Core;
-using IptablesNet.Core.Options;
-using IptablesNet.Core.Commands;
-using IptablesNet.Core.Extensions.ExtendedMatch;
-using IptablesNet.Core.Extensions.ExtendedTarget;
+using IptablesSharp.Core;
+using IptablesSharp.Core.Options;
+using IptablesSharp.Core.Commands;
+using IptablesSharp.Core.Extensions.ExtendedMatch;
+using IptablesSharp.Core.Extensions.ExtendedTarget;
 
 using Developer.Common.Options;
 
-namespace IptablesNet.Core
+namespace IptablesSharp.Core
 {
 	
 	/// <summary>

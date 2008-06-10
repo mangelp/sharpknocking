@@ -23,9 +23,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using IptablesNet.Core;
+using IptablesSharp.Core;
 
-namespace IptablesNet.Core.Extensions.ExtendedTarget
+namespace IptablesSharp.Core.Extensions.ExtendedTarget
 {
 	/// <summary>
 	/// ReadOnly list adapter for lists of targetExtensionHandler type.

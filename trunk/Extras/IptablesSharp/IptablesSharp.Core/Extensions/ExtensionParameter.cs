@@ -24,7 +24,7 @@ using System;
 using Developer.Common.Types;
 using Developer.Common.Options;
 
-namespace IptablesNet.Core.Extensions
+namespace IptablesSharp.Core.Extensions
 {
 	/// <summary>
 	/// Models a parameter of a target extension.

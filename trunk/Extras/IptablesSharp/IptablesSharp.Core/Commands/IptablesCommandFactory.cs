@@ -24,7 +24,7 @@ using System;
 using Developer.Common.Types;
 using Developer.Common.Options;
 
-namespace IptablesNet.Core.Commands
+namespace IptablesSharp.Core.Commands
 {
 	
 	/// <summary>

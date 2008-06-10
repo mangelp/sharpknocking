@@ -22,7 +22,7 @@ using System.Collections;
 
 using Developer.Common.Options;
 
-namespace IptablesNet.Core.Options
+namespace IptablesSharp.Core.Options
 {
     public delegate void GenericOptionListEventHandler(object sender, ListChangedEventArgs<GenericOption> args);
 	    

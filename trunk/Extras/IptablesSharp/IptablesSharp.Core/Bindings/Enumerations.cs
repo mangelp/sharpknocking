@@ -1,7 +1,6 @@
-// MatchExtensionParameter.cs
+// Enumerations.cs
 //
-//  Copyright (C) 2007 iSharpKnocking project
-//  Created by mangelp<@>gmail[*]com
+//  Copyright (C) 2008 Miguel Angel Perez (mail://mangelp/at/gmail?dot=com)
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -19,20 +18,7 @@
 //
 //
 
-using System;
-using System.Collections;
-
-using IptablesSharp.Core;
-
-namespace IptablesSharp.Core.Extensions.ExtendedMatch
+namespace IptablesSharp.Core.Bindings
 {
 	
-	public abstract class MatchExtensionParameter: ExtensionParameter<MatchExtensionHandler>
-	{   
-		public MatchExtensionParameter(MatchExtensionHandler owner, object enumValue)
-		  :base(owner, enumValue)
-		{
-
-		}
-	}
 }

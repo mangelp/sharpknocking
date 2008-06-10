@@ -23,10 +23,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using IptablesNet.Core;
-using IptablesNet.Core.Extensions;
+using IptablesSharp.Core;
+using IptablesSharp.Core.Extensions;
 
-namespace IptablesNet.Core.Extensions.ExtendedMatch
+namespace IptablesSharp.Core.Extensions.ExtendedMatch
 {
 	
 	

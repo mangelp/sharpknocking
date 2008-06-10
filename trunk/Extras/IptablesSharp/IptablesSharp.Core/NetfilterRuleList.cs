@@ -21,9 +21,9 @@
 
 using System;
 using System.Collections;
-using IptablesNet.Core;
+using IptablesSharp.Core;
 
-namespace IptablesNet.Core
+namespace IptablesSharp.Core
 {
     
     /// <summary>

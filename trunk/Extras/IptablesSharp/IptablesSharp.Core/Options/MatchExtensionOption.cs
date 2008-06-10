@@ -19,12 +19,12 @@
 //
 using System;
 
-using IptablesNet.Core;
-using IptablesNet.Core.Extensions;
+using IptablesSharp.Core;
+using IptablesSharp.Core.Extensions;
 
 using Developer.Common.Types;
 
-namespace IptablesNet.Core.Options
+namespace IptablesSharp.Core.Options
 {
 	
 	/// <summary>

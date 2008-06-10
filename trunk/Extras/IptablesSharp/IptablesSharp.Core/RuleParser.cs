@@ -22,17 +22,17 @@
 using System;
 using System.Collections;
 
-using IptablesNet.Core;
-using IptablesNet.Core.Options;
-using IptablesNet.Core.Commands;
-using IptablesNet.Core.Extensions;
-using IptablesNet.Core.Extensions.ExtendedMatch;
-using IptablesNet.Core.Extensions.ExtendedTarget;
+using IptablesSharp.Core;
+using IptablesSharp.Core.Options;
+using IptablesSharp.Core.Commands;
+using IptablesSharp.Core.Extensions;
+using IptablesSharp.Core.Extensions.ExtendedMatch;
+using IptablesSharp.Core.Extensions.ExtendedTarget;
 
 using Developer.Common.Types;
 using Developer.Common.Options;
 
-namespace IptablesNet.Core
+namespace IptablesSharp.Core
 {
     /// <summary>
     /// Parser for rule lines in the format of iptables-save command.
