@@ -1,5 +1,5 @@
-<Project name="Developer.Common.Unix" fileversion="2.0" Description="Unix stuff" DefaultNamespace="Developer.Common.Unix" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Debug">
+<Project name="Developer.Common.Unix" fileversion="2.0" language="C#" DefaultNamespace="Developer.Common.Unix" clr-version="Net_2_0" Description="Unix stuff" ctype="DotNetProject">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
         <Command type="AfterBuild" command="../../../bin/copyToLibrary.sh bin/Debug ../../../Library/Debug" workingdir="${ProjectDir}" />

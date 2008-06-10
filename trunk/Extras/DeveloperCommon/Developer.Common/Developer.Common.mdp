@@ -1,5 +1,5 @@
-<Project name="Developer.Common" fileversion="2.0" Description="Common functionality originally done for the iSharpKnocking project &#xA;but that can be usefull for more projects of any kind." DefaultNamespace="Developer.Common" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Debug">
+<Project name="Developer.Common" fileversion="2.0" language="C#" DefaultNamespace="Developer.Common" clr-version="Net_2_0" Description="Common functionality originally done for the iSharpKnocking project &#xA;but that can be usefull for more projects of any kind." ctype="DotNetProject">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
         <Command type="AfterBuild" name="Copy to library" command="../../../bin/copyToLibrary.sh bin/Debug ../../../Library/Debug" workingdir="${ProjectDir}" />
@@ -29,7 +29,6 @@
     <File name="Types/AliasAttribute.cs" subtype="Code" buildaction="Compile" />
     <File name="Types/AliasUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="Types/AttributeUtil.cs" subtype="Code" buildaction="Compile" />
-    <File name="Net/NetMask.cs" subtype="Code" buildaction="Compile" />
     <File name="Types/StringUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands" subtype="Directory" buildaction="Compile" />
     <File name="SystemCommands/ISysCommandWrapper.cs" subtype="Code" buildaction="Compile" />
@@ -59,6 +58,12 @@
     <File name="System/UnixOsDetect.cs" subtype="Code" buildaction="Compile" />
     <File name="System/Enumerations.cs" subtype="Code" buildaction="Compile" />
     <File name="System/Definitions.cs" subtype="Code" buildaction="Compile" />
+    <File name="Net/IPAddressRange.cs" subtype="Code" buildaction="Compile" />
+    <File name="Net/IPAddressMask.cs" subtype="Code" buildaction="Compile" />
+    <File name="Net/IPAddressShortMask.cs" subtype="Code" buildaction="Compile" />
+    <File name="Net/IPAddressLongMask.cs" subtype="Code" buildaction="Compile" />
+    <File name="Types/ArrayComparer.cs" subtype="Code" buildaction="Compile" />
+    <File name="Types/Conversion.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

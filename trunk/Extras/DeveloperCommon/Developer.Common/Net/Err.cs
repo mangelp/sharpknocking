@@ -1,7 +1,6 @@
-// IptablesSysCmd.cs
+// Err.cs
 //
-//  Copyright (C)  2007 SharpKnocking project
-//  Created by Miguel Angel Perez, mangelp@gmail.com
+//  Copyright (C) 2008 [name of author]
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -20,22 +19,16 @@
 //
 
 using System;
-using System.Diagnostics;
 
-using Developer.Common.SystemCommands;
-
-namespace Developer.Common.Unix.SystemCommands
+namespace Net
 {
 	
-	/// <summary>
-	/// Wrapper for the iptables command.
-	/// </summary>
-	public class IptablesSysCmd: TextOutputCommand
+	
+	public class Err
 	{
-		public IptablesSysCmd()
-			:base("iptables", true)
+		
+		public Err()
 		{
-			
 		}
 	}
 }

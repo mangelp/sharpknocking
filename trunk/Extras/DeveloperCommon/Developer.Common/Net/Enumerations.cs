@@ -282,4 +282,31 @@ namespace Developer.Common.Net
 	    [AliasAttribute("any")]
 	    Any=ushort.MaxValue
 	}	
+	
+	/// <summary>
+	/// Types of ip address masks
+	/// </summary>
+	public enum IPAddressMaskType
+	{
+		/// <summary>
+		/// No valid mask
+		/// </summary>
+		None = 0,
+		/// <summary>
+		/// IPV4 mask with the number of bits
+		/// </summary>
+		Ipv4Short = 1,
+		/// <summary>
+		/// IPV4 mask with the bit mask
+		/// </summary>
+		Ipv4Long = 2,
+		/// <summary>
+		/// IPV6 mask with the number of bits
+		/// </summary>
+		Ipv6Short = 3,
+		/// <summary>
+		/// IPV6 mask with the bit mask
+		/// </summary>
+		Ipv6Long = 4
+	}
 }
