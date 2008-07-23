@@ -25,13 +25,12 @@ using NUnit.Framework;
 
 using Developer.Common.Types;
 
-namespace Tests
+namespace Developer.Common.Tests
 {
 	
 	[TestFixture]
 	public class ConversionTests
 	{
-		
 		public void ToByteArray()
 		{
 			long num1 = 0xABCDABCD;
@@ -53,8 +52,5 @@ namespace Tests
 			int numc = Conversion.ToInt(result);
 			Assert.AreEqual(numc, num3, "Failed conversion from byte array to short");
 		}
-		
-		public void Test2()
-		{}
 	}
 }
