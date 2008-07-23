@@ -14,9 +14,9 @@
         <Command type="AfterBuild" command="../../../bin/copyToLibrary.sh bin/Release ../../../Library/Release" workingdir="${ProjectDir}" />
       </CustomCommands>
       <Output directory="bin/Release" assembly="Developer.Common.Unix" />
-      <Build debugmode="False" target="Library" />
+      <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="True" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
@@ -31,10 +31,13 @@
     <File name="SystemCommands/LocateSysCmd.cs" subtype="Code" buildaction="Compile" />
     <File name="Native" subtype="Directory" buildaction="Compile" />
     <File name="Native/UnixNative.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommands/TextOutputCommand.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommands/IptablesSaveSysCommand.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommands/IptablesRestoreSysCommand.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommands/TextInputCommand.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/IptablesSaveSysCmd.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/IptablesRestoreSysCmd.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/GksuSysCmd.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/BaseUnixSysCmd.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/UnixTextInputSysCmd.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/UnixTextOutputSysCmd.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/UnixInteractiveSysCmd.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

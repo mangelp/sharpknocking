@@ -1,7 +1,7 @@
 // IptablesSysCmd.cs
 //
 //  Copyright (C)  2007 SharpKnocking project
-//  Created by Miguel Angel Perez, mangelp@gmail.com
+//  Created by Miguel Angel Perez, mangelp[AT]gmail[DOT]com
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -32,6 +32,9 @@ namespace Developer.Common.Unix.SystemCommands
 	/// </summary>
 	public class IptablesSysCmd: TextOutputCommand
 	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public IptablesSysCmd()
 			:base("iptables", true)
 		{

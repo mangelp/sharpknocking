@@ -28,17 +28,61 @@ namespace Developer.Common.Unix.Net
 	/// </summary>
 	public struct NetworkService
 	{
+		/// <summary>
+		/// Empty instance
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		public static readonly NetworkService Empty = new NetworkService();
 		
+		/// <summary>
+		/// Service name
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		public string Name;
+		
+		/// <summary>
+		/// Service protocol
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		public Protocols Protocol;
+		
+		/// <summary>
+		/// Service port number
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		public ushort Port;
 		
+		/// <summary>
+		/// Gets an string that represents this instace
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		public override string ToString ()
 		{
 			return Name+"@"+((ushort)Protocol)+":"+Port.ToString();
 		}
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <param name="proto">
+		/// A <see cref="Protocols"/>
+		/// </param>
+		/// <param name="port">
+		/// A <see cref="System.UInt16"/>
+		/// </param>
 		public NetworkService(string name, Protocols proto, ushort port)
 		{
 			this.Name = name;
@@ -46,6 +90,16 @@ namespace Developer.Common.Unix.Net
 			this.Port = port;
 		}
 		
+		/// <summary>
+		/// Parses a string and gets an instance of NetworkService initiallized
+		/// with the information found
+		/// </summary>
+		/// <param name="netServ">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="NetworkService"/>
+		/// </returns>
 		public static NetworkService Parse(string netServ)
 		{
 			int pos = netServ.IndexOf('@');
@@ -65,6 +119,12 @@ namespace Developer.Common.Unix.Net
 			throw new FormatException("Invalid format for input string");
 		}
 		
+		/// <summary>
+		/// Gets the hash code
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.Int32"/>
+		/// </returns>
 		public override int GetHashCode ()
 		{
 			return this.ToString().GetHashCode();

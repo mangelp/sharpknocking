@@ -20,23 +20,38 @@
 //
 
 using System;
+using System.IO;
 
 using Developer.Common.SystemCommands;
 
 namespace Developer.Common.Unix.SystemCommands
 {
-
-	public class IptablesSaveSysCommand: TextOutputCommand
+	/// <summary>
+	/// Wraps the command-line iptables-save command that allows to
+	/// get a copy of the current iptables ruleset.
+	/// </summary>
+	public class IptablesSaveSysCmd: UnixTextOutputSysCmd
 	{
-		public IptablesSaveSysCommand()
-			:base("iptables-save", true)
+		private static readonly string CommandName = "iptables-save";
+		
+		/// <summary>
+		/// Constructor. Initializes the name of the command to iptables-save
+		/// </summary>
+		public IptablesSaveSysCmd()
+			:base(CommandName, true)
 		{
 		}
 		
-		public string GetCurrentRules()
+		/// <summary>
+		/// Saves the current set of rules to a file
+		/// </summary>
+		/// <param name="fileName">
+		/// A <see cref="System.String"/>
+		/// </param>
+		public void ToFile(string fileName)
 		{
-			CommandResult res = base.Exec();
-			return (string)res.UserData;
+			string text = base.Read();
+			File.WriteAllText(fileName, text);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 // UnixNative.cs
 //
 //  Copyright (C)  2007 iSharpKnocking project
-//  Created by Miguel Angel Perez, mangelp@gmail.com
+//  Created by Miguel Angel Perez, mangelp{at}gmail{_DOT_}com
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -19,8 +19,9 @@
 
 using System;
 using System.IO;
-using Mono.Unix.Native;
 
+using Mono.Unix;
+using Mono.Unix.Native;
     
 namespace Developer.Common.Unix.Native
 {
@@ -30,7 +31,7 @@ namespace Developer.Common.Unix.Native
     /// </summary>
 	public static class UnixNative
 	{        
-		private static string baseLockPath="/tmp";
+		private static string baseLockPath="/tmp/lock";
 		private static string baseTmpPath = "/tmp";
 		
         /// <summary>
@@ -90,8 +91,19 @@ namespace Developer.Common.Unix.Native
         /// </summary>
         public static bool ExecUserIsRoot()
         {
-            return Mono.Unix.UnixEnvironment.EffectiveUserId == 0;
+            return UnixEnvironment.EffectiveUserId == 0;
         }
+		
+		public static string GetCurrentUser()
+		{
+			return UnixEnvironment.EffectiveUser.UserName;
+		}
+		
+		public static bool IsCurrentUser(string userName)
+		{
+			return String.Equals(userName,
+			                     UnixEnvironment.EffectiveUser.UserName);
+		}
         
         /// <summary>
         /// Creates a temporary file name
