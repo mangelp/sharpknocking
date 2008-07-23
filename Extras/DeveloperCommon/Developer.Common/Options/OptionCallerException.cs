@@ -1,7 +1,6 @@
-// Definitions.cs
+// OptionCallerException.cs
 //
-//  Copyright (C)  2007 iSharpKnocking project
-//  Created by Miguel Angel Perez Valencia, email://mangelp/at/gmail?dot=com
+//  Copyright (C) 2008 [name of author]
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -16,32 +15,47 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
-
+//
+//
 
 using System;
 
-namespace Developer.Common.SystemCommands
+namespace Developer.Common.Options
 {
 	/// <summary>
-	/// Models the results of a command
+	/// Exception thrown when an error happens in the option caller.
 	/// </summary>
-	public struct CommandResult
+	public class OptionCallerException: Exception
 	{
 		/// <summary>
-		/// Exit code of the command
+		/// Constructor
 		/// </summary>
-		public int ExitCode;
+		public OptionCallerException()
+			:base()
+		{
+		}
+		
 		/// <summary>
-		/// User data related to the finalization of the command
+		/// Constructor with message
 		/// </summary>
-		public object UserData;
+		/// <param name="msg">
+		/// A <see cref="System.String"/>
+		/// </param>
+		public OptionCallerException(string msg)
+			:base(msg)
+		{}
+		
 		/// <summary>
-		/// Descriptive string with the results of the command
+		/// Constructor with message and inner exception
 		/// </summary>
-		public string Detail;
-		/// <summary>
-		/// Gets if the command was killed or aborted
-		/// </summary>
-		public bool Aborted;
+		/// <param name="msg">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <param name="inner">
+		/// A <see cref="Exception"/>
+		/// </param>
+		public OptionCallerException(string msg, Exception inner)
+			:base(msg, inner)
+		{}
 	}
 }

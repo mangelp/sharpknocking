@@ -1,6 +1,7 @@
 // OptionCaller.cs
 //
-//  Copyright (C) 2008 [name of author]
+//  Copyright (C)  2008 iSharpKnocking project
+//  Created by Miguel Angel Perez (mangelp_AT_gmail_DOT_com)
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -19,6 +20,7 @@
 //
 
 using System;
+using System.Text;
 using System.Reflection;
 
 namespace Developer.Common.Options
@@ -41,7 +43,7 @@ namespace Developer.Common.Options
 		public OptionActionDelegate ProcesingDelegate
 		{
 			get { return this.procesingDelegate;}
-			internal set { this.procesingDelegate = value;}
+			set { this.procesingDelegate = value;}
 		}
 		
 		private string methodName;
@@ -52,7 +54,7 @@ namespace Developer.Common.Options
 		public string MethodName
 		{
 			get { return this.methodName; }
-			internal set { this.methodName = value; }
+			set { this.methodName = value; }
 		}
 		
 		private object owner;
@@ -65,7 +67,7 @@ namespace Developer.Common.Options
 			get {
 				return this.owner;
 			}
-			internal set {
+			set {
 				this.owner = value;
 			}
 		}
@@ -85,8 +87,9 @@ namespace Developer.Common.Options
 		/// Executes the method if there is any specified
 		/// </summary>
 		/// <remarks>
-		/// If there have been specified a procesing delegate it will be used, but if not the information
-		/// is used to search a method to call by reflection.
+		/// If there have been specified a procesing delegate it will be used, 
+		/// but if not the information is used to search a method to call by 
+		/// reflection.
 		/// </remarks>
 		/// <param name="data">
 		/// A <see cref="OptionCallerData"/>
@@ -102,8 +105,7 @@ namespace Developer.Common.Options
                     +". The source type or instance are not specified");
 			}
 
-			BindingFlags flags = BindingFlags.InvokeMethod | BindingFlags.Public 
-					| BindingFlags.Instance;
+			BindingFlags flags = BindingFlags.InvokeMethod | BindingFlags.Public;
 			Type t = null;
 			object instance = null;
 			
@@ -114,13 +116,61 @@ namespace Developer.Common.Options
 				//If there is a methodOwnerInstance specified use it to execute the
 				//method that is required to be public
 				t = this.owner.GetType();
+				flags |= BindingFlags.Instance;
 				instance = this.owner;
 			} else {
-				throw new InvalidOperationException("There is no target to execute the method");
+				throw new OptionCallerException("There is no target to execute the method");
 			}
 
-			t.InvokeMember(data.SourceOption.Caller.MethodName, flags, null, 
+			try {
+				Type[] types = new Type[]{typeof(OptionCallerData)};
+				MethodInfo minfo = t.GetMethod(data.SourceOption.Caller.methodName, 
+					flags, null, types, null);
+					
+				if (minfo != null) {
+					t.InvokeMember(data.SourceOption.Caller.MethodName, flags, null, 
 			               instance, new object[]{data});
+			        return;
+			    }
+			    
+			    types = new Type[]{};
+			    minfo = t.GetMethod(data.SourceOption.Caller.methodName, flags, null,
+			    	types, null);
+			    	
+			    if (minfo != null) {
+					t.InvokeMember(data.SourceOption.Caller.MethodName, flags, null, 
+			               instance, new object[]{});		
+			        return;	    	
+			    }
+			    
+			    throw new OptionCallerException("Invocation of method "+
+			    	data.SourceOption.Caller.methodName + " over " + 
+			    	t.FullName + " failed. The method must have an overload "+
+			    	"with one parameter of type " + typeof(OptionCallerData).FullName +
+			    	" or no parameters");
+			    	
+			} catch (MissingMethodException ex) {
+				string msg = this.DebugFailedCall(t, data);
+				throw new OptionCallerException("Invocation of method "+
+				                                data.SourceOption.Caller.MethodName+
+				                                " over " + t.FullName + " failed "
+				                                + "Details: \n"+msg, ex);
+			}
+		}
+		
+		private string DebugFailedCall(Type t, OptionCallerData data)
+		{
+			string mName = data.SourceOption.Caller.methodName;
+			StringBuilder sb = new StringBuilder("Debugging call to " + mName+"\n");
+			MethodInfo[] minfos = t.GetMethods();
+			sb.AppendLine("Finding methods of " + t.FullName);
+			foreach(MethodInfo minfo in minfos) {
+				sb.AppendLine("Method: " + minfo.Name);
+				if (String.Equals(minfo.Name, mName))
+					sb.AppendLine("  This is the method required");
+			}
+			
+			return sb.ToString();
 		}
 	}
 }

@@ -21,7 +21,20 @@
 
 using System;
 
-namespace Developer.Common
+namespace Developer.Common.SystemCommands
 {	
-
+	/// <summary>
+	/// Read modes for the output of a command
+	/// </summary>
+	public enum ReadMode
+	{
+		/// <summary>
+		/// Read output of the command line by line (default)
+		/// </summary>
+		Line = 0, 
+		/// <summary>
+		/// Read the output of the command as a single line.
+		/// </summary>
+		All
+	}
 }

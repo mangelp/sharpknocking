@@ -1,6 +1,7 @@
 // Option.cs
 //
-//  Copyright (C) 2008 [name of author]
+//  Copyright (C) 2008 iSharpKnocking project
+//  Created by Miguel Angel Perez <mangelp>at<gmail>dot<com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -31,7 +32,7 @@ namespace Developer.Common.Options
 	/// Each option can have multiple parameters after the parsing of the command line if that is allowed.
 	/// How this option behaves is determined by the flags set to it
 	/// </remarks>
-	public class Option
+	public class Option: IEquatable<Option>
 	{
 		//This flag controls if more aliases can be added
 		private bool dontAddMoreAliases;
@@ -208,7 +209,7 @@ namespace Developer.Common.Options
 		}
 		
 		/// <summary>
-		/// Constructor
+		/// Constructor. Initiallizes the owner of this option
 		/// </summary>
 		/// <param name="owner">
 		/// A <see cref="OptionParser"/>
@@ -222,6 +223,17 @@ namespace Developer.Common.Options
 		}
 		
 		//Ordered insertion into the array of aliases
+		/// <summary>
+		/// We insert the alias in the array keeping the order.
+		/// </summary>
+		/// <summary>
+		/// This will help us when getting a hash code equal for 
+		/// all options as two options with the same aliases will 
+		/// have them in the same order.
+		/// </summary>
+		/// <param name="name">
+		/// A <see cref="System.String"/>
+		/// </param>
 		private void AddAlias(string name)
 		{
 			int pos = this.names.BinarySearch(name);
@@ -235,18 +247,21 @@ namespace Developer.Common.Options
 		}
 		
 		/// <summary>
-		/// Adds aliases for the option's name. This will not
+		/// Adds aliases for the option's name. This method returns the reference to the instace.
 		/// </summary>
 		/// <param name="names">
 		/// A <see cref="System.String"/>
 		/// </param>
-		public void AddAliases(params string[] names)
+		/// <returns>The reference to the instance where this method is executed</returns>
+		public Option AddAliases(params string[] names)
 		{
 			foreach(string alias in names) {
 				if (this.names.Contains(alias))
 					throw new ArgumentException("The name "+alias+" is already assigned.");
 				this.AddAlias(alias);
 			}
+			
+			return this;
 		}
 		
 		/// <summary>
@@ -259,18 +274,23 @@ namespace Developer.Common.Options
 		}
 		
 		/// <summary>
-		/// Gets if the option has the same aliass that other option
+		/// Gets if the option has all the aliases in an array
 		/// </summary>
 		/// <param name="names">
 		/// A <see cref="System.String"/>
 		/// </param>
 		/// <returns>
+		/// <remarks>
+		/// This operation does a binary search over the alias array so its O(log(n))
+		/// but the size of the alias array is usually between 1 and 5 so this has no
+		/// benefit in the real world :p
+		/// </remarks>
 		/// A <see cref="System.Boolean"/>
 		/// </returns>
 		public bool IsAlias(params string[] names)
 		{
 			foreach(string alias in names) {
-				if (!this.names.Contains(alias))
+				if (this.names.BinarySearch(alias) < 0)
 					return false;
 			}
 			return true;
@@ -282,6 +302,9 @@ namespace Developer.Common.Options
 		/// <param name="opt">
 		/// A <see cref="Option"/>
 		/// </param>
+		/// <remarks>
+		/// This operation internally uses IsAlias(string[])
+		/// </remarks>
 		/// <returns>
 		/// A <see cref="System.Boolean"/>
 		/// </returns>
@@ -320,37 +343,6 @@ namespace Developer.Common.Options
 		public bool IsAliasAny(Option opt)
 		{
 			return this.IsAliasAny(opt.names.ToArray());
-		}
-		
-		/// <summary>
-		/// Compares two objects.
-		/// </summary>
-		/// <param name="obj">
-		/// A <see cref="System.Object"/>
-		/// </param>
-		/// <returns>
-		/// A <see cref="System.Boolean"/>
-		/// </returns>
-		public override bool Equals(object obj)
-		{
-			if (!(obj is Option))
-				return false;
-			return this.IsAlias((Option)obj);
-		}
-		
-		/// <summary>
-		/// Gets the hash code
-		/// </summary>
-		/// <returns>
-		/// A <see cref="System.Int32"/>
-		/// </returns>
-		public override int GetHashCode()
-		{
-			StringBuilder sb = new StringBuilder();
-			foreach(string alias in this.names) {
-				sb.Append(alias);
-			}
-			return sb.ToString().GetHashCode();
 		}
 		
 		/// <summary>
@@ -575,6 +567,106 @@ namespace Developer.Common.Options
 		public string[] GetValues()
 		{
 			return this.Values;
+		}
+		
+		/// <summary>
+		/// Compares two options
+		/// </summary>
+		/// <param name="opt">
+		/// A <see cref="Option"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		public bool Equals(Option opt)
+		{
+			if (this.Aliases.Length != opt.Aliases.Length
+			    || !this.IsAlias(opt.Aliases)
+			    || this.AssertFlags != opt.AssertFlags
+			    || this.DefaultValue != opt.DefaultValue
+			    || this.Flags != opt.Flags)
+			{
+				return false;
+			}
+			
+			return true;
+		}
+		
+		/// <summary>
+		/// Compares two objects
+		/// </summary>
+		/// <param name="obj">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		override public bool Equals(object obj)
+		{
+			if (!(obj is Option))
+				return false;
+			
+			return this.Equals((Option)obj);
+		}
+		
+		/// <summary>
+		/// Gets the hash code for this instance
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.Int32"/>
+		/// </returns>
+		override public int GetHashCode()
+		{
+			string key = String.Empty;
+			foreach(string str in this.Aliases) {
+				key += str;
+			}
+			
+			key+=this.AssertFlags;
+			key+=this.DefaultValue;
+			key+=this.Flags;
+			
+			return key.GetHashCode();
+		}
+		
+		/// <summary>
+		/// Gets an string that represents this instance
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
+		public override string ToString()
+		{
+			return this.ToString(String.Empty);
+		}
+		
+		/// <summary>
+		/// Gets an string that represents this instance
+		/// </summary>
+		/// <param name="value">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
+		public string ToString(string value)
+		{
+			string defName = this.names[0];
+			
+			if (defName.Length > 1)
+				defName = "--"+defName;
+			else
+				defName = "-"+defName;
+			
+			if (!String.IsNullOrEmpty(value)) {
+				if (!this.HasFlag(OptionFlags.ValueRequired))
+					throw new InvalidOperationException("This option doesn't have a value");
+				defName += " " + value;
+			} else if (this.HasDefaultValue && !String.IsNullOrEmpty(this.DefaultValue+String.Empty)) {
+				defName += " " + this.DefaultValue;
+			}
+			
+			return defName;
 		}
 	}
 }

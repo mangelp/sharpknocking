@@ -1,6 +1,7 @@
-// IpAddressRange.cs
+// SysCmd.cs
 //
-//  Copyright (C) 2008 Miguel Angel Perez (mye://mangelp/at/gmail?dot=com)
+//  Copyright (C) 2008 iSharpKnocking project
+//  Created by Miguel Angel Perez <mangelp>at<gmail>dot<com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -19,49 +20,43 @@
 //
 
 using System;
-using System.Net;
 
-namespace Developer.Common.Net
+namespace Developer.Common.SystemCommands
 {
-	
 	/// <summary>
-	/// Models a range of ip addresses.
+	/// Generic command wrapper that supports reading and writting standard output and input, respectively, plus to
+	/// error output read by asynchronous handlers.
 	/// </summary>
-	public class IPAddressRange
-	{
-		private IPAddress address;
-		
-		public IPAddress Address {
-			get {
-				return address;
-			}
-			set {
-				address = value;
-			}
+	public class SysCmd: BaseSystemCommand
+	{	
+		public SysCmd(string name)
+			:base(name)
+		{
 		}
 		
-		private IPAddressMask mask;
+		public SysCmd(string name, bool requiresRoot)
+			:base(name, requiresRoot)
+		{
+		}
+		
+		public override bool CanExec {
+			get { return true; }
+		}
 
-		public IPAddressMask Mask {
-			get {
-				return mask;
-			}
-			set {
-				mask = value;
-			}
+		public override bool CanExecAsync {
+			get { return true; }
 		}
-		
-		public IPAddressRange()
-		{}
-		
-		public bool IsInRange(IPAddress addr)
-		{
-			throw new NotImplementedException();
+
+		public override bool CanRead {
+			get { return true; }
 		}
-		
-		public static IPAddressRange CreateRange(IPAddress start, IPAddress end)
-		{
-			throw new NotImplementedException();
+
+		public override bool CanReadError {
+			get { return true; }
+		}
+
+		public override bool CanWrite {
+			get { return true; }
 		}
 	}
 }

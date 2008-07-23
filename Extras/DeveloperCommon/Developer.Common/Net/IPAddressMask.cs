@@ -51,7 +51,8 @@ namespace Developer.Common.Net
 			get { return useLongMask; }
 		}
 		
-		protected bool useShortMask;
+		
+		private bool useShortMask;
 		
 		/// <summary>
 		/// Gets if the mask in in short format
@@ -97,7 +98,7 @@ namespace Developer.Common.Net
 	        get {return this.shortMask;}
 	        set
 	        {
-	            if(value<0 || value > 64)
+	            if(value < 0 || value > 64)
 	                throw new ArgumentException("Invalid value "+
 	                        value+" for the mask. It must be between 0 and 32");
 	            
@@ -121,6 +122,8 @@ namespace Developer.Common.Net
 		/// <returns>
 		/// A <see cref="System.Byte"/>
 		/// </returns>
+		/// <exception cref="System.ArgumentException">If the input parameter has an
+		/// invalid length</exception>
 		protected abstract byte[] ApplyMask(byte[] bytes);
 		
 		/// <summary>
@@ -136,42 +139,6 @@ namespace Developer.Common.Net
 		{
 			byte[] bytes = this.ApplyMask(addr.GetAddressBytes());
 			return new IPAddress(bytes);
-		}
-		
-		/// <summary>
-		/// Returns the ip address resulting of applying a mask to it
-		/// </summary>
-		/// <param name="mask">
-		/// A <see cref="System.Int64"/>
-		/// </param>
-		/// <returns>
-		/// A <see cref="System.Int64"/>
-		/// </returns>
-		public long ApplyMask(long mask)
-		{
-			byte[] data = this.ApplyMask(Conversion.ToByteArray(mask));
-			return Conversion.ToLong(data);
-		}
-		
-		/// <summary>
-		/// Gets if an address matches the mask
-		/// </summary>
-		/// <remarks>
-		/// An address matches a mask if after applying it with a and bit-wise operation
-		/// the address remain the same.
-		/// </remarks>
-		/// <param name="addr">
-		/// A <see cref="IPAddress"/>
-		/// </param>
-		/// <returns>
-		/// A <see cref="System.Boolean"/>
-		/// </returns>
-		public bool MatchesMask(IPAddress addr)
-		{
-			byte[] iBytes = addr.GetAddressBytes();
-			byte[] oBytes = this.ApplyMask(iBytes);
-			
-			return ArrayComparer.Same(iBytes, oBytes);
 		}
 		
 		/// <summary>
@@ -247,6 +214,29 @@ namespace Developer.Common.Net
 			}
 		    
 		    return result;
+		}
+		
+		/// <summary>
+		/// Converts an string into a mask
+		/// </summary>
+		/// <param name="mask">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <param name="ipAddrMask">
+		/// A <see cref="IPAddressMask"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		public static bool TryParse(string mask, out IPAddressMask ipAddrMask)
+		{
+			ipAddrMask = null;
+			try {
+				ipAddrMask = IPAddressMask.Parse(mask);
+				return true;
+			} catch(Exception) {
+				return false;
+			}
 		}
 	}
 }

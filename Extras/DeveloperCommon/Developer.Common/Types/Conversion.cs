@@ -22,7 +22,9 @@ using System;
 
 namespace Developer.Common.Types
 {
-	
+	/// <summary>
+	/// Usefull conversion methods between uncommon types
+	/// </summary>
 	public static class Conversion
 	{
 		private static byte[] ToByteArray(byte byteNum, long val)
@@ -37,21 +39,57 @@ namespace Developer.Common.Types
 			return res;		
 		}
 		
+		/// <summary>
+		/// Converts a long value to a byte array
+		/// </summary>
+		/// <param name="val">
+		/// A <see cref="System.Int64"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Byte"/>
+		/// </returns>
 		public static byte[] ToByteArray(long val)
 		{
 			return ToByteArray(8, val);
 		}
 		
+		/// <summary>
+		/// Converts an integer to an array of bytes
+		/// </summary>
+		/// <param name="val">
+		/// A <see cref="System.Int32"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Byte"/>
+		/// </returns>
 		public static byte[] ToByteArray(int val)
 		{
 			return ToByteArray(4, Convert.ToInt64(val));
 		}
 		
+		/// <summary>
+		/// Converts a short value into an array of bytes
+		/// </summary>
+		/// <param name="val">
+		/// A <see cref="System.Int16"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Byte"/>
+		/// </returns>
 		public static byte[] ToByteArray(short val)
 		{
 			return ToByteArray(2, Convert.ToInt64(val));
 		}
 		
+		/// <summary>
+		/// Converts an array of bytes to long
+		/// </summary>
+		/// <param name="val">
+		/// A <see cref="System.Byte"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Int64"/>
+		/// </returns>
 		public static long ToLong(byte[] val)
 		{
 			if (val.Length != 8)
@@ -64,11 +102,29 @@ namespace Developer.Common.Types
 			return res;
 		}
 		
+		/// <summary>
+		/// Converts an array of bytes to an integer
+		/// </summary>
+		/// <param name="val">
+		/// A <see cref="System.Byte"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Int32"/>
+		/// </returns>
 		public static int ToInt(byte[] val)
 		{
 			return Convert.ToInt32(ToLong(val));
 		}
 		
+		/// <summary>
+		/// Coverts an array of bytes to a short
+		/// </summary>
+		/// <param name="val">
+		/// A <see cref="System.Byte"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Int16"/>
+		/// </returns>
 		public static short ToShort(byte[] val)
 		{
 			return Convert.ToInt16(ToLong(val));

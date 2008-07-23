@@ -1,3 +1,12 @@
+2008-07-23  Miguel Angel Perez <mangelp@gmail.com> 
+
+• Improved implementation of the BaseSystemCommand (renamed from BaseCommandWrapper)
+• The implementation of new derived system commands is pretty easy as they only have to care about their particular behaviour.
+• Worked a bit the iptables-save and iptable-restore system commands. The former works and the latter is more complex and is still under development.
+• Improved the implementation of the options and removed old files that where hanging around here.
+• Moved TextInputCommand and TextOutputCommand from Developer.Common.Unix.SystemCommands to Developer.Common.SystemCommands as they are very generic.
+• Added support to execute a command as a different user
+
 2008-05-12  Miguel Angel Perez Valencia <mangelp@gmail.com> 
 
 	
