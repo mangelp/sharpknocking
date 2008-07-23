@@ -38,7 +38,9 @@ namespace Developer.Common.Unix.SystemCommands
 	/// </remarks>
 	public class WhichSysCmd: TextOutputCommand
 	{
-
+		/// <summary>
+		/// Constructor. Initiallizes the command name to which.
+		/// </summary>
 		public WhichSysCmd() 
 			: base("which")
 		{

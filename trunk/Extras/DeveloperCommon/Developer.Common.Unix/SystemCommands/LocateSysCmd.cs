@@ -24,8 +24,14 @@ using Developer.Common.SystemCommands;
 
 namespace Developer.Common.Unix.SystemCommands
 {
+	/// <summary>
+	/// Wrapps the command locate used to search files throught locatedb database
+	/// </summary>
 	public class LocateSysCmd: TextOutputCommand
 	{
+		/// <summary>
+		/// Constructor. Initiallizes the command name to locate.
+		/// </summary>
 		public LocateSysCmd()
 			:base("locate")
 		{

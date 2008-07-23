@@ -70,7 +70,7 @@ namespace Developer.Common.Unix.Net
         [Alias("tcp")]
         Tcp=6, 
         /// <summary>
-        /// CBT, Tony Ballardie <A.Ballardie@cs.ucl.ac.uk>
+        /// CBT, Tony Ballardie &lt;A.Ballardie@cs.ucl.ac.uk&gt;
         /// </summary>
         [Alias("cbt")]
         Cbt=7, 

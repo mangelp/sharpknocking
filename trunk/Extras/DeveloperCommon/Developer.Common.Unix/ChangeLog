@@ -1,3 +1,10 @@
+2008-07-23  Miguel Angel Perez <mangelp@gmail.com> 
+- Added a new base class for unix commands that adds impersonation to unix with gksu (gtk)
+- Updated commands to follow changes in base class
+- Added two new base class that provide the same functionality as TextInputcommand and TextOutputCommand
+but the inherits from our brand new BaseUnixSysCmd.
+- Other changes that i don't remember.
+
 2008-05-12  Miguel Angel Perez Valencia <mangelp@gmail.com> 
 
 	
