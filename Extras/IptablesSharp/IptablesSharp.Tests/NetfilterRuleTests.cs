@@ -29,7 +29,7 @@ namespace IptablesSharp.Tests
 	[TestFixture]
 	public class NetfilterRuleTests
 	{
-		[TestFixtureSetup]
+		[TestFixtureSetUp]
 		public void Setup()
 		{
 		}

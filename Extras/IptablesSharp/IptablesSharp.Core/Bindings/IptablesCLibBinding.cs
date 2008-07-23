@@ -23,7 +23,7 @@ using System;
 namespace IptablesSharp.Core.Bindings
 {
 	
-	internal class IptablesCLibBinding: IIpetablesBinding
+	internal class IptablesCLibBinding
 	{
 		
 		public IptablesCLibBinding()

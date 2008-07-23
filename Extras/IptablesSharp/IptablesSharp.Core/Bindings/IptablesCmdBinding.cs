@@ -22,7 +22,7 @@ using System;
 
 namespace IptablesSharp.Core.Bindings
 {
-	internal class IptablesCmdBinding: IIpetablesBinding
+	internal class IptablesCmdBinding
 	{
 		
 		public IptablesCmdBinding()

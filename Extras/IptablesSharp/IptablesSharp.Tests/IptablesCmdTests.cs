@@ -30,7 +30,7 @@ namespace IptablesSharp.Tests
 	[TestFixture]
 	public class IptablesCmdTests
 	{
-		[TestFixtureSetup]
+		[TestFixtureSetUp]
 		public void Setup()
 		{
 		

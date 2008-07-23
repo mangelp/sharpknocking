@@ -1,6 +1,7 @@
 // IptablesBinding.cs
 //
-//  Copyright (C) 2008 [name of author]
+//  Copyright (C) 2008 iSharpKnocking project
+//  Created by Miguel Angel Perez [mangelp]at[gmail]dot[com]
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -19,6 +20,10 @@
 //
 
 using System;
+using System.IO;
+using System.Text;
+
+using Developer.Common.Unix.SystemCommands;
 
 namespace IptablesSharp.Core.Bindings
 {

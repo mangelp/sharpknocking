@@ -1,4 +1,4 @@
-<Project name="IptablesSharp.Tests" fileversion="2.0" language="C#" clr-version="Net_2_0" Description="NUnit tests" UseParentDirectoryAsNamespace="True" ctype="DotNetProject">
+<Project name="IptablesSharp.Tests" fileversion="2.0" language="C#" UseParentDirectoryAsNamespace="True" clr-version="Net_2_0" Description="NUnit tests" ctype="DotNetProject">
   <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="IptablesSharp.Tests" />
