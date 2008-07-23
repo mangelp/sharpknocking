@@ -1,3 +1,9 @@
+2008-07-23  Miguel Angel Perez <mangelp@gmail.com> 
+- Updated nunit test
+- Updated bindings to iptables commands
+- Some other things ...
+	
+
 2008-05-12  Miguel Angel Perez Valencia <mangelp@gmail.com> 
 - Removed files that where refactorized into Developer.Common
 - Changed IStringConvertible interface and updated implementing classes.

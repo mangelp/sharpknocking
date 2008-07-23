@@ -80,8 +80,9 @@
     <File name="Bindings/IptablesBinding.cs" subtype="Code" buildaction="Compile" />
     <File name="Bindings/IptablesCmdBinding.cs" subtype="Code" buildaction="Compile" />
     <File name="Bindings/IptablesCLibBinding.cs" subtype="Code" buildaction="Compile" />
-    <File name="Bindings/IIpetablesBinding.cs" subtype="Code" buildaction="Compile" />
+    <File name="Bindings/IIptablesBinding.cs" subtype="Code" buildaction="Compile" />
     <File name="Bindings/Enumerations.cs" subtype="Code" buildaction="Compile" />
+    <File name="Visitors" subtype="Directory" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

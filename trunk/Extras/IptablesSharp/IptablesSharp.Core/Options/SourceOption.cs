@@ -18,6 +18,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
 //
 using System;
+using System.Net;
 
 using IptablesSharp.Core;
 
@@ -31,12 +32,12 @@ namespace IptablesSharp.Core.Options
 	/// </summary>
 	public class SourceOption: GenericOption
 	{
-	    private SkIpAddress address;
+	    private IPAddress address;
 	    
 	    /// <summary>
 	    /// Source address range to match
 	    /// </summary>
-	    public SkIpAddress Address
+	    public IPAddress Address
 	    {
 	        get { return this.address;}
 	        set 
@@ -50,20 +51,31 @@ namespace IptablesSharp.Core.Options
 		{
 		}
 
-		
+		/// <summary>
+		/// Read values for this option from an input string
+		/// </summary>
+		/// <param name="strVal">
+		/// A <see cref="System.String"/> with the values to extract
+		/// </param>
+		/// <param name="errorStr">
+		/// A <see cref="System.String"/> with the error description
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/> true if a value was read or false if not
+		/// </returns>
 	    public override bool TryReadValues (string strVal, out string errorStr)
 		{
-		    SkIpAddress range;
+		    IPAddress range;
 		    errorStr = String.Empty;
 		    
-		    if(SkIpAddress.TryParse(strVal, out range))
+		    if(IPAddress.TryParse(strVal, out range))
 		    {
 		        this.address = range;
 		        return true;
 		    }
 
 	        errorStr = "Can't convert from string '"+strVal+"' to "+
-	                   "object IpAddressRange";
+	                   "object IPAddressRange";
 	        return false;
 		}
 		

@@ -1,6 +1,7 @@
 // IIpetablesBinding.cs
 //
-//  Copyright (C) 2008 [name of author]
+//  Copyright (C) 2008 iSharpKnocking project
+//  Created by Miguel Angel Perez (mangelp)at(gmail)dot(com)
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -19,6 +20,8 @@
 //
 
 using System;
+using System.Collections.Generic;
+
 using IptablesSharp.Core;
 
 namespace IptablesSharp.Core.Bindings
@@ -27,17 +30,30 @@ namespace IptablesSharp.Core.Bindings
 	/// <summary>
 	/// Methods to interact with concrete iptables bindings
 	/// </summary>
-	public interface IIpetablesBinding
+	public interface IIptablesBinding
 	{
-		string[] GetTableSet();
-		void UpdateTableSet(NetfilterTableSet tableSet);
-		void ApplyTableSet(NetfilterTableSet tableSet);
-		NetfilterTable GetTable(string name);
-		void UpdateTable(NetfilterTable table);
-		void ApplyTable(NetfilterTable table);
-		void ApplyRule(NetfilterRule rule);
-		bool HasRule(NetfilterRule rule, PacketTableType table);
-		bool HasTable(string name);
-		int GetRuleCount(string name);
+		/// <summary>
+		/// Gets the current output of the iptables-save command
+		/// </summary>
+		string GetCurrentTables();
+		/// <summary>
+		/// Saves the current output of the iptables-save command to
+		/// a file.
+		/// </summary>
+		/// <param name="fileName">
+		/// A <see cref="System.String"/>
+		/// </param>
+		void GetCurrentTables(string fileName);
+		/// <summary>
+		/// Sets the rules throught the iptables-restore command
+		/// </summary>
+		void SetTable(string table, IList<string> ruleset);
+		/// <summary>
+		/// Sets the rules througth the iptables-restore command
+		/// </summary>
+		/// <param name="fileName">
+		/// Name of the file with the rule set in the proper format
+		/// </param>
+		void SetRuleset(IList<string> ruleset);
 	}
 }
