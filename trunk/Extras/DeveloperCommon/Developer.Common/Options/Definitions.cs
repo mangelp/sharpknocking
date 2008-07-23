@@ -21,11 +21,11 @@ using System;
 
 namespace Developer.Common.Options
 {
-	/// <summary>
-	/// Delegate to call aditional procesing over an option found in the command
-	/// line
-	/// </summary>
-	public delegate void OptionProcessingDelegate(OptionCallData data);
+
+//	/// Delegate to call aditional procesing over an option found in the command
+//	/// line
+//	/// </summary>
+//	public delegate void OptionProcessingDelegate(OptionCallData data);
 	
 	/// <summary>
 	/// Delegate to call aditional procesing over an option found in the command

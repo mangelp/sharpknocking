@@ -89,4 +89,32 @@ namespace Developer.Common.SystemCommands
 			result.Detail = detail;
 		}
 	}
+
+	/// <summary>
+	/// Arguments for output read operations
+	/// </summary>
+	public class OutputReadEventArgs: EventArgs
+	{
+		private string data;
+		
+		/// <summary>
+		/// Data read
+		/// </summary>
+		public string Data
+		{
+			get {return this.data;}
+			set {this.data = value;}
+		}
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="data">
+		/// A <see cref="System.String"/>
+		/// </param>
+		public OutputReadEventArgs(string data)
+		{
+			this.data = data;
+		}
+	}
 }

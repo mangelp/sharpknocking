@@ -1,4 +1,4 @@
-// GenericParameterList.cs
+// ParameterList.cs
 //
 //  Copyright (C) 2007 iSharpKnocking project
 //  Created by Miguel Angel Perez (mangelp{@}gmail{d0t}com)
@@ -27,7 +27,7 @@ namespace Developer.Common.Options
 	/// <summary>
 	/// Models a list of parameters where each one must be a subtype of SimpleParameter
 	/// </summary>
-	public class GenericParameterList<T>: CollectionBase where T:SimpleParameter
+	public class ParameterList<T>: CollectionBase where T:SimpleParameter
 	{
 		/// <summary>
 		/// Delegate to notify changes in the list
@@ -47,12 +47,12 @@ namespace Developer.Common.Options
 		/// <summary>
 		/// Notifies that all the elements in the list have been erased
 		/// </summary>
-	    public event EventHandler ItemsCleared;
+	    public event ListChangedEventHandler ItemsCleared;
 	    
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public GenericParameterList()
+		public ParameterList()
 		  :base()
 		{}
 		
@@ -199,10 +199,9 @@ namespace Developer.Common.Options
 		/// </param>
 		protected virtual void OnItemRemoved(T item)
 		{
-		    if(this.ItemRemoved!=null)
-		    {
+		    if(this.ItemRemoved != null) {
 		        this.ItemRemoved(this,
-		                         new ListChangedEventArgs<T>(item));
+		            new ListChangedEventArgs<T>(item));
 		    }
 		}
 		
@@ -214,10 +213,9 @@ namespace Developer.Common.Options
 		/// </param>
 		protected virtual void OnItemAdded(T item)
 		{
-		    if (this.ItemAdded != null)
-		    {
+		    if (this.ItemAdded != null) {
 		        this.ItemAdded(this,
-		                         new ListChangedEventArgs<T>(item));
+		        	new ListChangedEventArgs<T>(item));
 		    }  
 		}
 		
@@ -227,7 +225,8 @@ namespace Developer.Common.Options
 		protected virtual void OnItemsCleared()
 		{
 		    if (this.ItemsCleared != null) {
-		        this.ItemsCleared(this, EventArgs.Empty);    
+		        this.ItemsCleared(this,
+		        	new ListChangedEventArgs<T>(null));    
 		    }
 		}
 		

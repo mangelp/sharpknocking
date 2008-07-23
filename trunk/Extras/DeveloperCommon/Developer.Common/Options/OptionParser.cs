@@ -408,6 +408,7 @@ namespace Developer.Common.Options
 			this.OnOptionFound(data);
 		}
 		
+		//Adds an option to the current list
 		private Option InternalAddOption(object owner,
 		                                 string handlerMethod,
 		                                 OptionActionDelegate del,

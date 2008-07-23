@@ -24,13 +24,16 @@ using Developer.Common.Types;
 
 namespace Developer.Common.Net
 {
-	
 	/// <summary>
 	/// Models a short mask format for an ip address (v4 or v6) specifying
 	/// what bytes are part of the mask starting from the most significative one.
 	/// </summary>
 	public class IPAddressShortMask: IPAddressMask
 	{
+		/// <summary>
+		/// Get/set the mask as an integer value with the number of bits from
+		/// the left masked.
+		/// </summary>
 		public int Mask
 		{
 			get {
