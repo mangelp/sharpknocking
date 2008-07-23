@@ -1,3 +1,10 @@
+2008-07-23  Miguel Angel Perez <mangelp@gmail.com> 
+
+-Added new tests for system commands
+-Added new tests for net related classes
+-Updated tests in the OptionsParserFixture
+-Upvated tests in the ConverstionTests
+
 2008-05-12  Miguel Angel Perez Valencia <mangelp@gmail.com> 
 - Added static class for custom distro detection.
 - Refactorized code to fill custom running os information.

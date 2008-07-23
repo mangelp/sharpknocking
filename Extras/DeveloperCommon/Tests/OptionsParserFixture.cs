@@ -25,11 +25,39 @@ using NUnit.Core;
 
 using Developer.Common.Options;
 
-namespace Tests
+namespace Developer.Common.Tests
 {
+	
 	[TestFixture]
 	public class OptionsParserFixture
 	{
+		public class OwnerOne
+		{
+			public void TestMethod1()
+			{
+				Console.WriteLine("Test method from OwnerOne");
+			}
+			
+			public static void TestMethod1Static()
+			{
+				Console.WriteLine("Test method static from OwnerOne");
+			}
+		}
+		
+		public class OwnerTwo
+		{
+			public void TestMethod2()
+			{
+				Console.WriteLine("Test method from OwnerTwo");
+			}
+			
+			
+			public static void TestMethod2Static()
+			{
+				Console.WriteLine("Test method static from OwnerTwo");
+			}
+		}
+		
 		OptionParser optParse;
 		
 		[TestFixtureSetUp]
@@ -42,7 +70,8 @@ namespace Tests
 		
 		public void EmptyHandler(OptionCallerData data)
 		{
-			Console.WriteLine("  Empty handler called for "+data.Parameter.Name+" with value "+data.Value);
+			Console.WriteLine("  Empty handler called for "+data.Parameter.Name
+				+" with value "+data.Value);
 		}
 		
 		public void HelpHandler(OptionCallerData data)
@@ -63,22 +92,52 @@ namespace Tests
 		[Test]
 		public void AddItems()
 		{
+			OwnerOne one = new OwnerOne();
+			OwnerTwo two = new OwnerTwo();
+			
 			Console.WriteLine("Adding options");
 			optParse.AddOption("EmptyHandler", OptionFlags.Required | OptionFlags.ValueRequired, "p")
-				.SetDescription("Dumb option p");
+				.SetDescription("Dumb option p")
+				.Caller.Owner = this;
 			optParse.AddOption("EmptyHandler", OptionFlags.ValueRequired, "mode")
-				.SetDescription("Dumb option mode");
+				.SetDescription("Dumb option mode")
+				.Caller.Owner = this;
 			optParse.AddOption("EmptyHandler", OptionFlags.ValueRequired | OptionFlags.Negable, "b")
-				.SetDescription("Dumb option aiefaoejf");
+				.SetDescription("Dumb option aiefaoejf")
+				.Caller.Owner = this;
 			optParse.AddOption("EmptyHandler", OptionFlags.ValueRequired | OptionFlags.ExistingPath | OptionFlags.Multiple, "s")
-				.SetDescription("Dumb optioneieieieie");
+				.SetDescription("Dumb optioneieieieie")
+				.Caller.Owner = this;
 			optParse.AddOption("HelpHandler", OptionFlags.DefaultOption, "h", "help")
-				.SetDescription("Dumb option helepepepep");
+				.SetDescription("Dumb option helepepepep")
+				.Caller.Owner = this;
 			optParse.AddOption("Number", OptionFlags.Defaults, "n", "number")
 				.SetDescription("Number of elements")
 				.SetDefaultValue("12")
-				.AddAssertFlag(TypeAssertionFlags.Int);
-			Assert.IsNotNull(optParse.DefaultOption);
+				.AddAssertFlag(TypeAssertionFlags.Int)
+				.Caller.Owner = this;
+			
+			optParse.AddOption("TestMethod1", OptionFlags.Defaults, "c1")
+				.SetDescription("Call test method on owner 1")
+				.Caller.Owner = one;
+			
+			optParse.AddOption("TestMethod2", OptionFlags.Defaults, "c2")
+				.SetDescription("Call test method on owner 2")
+				.Caller.Owner = two;
+			
+			optParse.AddOption("TestMethod1Static", OptionFlags.Defaults, "c1s")
+				.SetDescription("Call test method on owner 1")
+				.Caller.Owner = one.GetType();
+			
+			optParse.AddOption("TestMethod2Static", OptionFlags.Defaults, "c2s")
+				.SetDescription("Call test method on owner 2")
+				.Caller.Owner = two.GetType();
+			
+			optParse.AddOption("FooMethod", OptionFlags.Defaults, "peta")
+				.SetDescription("Throws an exception because there is no owner")
+				.Caller.Owner = null;
+			
+			Assert.IsNotNull(optParse.DefaultOption, "The default option was not set properly");
 			optParse.ErrorFound += new EventHandler<OptionCallerData>(this.ErrorHandler);
 			optParse.OptionFound += new EventHandler<OptionCallerData>(this.OptionHandler);
 		}
@@ -93,15 +152,13 @@ namespace Tests
 		[Test]
 		public void CheckFailWithSecondDefaultOption()
 		{
-			bool ok = false;
 			try {
 				optParse.AddOption("HelpHandler", OptionFlags.DefaultOption, "h2", "help2");
 			} catch(OptionParserException ex) {
-				ok = true;
 				Console.WriteLine("Correct exception found: "+ex.Message);
+				return;
 			}
-			if (!ok)
-				Assert.Fail("Failed when adding a second default option. It must throw OptionParserException");
+			Assert.Fail("Failed when adding a second default option. It must throw OptionParserException");	
 		}
 		
 		[Test()]
@@ -143,20 +200,36 @@ namespace Tests
 		public void CheckNumberOfOptions()
 		{
 			Option opt = optParse["p"];
-			Assert.IsNotNull(opt);
+			Assert.IsNotNull(opt, "Option 'p' added but can't be accessed");
 			Assert.AreEqual(opt.ParamCount, 1);
 			
 			opt = optParse["mode"];
-			Assert.IsNotNull(opt);
+			Assert.IsNotNull(opt, "Option 'mode' added but can't be accessed");
 			Assert.AreEqual(opt.ParamCount, 1);
 			
 			opt = optParse["b"];
-			Assert.IsNotNull(opt);
+			Assert.IsNotNull(opt, "Option 'b' added but can't be accessed");
 			Assert.AreEqual(opt.ParamCount, 1);
 			
 			opt = optParse["s"];
-			Assert.IsNotNull(opt);
+			Assert.IsNotNull(opt, "Option 's' added but can't be accessed");
 			Assert.AreEqual(opt.ParamCount, 2);
+		}
+		
+		[Test]
+		public void TestOtherOwnersCall()
+		{
+			Console.WriteLine("Checking options with other owners");
+			string args = "--c1 --c2 --c1s --c2s";
+			optParse.Parse(args);
+			Console.WriteLine("Checking parsing");
+			Assert.IsNotNull(optParse["c1"]);
+			Assert.IsNotNull(optParse["c2"]);
+			Assert.IsNotNull(optParse["c1s"]);
+			Assert.IsNotNull(optParse["c2s"]);
+			Console.WriteLine("Checking procesing");
+			optParse.ProcessOptions();
+			Console.WriteLine("Options successfully procesed");
 		}
 		
 		[Test]
@@ -178,6 +251,22 @@ namespace Tests
 				optParse.Parse(arg);
 				optParse.ProcessOptions();
 			}
+		}
+		
+		[Test]
+		public void EntryLineParsingFailsWhenNoOwnerForMethodSet()
+		{
+			Console.WriteLine("Checking that fails when the option has a method but no owner");
+			string args = "--peta";
+			optParse.Parse(args);
+			try{
+				optParse.ProcessOptions();
+			} catch (InvalidOperationException ex) {
+				Console.WriteLine("Correct exception found: " + ex.Message);
+				return;
+			}
+			
+			Assert.Fail("Expected exception not found: InvalidOperationException");
 		}
 	}
 }
