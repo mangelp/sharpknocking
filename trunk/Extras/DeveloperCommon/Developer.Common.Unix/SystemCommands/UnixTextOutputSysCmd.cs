@@ -92,25 +92,44 @@ namespace Developer.Common.Unix.SystemCommands
 		private string result;
 		private bool ownRead = false;
 		
+		/// <summary>
+		/// Reads the output of the process.
+		/// </summary>
+		/// <remarks>All the output is read in one time so it the process hangs when writting the output this
+		/// call will also hang while the output ends and the reader gets a end of buffer.</remarks>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		public string Read()
 		{
 			if (this.IsRunning)
 				throw new InvalidOperationException("The process must not be started when using this method");
 			
 			this.ownRead = true;
+			//Read all the output
 			this.SyncReadMode = ReadMode.All;
 			result = String.Empty;
+//			this.KillTimeoutStart(1000);
 			this.Exec();
 			this.ownRead = false;
 			return result;
 		}
 		
+		/// <summary>
+		/// Handler overrided to perform a read from the command output without notifying anyone else
+		/// </summary>
+		/// <param name="data">
+		/// A <see cref="System.String"/>
+		/// </param>
 		protected override void OnOutputReceivedHandler (string data)
 		{
-			if (this.ownRead)
+			if (this.ownRead) {
+//				Console.WriteLine("Data read ("+data.Length+") "+data);
+//				this.KillTimeoutEnd();
 				this.result = data;
-			else
+			} else {
 				base.OnOutputReceivedHandler(data);
+			}
 		}
 	}
 }

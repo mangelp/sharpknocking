@@ -29,7 +29,7 @@ namespace Developer.Common.Unix.SystemCommands
 		/// Gets if the command can be executed synchronously
 		/// </summary>
 		public override bool CanExec {
-			get { return true; }
+			get { return false; }
 		}
 
 		/// <summary>
@@ -86,5 +86,7 @@ namespace Developer.Common.Unix.SystemCommands
 		{
 		
 		}
+		
+		
 	}
 }
