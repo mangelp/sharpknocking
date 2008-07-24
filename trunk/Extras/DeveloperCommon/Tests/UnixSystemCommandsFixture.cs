@@ -26,13 +26,15 @@ using NUnit.Framework;
 
 using Developer.Common.SystemCommands;
 
+using Developer.Common.Unix.SystemCommands;
+
 namespace Developer.Common.Tests
 {
 	
 	[TestFixture]
-	public class SystemCommandsFixture
+	public class UnixSystemCommandsFixture
 	{
-		public SystemCommandsFixture()
+		public UnixSystemCommandsFixture()
 		{
 		}
 		
@@ -44,7 +46,7 @@ namespace Developer.Common.Tests
 		public void ExecWhich()
 		{
 			Console.WriteLine("Executing command 'which mono'");
-			TextOutputCommand cmd = new TextOutputCommand("which");
+			UnixTextOutputSysCmd cmd = new UnixTextOutputSysCmd("which");
 			cmd.OutputRead += new EventHandler<OutputReadEventArgs>(this.TextRead);
 			cmd.SyncReadMode = ReadMode.All;
 			
@@ -72,12 +74,28 @@ namespace Developer.Common.Tests
 			Console.WriteLine("Result: "+args.Data);
 		}
 		
+		private void ErrorRead(object sender, OutputReadEventArgs args)
+		{
+			Console.WriteLine("Error: "+args.Data);
+		}
+		
 		[Test]
 		public void ReadIptablesConfig()
 		{
-			TextOutputCommand toc = new TextOutputCommand("/sbin/itables-save", true);
+			TextOutputCommand toc = new TextOutputCommand("/sbin/iptables-save", false);
+			toc.OutputRead += new EventHandler<OutputReadEventArgs>(this.TextRead);
+			toc.ErrorRead += new EventHandler<OutputReadEventArgs>(this.ErrorRead);
+			toc.Exec();
 			Console.WriteLine("Iptables-save output:\n"+toc.Read());
 			Console.WriteLine("RC: "+toc.ExitCode);
 		}
+		
+//		[Test]
+//		public void ReadWithTimeout()
+//		{
+//			UnixTextOutputSysCmd cmd = new UnixTextOutputSysCmd("tail", true);
+//			cmd.Args = "-f /var/log/messages";
+//			cmd.Exec();
+//		}
 	}
 }

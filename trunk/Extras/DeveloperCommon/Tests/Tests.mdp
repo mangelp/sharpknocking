@@ -18,7 +18,7 @@
     <File name="OptionsParserFixture.cs" subtype="Code" buildaction="Compile" />
     <File name="ConversionTests.cs" subtype="Code" buildaction="Compile" />
     <File name="NetTests.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommandsFixture.cs" subtype="Code" buildaction="Compile" />
+    <File name="UnixSystemCommandsFixture.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -27,5 +27,6 @@
     <ProjectReference type="Gac" localcopy="True" refto="nunit.mocks, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
     <ProjectReference type="Gac" localcopy="True" refto="nunit.util, Version=2.2.0.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
     <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
+    <ProjectReference type="Project" localcopy="True" refto="Developer.Common.Unix" />
   </References>
 </Project>
