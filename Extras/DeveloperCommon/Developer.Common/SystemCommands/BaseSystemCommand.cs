@@ -452,20 +452,15 @@ namespace Developer.Common.SystemCommands
 			if (this.current == null)
 				return;
 			
-			this.killTimer = new Timer();
-			this.killTimer.AutoReset = false;
-			this.killTimer.Interval = 8000;
-			this.killTimer.Elapsed += new ElapsedEventHandler(this.KillHandler);
-			
 			if (this.CanRead && this.isAsync)
 				this.current.CancelOutputRead();
 			
 			if (this.CanReadError)
 				this.current.CancelErrorRead();
 			
-			this.killTimer.Start();
+			this.KillTimeoutStart();
 			this.current.Close();
-			this.killTimer.Stop();
+			this.KillTimeoutEnd();
 			
 			this.OnProcessEnd(this, EventArgs.Empty);
 		}
@@ -481,13 +476,56 @@ namespace Developer.Common.SystemCommands
 		/// </param>
 		protected virtual void KillHandler(object sender, EventArgs args)
 		{
+			throw new InvalidOperationException();
+			Console.WriteLine("Timer kill");
 			this.killTimer.Stop();
 			this.killTimer = null;
-			if (this.current != null && !this.current.HasExited)
+
+			if (this.current != null && !this.current.HasExited) {
+				Console.WriteLine("KILL");
 				this.current.Kill();
+			}
+		}
+		
+		protected void KillTimeoutStart()
+		{
+			this.KillTimeoutStart(1000);
+		}
+		
+		protected void KillTimeoutStart(int millis)
+		{
+			if (this.killTimer != null && this.killTimer.Enabled) {
+				this.killTimer.Stop();
+			}
+			Console.WriteLine("starting timer "+millis);
+			this.killTimer = new Timer();
+			this.killTimer.AutoReset = false;
+			this.killTimer.Interval = millis;
+			this.killTimer.Elapsed += new ElapsedEventHandler(this.KillHandler);
+			
+			this.killTimer.Start();
+		}
+		
+		protected void KillTimeoutEnd()
+		{
+			Console.WriteLine("Ending timer");
+			if (this.killTimer == null)
+				return;
+			
+			if (this.killTimer.Enabled)
+				this.killTimer.Stop();
+			
+			this.killTimer = null;
+		}
+		
+		protected bool IsKillTimeoutActive()
+		{
+			return this.killTimer != null && this.killTimer.Enabled;
 		}
 		
 		#endregion
+		
+		#region public stuff
 		
 		/// <summary>
 		/// Inheritors must define this method to execute the command
@@ -560,5 +598,9 @@ namespace Developer.Common.SystemCommands
 			
 			this.current.StandardInput.Write(data);
 		}
+		
+		#endregion
+	
+		
 	}
 }
