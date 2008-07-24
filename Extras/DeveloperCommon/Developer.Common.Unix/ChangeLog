@@ -1,3 +1,9 @@
+2008-07-24  Miguel Angel Perez <mangelp@gmail.com> 
+- Added a timer to kill the process if it makes us wait too long for a read in BaseSysCmd and used it in UnixTextOutputSysCmd
+- The format of the string used in GksuSysCmd was incorrect. Fixed.
+- Fixed values of the properties for the UnixInteractiveSysCmd
+	
+
 2008-07-23  Miguel Angel Perez <mangelp@gmail.com> 
 - Added a new base class for unix commands that adds impersonation to unix with gksu (gtk)
 - Updated commands to follow changes in base class

@@ -28,7 +28,7 @@ namespace Developer.Common.Unix.SystemCommands
 	public class GksuSysCmd
 	{
 		private static readonly string CommandName = "gksu";
-		private static readonly string ArgsTemplate = "{0} --message \"{2}\" \"{3} {4}\"";
+		private static readonly string ArgsTemplate = "{0} --message \"{1}\" \"{2} {3}\"";
 		private static readonly string UserTemplate = "--user {0}";
 		
 		public GksuSysCmd()
