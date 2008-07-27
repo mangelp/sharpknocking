@@ -31,9 +31,7 @@
     <File name="Types/AttributeUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="Types/StringUtil.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands" subtype="Directory" buildaction="Compile" />
-    <File name="SystemCommands/ISysCommandWrapper.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/BaseSystemCommand.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommands/SysCommandManager.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/Enumerations.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/Definitions.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/Events.cs" subtype="Code" buildaction="Compile" />
@@ -62,10 +60,8 @@
     <File name="Types/Conversion.cs" subtype="Code" buildaction="Compile" />
     <File name="Net/IPAddressWrapper.cs" subtype="Code" buildaction="Compile" />
     <File name="Options/OptionCallerException.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommands/TextInputCommand.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommands/TextOutputCommand.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommands/SysCmd.cs" subtype="Code" buildaction="Compile" />
     <File name="Options/OptionList.cs" subtype="Code" buildaction="Compile" />
+    <File name="SystemCommands/CommandAuthException.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />

@@ -77,8 +77,8 @@ namespace Developer.Common.Net
     /// </summary>
     /// <remarks>
     /// The Alias Attribute have been used to provide support for aliases and
-    /// searching the original names instead of providing in another class
-    /// methods to compare names.
+    /// searching the original names instead of writing methods in another class
+    /// to get the names.
     /// 
     /// Every enumeration member has at least one alias name. The names used
     /// in the commands are the aliased ones

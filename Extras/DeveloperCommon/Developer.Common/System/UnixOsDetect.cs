@@ -53,9 +53,11 @@ namespace Developer.Common.System
 		private static void GetData()
 		{
 			platform = UnixPlatform.Other;
+			//Detect platform
 			if (File.Exists(releaseFedora))
 				platform = UnixPlatform.Fedora;
 			
+			//read version for each platform
 			switch(platform)
 			{
 				case UnixPlatform.Fedora:
