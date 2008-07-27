@@ -24,7 +24,9 @@ using System.Collections.Generic;
 
 namespace Developer.Common.Options
 {
-
+	/// <summary>
+	/// List of options. Each element must extend Option class
+	/// </summary>
 	public class OptionList<T>: List<T> where T:Option
 	{
 		/// <summary>
