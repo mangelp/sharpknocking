@@ -1,3 +1,30 @@
+2008-07-27  Miguel Angel Perez <mangelp@gmail.com> 
+
+	* SystemCommands/UnixTextOutputSysCmd.cs: Changed timeout timer to 5000
+	  millis
+	
+	  Uncommented kill timeout methods.
+	* SystemCommands/BaseUnixSysCmd.cs: Renamed the constructor parameter
+	  requiresRoot for authRequired.
+	
+	  Moved the code in GetNewProcess to OnAuthRequired (new method
+	  overload) and changed a bit to make it more simple and to not use
+	  gksu when the current user is the one who is going to execute the
+	  process.
+	
+	* SystemCommands/UnixInteractiveSysCmd.cs: 
+	
+	* SystemCommands/WhichSysCmd.cs: Changed base class to
+	  UnixTextOutputsysCmd
+	* SystemCommands/IptablesSysCmd.cs: Unused
+	* SystemCommands/LocateSysCmd.cs: Changed base class to
+	  UnixTextOutputSysCmd
+	* SystemCommands/IptablesRestoreSysCmd.cs: Some cosmetical changes
+	* Native/UnixNative.cs: Changed Native/UnixNative.cs. Added new method
+	  overload to create lock file that stores in it the pid of the
+	  process. The older overload now calls this new one with
+	  Int32.MaxValue as second parameter.
+
 2008-07-24  Miguel Angel Perez <mangelp@gmail.com> 
 - Added a timer to kill the process if it makes us wait too long for a read in BaseSysCmd and used it in UnixTextOutputSysCmd
 - The format of the string used in GksuSysCmd was incorrect. Fixed.

@@ -124,9 +124,12 @@ namespace Developer.Common.Unix.SystemCommands
 			
 			while(this.IsRunning && pos < ruleset.Count) {
 				this.WriteLine(ruleset[pos]);
+				pos ++;
 			}
 			
-			//TODO: Should we throw an exception when the iptables-restore command fails?
+			if (pos < ruleset.Count) {
+				//TODO: Should we throw an exception when the iptables-restore command fails?
+			}
 			
 			if (this.IsRunning) {
 				this.WriteLine(COMMIT);
@@ -151,11 +154,11 @@ namespace Developer.Common.Unix.SystemCommands
 		public void ExecRules(IList<string> ruleset, bool test, bool verbose)
 		{
 			string oldArgs = this.Args;
-			this.Args += options["noflush"];
+			this.Args += " " + options["noflush"];
 			if (test)
-				this.Args += options["test"];
+				this.Args += " " + options["test"];
 			if (verbose)
-				this.Args += options["verbose"];
+				this.Args += " " + options["verbose"];
 			this.WriteRuleSet(ruleset);
 			this.Args = oldArgs;
 		}

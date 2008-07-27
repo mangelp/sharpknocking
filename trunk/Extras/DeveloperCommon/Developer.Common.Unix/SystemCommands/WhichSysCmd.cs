@@ -36,7 +36,7 @@ namespace Developer.Common.Unix.SystemCommands
 	/// This class is based in the class SearchWrapper created by Luis Román 
 	/// for this task
 	/// </remarks>
-	public class WhichSysCmd: TextOutputCommand
+	public class WhichSysCmd: UnixTextOutputSysCmd
 	{
 		/// <summary>
 		/// Constructor. Initiallizes the command name to which.

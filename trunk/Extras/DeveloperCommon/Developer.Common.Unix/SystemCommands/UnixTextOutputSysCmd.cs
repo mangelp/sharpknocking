@@ -109,7 +109,7 @@ namespace Developer.Common.Unix.SystemCommands
 			//Read all the output
 			this.SyncReadMode = ReadMode.All;
 			result = String.Empty;
-//			this.KillTimeoutStart(1000);
+			this.KillTimeoutStart(5000);
 			this.Exec();
 			this.ownRead = false;
 			return result;
@@ -124,8 +124,8 @@ namespace Developer.Common.Unix.SystemCommands
 		protected override void OnOutputReceivedHandler (string data)
 		{
 			if (this.ownRead) {
-//				Console.WriteLine("Data read ("+data.Length+") "+data);
-//				this.KillTimeoutEnd();
+				Console.WriteLine("Data read ("+data.Length+") "+data);
+				this.KillTimeoutEnd();
 				this.result = data;
 			} else {
 				base.OnOutputReceivedHandler(data);

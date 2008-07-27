@@ -35,8 +35,8 @@ namespace Developer.Common.Unix.SystemCommands
 			
 		}
 		
-		public BaseUnixSysCmd(string name, bool requiresRoot)
-			:base(name, requiresRoot)
+		public BaseUnixSysCmd(string name, bool authRequired)
+			:base(name, authRequired)
 		{
 			
 		}
@@ -44,31 +44,33 @@ namespace Developer.Common.Unix.SystemCommands
 		public BaseUnixSysCmd(string name, string user)
 			:base(name, user)
 		{
-			if (String.Equals(user, "root", StringComparison.InvariantCultureIgnoreCase))
-				this.RequiresRoot = true;
+
 		}
 		
-		protected override Process GetNewProcess ()
+		protected override string GetAdminName()
 		{
-			Process p = base.GetNewProcess ();
+			return "root";
+		}
+		
+		protected override void OnAuthRequired(AuthRequiredEventArgs args)
+		{
+			args.UserName = String.IsNullOrEmpty(this.ExecuteAs) ? 
+				this.GetAdminName() : 
+					this.ExecuteAs;
 			
-			if (this.RequiresRoot) {
+			Process p = this.Current;
+			
+			if (!UnixNative.IsCurrentUser(this.ExecuteAs)) {
 				p.StartInfo.FileName = GksuSysCmd.GetCommandName();
 				p.StartInfo.Arguments = GksuSysCmd.GetArgsFor(
-				    this.Name,
+				    this.CmdName,
 					this.Args,
-					true);
-			} else if (!String.IsNullOrEmpty(this.ExecuteAs)
-			           && UnixNative.IsCurrentUser(this.ExecuteAs)) {
-				p.StartInfo.FileName = GksuSysCmd.GetCommandName();
-				p.StartInfo.Arguments = GksuSysCmd.GetArgsFor(
-				    this.Name,
-					this.Args,
-					this.ExecuteAs,
+					args.UserName,
 					true);
 			}
 			
-			return p;
+			args.Delayed = true;
+			args.Success = false;
 		}
 
 	}

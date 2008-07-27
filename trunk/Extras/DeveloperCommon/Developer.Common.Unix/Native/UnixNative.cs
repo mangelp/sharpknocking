@@ -20,6 +20,8 @@
 using System;
 using System.IO;
 
+using Developer.Common.Types;
+
 using Mono.Unix;
 using Mono.Unix.Native;
     
@@ -33,6 +35,7 @@ namespace Developer.Common.Unix.Native
 	{        
 		private static string baseLockPath="/tmp/lock";
 		private static string baseTmpPath = "/tmp";
+		private static object objLock = new object();
 		
         /// <summary>
         /// Creates a new lock file.
@@ -42,15 +45,34 @@ namespace Developer.Common.Unix.Native
         /// </returns>
 		public static bool CreateLockFile(string baseName)
         {
-            FileStream fs = File.Create(baseLockPath+baseName+".lock");
-            
-            if(fs!=null)
-            {
-                fs.Close();
-                return true;
-            }
-            else
-                return false;
+        	return CreateLockFile(baseName, Int32.MaxValue);
+        }
+		
+     	/// <summary>
+        /// Creates a new lock file.
+        /// </summary>
+        /// <returns>
+        /// True if it was created or false if not
+        /// </returns>
+		public static bool CreateLockFile(string baseName, int pid)
+        {
+			baseName = baseLockPath + baseName + ".lock";
+			bool result = false;
+			lock(objLock) {
+				if (!File.Exists(baseName)) {
+            		FileStream fs = File.Create(baseName);
+					if (fs != null) {
+						if (pid != Int32.MaxValue) {
+							byte[] data = Conversion.ToByteArray(pid);
+							fs.Write(data, 0, data.Length);
+						}
+		                fs.Close();
+						result = true;
+					}
+				}
+			}
+			
+			return result;
         }
         
         /// <summary>
@@ -135,6 +157,7 @@ namespace Developer.Common.Unix.Native
 		[Obsolete("Use new Mono.Unix.UnixSignal logic instead")]
         public static void HandleCtrlCSignal(SignalHandler usrHandler)
         {
+			//TODO: Change this
             SignalHandler handler = Mono.Unix.Native.Stdlib.signal(Signum.SIGINT , usrHandler);
             
             if(handler == Stdlib.SIG_ERR)
@@ -150,6 +173,7 @@ namespace Developer.Common.Unix.Native
 		[Obsolete("Use new Mono.Unix.UnixSignal logic instead")]
         public static void HandleTermSignal(SignalHandler usrHandler)
         {
+			//TODO: Change this
             SignalHandler handler = Mono.Unix.Native.Stdlib.signal(Signum.SIGTERM, usrHandler);
             
             if(handler == Stdlib.SIG_ERR)
