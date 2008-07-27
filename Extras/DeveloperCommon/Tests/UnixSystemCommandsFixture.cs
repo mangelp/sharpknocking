@@ -51,20 +51,20 @@ namespace Developer.Common.Tests
 			cmd.SyncReadMode = ReadMode.All;
 			
 			cmd.Args = "mono";
-			Console.WriteLine("Executing command "+cmd.Name);
+			Console.WriteLine("Executing command "+cmd.CmdName);
 			cmd.Exec();
 			Console.WriteLine("Direct read "+cmd.Read());
 			cmd.Args = "monodevelop";
-			Console.WriteLine("Executing command "+cmd.Name);
+			Console.WriteLine("Executing command "+cmd.CmdName);
 			cmd.Exec();
 			Console.WriteLine("Direct read "+cmd.Read());
 			cmd.SyncReadMode = ReadMode.Line;
 			cmd.Args = "mono";
-			Console.WriteLine("Executing command "+cmd.Name);
+			Console.WriteLine("Executing command "+cmd.CmdName);
 			cmd.Exec();
 			Console.WriteLine("Direct read "+cmd.Read());
 			cmd.Args = "monodevelop";
-			Console.WriteLine("Executing command "+cmd.Name);
+			Console.WriteLine("Executing command "+cmd.CmdName);
 			cmd.Exec();
 			Console.WriteLine("Direct read "+cmd.Read());
 		}
@@ -82,20 +82,22 @@ namespace Developer.Common.Tests
 		[Test]
 		public void ReadIptablesConfig()
 		{
-			TextOutputCommand toc = new TextOutputCommand("/sbin/iptables-save", false);
+			UnixTextOutputSysCmd toc = new UnixTextOutputSysCmd("/sbin/iptables-save", true);
 			toc.OutputRead += new EventHandler<OutputReadEventArgs>(this.TextRead);
 			toc.ErrorRead += new EventHandler<OutputReadEventArgs>(this.ErrorRead);
 			toc.Exec();
-			Console.WriteLine("Iptables-save output:\n"+toc.Read());
-			Console.WriteLine("RC: "+toc.ExitCode);
+			//This doesn't work with gksu as it outputs the command stdout to stderr
+//			Console.WriteLine("Iptables-save output:\n"+toc.Read());
 		}
 		
-//		[Test]
-//		public void ReadWithTimeout()
-//		{
-//			UnixTextOutputSysCmd cmd = new UnixTextOutputSysCmd("tail", true);
-//			cmd.Args = "-f /var/log/messages";
-//			cmd.Exec();
-//		}
+		[Test]
+		public void ReadWithTimeout()
+		{
+			Console.WriteLine("Reading from a command that doesn't ends");
+			UnixTextOutputSysCmd cmd = new UnixTextOutputSysCmd("tail", false);
+			cmd.Args = "-f /home/mangelp/.bash_history";
+			Console.WriteLine("Starting read, waiting for kill");
+			cmd.Read();
+		}
 	}
 }
