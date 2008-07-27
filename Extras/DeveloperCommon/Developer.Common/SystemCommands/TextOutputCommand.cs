@@ -32,7 +32,7 @@ namespace Developer.Common.SystemCommands
 	/// Models a system command that is expected to output information after
 	/// executing it.
 	/// </summary>
-	public class TextOutputCommand: BaseSystemCommand
+	public abstract class TextOutputCommand: BaseSystemCommand
 	{
 		/// <summary>
 		/// Gets if the command can exec synchronously

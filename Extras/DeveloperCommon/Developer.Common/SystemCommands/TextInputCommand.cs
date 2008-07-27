@@ -29,7 +29,7 @@ namespace Developer.Common.SystemCommands
 	/// Models a command that is mean to process the input as it is written into
 	/// stdin.
 	/// </summary>
-	public class TextInputCommand: BaseSystemCommand
+	public abstract class TextInputCommand: BaseSystemCommand
 	{
 		/// <summary>
 		/// Gets if the command can be executed synchronously

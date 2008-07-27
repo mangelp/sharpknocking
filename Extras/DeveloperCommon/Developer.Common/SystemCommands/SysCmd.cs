@@ -27,7 +27,7 @@ namespace Developer.Common.SystemCommands
 	/// Generic command wrapper that supports reading and writting standard output and input, respectively, plus to
 	/// error output read by asynchronous handlers.
 	/// </summary>
-	public class SysCmd: BaseSystemCommand
+	public abstract class SysCmd: BaseSystemCommand
 	{	
 		public SysCmd(string name)
 			:base(name)

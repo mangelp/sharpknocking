@@ -19,6 +19,7 @@
 
 
 using System;
+using System.Security;
 
 namespace Developer.Common.SystemCommands
 {
@@ -115,6 +116,106 @@ namespace Developer.Common.SystemCommands
 		public OutputReadEventArgs(string data)
 		{
 			this.data = data;
+		}
+	}
+	
+	/// <summary>
+	/// Arguments for authentication event handling/notification
+	/// </summary>
+	public class AuthRequiredEventArgs: EventArgs
+	{
+		private SecureString password;
+		
+		/// <summary>
+		/// Auth password for the requested user
+		/// </summary>
+		public SecureString Password
+		{
+			get {return password;}
+			set { password = value;}
+		}
+		
+		private string userName;
+		
+		/// <summary>
+		/// Gets the user name
+		/// </summary>
+		public string UserName
+		{
+			get {return userName;}
+			set {this.userName = value;}
+		}
+		
+		private string cmdName;
+		
+		/// <summary>
+		/// Gets/sets the name of the command to execute
+		/// </summary>
+		public string CmdName
+		{
+			get {return cmdName;}
+			internal set {this.cmdName = value;}
+		}
+		
+		private bool success;
+		
+		/// <summary>
+		/// Gets/sets if the authentication was successfull
+		/// </summary>
+		public bool Success
+		{
+			get {
+				return this.success;
+			}
+			
+			set {
+				this.success = value;
+			}
+		}
+		
+		private bool delayed;
+		
+		/// <summary>
+		/// Gets/Sets if the auth have been delayed. Usefull if it will be
+		/// done later or is already done.
+		/// </summary>
+		public bool Delayed
+		{
+			get {
+				return this.delayed;
+			}
+			
+			set {
+				this.delayed = value;
+			}
+		}
+		
+		/// <summary>
+		/// Constructor. Initiallizes the command name and the user name.
+		/// </summary>
+		/// <param name="cmdName">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <param name="userName">
+		/// A <see cref="System.String"/>
+		/// </param>
+		public AuthRequiredEventArgs(string cmdName, string userName)
+			:base()
+		{
+			this.password = new SecureString();
+			this.userName = userName;
+			this.cmdName = cmdName;
+		}
+		
+		/// <summary>
+		/// Constructor. Only initiallizes the command name.
+		/// </summary>
+		/// <param name="cmdName">
+		/// A <see cref="System.String"/>
+		/// </param>
+		public AuthRequiredEventArgs(string cmdName)
+			:this(cmdName, String.Empty)
+		{
 		}
 	}
 }

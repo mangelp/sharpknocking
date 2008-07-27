@@ -1,3 +1,17 @@
+2008-07-27  Miguel Angel Perez <mangelp@gmail.com> 
+
+	* SystemCommands/BaseSystemCommand.cs: -Added support for an
+	  authorization event that will notify others in the hope that
+	  someone will provide the user's password.
+	
+	  -Added support for a timer to kill the underliying process if it
+	  gets too much time to perform certain operations
+	
+	  -Changed a little the properties: Path removed, Name renamed to
+	  CmdName, Current made protected, IsAsync made protected.
+	
+	  -Changed some doc comments
+
 2008-07-24  Miguel Angel Perez <mangelp@gmail.com> 
 - Added a timer to kill the process when the operation lasts too much
 	
