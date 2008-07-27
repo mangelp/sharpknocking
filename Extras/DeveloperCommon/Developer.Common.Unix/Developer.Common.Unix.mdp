@@ -27,7 +27,6 @@
     <File name="Net/Structs.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands" subtype="Directory" buildaction="Compile" />
     <File name="SystemCommands/WhichSysCmd.cs" subtype="Code" buildaction="Compile" />
-    <File name="SystemCommands/IptablesSysCmd.cs" subtype="Code" buildaction="Compile" />
     <File name="SystemCommands/LocateSysCmd.cs" subtype="Code" buildaction="Compile" />
     <File name="Native" subtype="Directory" buildaction="Compile" />
     <File name="Native/UnixNative.cs" subtype="Code" buildaction="Compile" />
