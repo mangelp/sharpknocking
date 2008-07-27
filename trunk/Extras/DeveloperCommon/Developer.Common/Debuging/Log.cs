@@ -1,7 +1,7 @@
 // Log.cs
 //
 //  Copyright (C)  2007 iSharpKnocking project
-//  Created by Miguel Angel Perez Valencia, mangelp@gmail.com
+//  Created by Miguel Angel Perez, mangelp@gmail.com
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public

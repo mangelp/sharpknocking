@@ -23,7 +23,7 @@ using System;
 namespace Developer.Common.System
 {
 	/// <summary>
-	/// Describes the set of known *nix clones
+	/// Describes the set of most widely used *nix clones or flavours
 	/// </summary>
 	public enum UnixPlatform
 	{

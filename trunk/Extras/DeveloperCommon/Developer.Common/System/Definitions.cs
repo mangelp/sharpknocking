@@ -31,15 +31,15 @@ namespace Developer.Common.System
 		/// System OS version
 		/// </summary>
 		/// <remarks>
-		/// This should be for example the version of the kernel. IE 2.6.23
+		/// This must be the version of the kernel. IE 2.6.23
 		/// </remarks>
-		public Version OsVersion;
+		public Version KernelVersion;
 		
 		/// <summary>
 		/// System OS kind
 		/// </summary>
 		/// <remarks>
-		/// This should be for examble the type of system. IE: Unix, Win32NT, ...
+		/// This must be the type of system. IE: Unix, Win32NT, ...
 		/// </remarks>
 		public PlatformID OsPlatform;
 		
@@ -53,7 +53,7 @@ namespace Developer.Common.System
 		/// </summary>
 		/// <remarks>
 		/// Version for the distribution in case of oses that comes in different
-		/// flavours called "distros". 
+		/// flavours called "distros".
 		/// </remarks>
 		public string DistroVersion;
 		
@@ -64,7 +64,7 @@ namespace Developer.Common.System
 		/// Name for the distribution in case of oses that comes in different
 		/// flavours called "distros". 
 		/// </remarks>
-		public string DistroName;
+		public UnixPlatform DistroName;
 		
 		/// <summary>
 		/// Gets an struct with the information about the platform, framework and distro.
@@ -77,13 +77,14 @@ namespace Developer.Common.System
 			OsInfo osInfo = new OsInfo();
 			osInfo.MonoVersion = (Version)Environment.Version.Clone();
 			osInfo.OsPlatform = Environment.OSVersion.Platform;
-			osInfo.OsVersion = (Version)Environment.OSVersion.Version.Clone();
+			osInfo.KernelVersion = (Version)Environment.OSVersion.Version.Clone();
+			
 			if(osInfo.OsPlatform == PlatformID.Unix) {
 				osInfo.DistroVersion = UnixOsDetect.Version;
-				osInfo.DistroName = UnixOsDetect.Platform.ToString();
+				osInfo.DistroName = UnixOsDetect.Platform;
 			} else {
-				osInfo.DistroVersion = Environment.OSVersion.ServicePack.ToString();
-				osInfo.DistroName = "Windows";
+				osInfo.DistroVersion = "0.0";
+				osInfo.DistroName = UnixPlatform.Other;
 			}
 			
 			return osInfo;
