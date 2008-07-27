@@ -20,6 +20,7 @@
 
 using System;
 using System.Timers;
+using System.Security;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -48,6 +49,10 @@ namespace Developer.Common.SystemCommands
 		/// Notifies that the command have been started
 		/// </summary>
 		public event EventHandler CommandStart;
+		/// <summary>
+		/// Notifies that authentication is required to run the command
+		/// </summary>
+		public event EventHandler<AuthRequiredEventArgs> AuthRequired;
 		
 		#endregion
 		
@@ -63,10 +68,9 @@ namespace Developer.Common.SystemCommands
 		/// <remarks>
 		/// If there is no process running this reference can be null
 		/// </remarks>
-		public Process Current
+		protected Process Current
 		{
 			get { return this.current;}
-			protected set { this.current = value;}
 		}
 		
 		private bool isAsync;
@@ -83,6 +87,8 @@ namespace Developer.Common.SystemCommands
 			set { 
 				if(value && !this.CanExecAsync)
 					throw new InvalidOperationException("command process can't execute asynchronously");
+				if (!value && !this.CanExec)
+					throw new InvalidOperationException("Command can't execute synchronously");
 				this.isAsync = value;
 			}
 		}
@@ -98,25 +104,14 @@ namespace Developer.Common.SystemCommands
 			protected set { this.exitCode = value;}
 		}
 		
-		private string name;
+		private string cmdName;
 		
 		/// <summary>
 		/// Name of the command
 		/// </summary>
-		public string Name
+		public string CmdName
 		{
-			get {return this.name;}
-		}
-		
-		private string path;
-		
-		/// <summary>
-		/// Command path if it has got one
-		/// </summary>
-		public string Path
-		{
-			get {return this.path;}
-			set {this.path = value;}
+			get {return this.cmdName;}
 		}
 		
 		private string args;
@@ -168,6 +163,16 @@ namespace Developer.Common.SystemCommands
 			get { return this.syncReadMode;}
 			set { this.syncReadMode = value;}
 		}
+
+		private bool isAuthRequired;
+		
+		/// <summary>
+		/// Gets if authentication is required to run the current command
+		/// </summary>
+		protected bool IsAuthRequired
+		{
+			get { return this.isAuthRequired; }
+		}
 		
 		private string executeAs;
 		
@@ -177,22 +182,10 @@ namespace Developer.Common.SystemCommands
 		public string ExecuteAs
 		{
 			get {return this.executeAs;}
-			set {this.executeAs = value;}
-		}
-		
-		private bool requiresRoot;
-		
-		/// <summary>
-		/// If true the command requires root permissions to work.
-		/// </summary>
-		/// <remarks>
-		/// This usually means that the program must be executed as root or
-		/// that an autentication process must be set.
-		/// </remarks>
-		public bool RequiresRoot
-		{
-			get {return this.requiresRoot;}
-			protected set {this.requiresRoot = value;}
+			set {
+				this.executeAs = value;
+				this.isAuthRequired = !String.IsNullOrEmpty(value);
+			}
 		}
 		
 		private StringDictionary enviroment;
@@ -236,7 +229,7 @@ namespace Developer.Common.SystemCommands
 		public BaseSystemCommand(string name)
 		{
 			enviroment = new StringDictionary();
-			this.name = name;
+			this.cmdName = name;
 		}
 		
 		/// <summary>
@@ -245,20 +238,31 @@ namespace Developer.Common.SystemCommands
 		/// <param name="name">
 		/// A <see cref="System.String"/> with the name of the command to execute
 		/// </param>
-		/// <param name="requiresRoot">
+		/// <param name="authRequired">
 		/// A <see cref="System.Boolean"/> that indicates if the command requires root privileges
 		/// to work properly
 		/// </param>
-		public BaseSystemCommand(string name, bool requiresRoot)
+		public BaseSystemCommand(string name, bool authRequired)
 			: this(name)
 		{
-			this.requiresRoot = requiresRoot;
+			this.isAuthRequired = authRequired;
+			if (authRequired)
+				this.executeAs = this.GetAdminName();
 		}
 		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="cmdName">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <param name="username">
+		/// A <see cref="System.String"/>
+		/// </param>
 		public BaseSystemCommand(string cmdName, string username)
 			: this(cmdName)
 		{
-			this.executeAs = username;
+			this.ExecuteAs = username;
 		}
 		
 		#endregion
@@ -277,6 +281,7 @@ namespace Developer.Common.SystemCommands
 		/// </param>
 		protected virtual void OnProcessEnd(object sender, EventArgs args)
 		{
+			Console.WriteLine("Process end at "+DateTime.Now);
 			CommandResult result = this.WaitForEnd();
 			if (this.CommandEnd != null) {
 				CommandEndEventArgs cmdargs = new CommandEndEventArgs(result);
@@ -342,19 +347,90 @@ namespace Developer.Common.SystemCommands
 			}
 		}
 		
+		/// <summary>
+		/// Sends the notification about the required authentication.
+		/// </summary>
+		/// <remarks> Usually clients will want to use this or switch to custom os
+		/// impersonation.
+		/// </remarks>
+		/// <param name="args">
+		/// A <see cref="AuthRequiredEventArgs"/>
+		/// </param>
+		protected virtual void OnAuthRequired(AuthRequiredEventArgs args)
+		{
+			//If no auth is required return as if it where successfull
+			if (!this.isAuthRequired) {
+				args.Success = true;
+				return;
+			}
+			
+			//Take care of getting a user name
+			if (String.IsNullOrEmpty(this.executeAs))
+				args.UserName = this.GetAdminName();
+			else
+				args.UserName = this.executeAs;
+			
+			//If the delayed flag is on we omit notifications
+			if (this.AuthRequired != null && !args.Delayed)
+				this.AuthRequired(this, args);
+		}
+		
 		#endregion
 		
 		#region protected stuff
+		/// <summary>
+		/// Returns the name of the administrator user for the current os
+		/// </summary>
+		/// <remarks>
+		/// This usually is 'root' in unix and 'admin' in windows.
+		/// </remarks>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
+		protected abstract string GetAdminName();
+		
+		/// <summary>
+		/// Performs authentication
+		/// </summary>
+		/// <remarks>
+		/// This method calls OnAuthRequired to notify others and see if there are someone that
+		/// will resolve authorization request providing either a password for the current user
+		/// name or giving the auth for the process
+		/// </remarks>
+		/// <returns>
+		/// A <see cref="System.Boolean"/> true if the auth is successfull or if it is delayed
+		/// </returns>
+		protected bool DoAuth()
+		{
+			if (!this.isAuthRequired)
+				return true;
+			
+			AuthRequiredEventArgs args = new AuthRequiredEventArgs(this.executeAs);
+			
+			this.OnAuthRequired(args);
+			
+			if (args.Delayed && args.Password.Length > 0)
+				this.current.StartInfo.Password = args.Password;
+			
+			if (args.Delayed && !String.IsNullOrEmpty(args.UserName))
+				this.current.StartInfo.UserName = args.UserName;
+				
+			return args.Delayed || args.Success;
+		}
+		
 		/// <summary>
 		/// Initializes the execution of the process
 		/// </summary>
 		protected void Start()
 		{
-			if (this.current != null && !this.current.HasExited)
+			if (this.current != null && this.current.HasExited)
 				this.current.Close();
+			else if (this.current != null && !this.current.HasExited)
+				this.current.Kill();
+			
 			this.current = this.GetNewProcess();
 			this.current.Exited += new	EventHandler(this.OnProcessEnd);
-			this.exitCode = Int32.MinValue;
+			this.exitCode = Int32.MaxValue;
 			
 			if (this.CanRead && this.isAsync) {
 				this.current.OutputDataReceived += 
@@ -366,19 +442,30 @@ namespace Developer.Common.SystemCommands
 					new DataReceivedEventHandler(this.OnOutputErrorReceivedHandler);
 			}
 			
-			if (this.current != null) {
-				this.current.Start();
-				if (this.CanRead && this.isAsync)
-					this.current.BeginOutputReadLine();
-				if (this.CanReadError)
-					this.current.BeginErrorReadLine();
-				this.OnCommandStart();
+			if (!this.DoAuth()) {
+				throw new Developer.Common.CommandAuthException();
 			}
+			
+			this.current.Start();
+			
+			if (this.CanRead && this.isAsync)
+				this.current.BeginOutputReadLine();
+			
+			if (this.CanReadError)
+				this.current.BeginErrorReadLine();
+			
+			this.OnCommandStart();
 		}
 		
 		/// <summary>
 		/// Waits for the current process to finish and sets the exit code
 		/// </summary>
+		/// <remarks>
+		/// This method does a waitForExit for 30 seconds, after that time
+		/// if the process haven't finished it tries to kill it.
+		/// Finally it tries to call Close() once the process has exited or
+		/// have been killed.
+		/// </remarks>
 		protected CommandResult WaitForEnd()
 		{
 			CommandResult result = new CommandResult();
@@ -387,11 +474,15 @@ namespace Developer.Common.SystemCommands
 			result.UserData = null;
 			
 			try {
+				
 				//Before requesting the exit code we must wait the process to exit
-				//we will wait for 30 secs and then kill it if it haven't exited yet
+				//we will wait for 30 secs
 				this.current.WaitForExit(30000);
-				if (!this.current.HasExited)
+				//If after 30 seconds the exit code haven't been got we send it a kill
+				if (!this.current.HasExited) {
 					this.current.Kill();
+					result.Aborted = true;
+				}
 				this.exitCode = this.current.ExitCode;
 				result.ExitCode = this.exitCode;
 				//Free resources
@@ -400,6 +491,8 @@ namespace Developer.Common.SystemCommands
 				throw ex;
 			}
 			finally{
+				if (this.current != null)
+					this.current.Dispose();
 				this.current = null;
 			}
 			
@@ -409,6 +502,10 @@ namespace Developer.Common.SystemCommands
 		/// <summary>
 		/// Gets a new process object partially configured to be started.
 		/// </summary>
+		/// <remarks>
+		/// Inheritors should override this method calling first the parent one to
+		/// get the process instance and then configure it properly.
+		/// </remarks>
 		/// <returns>
 		/// A <see cref="Process"/> with the required command name
 		/// </returns>
@@ -416,7 +513,7 @@ namespace Developer.Common.SystemCommands
 		{
 			Process p = new Process();
 			p.StartInfo.UseShellExecute = false;
-			p.StartInfo.FileName = this.name;
+			p.StartInfo.FileName = this.cmdName;
 			p.StartInfo.Arguments = this.args;
 			
 			if(this.enviroment.Count>0)
@@ -441,7 +538,7 @@ namespace Developer.Common.SystemCommands
 		}
 		
 		/// <summary>
-		/// Ends the executing process
+		/// Ends the executing process killing it.
 		/// </summary>
 		/// <remarks>
 		/// This method is intended to stop the running process by any means and once it is stopped 
@@ -458,10 +555,6 @@ namespace Developer.Common.SystemCommands
 			if (this.CanReadError)
 				this.current.CancelErrorRead();
 			
-			this.KillTimeoutStart();
-			this.current.Close();
-			this.KillTimeoutEnd();
-			
 			this.OnProcessEnd(this, EventArgs.Empty);
 		}
 		
@@ -476,48 +569,66 @@ namespace Developer.Common.SystemCommands
 		/// </param>
 		protected virtual void KillHandler(object sender, EventArgs args)
 		{
-			throw new InvalidOperationException();
-			Console.WriteLine("Timer kill");
-			this.killTimer.Stop();
-			this.killTimer = null;
+			Console.WriteLine("Timer kill for process " + this.cmdName);
+			this.KillTimeoutEnd();
 
 			if (this.current != null && !this.current.HasExited) {
-				Console.WriteLine("KILL");
+				Console.WriteLine("Killing "+this.cmdName);
 				this.current.Kill();
+			} else {
+				Console.WriteLine("Can't kill");
 			}
 		}
 		
+		/// <summary>
+		/// Starts the timeout for 10 seconds (default)
+		/// </summary>
 		protected void KillTimeoutStart()
 		{
-			this.KillTimeoutStart(1000);
+			this.KillTimeoutStart(10000);
 		}
 		
+		/// <summary>
+		/// Starts the timeout for an amount of time
+		/// </summary>
+		/// <param name="millis">
+		/// A <see cref="System.Int32"/> Milliseconds to set as interval for the timer
+		/// </param>
 		protected void KillTimeoutStart(int millis)
 		{
-			if (this.killTimer != null && this.killTimer.Enabled) {
-				this.killTimer.Stop();
-			}
-			Console.WriteLine("starting timer "+millis);
+			this.KillTimeoutEnd();
+			
 			this.killTimer = new Timer();
 			this.killTimer.AutoReset = false;
 			this.killTimer.Interval = millis;
 			this.killTimer.Elapsed += new ElapsedEventHandler(this.KillHandler);
 			
+			Console.WriteLine("starting kill timer: "+millis);
 			this.killTimer.Start();
 		}
 		
+		/// <summary>
+		/// Ends the timeout
+		/// </summary>
 		protected void KillTimeoutEnd()
 		{
-			Console.WriteLine("Ending timer");
 			if (this.killTimer == null)
 				return;
 			
+			Console.WriteLine("Ending kill timer");	
 			if (this.killTimer.Enabled)
 				this.killTimer.Stop();
 			
+			this.killTimer.Dispose();
 			this.killTimer = null;
 		}
 		
+		/// <summary>
+		/// Gets if the kill timeout is active
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
 		protected bool IsKillTimeoutActive()
 		{
 			return this.killTimer != null && this.killTimer.Enabled;
@@ -542,8 +653,8 @@ namespace Developer.Common.SystemCommands
 		{
 			if (!this.CanExec)
 				throw new InvalidOperationException("This command can't be executed synchronously");
-			this.isAsync = false;
-
+			this.IsAsync = false;
+			
 			this.Start();
 			string data = null;
 			
@@ -600,7 +711,5 @@ namespace Developer.Common.SystemCommands
 		}
 		
 		#endregion
-	
-		
 	}
 }
