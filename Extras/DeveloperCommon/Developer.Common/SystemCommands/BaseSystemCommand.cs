@@ -382,7 +382,7 @@ namespace Developer.Common.SystemCommands
 		/// Returns the name of the administrator user for the current os
 		/// </summary>
 		/// <remarks>
-		/// This usually is 'root' in unix and 'admin' in windows.
+		/// This usually is 'root' in unix and 'administrator' in windows.
 		/// </remarks>
 		/// <returns>
 		/// A <see cref="System.String"/>

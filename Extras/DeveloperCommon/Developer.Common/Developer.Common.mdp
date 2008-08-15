@@ -67,5 +67,6 @@
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </References>
   <Deployment.LinuxDeployData scriptName="developer.common" />
+  <GtkDesignInfo gtkVersion="2.12.2" />
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UseParentPolicy" />
 </Project>

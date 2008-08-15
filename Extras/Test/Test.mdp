@@ -1,5 +1,5 @@
 <Project name="Test" fileversion="2.0" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="Test" />
       <Build debugmode="True" target="Exe" />
@@ -21,4 +21,5 @@
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
   </References>
+  <GtkDesignInfo gtkVersion="2.12.2" />
 </Project>
