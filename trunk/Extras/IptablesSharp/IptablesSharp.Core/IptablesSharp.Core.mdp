@@ -91,4 +91,5 @@
     <ProjectReference type="Project" localcopy="True" refto="Developer.Common.Unix" />
   </References>
   <Deployment.LinuxDeployData scriptName="iptablesnet.core" />
+  <GtkDesignInfo gtkVersion="2.12.2" />
 </Project>

@@ -19,6 +19,7 @@
 //
 //
 using System;
+using PcapSharp;
 
 namespace PCapTools.Test
 {
