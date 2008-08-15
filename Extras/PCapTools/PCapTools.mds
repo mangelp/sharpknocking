@@ -1,0 +1,20 @@
+<Combine name="PCapTools" fileversion="2.0">
+  <Configurations active="Release">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="PCapTools.Capturer" configuration="Debug" />
+      <Entry build="True" name="PCapTools.Test" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="PCapTools.Capturer" configuration="Release" />
+      <Entry build="True" name="PCapTools.Test" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="PCapTools.Capturer" single="True">
+    <Execute type="None" entry="PCapTools.Capturer" />
+    <Execute type="None" entry="PCapTools.Test" />
+  </StartMode>
+  <Entries>
+    <Entry filename="PCapTools.Capturer/PCapTools.Capturer.mdp" />
+    <Entry filename="PCapTools.Test/PCapTools.Test.mdp" />
+  </Entries>
+</Combine>
