@@ -44,5 +44,6 @@
     <ProjectReference type="Project" localcopy="True" refto="Developer.Common" />
   </References>
   <Deployment.LinuxDeployData scriptName="developer.common.unix" />
+  <GtkDesignInfo gtkVersion="2.12.2" />
   <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="UseParentPolicy" />
 </Project>
