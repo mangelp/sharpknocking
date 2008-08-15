@@ -20,6 +20,7 @@
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Project" localcopy="True" refto="PCapTools.Capturer" />
+    <ProjectReference type="Assembly" localcopy="True" refto="../../Library/pcap-sharp.dll" />
   </References>
   <GtkDesignInfo gtkVersion="2.12.2" />
 </Project>

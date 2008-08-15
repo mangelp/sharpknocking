@@ -29,13 +29,23 @@ namespace PcapTools.Capturer
 		
 		//Fields 
 		
+		#region IRule implementation 
 		
-		bool isApplicable (IKnocking knocking)
+		public bool isApplicable (IKnocking knocking)
 		{
 			if (knocking is TcpKnocking)
 				return true;
 			else
 				return false;
-		}	
+		}
+		
+		public bool eval (IKnocking knocking)
+		{
+			return false;
+		}
+		
+		#endregion 
+		
+	
 	}
 }
