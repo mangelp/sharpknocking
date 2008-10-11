@@ -8,6 +8,20 @@ Here you will find the latest news of this project
 
 = News =
 
+=== 11/01/2008 ===
+
+*IptablesSharp subproject moved*
+
+This is for now the only thing that have been a little bit active for a long time and now have been changed to another project to get a little bit of relevance.
+
+The new project is called [http://code.google.com/p/nfsharp NFSharp] and you will find there the old IptablesSharp.
+
+The rest of the sharpknocking project code will remain untouched from now as there is no one working on this. We are very busy and the only one of us that was taking some bits of time to code is going to spend them in the new project.
+
+Regards,
+
+The Sharpknocking project team.
+
 === 01/01/2008 ===
 
 *Goodbye and hello*
