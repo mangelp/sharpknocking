@@ -1,4 +1,4 @@
-<Project name="iSharpKnocking.Daemon" fileversion="2.0" Description="Daemon that manages detection of the knocking sequences and the actions done." DefaultNamespace="iSharpKnocking.Daemon" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="iSharpKnocking.Daemon" fileversion="2.0" language="C#" DefaultNamespace="iSharpKnocking.Daemon" Description="Daemon that manages detection of the knocking sequences and the actions done." clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>

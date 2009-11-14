@@ -1,4 +1,4 @@
-<Project name="iSharpKnocking.Core" fileversion="2.0" Description="Core functionality of iSharpKnocking project" DefaultNamespace="iSharpKnocking.Core" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="iSharpKnocking.Core" fileversion="2.0" language="C#" DefaultNamespace="iSharpKnocking.Core" Description="Core functionality of iSharpKnocking project" clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <CustomCommands>
