@@ -1,16 +1,16 @@
-<Project name="KnockingDaemon" fileversion="2.0" Description="Daemon application that monitorizes knockings and change firewall&#xA;rules." language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="KnockingDaemon" fileversion="2.0" language="C#" Description="Daemon application that monitorizes knockings and change firewall&#xA;rules." clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="KnockingDaemon" />
       <Build debugmode="True" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" mainclass="SharpKnocking.KnockingDaemon.MainClass" generatexmldocumentation="True" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="True" ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Release" assembly="KnockingDaemon" />
       <Build debugmode="False" target="Exe" />
       <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Csc" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
@@ -37,6 +37,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Messaging, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <ProjectReference type="Assembly" localcopy="True" refto="../NetfilterFirewall/bin/Debug/NetfilterFirewall.dll" />
   </References>
+  <LanguageParameters StartupObject="SharpKnocking.KnockingDaemon.MainClass" ctype="CSharpProjectParameters" />
   <Deployment.LinuxDeployData scriptName="knockingdaemon" />
   <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="Makefile.am" SyncReferences="True" IsAutotoolsProject="True" RelativeConfigureInPath="..">
     <BuildFilesVar Sync="True" Name="FILES" />

@@ -1,11 +1,6 @@
-<Combine releaseversion="0.1-i" name="SharpKnocking" fileversion="2.0" description="SharpKnocking project solution" outputpath="build/bin/" MakePkgConfig="True" MakeLibPC="True">
-  <Configurations active="Release">
+<Combine name="SharpKnocking" fileversion="2.0" releaseversion="0.1-i" description="SharpKnocking project solution" outputpath="build/bin/" MakePkgConfig="True" MakeLibPC="True">
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
-      <CustomCommands>
-        <Command type="Custom" name="make" command="make" />
-        <Command type="Custom" name="make install" command="kdesu make install" />
-        <Command type="Custom" name="Autogen" command="./autogen.sh" />
-      </CustomCommands>
       <Entry build="True" name="Common" configuration="Debug" />
       <Entry build="True" name="CommonWidgets" configuration="Debug" />
       <Entry build="True" name="Doorman" configuration="Debug" />
@@ -25,7 +20,6 @@
     </Configuration>
   </Configurations>
   <StartMode startupentry="Common" single="True">
-    <Execute type="None" entry="SharpKnocking.Core" />
     <Execute type="None" entry="Common" />
     <Execute type="None" entry="CommonWidgets" />
     <Execute type="None" entry="Doorman" />
