@@ -1,5 +1,5 @@
-<Project name="KnockingDaemonControl" fileversion="2.0" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
-  <Configurations active="Release">
+<Project name="KnockingDaemonControl" fileversion="2.0" language="C#" clr-version="Net_1_1" targetFramework="1.1" ctype="DotNetProject">
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug" assembly="KnockingDaemonControl" />
       <Build debugmode="True" target="Exe" />
