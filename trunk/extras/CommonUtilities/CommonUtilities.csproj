@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BBF58DC8-CF38-4557-949D-48268D082543}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>CommonUtilities</AssemblyName>
+    <RootNamespace>CommonUtilities</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Types\AliasAttribute.cs" />
+    <Compile Include="Types\AliasUtil.cs" />
+    <Compile Include="Types\ArrayComparer.cs" />
+    <Compile Include="Types\AssemblyUtil.cs" />
+    <Compile Include="Types\AttributeUtil.cs" />
+    <Compile Include="Types\Conversion.cs" />
+    <Compile Include="Types\StringUtil.cs" />
+    <Compile Include="Types\TypeUtil.cs" />
+    <Compile Include="Net\Enumerations.cs" />
+    <Compile Include="Net\IPAddressLongMask.cs" />
+    <Compile Include="Net\IPAddressMask.cs" />
+    <Compile Include="Net\IPAddressShortMask.cs" />
+    <Compile Include="Net\IPAddressWrapper.cs" />
+    <Compile Include="Net\Structs.cs" />
+    <Compile Include="SystemCommands\BaseSystemCommand.cs" />
+    <Compile Include="SystemCommands\CommandAuthException.cs" />
+    <Compile Include="SystemCommands\Definitions.cs" />
+    <Compile Include="SystemCommands\Enumerations.cs" />
+    <Compile Include="SystemCommands\Events.cs" />
+    <Compile Include="SystemCommands\ISysCommandWrapper.cs" />
+    <Compile Include="SystemCommands\SysCmd.cs" />
+    <Compile Include="SystemCommands\TextInputCommand.cs" />
+    <Compile Include="SystemCommands\TextOutputCommand.cs" />
+    <Compile Include="Unix\Net\NetworkServicesData.cs" />
+    <Compile Include="Unix\Net\Protocols.cs" />
+    <Compile Include="Unix\Net\Structs.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
