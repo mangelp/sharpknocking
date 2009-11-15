@@ -24,7 +24,7 @@ using System.Collections.Specialized;
 using NFSharp.Iptables.Core.Extensions;
 using NFSharp.Iptables.Core.Extensions.Match;
 
-using NFSharp.Common.Types;
+using CommonUtilities.Types;
 using NFSharp.Iptables.Parser.IptablesSaveFormat;
 using NFSharp.Iptables.Util;
 

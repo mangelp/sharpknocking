@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Iptables", "Iptables\Iptabl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{249F38AC-2EDF-4F0E-88A2-767029E1150B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "extras", "extras", "{5E81C7BB-2277-4A3E-8E47-F446A7FAE9B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonUtilities", "..\extras\CommonUtilities\CommonUtilities.csproj", "{BBF58DC8-CF38-4557-949D-48268D082543}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,13 @@ Global
 		{3E6F7016-33B4-4B56-B243-61784654E988}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E6F7016-33B4-4B56-B243-61784654E988}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E6F7016-33B4-4B56-B243-61784654E988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBF58DC8-CF38-4557-949D-48268D082543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBF58DC8-CF38-4557-949D-48268D082543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBF58DC8-CF38-4557-949D-48268D082543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBF58DC8-CF38-4557-949D-48268D082543}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BBF58DC8-CF38-4557-949D-48268D082543} = {5E81C7BB-2277-4A3E-8E47-F446A7FAE9B5}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		version = 0.1

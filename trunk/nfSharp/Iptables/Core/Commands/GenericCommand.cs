@@ -25,7 +25,7 @@ using System.Collections;
 
 using NFSharp.Iptables;
 
-using NFSharp.Common.Types;
+using CommonUtilities.Types;
 using NFSharp.Iptables.Parser.IptablesSaveFormat;
 
 namespace NFSharp.Iptables.Core.Commands
@@ -60,6 +60,7 @@ namespace NFSharp.Iptables.Core.Commands
 		public NetfilterRule Rule
 		{
 			get { return this.rule;}
+			set { this.rule = value;}
 		}
 	    
 	    private string chainName;

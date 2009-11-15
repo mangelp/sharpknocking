@@ -21,7 +21,7 @@ using System;
 using System.Reflection;
 using System.Collections.Generic;
 
-using Developer.Common.Types;
+using CommonUtilities.Types;
 
 namespace NFSharp.Iptables.Parser.IptablesSaveFormat
 {

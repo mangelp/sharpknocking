@@ -3,10 +3,10 @@ using System;
 
 using NFSharp.Iptables;
 
-using NFSharp.Common.Net;
-using NFSharp.Common.Types;
+using CommonUtilities.Net;
+using CommonUtilities.Types;
 
-using NFSharp.Common.Unix.Net;
+using CommonUtilities.Unix.Net;
 
 
 namespace NFSharp.Iptables.Core.Commands.Options

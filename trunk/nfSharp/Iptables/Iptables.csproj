@@ -117,15 +117,13 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <Folder Include="Parser\" />
-    <Folder Include="Parser\IptablesSaveFormat\" />
-    <Folder Include="Parser\XmlFileFormat\" />
-    <Folder Include="Util\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{249F38AC-2EDF-4F0E-88A2-767029E1150B}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\extras\CommonUtilities\CommonUtilities.csproj">
+      <Project>{BBF58DC8-CF38-4557-949D-48268D082543}</Project>
+      <Name>CommonUtilities</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

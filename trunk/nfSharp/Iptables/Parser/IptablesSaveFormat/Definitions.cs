@@ -22,11 +22,11 @@ using System;
 namespace NFSharp.Iptables.Parser.IptablesSaveFormat
 {
 
-//	/// Delegate to call aditional procesing over an option found in the command
-//	/// line
-//	/// </summary>
-//	public delegate void OptionProcessingDelegate(OptionCallData data);
-	
+	/// Delegate to call aditional procesing over an option found in the command
+	/// line
+	/// </summary>
+	public delegate void OptionProcessingDelegate(OptionCallData data);
+
 	/// <summary>
 	/// Delegate to call aditional procesing over an option found in the command
 	/// line

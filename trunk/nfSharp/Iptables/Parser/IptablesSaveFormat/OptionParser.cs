@@ -23,7 +23,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 
-using Developer.Common.Types;
+using CommonUtilities.Types;
 
 namespace NFSharp.Iptables.Parser.IptablesSaveFormat
 {

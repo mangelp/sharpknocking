@@ -21,7 +21,7 @@ using System;
 using System.Text;
 using System.Collections;
 
-using NFSharp.Common.Types;
+using CommonUtilities.Types;
 
 namespace NFSharp.Iptables.Core
 {

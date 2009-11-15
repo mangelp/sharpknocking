@@ -23,7 +23,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-using NFSharp.Common.Types;
+using CommonUtilities.Types;
 
 namespace NFSharp.Iptables.Core.Extensions
 {

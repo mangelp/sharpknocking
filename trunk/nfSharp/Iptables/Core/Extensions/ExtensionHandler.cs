@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using NFSharp.Iptables;
 using NFSharp.Iptables.Util;
 
-using NFSharp.Common.Types;
+using CommonUtilities.Types;
 
 namespace NFSharp.Iptables.Core.Extensions
 {

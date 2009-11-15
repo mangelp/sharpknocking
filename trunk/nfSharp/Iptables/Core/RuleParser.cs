@@ -28,9 +28,9 @@ using NFSharp.Iptables.Core.Commands;
 using NFSharp.Iptables.Core.Extensions;
 using NFSharp.Iptables.Core.Extensions.Match;
 using NFSharp.Iptables.Core.Extensions.Target;
+using NFSharp.Iptables.Core.Commands.Options;
 
-using NFSharp.Common.Types;
-using NFSharp.Iptables.Parser.IptablesSaveFormat;
+using CommonUtilities.Types;
 
 namespace NFSharp.Iptables.Core
 {

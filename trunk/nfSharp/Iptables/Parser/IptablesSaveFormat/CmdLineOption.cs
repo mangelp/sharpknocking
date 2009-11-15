@@ -197,7 +197,7 @@ namespace NFSharp.Iptables.Parser.IptablesSaveFormat
 		/// </param>
 		/// <param name="procesingDelegate">
 		/// A <see cref="OptionProcessingDelegate"/> that will be called when the option
-		/// is procesed
+		/// is processed
 		/// </param>
 		public CmdLineOption(string name, OptionProcessingDelegate procesingDelegate)
 			:this(name)
