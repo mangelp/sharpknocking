@@ -21,7 +21,7 @@
 
 using System;
 
-using NFSharp.Common.Types;
+using CommonUtilities.Types;
 using NFSharp.Iptables.Parser.IptablesSaveFormat;
 
 namespace NFSharp.Iptables.Core.Commands

@@ -19,7 +19,7 @@
 
 using System;
 
-using NFSharp.Common.Types;
+using CommonUtilities.Types;
 
 namespace NFSharp.Iptables.Core
 {   

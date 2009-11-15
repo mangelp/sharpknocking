@@ -23,7 +23,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-using NFSharp.Common.Types;
+using CommonUtilities.Types;
 
 using NFSharp.Iptables;
 
