@@ -20,11 +20,11 @@
 using System;
 
 using NFSharp.Iptables;
-using NFSharp.Iptables.Extensions;
+using NFSharp.Iptables.Core.Extensions;
 
 using NFSharp.Common.Types;
 
-namespace NFSharp.Iptables.Options
+namespace NFSharp.Iptables.Core.Commands.Options
 {
 	
 	/// <summary>

@@ -25,7 +25,7 @@ using System.Reflection;
 
 using NFSharp.Common.Types;
 
-using NFSharp.Iptables.Extensions;
+using NFSharp.Iptables.Core.Extensions;
 
 namespace NFSharp.Iptables.Core.Extensions.Match
 {
@@ -123,7 +123,7 @@ namespace NFSharp.Iptables.Core.Extensions.Match
        	/// </summary>
        	/// <remarks>
        	/// The type that is expected to be found is:<br/>
-  	    /// NFSharp.Iptables.Extensions.[EnumName]MatchExtension<br/>
+  	    /// NFSharp.Iptables.Core.Extensions.[EnumName]MatchExtension<br/>
   	    /// If it is not found the assembly is expected to load with the name:<br/>
         /// [EnumName]Extension.dll<br/>
         /// In a subdirectory called extensions in the same directory where the

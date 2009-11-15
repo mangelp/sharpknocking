@@ -24,7 +24,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 using NFSharp.Iptables;
-using NFSharp.Iptables.Extensions;
+using NFSharp.Iptables.Core.Extensions;
 
 namespace NFSharp.Iptables.Core.Extensions.Match
 {

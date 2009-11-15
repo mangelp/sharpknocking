@@ -21,9 +21,9 @@ using System;
 
 using NFSharp.Iptables;
 
-using NFSharp.Common.Options;
+using NFSharp.Iptables.Parser.IptablesSaveFormat;
 
-namespace NFSharp.Iptables.Options
+namespace NFSharp.Iptables.Core.Commands.Options
 {
 	
 	/// <summary>

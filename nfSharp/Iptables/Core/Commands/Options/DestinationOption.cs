@@ -24,7 +24,7 @@ using NFSharp.Iptables;
 
 using NFSharp.Common.Net;
 
-namespace NFSharp.Iptables.Options
+namespace NFSharp.Iptables.Core.Commands.Options
 {
 	
 	/// <summary>

@@ -20,9 +20,9 @@
 using System;
 using System.Collections;
 
-using NFSharp.Common.Options;
+using NFSharp.Iptables.Parser.IptablesSaveFormat;
 
-namespace NFSharp.Iptables.Options
+namespace NFSharp.Iptables.Core.Commands.Options
 {
     public delegate void GenericOptionListEventHandler(object sender, ListChangedEventArgs<GenericOption> args);
 	    

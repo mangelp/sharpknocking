@@ -9,7 +9,7 @@ using NFSharp.Common.Types;
 using NFSharp.Common.Unix.Net;
 
 
-namespace NFSharp.Iptables.Options
+namespace NFSharp.Iptables.Core.Commands.Options
 {
 	
 	/// <summary>

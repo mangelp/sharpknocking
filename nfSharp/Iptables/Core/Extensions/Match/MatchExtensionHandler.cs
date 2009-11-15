@@ -22,7 +22,7 @@
 using System;
 
 using NFSharp.Iptables.Util;
-using NFSharp.Iptables.Extensions;
+using NFSharp.Iptables.Core.Extensions;
 
 
 namespace NFSharp.Iptables.Core.Extensions.Match
