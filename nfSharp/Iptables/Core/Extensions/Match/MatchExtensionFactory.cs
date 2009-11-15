@@ -27,7 +27,7 @@ using NFSharp.Common.Types;
 
 using NFSharp.Iptables.Extensions;
 
-namespace NFSharp.Iptables.Extensions.ExtendedMatch
+namespace NFSharp.Iptables.Core.Extensions.Match
 {
     /// <summary>
     /// Defines a factory that creates instances of objects that extends the base
