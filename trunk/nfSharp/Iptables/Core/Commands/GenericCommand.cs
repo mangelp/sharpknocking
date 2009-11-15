@@ -26,7 +26,7 @@ using System.Collections;
 using NFSharp.Iptables;
 
 using NFSharp.Common.Types;
-using NFSharp.Common.Options;
+using NFSharp.Iptables.Parser.IptablesSaveFormat;
 
 namespace NFSharp.Iptables.Core.Commands
 {
@@ -55,9 +55,9 @@ namespace NFSharp.Iptables.Core.Commands
 		private NetfilterRule rule;
 		
 		/// <summary>
-		/// Gets the list of rules modified/created/updated by this command
+		/// Gets the rule modified/created/updated by this command
 		/// </summary>
-		public List<NetfilterRule> Rules
+		public NetfilterRule Rule
 		{
 			get { return this.rule;}
 		}

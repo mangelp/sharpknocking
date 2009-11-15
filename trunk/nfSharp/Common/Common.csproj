@@ -8,6 +8,7 @@
     <ProjectGuid>{249F38AC-2EDF-4F0E-88A2-767029E1150B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Common</AssemblyName>
+    <RootNamespace>NFSharp.Common</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +33,40 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Types\AliasAttribute.cs" />
+    <Compile Include="Types\AliasUtil.cs" />
+    <Compile Include="Types\ArrayComparer.cs" />
+    <Compile Include="Types\AssemblyUtil.cs" />
+    <Compile Include="Types\AttributeUtil.cs" />
+    <Compile Include="Types\Conversion.cs" />
+    <Compile Include="Types\StringUtil.cs" />
+    <Compile Include="Types\TypeUtil.cs" />
+    <Compile Include="Net\Enumerations.cs" />
+    <Compile Include="Net\Err.cs" />
+    <Compile Include="Net\IPAddressLongMask.cs" />
+    <Compile Include="Net\IPAddressMask.cs" />
+    <Compile Include="Net\IPAddressShortMask.cs" />
+    <Compile Include="Net\IPAddressWrapper.cs" />
+    <Compile Include="Net\Structs.cs" />
+    <Compile Include="Unix\Net\NetworkServicesData.cs" />
+    <Compile Include="Unix\Net\Protocols.cs" />
+    <Compile Include="Unix\Net\Structs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Types\" />
+    <Folder Include="Net\" />
+    <Folder Include="Unix\" />
+    <Folder Include="Unix\Net\" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <StandardHeader Text=" &#xA; Copyright (C) ${Year} SharpKnocking project&#xA; File created by ${CopyrightHolder}&#xA;&#xA; This program is free software: you can redistribute it and/or modify&#xA; it under the terms of the GNU General Public License as published by&#xA; the Free Software Foundation, either version 3 of the License, or&#xA; (at your option) any later version.&#xA;&#xA; This program is distributed in the hope that it will be useful,&#xA; but WITHOUT ANY WARRANTY; without even the implied warranty of&#xA; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#xA; GNU General Public License for more details.&#xA;&#xA; You should have received a copy of the GNU General Public License&#xA; along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.&#xA;" inheritsSet="MITX11License" />
+          <TextStylePolicy FileWidth="120" TabWidth="4" TabsToSpaces="False" NoTabsAfterNonTabs="False" RemoveTrailingWhitespace="True" EolMarker="Native" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
 </Project>

@@ -1,7 +1,7 @@
-// FragmentOption.cs
+// RuleException.cs
 //
-//  Copyright (C) 2006 SharpKnocking project
-//  Created by Miguel Angel Pérez, mangelp@gmail.com
+//  Copyright (C) 2007 iSharpKnocking project
+//  Created by Miguel Angel Perez (mangelp{@}gmail{d0t}com)
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -17,30 +17,28 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
 //
+//
+
 using System;
 
-using NFSharp.Iptables;
-
-namespace NFSharp.Iptables.Core.Commands.Options
+namespace NFSharp.Iptables.Core
 {
 	
-	
-	public class FragmentOption: GenericOption
-	{	    
-		public FragmentOption()
-		  :base(RuleOptions.Fragment)
+	/// <summary>
+	/// Exception produced in a rule operation
+	/// </summary>
+	public class RuleException: Exception
+	{
+		
+		public RuleException(string text)
+		    :base(text)
 		{
 		}
 		
-		public override bool TryReadValues (string strVal, out string errStr)
+		public RuleException(string text, Exception innerException)
+		    :base(text, innerException)
 		{
-		    errStr="The fragment option doesn't allow any values";
-		    return false;
-		}
-		
-		protected override string GetValueAsString()
-		{
-			return String.Empty;
+		    
 		}
 	}
 }

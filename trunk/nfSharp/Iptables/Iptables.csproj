@@ -92,6 +92,18 @@
     <Compile Include="Parser\IptablesSaveFormat\SimpleParameter.cs" />
     <Compile Include="Parser\StreamParser.cs" />
     <Compile Include="Parser\IptablesSaveFormatParser.cs" />
+    <Compile Include="Util\EnumValueAliasCache.cs" />
+    <Compile Include="Core\Definitions.cs" />
+    <Compile Include="Core\DuplicatedElementExcepcion.cs" />
+    <Compile Include="Core\IStringConvertibleObject.cs" />
+    <Compile Include="Core\NetfilterChain.cs" />
+    <Compile Include="Core\NetfilterException.cs" />
+    <Compile Include="Core\NetfilterRule.cs" />
+    <Compile Include="Core\NetfilterRuleList.cs" />
+    <Compile Include="Core\NetfilterTable.cs" />
+    <Compile Include="Core\NetfilterTableSet.cs" />
+    <Compile Include="Core\RuleException.cs" />
+    <Compile Include="Core\RuleParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -99,6 +111,7 @@
       <Properties>
         <Policies>
           <StandardHeader Text=" &#xA; Copyright (C) ${Year} SharpKnocking project&#xA; File created by ${CopyrightHolder}&#xA;&#xA; This program is free software: you can redistribute it and/or modify&#xA; it under the terms of the GNU General Public License as published by&#xA; the Free Software Foundation, either version 3 of the License, or&#xA; (at your option) any later version.&#xA;&#xA; This program is distributed in the hope that it will be useful,&#xA; but WITHOUT ANY WARRANTY; without even the implied warranty of&#xA; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#xA; GNU General Public License for more details.&#xA;&#xA; You should have received a copy of the GNU General Public License&#xA; along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.&#xA;" inheritsSet="MITX11License" />
+          <TextStylePolicy FileWidth="120" TabWidth="4" TabsToSpaces="False" NoTabsAfterNonTabs="False" RemoveTrailingWhitespace="True" EolMarker="Native" />
         </Policies>
       </Properties>
     </MonoDevelop>
@@ -107,5 +120,12 @@
     <Folder Include="Parser\" />
     <Folder Include="Parser\IptablesSaveFormat\" />
     <Folder Include="Parser\XmlFileFormat\" />
+    <Folder Include="Util\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{249F38AC-2EDF-4F0E-88A2-767029E1150B}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

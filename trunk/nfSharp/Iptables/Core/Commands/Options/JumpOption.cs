@@ -20,11 +20,11 @@
 using System;
 
 using NFSharp.Iptables;
-using NFSharp.Iptables.Extensions.ExtendedTarget;
+using NFSharp.Iptables.Core.Extensions.Target;
 
 using NFSharp.Common.Types;
 
-namespace NFSharp.Iptables.Options
+namespace NFSharp.Iptables.Core.Commands.Options
 { 
 	/// <summary>
 	/// Jump option.

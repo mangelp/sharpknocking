@@ -21,14 +21,14 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-using NFSharp.Iptables.Util;
-using NFSharp.Iptables.Extensions;
-using NFSharp.Iptables.Extensions.ExtendedMatch;
+using NFSharp.Iptables.Core.Extensions;
+using NFSharp.Iptables.Core.Extensions.Match;
 
 using NFSharp.Common.Types;
-using NFSharp.Common.Options;
+using NFSharp.Iptables.Parser.IptablesSaveFormat;
+using NFSharp.Iptables.Util;
 
-namespace NFSharp.Iptables.Options
+namespace NFSharp.Iptables.Core.Commands.Options
 {
 	
 	/// <summary>
