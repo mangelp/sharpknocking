@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3E6F7016-33B4-4B56-B243-61784654E988}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>NFSharp.Iptables</RootNamespace>
+    <AssemblyName>Iptables</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Core\Commands\AppendRuleCommand.cs" />
+    <Compile Include="Core\Commands\DeleteChainCommand.cs" />
+    <Compile Include="Core\Commands\DeleteRuleCommand.cs" />
+    <Compile Include="Core\Commands\FlushChainCommand.cs" />
+    <Compile Include="Core\Commands\GenericCommand.cs" />
+    <Compile Include="Core\Commands\InsertRuleCommand.cs" />
+    <Compile Include="Core\Commands\IptablesCommandFactory.cs" />
+    <Compile Include="Core\Commands\ListChainCommand.cs" />
+    <Compile Include="Core\Commands\NewChainCommand.cs" />
+    <Compile Include="Core\Commands\RenameChainCommand.cs" />
+    <Compile Include="Core\Commands\ReplaceRuleCommand.cs" />
+    <Compile Include="Core\Commands\SetChainPolicyCommand.cs" />
+    <Compile Include="Core\Commands\ZeroChainCommand.cs" />
+    <Compile Include="Core\Extensions\Definitions.cs" />
+    <Compile Include="Core\Extensions\ExtensionHandler.cs" />
+    <Compile Include="Core\Extensions\ExtensionParameter.cs" />
+    <Compile Include="Core\Extensions\IExtensionHandler.cs" />
+    <Compile Include="Core\Extensions\IExtensionParameter.cs" />
+    <Compile Include="Core\Extensions\ReadOnlyListAdapter.cs" />
+    <Compile Include="Core\Extensions\Match\MatchExtensionFactory.cs" />
+    <Compile Include="Core\Extensions\Match\MatchExtensionHandler.cs" />
+    <Compile Include="Core\Extensions\Match\MatchExtensionParameter.cs" />
+    <Compile Include="Core\Extensions\Match\ReadOnlyMatchExtensionListAdapter.cs" />
+    <Compile Include="Core\Extensions\Target\ReadOnlyTargetExtensionListAdapter.cs" />
+    <Compile Include="Core\Extensions\Target\TargetExtensionFactory.cs" />
+    <Compile Include="Core\Extensions\Target\TargetExtensionHandler.cs" />
+    <Compile Include="Core\Extensions\Target\TargetExtensionParameter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
+    <Folder Include="Core\Rules\" />
+    <Folder Include="Core\Commands\" />
+    <Folder Include="Core\Extensions\" />
+    <Folder Include="Core\Commands\Parser\" />
+    <Folder Include="Core\Commands\Options\" />
+    <Folder Include="Core\Extensions\Match\" />
+    <Folder Include="Core\Extensions\Target\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties xmlns="">
+        <Policies>
+          <StandardHeader Text=" &#xA; Copyright (C) ${Year} SharpKnocking project&#xA; File created by ${CopyrightHolder}&#xA;&#xA; This program is free software: you can redistribute it and/or modify&#xA; it under the terms of the GNU General Public License as published by&#xA; the Free Software Foundation, either version 3 of the License, or&#xA; (at your option) any later version.&#xA;&#xA; This program is distributed in the hope that it will be useful,&#xA; but WITHOUT ANY WARRANTY; without even the implied warranty of&#xA; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#xA; GNU General Public License for more details.&#xA;&#xA; You should have received a copy of the GNU General Public License&#xA; along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.&#xA;" inheritsSet="MITX11License" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>
