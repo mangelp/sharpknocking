@@ -22,9 +22,12 @@
 using System;
 
 using CommonUtilities.Types;
+
+using NFSharp.Iptables.Core;
+using NFSharp.Iptables.Core.Commands;
 using NFSharp.Iptables.Parser.IptablesSaveFormat;
 
-namespace NFSharp.Iptables.Core.Commands
+namespace NFSharp.Iptables.Parser.IptablesSaveFormat
 {
 	
 	/// <summary>
@@ -32,13 +35,7 @@ namespace NFSharp.Iptables.Core.Commands
 	/// </summary>
 	public static class IptablesCommandFactory
 	{
-	    private static string currentNamespace;
-	    
-	    static IptablesCommandFactory()
-	    {
-	        Type t = typeof(IptablesCommandFactory);
-	        currentNamespace = t.Namespace;
-	    }
+	    private static string commandsNamespace = "NFSharp.Iptables.Core.Commands";
 	    
 		/// <summary>
 		/// Builds a command from a simple parameter. 
@@ -94,7 +91,7 @@ namespace NFSharp.Iptables.Core.Commands
 	        RuleCommands type = GenericCommand.GetCommandType(param.Name);
 	        string[] parts = StringUtil.Split(param.Value, true, ' ');
 	        //Create the instance for the concrete object
-	        Type objType = Type.GetType(currentNamespace+"."+type.ToString()+"Command",
+	        Type objType = Type.GetType(commandsNamespace + "." + type.ToString()+"Command",
                                         true, 
 			                            false);
 	        res = (GenericCommand)Activator.CreateInstance(objType);

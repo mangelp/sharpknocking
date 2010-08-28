@@ -39,7 +39,6 @@
     <Compile Include="Core\Commands\FlushChainCommand.cs" />
     <Compile Include="Core\Commands\GenericCommand.cs" />
     <Compile Include="Core\Commands\InsertRuleCommand.cs" />
-    <Compile Include="Core\Commands\IptablesCommandFactory.cs" />
     <Compile Include="Core\Commands\ListChainCommand.cs" />
     <Compile Include="Core\Commands\NewChainCommand.cs" />
     <Compile Include="Core\Commands\RenameChainCommand.cs" />
@@ -90,7 +89,6 @@
     <Compile Include="Parser\IptablesSaveFormat\OptionParserException.cs" />
     <Compile Include="Parser\IptablesSaveFormat\ParameterList.cs" />
     <Compile Include="Parser\IptablesSaveFormat\SimpleParameter.cs" />
-    <Compile Include="Parser\StreamParser.cs" />
     <Compile Include="Parser\IptablesSaveFormatParser.cs" />
     <Compile Include="Util\EnumValueAliasCache.cs" />
     <Compile Include="Core\Definitions.cs" />
@@ -104,6 +102,13 @@
     <Compile Include="Core\NetfilterTableSet.cs" />
     <Compile Include="Core\RuleException.cs" />
     <Compile Include="Core\RuleParser.cs" />
+    <Compile Include="Parser\TextFileParser.cs" />
+    <Compile Include="Parser\IRuleParser.cs" />
+    <Compile Include="Parser\IptablesSaveFormat\CommandParser.cs" />
+    <Compile Include="Parser\IptablesSaveFormat\ChainParser.cs" />
+    <Compile Include="Parser\RuleParserException.cs" />
+    <Compile Include="Parser\IptablesSaveFormat\IptablesCommandFactory.cs" />
+    <Compile Include="Parser\IptablesSaveFormat\TableParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -111,7 +116,7 @@
       <Properties>
         <Policies>
           <StandardHeader Text=" &#xA; Copyright (C) ${Year} SharpKnocking project&#xA; File created by ${CopyrightHolder}&#xA;&#xA; This program is free software: you can redistribute it and/or modify&#xA; it under the terms of the GNU General Public License as published by&#xA; the Free Software Foundation, either version 3 of the License, or&#xA; (at your option) any later version.&#xA;&#xA; This program is distributed in the hope that it will be useful,&#xA; but WITHOUT ANY WARRANTY; without even the implied warranty of&#xA; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#xA; GNU General Public License for more details.&#xA;&#xA; You should have received a copy of the GNU General Public License&#xA; along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.&#xA;" inheritsSet="MITX11License" />
-          <TextStylePolicy FileWidth="120" TabWidth="4" TabsToSpaces="False" NoTabsAfterNonTabs="False" RemoveTrailingWhitespace="True" EolMarker="Native" />
+          <TextStylePolicy FileWidth="120" TabWidth="4" RemoveTrailingWhitespace="True" inheritsSet="Mono" inheritsScope="text/plain" />
         </Policies>
       </Properties>
     </MonoDevelop>

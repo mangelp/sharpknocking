@@ -71,6 +71,16 @@ namespace NFSharp.Iptables.Core
             NetfilterTable table = new NetfilterTable();
             this.tables.Add(table);
         }
+
+		/// <summary>
+		/// Adds a new table to the table set
+		/// </summary>
+		/// <param name="table">
+		/// A <see cref="NetfilterTable"/>
+		/// </param>
+		public void AddTable(NetfilterTable table) {
+			this.tables.Add(table);
+		}
 		
 		/// <summary>
 		/// Finds a chain in the current set of tables
@@ -118,109 +128,13 @@ namespace NFSharp.Iptables.Core
 		/// </summary>
 		public void Clear()
 		{
-		    foreach(NetfilterTable table in this.tables)
+		    foreach(NetfilterTable table in this.tables) {
 				table.Clear();
+			}
 			this.tables.Clear();
 		}
 		
 		/*** Get tableset/ruleset from iptables-save output ***/
-		
-		//TODO:All this stuff doesn't belong to the table set. It must have his own class for parsing
-		//ipsables-save output text.
-		
-		/// <summary>
-		/// Sets the table set from the string.
-        /// </summary>
-		/// <remarks>
-		/// The previous one is completely removed and the string must be in the same 
-		/// format as iptables-save output.
-		/// </remarks>
-		public void LoadFromString(string current)
-		{
-		    //Clear existing stuff
-			this.Clear();
-		    
-		    string[] lines = current.Split(new char[]{'\n','\r'}, StringSplitOptions.RemoveEmptyEntries);
-		    
-		    string line;
-		    
-		    NetfilterTable lastTable = null;
-		    NetfilterChain lastChain = null;
-		    PacketTableType tableType;
-			GenericCommand gCmd = null;
-		    
-		    //Now process each line until COMMIT line
-		    for(int i=0;i<lines.Length;i++)
-		    {
-				//Clear spureus spaces from line
-		        line = lines[i].Trim();
-				//Console.WriteLine("Got line "+line);
-		        
-				//Commented and empty lines are ignored
-				if(String.IsNullOrEmpty(line) || line.StartsWith("#"))
-		            continue;
-				//COMMIT means the end of the parsing, the rest is just ignored
-		        else if(line.Equals("COMMIT")) {
-		            break;
-				//Try to get a table
-		        } else if(NetfilterTable.TryGetTableType(line,out tableType)) {
-					//We got a table, we keep a reference to it (the last found table)
-		            lastTable = new NetfilterTable(tableType);
-		            this.tables.Add(lastTable);
-				//Check if it is a chain definition
-		        } else if(NetfilterChain.IsChain(line)) {
-					//If there is no table, cry
-					if(lastTable == null)
-						throw new NetfilterException("Bad format for input string. Can't be a chain before the table");
-					//We got a chain, we append it to the last added table if it is not a built-in one
-					//It it is built-in we already have it
-		            lastChain = NetfilterChain.Parse(line, lastTable);
-					if(!lastChain.IsBuiltIn)
-						lastTable.AddChain(lastChain);
-					else
-						lastTable.SetChainCounters(lastChain.ChainType, lastChain.PacketCount, lastChain.ByteCount);
-						
-		        } else if(GenericCommand.CanBeACommand (line)) {
-		            //No chain found. Can't continue.
-		            if(lastChain == null)
-		                throw new NetfilterException("Bad format for input string. Can't be a command before the chains");
-		            else if(lastTable == null)
-						throw new NetfilterException("Bad format for input string. Can't be a command before the table");
-					//Here what we have is a command where tipically the last argument is a rule.
-					//Tipical commands are for inserting rules, but who knows what we can find ...
-					
-		            //Use the rule parser to build a GenericCommand from the line that
-					//contains all the information in the line
-		            gCmd = RuleParser.GetCommand(line, lastTable);
-		            
-		            if(gCmd!=null && gCmd.Rule != null) 
-		                this.Exec(gCmd);
-		            else
-		                throw new NetfilterException("Bad format for input string. Can't get the rule for: \n"+line);
-		        } else 
-					throw new NetfilterException("Can't parse line: "+line);
-				
-		    }
-		}
-					                             
-		/// <summary>
-		/// Sets the table set from the file. The previous one is completely
-		/// removed and the file must be in the same format as iptables-save
-		/// outputs.
-        /// </summary>
-		public void LoadFromFile(string fileName)
-		{
-			//TODO: Maybe we should check the existance of the file, the permissions,
-			//and all those things that can cause this to give us an exception
-			StreamReader sReader = File.OpenText(fileName);
-		    
-		    if(sReader==null)
-		        return;
-		    
-		    string text = sReader.ReadToEnd();
-		    
-		    this.LoadFromString(text);
-		}
 		
 		/// <summary>
 		/// Returns a string with all the information in the current table set
