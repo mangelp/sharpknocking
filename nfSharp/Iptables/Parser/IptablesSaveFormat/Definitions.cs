@@ -143,4 +143,8 @@ namespace NFSharp.Iptables.Parser.IptablesSaveFormat
 		/// </remarks>
 		ValueRange=128,
 	}
+
+	public enum Tokens {
+		COMMIT
+	}
 }

@@ -274,38 +274,25 @@ namespace NFSharp.Iptables.Core
 			this.AppendContentsTo(sb, options);
 		    return sb.ToString();
 		}
-		
+
 		/// <summary>
 		/// Gets if the string is a valid table. If it is the enum that matches
 		/// the table is set in the output parameter.
         /// </summary>
 		public static bool TryGetTableType(string line, out PacketTableType table)
 		{
-		    line = line.Trim();
 			object obj = null;
-		    
-		    if(line.StartsWith("*"))
-		        line = line.Substring(1).Trim();
-			
+
+			if(line.StartsWith("*"))
+				line = line.Substring(1).Trim();
+
 			if(!TypeUtil.TryGetEnumValue(typeof(PacketTableType), line, out obj)) {
-			    table = PacketTableType.Filter;
-			    return false;
-		    }
-			
+				table = PacketTableType.Filter;
+				return false;
+			}
+
 			table = (PacketTableType)obj;
-		    return true;
-		}
-		
-		/// <summary>
-        /// Parses a string and builds a instance of a NetfilterTable object
-        /// </summary>
-		public static NetfilterTable Parse(string line)
-		{
-			PacketTableType tp = PacketTableType.Filter;
-		    if(!TryGetTableType(line, out tp))
-		        return null;
-		    
-		    return new NetfilterTable(tp);
+			return true;
 		}
 	}
 }
