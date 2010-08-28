@@ -17,15 +17,22 @@
 // 
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace NFSharp.Iptables.Parser
 {
-	
+	/// <summary>
+	/// Factory that returns a rule parser for a concrete format
+	/// </summary>
 	public class Factory
 	{
-		
 		private static Factory instance;
-		
+
+		/// <summary>
+		/// Singleton that returns the factory instance
+		/// </summary>
 		public static Factory Instance {
 			get {
 				if (instance == null) {
@@ -39,9 +46,34 @@ namespace NFSharp.Iptables.Parser
 		private Factory()
 		{
 		}
-		
-		public void getStreamParser(string fileName) {
-			
+
+		/// <summary>
+		/// Gets a parser for a file
+		/// </summary>
+		/// <param name="parserName">
+		/// A <see cref="System.String"/> with the name of the parser to instantiante.
+		/// </param>
+		/// <example>
+		/// GetParser("IptablesSaveFormat");
+		/// </example>
+		public IRuleParser GetParser (string parserName, StringDictionary options) {
+			parserName += "Parser";
+
+			// TODO: Support to load parsers from an assembly in a given extensions folder
+
+			IRuleParser result = null;
+
+			switch (parserName) {
+				case "IptablesSaveFormatParser":
+					result = new IptablesSaveFormatParser ();
+					break;
+				default:
+					throw new ArgumentException("Invalid parser name " + parserName);
+			}
+
+			result.Options = options;
+
+			return result;
 		}
 	}
 }

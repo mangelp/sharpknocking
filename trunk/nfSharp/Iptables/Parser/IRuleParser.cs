@@ -1,6 +1,6 @@
 //  
-//  Copyright (C) 2009 SharpKnocking project
-//  File created by Miguel Angel Perez
+//  Copyright (C) 2010 SharpKnocking project
+//  File created by mangelp
 // 
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -17,19 +17,32 @@
 // 
 
 using System;
+using System.Collections;
+using System.Collections.Specialized;
+using NFSharp.Iptables.Core;
 
 namespace NFSharp.Iptables.Parser
 {
-	/// <summary>
-	/// Parses a stream of text assuming it contains iptables commands in the
-	/// same format as iptables-save command produces and iptables-restore
-	/// supports.
-	/// </summary>
-	public class StreamParser
+	public interface IRuleParser
 	{
-		
-		public StreamParser()
-		{
-		}
+		/// <summary>
+		/// Parses the rule source and returns the table set
+		/// </summary>
+		/// <returns>
+		/// A <see cref="NetfilterTableSet"/>
+		/// </returns>
+		NetfilterTableSet parse();
+		/// <summary>
+		/// Stores a table set in the rule source replacing the previous one.
+		/// </summary>
+		/// <param name="tableSet">
+		/// A <see cref="NetfilterTableSet"/>
+		/// </param>
+		void store(NetfilterTableSet tableSet);
+
+		/// <summary>
+		/// Options for parsing
+		/// </summary>
+		StringDictionary Options {get;set;}
 	}
 }
