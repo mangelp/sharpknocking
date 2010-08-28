@@ -17,17 +17,12 @@
 // 
 
 using System;
+using NFSharp.Iptables.Core;
 
 namespace NFSharp.Iptables.Parser
 {
-	
-	
-	public class IptablesSaveFormatParser : StreamParser
+	public class IptablesSaveFormatParser : TextFileParser
 	{
-		
-		public IptablesSaveFormatParser()
-			: base()
-		{
-		}
+
 	}
 }
