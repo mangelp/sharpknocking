@@ -34,7 +34,7 @@ namespace CommonUtilities.Types
 		/// <summary>
 	    /// Splits the input string removing empty strings if specified.
 	    /// </summary>
-		[Obsolete("Use String.Split instead")]
+		//[Obsolete("Use String.Split instead")]
 	    public static string[] Split(string input, bool removeEmpty, params char[] chars)
 	    {
 	        //Normal split

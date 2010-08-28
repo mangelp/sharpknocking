@@ -75,8 +75,8 @@ namespace CommonUtilities.Types
 				//Console.WriteLine ("Assembly file not found: "+asmName);
 				return asm;
 			}
-			
-			//Try to load an assembly with the name
+
+			//Try to load an assembly by the name
 			try {
 				//Console.WriteLine("Trying to load assembly: "+asmName);
 				asm = Assembly.LoadFrom(asmName);
@@ -102,18 +102,18 @@ namespace CommonUtilities.Types
 		/// <returns>
 		/// A <see cref="Type"/> if it was found in an assembly or null if not
 		/// </returns>
-		public static Type TryLoadWithType(string fullTypeName, params string[] assemblies)
+		public static Type TryLoadWithType (string fullTypeName, params string[] assemblies)
 		{
 			//Console.WriteLine("Loading type: "+fullTypeName+", from "+(assemblies.Length+1));
-			Type result = Type.GetType(fullTypeName, false, true);
+			Type result = Type.GetType (fullTypeName, false, true);
 			Assembly asm = null;
 			int pos = 0;
-			//While the type is not found go throught the array
-			while(result==null && pos<assemblies.Length)
-			{
-				asm = TryLoadAssembly(assemblies[pos]);
-				if( asm != null )
-					result = asm.GetType(fullTypeName, false, true);
+			// While the type is not found go throught the array
+			while (result == null && pos < assemblies.Length) {
+				asm = TryLoadAssembly (assemblies[pos]);
+				if (asm != null) {
+					result = asm.GetType (fullTypeName, false, true);
+				}
 				pos = pos + 1;
 			}
 			
