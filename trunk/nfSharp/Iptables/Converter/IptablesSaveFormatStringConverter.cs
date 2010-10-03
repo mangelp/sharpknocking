@@ -19,6 +19,8 @@
 using System;
 using NFSharp.Iptables.Core;
 using System.Text;
+using NFSharp.Iptables.Core.Extensions.Match;
+using NFSharp.Iptables.Core.Commands.Options;
 
 namespace NFSharp.Iptables.Converter {
 
@@ -111,7 +113,34 @@ namespace NFSharp.Iptables.Converter {
         }
 
         protected void ConvertRule(NetfilterRule rule, StringBuilder sb) {
-            // TODO: Convert rules
+            // Console.WriteLine("** Converting rule to string ** ");
+			JumpOption jumpOption = null;
+
+            for(int i=0; i<rule.Options.Count; i++) {
+				GenericOption option = rule.Options[i];
+
+                if(option is JumpOption) {
+					jumpOption = (JumpOption) option;
+                    continue;
+                } else if(rule.Options[i] is MatchExtensionOption) {
+                    // First we print the option and then the parameters
+                    sb.Append(option.ToString() + " ");
+                    MatchExtensionHandler handler = this.FindMatchExtensionHandler((MatchExtensionOption)this.options[i]);
+                    if(handler!=null) {
+                        handler.AppendContentsTo(sb);
+                        sb.Append(" ");
+                    }
+                    // Console.WriteLine("MatchExtension: "+this.options[i]+" "+handler);
+                } else {
+                    // Console.WriteLine("Option: "+this.options[i]);
+                    sb.Append(option.ToString() + " ");
+                }
+            }
+
+            // Console.WriteLine("Target extension: "+jumpOption);
+            if(jumpOption != null) {
+                sb.Append(jumpOption.ToString());
+            }
         }
     }
 }

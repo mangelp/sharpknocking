@@ -27,7 +27,7 @@ using CommonUtilities.Types;
 
 namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
     /// <summary>
-    /// Models a parser for options.
+    /// Models a parser for options of commands used in iptables-save format.
     /// </summary>
     public class OptionParser {
         /// <summary>
@@ -54,7 +54,8 @@ namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
         private bool throwExOnError;
 
         /// <summary>
-        /// Gets/Sets a flag that causes an exception to be thrown when the parser founds an error
+        /// Gets/Sets a flag that causes an exception to be thrown when the
+        /// parser founds an error
         /// </summary>
         public bool ThrowExOnError {
             get {
@@ -67,7 +68,8 @@ namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
         private bool showMessage;
 
         /// <summary>
-        /// Gets/Sets a flag that causes a message to be printed to console output when the parser
+        /// Gets/Sets a flag that causes a message to be printed to console
+        /// output when the parser
         /// founds an error.
         /// </summary>
         public bool ShowMessage {

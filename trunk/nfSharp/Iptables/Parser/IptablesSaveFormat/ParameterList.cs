@@ -24,7 +24,9 @@ using System.Collections;
 
 namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
     /// <summary>
-    /// Models a list of parameters where each one must be a subtype of SimpleParameter
+    /// Models a list of parameters where each one must be a subtype of
+    /// SimpleParameter and also adds some events fired when an item is
+    /// added, removed or when the collection is cleared
     /// </summary>
     public class ParameterList<T>: CollectionBase where T:SimpleParameter {
         /// <summary>

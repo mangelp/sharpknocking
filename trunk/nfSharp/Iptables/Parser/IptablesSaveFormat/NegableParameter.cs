@@ -23,8 +23,8 @@ using System;
 
 namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
     /// <summary>
-    /// Models a parameter that can be preceeded by an '!' character that changes the
-    /// sense of the value.
+    /// Models a parameter that can be preceeded by an '!' character that
+    /// changes the sense of the value.
     /// </summary>
     public abstract class NegableParameter: AbstractParameter {
         private bool not;

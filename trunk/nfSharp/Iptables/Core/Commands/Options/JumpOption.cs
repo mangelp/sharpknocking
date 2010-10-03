@@ -201,7 +201,7 @@ namespace NFSharp.Iptables.Core.Commands.Options {
                     str = this.customTargetName;
                 }
             } else {
-                str=AliasUtil.GetDefaultAlias(this.target);
+                str = AliasUtil.GetDefaultAlias(this.target);
             }
 
             return str;
