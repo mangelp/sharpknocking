@@ -15,7 +15,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 //
 
@@ -23,50 +23,50 @@ using System;
 
 using NFSharp.Iptables;
 
-namespace NFSharp.Iptables.Core.Commands
-{
-	/// <summary>
-	/// Models the set chain policy command.
-	/// </summary>
-	public class SetChainPolicyCommand: GenericCommand
-	{
-	    private string target;
-	    
-		/// <value>
-		/// Target of the policy change
-		/// </value>
-	    public string Target
-	    {
-	        get { return this.target;}
-	        set { this.target = value;}
-	    }
+namespace NFSharp.Iptables.Core.Commands {
+    /// <summary>
+    /// Models the set chain policy command.
+    /// </summary>
+    public class SetChainPolicyCommand: GenericCommand {
+        private string target;
 
-		/// <summary>
-		/// Gets if a rule must be specified for the command
-		/// </summary>
-	    public override bool MustSpecifyRule {
-	    	get { return false; }
-	    }
+        /// <value>
+        /// Target of the policy change
+        /// </value>
+        public string Target {
+            get {
+                return this.target;
+            } set {
+                this.target = value;
+            }
+        }
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-	    public SetChainPolicyCommand()
-	      :base(RuleCommands.SetChainPolicy)
-		{
-			throw new NotImplementedException ("This command is not implemented properly to be usable");
-		}
-		
-		/// <summary>
-		/// Gets an string that represents the value of the command
-		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String"/>
-		/// </returns>
-		protected override string GetValueAsString ()
-		{
-			return this.target;
-		}
+        /// <summary>
+        /// Gets if a rule must be specified for the command
+        /// </summary>
+        public override bool MustSpecifyRule {
+            get {
+                return false;
+            }
+        }
 
-	}
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public SetChainPolicyCommand()
+        :base(RuleCommands.SetChainPolicy) {
+            throw new NotImplementedException ("This command is not implemented properly to be usable");
+        }
+
+        /// <summary>
+        /// Gets an string that represents the value of the command
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/>
+        /// </returns>
+        protected override string GetValueAsString () {
+            return this.target;
+        }
+
+    }
 }

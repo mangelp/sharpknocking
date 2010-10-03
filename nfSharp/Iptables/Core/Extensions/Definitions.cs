@@ -15,7 +15,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 //
 
@@ -23,18 +23,16 @@ using System;
 
 using CommonUtilities.Types;
 
-namespace NFSharp.Iptables.Core.Extensions
-{
-	
-	/// <summary>
+namespace NFSharp.Iptables.Core.Extensions {
+
+    /// <summary>
     /// Match extensions.
     /// </summary>
     /// <remarks>
     /// The only supported are: tcp, udp, icmp and state.
     /// Each match extension handling must be developed in a separate class.
     /// </remarks>
-    public enum MatchExtension
-    {
+    public enum MatchExtension {
         /// <summary>
         /// Default value. None selected.
         /// </summary>
@@ -86,59 +84,59 @@ namespace NFSharp.Iptables.Core.Extensions
         /// </summary>
         [Alias("connlimit")]
         Connlimit,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("connmark")]
         Connmark,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("conrate")]
         Connrate,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("conntrack")]
         Conntrack,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("dccp")]
         Dccp,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("dscp")]
         Dscp,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("dstlimit")]
         Dstlimit,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("ecn")]
         Ecn,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("esp")]
         Esp,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("fuzzy")]
         Fuzzy,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("hashlimit")]
         Hashlimit,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("helper")]
         Helper,
         /// <summary>
@@ -146,119 +144,119 @@ namespace NFSharp.Iptables.Core.Extensions
         /// </summary>
         [Alias("icmp")]
         Icmp,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("iprange")]
         Iprange,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("ipv4options")]
         Ipv4options,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("length")]
         Length,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("limit")]
         Limit,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("mac")]
         Mac,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("mark")]
         Mark,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("mport")]
         Mport,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("multiport")]
         Multiport,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("nth")]
         Nth,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("osf")]
         Osf,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("owner")]
         Owner,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("physdev")]
         Physdev,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("pkttype")]
         Pkttype,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("policy")]
         Policy,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("psd")]
         Psd,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("quota")]
         Quota,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("random")]
         Random,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("realm")]
         Realm,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("recent")]
         Recent,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("sctp")]
         Sctp,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("set")]
         Set,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("state")]
         State,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("string")]
         String,
         /// <summary>
@@ -266,29 +264,29 @@ namespace NFSharp.Iptables.Core.Extensions
         /// </summary>
         [Alias("tcp")]
         Tcp,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("tcpmss")]
         Tcpmss,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("time")]
         Time,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("tos")]
         Tos,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("ttl")]
         Ttl,
-		/// <summary>
-		/// 
-		/// </summary>
+        /// <summary>
+        ///
+        /// </summary>
         [Alias("u32")]
         U32,
         /// <summary>
@@ -303,16 +301,15 @@ namespace NFSharp.Iptables.Core.Extensions
         [Alias("unclean")]
         Unclean
     }
-    
+
     /// <summary>
     /// Target extensions for the -j (--jump) option of the iptables command-line
     /// </summary>
     /// <remarks>
     /// Not all the extensions have been implemented. At the time of this writing
     /// there were plans on implementing ulog, log and reject targets.
-	/// </remarks>
-    public enum TargetExtension
-    {
+    /// </remarks>
+    public enum TargetExtension {
         [Alias("BALANCE")]
         Balance,
         [Alias("CLASSIFY")]

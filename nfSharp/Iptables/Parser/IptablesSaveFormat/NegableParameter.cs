@@ -15,60 +15,59 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 //
 
 using System;
 
-namespace NFSharp.Iptables.Parser.IptablesSaveFormat
-{
-	/// <summary>
-	/// Models a parameter that can be preceeded by an '!' character that changes the 
-	/// sense of the value.
-	/// </summary>
-	public abstract class NegableParameter: AbstractParameter
-	{
-	    private bool not;
-	    
-	    /// <summary>
-	    /// Gets/sets if the meaning of the value must change
-	    /// </summary>
-	    public bool Not
-	    {
-	        get { return this.not;}
-	        set { this.not = value;}
-	    }
-		
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public NegableParameter()
-			:base()
-		{
-		}
-		
-		/// <summary>
-		/// Returns an string that represents the parameter
-		/// </summary>
-		/// <remarks>
-		/// Refines parent default implementation.
-		/// </remarks>
-		public override string ToString()
-		{
-		    string result = base.GetNameAsString();
-			string value = this.GetValueAsString ();
-			
-		    if (this.not) {
-		        if (String.IsNullOrEmpty(value))
-		            result = "! "+result;
-				else
-					result = "! "+result+" "+value;
-		    } else if (!String.IsNullOrEmpty(value)) {
-		        result += " " + value;
-		    }
-		    
-		    return result;
-		}
-	}
+namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
+    /// <summary>
+    /// Models a parameter that can be preceeded by an '!' character that changes the
+    /// sense of the value.
+    /// </summary>
+    public abstract class NegableParameter: AbstractParameter {
+        private bool not;
+
+        /// <summary>
+        /// Gets/sets if the meaning of the value must change
+        /// </summary>
+        public bool Not {
+            get {
+                return this.not;
+            } set {
+                this.not = value;
+            }
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public NegableParameter()
+        :base() {
+        }
+
+        /// <summary>
+        /// Returns an string that represents the parameter
+        /// </summary>
+        /// <remarks>
+        /// Refines parent default implementation.
+        /// </remarks>
+        public override string ToString() {
+            string result = base.GetNameAsString();
+            string value = this.GetValueAsString ();
+
+            if (this.not) {
+                if (String.IsNullOrEmpty(value)) {
+                    result = "! "+result;
+                } else {
+                    result = "! "+result+" "+value;
+                }
+            } else if (!String.IsNullOrEmpty(value)) {
+                result += " " + value;
+            }
+
+            return result;
+        }
+    }
 }

@@ -15,44 +15,42 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 //
 
 using System;
 
-namespace NFSharp.Iptables.Core.Commands
-{
-	/// <summary>
-	/// Models the delete rule command
-	/// </summary>
-	public class DeleteChainCommand: GenericCommand
-	{
-		/// <value>
-		/// Gets if the command requires a rule especification
-		/// </value>
-	    public override bool MustSpecifyRule {
-	    	get { return false; }
-	    }
-		
-		/// <summary>
-		/// Default constructor
-		/// </summary>
-	    public DeleteChainCommand()
-	       :base(RuleCommands.DeleteChain)
-		{
+namespace NFSharp.Iptables.Core.Commands {
+    /// <summary>
+    /// Models the delete rule command
+    /// </summary>
+    public class DeleteChainCommand: GenericCommand {
+        /// <value>
+        /// Gets if the command requires a rule especification
+        /// </value>
+        public override bool MustSpecifyRule {
+            get {
+                return false;
+            }
+        }
 
-		}
-		
-		/// <summary>
-		/// Returns an string that represents the command
-		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String"/>
-		/// </returns>
-		protected override string GetValueAsString()
-		{
-			return String.Empty;
-		}
-	}
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public DeleteChainCommand()
+        :base(RuleCommands.DeleteChain) {
+
+        }
+
+        /// <summary>
+        /// Returns an string that represents the command
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/>
+        /// </returns>
+        protected override string GetValueAsString() {
+            return String.Empty;
+        }
+    }
 }

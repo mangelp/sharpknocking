@@ -15,7 +15,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 //
 
@@ -25,21 +25,19 @@ using System.Collections.Generic;
 
 using NFSharp.Iptables;
 
-namespace NFSharp.Iptables.Core.Extensions.Target
-{
-	/// <summary>
-	/// ReadOnly list adapter for lists of targetExtensionHandler type.
-	/// </summary>
-	public class ReadOnlyTargetExtensionListAdapter: ReadOnlyListAdapter<TargetExtensionHandler>
-	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="adapted">
-		/// A <see cref="List`1"/>
-		/// </param>
-		public ReadOnlyTargetExtensionListAdapter(List<TargetExtensionHandler> adapted)
-			:base(adapted)
-		{}
-	}
+namespace NFSharp.Iptables.Core.Extensions.Target {
+    /// <summary>
+    /// ReadOnly list adapter for lists of targetExtensionHandler type.
+    /// </summary>
+    public class ReadOnlyTargetExtensionListAdapter: ReadOnlyListAdapter<TargetExtensionHandler> {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="adapted">
+        /// A <see cref="List`1"/>
+        /// </param>
+        public ReadOnlyTargetExtensionListAdapter(List<TargetExtensionHandler> adapted)
+        :base(adapted)
+        {}
+    }
 }

@@ -15,54 +15,51 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 using System;
 
 using CommonUtilities.Types;
 
-namespace NFSharp.Iptables.Core
-{   
+namespace NFSharp.Iptables.Core {
     /// <summary>
     /// Built in chains in iptables. Not all the builtin chains are applicable
     /// to every table. Each table contains a subset of builtin chains.
     /// </summary>
-	/// <remarks>
-	/// <see>PacketTableType for reference of available tables</see> 
-	/// </remarks>
-    public enum BuiltInChains:short
-    {
+    /// <remarks>
+    /// <see>PacketTableType for reference of available tables</see>
+    /// </remarks>
+    public enum BuiltInChains:short {
         /// <summary>
-		/// User defined chain. Can be in any table. 
-		/// </summary>
+        /// User defined chain. Can be in any table.
+        /// </summary>
         UserDefined=0,
-		/// <summary>
-		/// Incoming packets chain. Can be in Filter and Mangler tables.
-		/// </summary>
+        /// <summary>
+        /// Incoming packets chain. Can be in Filter and Mangler tables.
+        /// </summary>
         Input,
         /// <summary>
-		/// Output packets chain. Can be in Nat, Mangler and Raw tables.
-		/// </summary>
+        /// Output packets chain. Can be in Nat, Mangler and Raw tables.
+        /// </summary>
         Output,
         /// <summary>
-		/// Forward packets chain. Can be in Filter and Mangler tables.
-		/// </summary>
+        /// Forward packets chain. Can be in Filter and Mangler tables.
+        /// </summary>
         Forward,
         /// <summary>
-		/// Prerouting packets chain. Can be in Nat, Mangler and Raw tables.
-		/// </summary>
+        /// Prerouting packets chain. Can be in Nat, Mangler and Raw tables.
+        /// </summary>
         Prerouting,
         /// <summary>
-		/// Postrouting packets chain. Can be in Nat and Mangler tables.
-		/// </summary>
+        /// Postrouting packets chain. Can be in Nat and Mangler tables.
+        /// </summary>
         Postrouting
     }
-    
+
     /// <summary>
     /// Custom targets.
     /// </summary>
-    public enum CustomRuleTargets
-    {
+    public enum CustomRuleTargets {
         /// <summary>
         /// No custom target defined. The target is a predefined one.
         /// </summary>
@@ -76,16 +73,15 @@ namespace NFSharp.Iptables.Core
         /// </summary>
         CustomExtension=2
     }
-    
+
     /// <summary>
-    /// Targets for iptables rules. 
+    /// Targets for iptables rules.
     /// </summary>
     /// <remarks>
     /// Here we have the predefined chains and also a value to specify that
     /// a user-defined chain have to be used (UserDefined).
     /// </remarks>
-    public enum RuleTargets
-    {
+    public enum RuleTargets {
         /// <summary>
         /// The target can be a built-in chain, a user-defined chain or
         /// a target added to iptables as an extension.
@@ -119,12 +115,11 @@ namespace NFSharp.Iptables.Core
         [Alias("RETURN")]
         Return=4
     }
-    
+
     /// <summary>
     /// Builtin tables in iptables for packets.
     /// </summary>
-    public enum PacketTableType
-    { 
+    public enum PacketTableType {
         /// <summary>
         /// Default table. Contains built-in chains INPUT, FORWARD and OUTPUT.
         /// </summary>
@@ -145,16 +140,15 @@ namespace NFSharp.Iptables.Core
         Mangler,
         /// <summary>
         /// Table for exemptions from connection tracking in combination with the NOTRACK target.
-        /// It provides the built-in chains PREROUTING and OUTPUT. 
+        /// It provides the built-in chains PREROUTING and OUTPUT.
         /// </summary>
         Raw
     }
-    
+
     /// <summary>
     /// Commands available
     /// </summary>
-    public enum RuleCommands: short
-    {
+    public enum RuleCommands: short {
         /// <summary>
         /// Default value. None selected.
         /// </summary>
@@ -215,18 +209,17 @@ namespace NFSharp.Iptables.Core
         [Alias("replace", "R")]
         ReplaceRule=(short)'R'
     }
-    
+
     /// <summary>
     /// Options available to specify with any action
     /// </summary>
-    public enum RuleOptions:short
-    {
+    public enum RuleOptions:short {
         /// <summary>
         /// Default value. None selected.
         /// </summary>
         None=0,
         /// <summary>
-        /// Protocol of the rule or of the packet to check. 
+        /// Protocol of the rule or of the packet to check.
         /// </summary>
         [Alias("protocol","p")]
         Protocol=(short)'p',
@@ -280,17 +273,16 @@ namespace NFSharp.Iptables.Core
         [Alias("match", "m")]
         MatchExtension=(short)'m'
     }
-	
-	public enum StringFormatOptions
-	{
-		/// <summary>
-		/// Default formatting
-		/// </summary>
-		Default=0,
-		/// <summary>
-		/// Format compatible with iptables-restore supported format
-		/// </summary>
-		Iptables=1
-	}
+
+    public enum StringFormatOptions {
+        /// <summary>
+        /// Default formatting
+        /// </summary>
+        Default=0,
+        /// <summary>
+        /// Format compatible with iptables-restore supported format
+        /// </summary>
+        Iptables=1
+    }
 }
- 
+

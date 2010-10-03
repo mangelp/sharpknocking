@@ -18,26 +18,11 @@
 
 using System;
 using NFSharp.Iptables.Core;
-using CommonUtilities.Types;
 
-namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
+namespace NFSharp.Iptables.Converter {
 
 
-    public class TableParser {
-
-        public TableParser () {
-        }
-
-        /// <summary>
-        /// Parses a string and builds a instance of a NetfilterTable object
-        /// </summary>
-        public NetfilterTable Parse(string line) {
-            PacketTableType tp = PacketTableType.Filter;
-            if(!NetfilterTable.TryGetTableType(line, out tp)) {
-                return null;
-            }
-
-            return new NetfilterTable(tp);
-        }
+    public interface IRuleConverter<T> {
+        T Convert(NetfilterTableSet tableSet);
     }
 }

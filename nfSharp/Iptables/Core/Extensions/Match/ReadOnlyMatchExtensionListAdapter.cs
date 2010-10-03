@@ -15,7 +15,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 //
 
@@ -26,17 +26,14 @@ using System.Collections.Generic;
 using NFSharp.Iptables;
 using NFSharp.Iptables.Core.Extensions;
 
-namespace NFSharp.Iptables.Core.Extensions.Match
-{
-	
-	
-	public class ReadOnlyMatchExtensionListAdapter: ReadOnlyListAdapter<MatchExtensionHandler>
-	{
-	    
-		public ReadOnlyMatchExtensionListAdapter(List<MatchExtensionHandler> adapted)
-			:base(adapted)
-		{
-		    
-		}
-	}
+namespace NFSharp.Iptables.Core.Extensions.Match {
+
+
+    public class ReadOnlyMatchExtensionListAdapter: ReadOnlyListAdapter<MatchExtensionHandler> {
+
+        public ReadOnlyMatchExtensionListAdapter(List<MatchExtensionHandler> adapted)
+        :base(adapted) {
+
+        }
+    }
 }
