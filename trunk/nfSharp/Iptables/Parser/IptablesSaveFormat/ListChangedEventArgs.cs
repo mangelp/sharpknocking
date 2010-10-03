@@ -15,38 +15,37 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 //
 using System;
 
-namespace NFSharp.Iptables.Parser.IptablesSaveFormat
-{
-	/// <summary>
-	/// Arguments for the events of the GenericParameterList generic type
-	/// </summary>
-	public class ListChangedEventArgs<T>: EventArgs
-	{
-	    private T item;
-	    
-		/// <summary>
-		/// Element affected
-		/// </summary>
-	    public T Item
-	    {
-	       get { return this.item;}       
-	       set { this.item = value;}
-	    }
-	    
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="item">
-		/// The element affected
-		/// </param>
-		public ListChangedEventArgs(T item)
-		{
-		    this.item = item;
-		}
-	}
+namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
+    /// <summary>
+    /// Arguments for the events of the GenericParameterList generic type
+    /// </summary>
+    public class ListChangedEventArgs<T>: EventArgs {
+        private T item;
+
+        /// <summary>
+        /// Element affected
+        /// </summary>
+        public T Item {
+            get {
+                return this.item;
+            } set {
+                this.item = value;
+            }
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="item">
+        /// The element affected
+        /// </param>
+        public ListChangedEventArgs(T item) {
+            this.item = item;
+        }
+    }
 }

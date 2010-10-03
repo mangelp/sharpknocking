@@ -15,25 +15,23 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 using System;
 
 using NFSharp.Common.Types;
 
-namespace NFSharp.Common.Unix.Net
-{
+namespace NFSharp.Common.Unix.Net {
     /// <summary>
-    /// Types of protocols. Extracted from /etc/protocols and from 
-	/// http://www.iana.org/assignments/protocol-numbers.  
+    /// Types of protocols. Extracted from /etc/protocols and from
+    /// http://www.iana.org/assignments/protocol-numbers.
     /// </summary>
-	/// <remarks>
-	/// This enumeration is an extensive list of protocol types of any type but
-	/// there is another enumeration like this called ProtocolType in
-	/// System.Net.Sockets that only considers the most important ones.
-	/// </remarks>
-    public enum Protocols
-    {
+    /// <remarks>
+    /// This enumeration is an extensive list of protocol types of any type but
+    /// there is another enumeration like this called ProtocolType in
+    /// System.Net.Sockets that only considers the most important ones.
+    /// </remarks>
+    public enum Protocols {
         /// <summary>
         /// hop-by-hop options for ipv6
         /// </summary>
@@ -43,87 +41,87 @@ namespace NFSharp.Common.Unix.Net
         /// internet control message protocol
         /// </summary>
         [Alias("icmp")]
-        Icmp=1, 
+        Icmp=1,
         /// <summary>
         /// internet group management protocol
         /// </summary>
         [Alias("igmp")]
-        Igmp=2, 
+        Igmp=2,
         /// <summary>
         /// gateway-gateway protocol
         /// </summary>
         [Alias("ggp")]
-        Ggp=3, 
+        Ggp=3,
         /// <summary>
         /// IP encapsulated in IP (officially "IP")
         /// </summary>
         [Alias("ipencap")]
-        IpEncap=4, 
+        IpEncap=4,
         /// <summary>
         /// ST datagram mode
         /// </summary>
         [Alias("st")]
-        St =5, 
+        St =5,
         /// <summary>
         /// transmission control protocol
         /// </summary>
         [Alias("tcp")]
-        Tcp=6, 
+        Tcp=6,
         /// <summary>
         /// CBT, Tony Ballardie &lt;A.Ballardie@cs.ucl.ac.uk&gt;
         /// </summary>
         [Alias("cbt")]
-        Cbt=7, 
+        Cbt=7,
         /// <summary>
         /// exterior gateway protocol
         /// </summary>
         [Alias("egp")]
-        Egp=8, 
+        Egp=8,
         /// <summary>
         /// any private interior gateway (Cisco: for IGRP)
         /// </summary>
         [Alias("igp")]
-        Igp=9, 
+        Igp=9,
         /// <summary>
         /// BBN RCC Monitoring
         /// </summary>
         [Alias("bbn-rcc")]
-        BbnRcc=10, 
+        BbnRcc=10,
         /// <summary>
         /// Network Voice Protocol
         /// </summary>
         [Alias("nvp")]
-        Nvp=11, 
+        Nvp=11,
         /// <summary>
         /// PARC universal packet protocol
         /// </summary>
         [Alias("pup")]
-        Pup=12, 
+        Pup=12,
         /// <summary>
         /// ARGUS
         /// </summary>
         [Alias("argus")]
-        Argus=13, 
+        Argus=13,
         /// <summary>
         /// EMCON
         /// </summary>
         [Alias("emcon")]
-        Emcon=14, 
+        Emcon=14,
         /// <summary>
         /// Cross Net Debugger
         /// </summary>
         [Alias("xnet")]
-        Xnet=15, 
+        Xnet=15,
         /// <summary>
         /// Chaos
         /// </summary>
         [Alias("chaos")]
-        Chaos=16, 
+        Chaos=16,
         /// <summary>
         /// user datagram protocol
         /// </summary>
         [Alias("udp")]
-        Udp=17, 
+        Udp=17,
         /// <summary>
         /// Multiplexing protocol
         /// </summary>
@@ -148,7 +146,7 @@ namespace NFSharp.Common.Unix.Net
         /// Xerox NS IDP
         /// </summary>
         [Alias("xns-idp")]
-        XnsIdp=22, 
+        XnsIdp=22,
         /// <summary>
         /// Trunk-1
         /// </summary>
@@ -158,7 +156,7 @@ namespace NFSharp.Common.Unix.Net
         /// Trunk-2
         /// </summary>
         [Alias("trunk-2")]
-        Trunk2=24, 
+        Trunk2=24,
         /// <summary>
         /// Leaf-1
         /// </summary>
@@ -168,7 +166,7 @@ namespace NFSharp.Common.Unix.Net
         /// Leaf-2
         /// </summary>
         [Alias("leaf-2")]
-        Leaf2=26, 
+        Leaf2=26,
         /// <summary>
         /// "reliable datagram" protocol
         /// </summary>
@@ -203,12 +201,12 @@ namespace NFSharp.Common.Unix.Net
         /// Datagram Congestion Control Protocol
         /// </summary>
         [Alias("dccp")]
-        Dccp=33, 
+        Dccp=33,
         /// <summary>
         /// Third Party Connect Protocol
         /// </summary>
         [Alias("3pc")]
-        ThirdPc=34, 
+        ThirdPc=34,
         /// <summary>
         /// Inter-Domain Policy Routing Protocol
         /// </summary>
@@ -273,7 +271,7 @@ namespace NFSharp.Common.Unix.Net
         /// General Routing Encapsulation
         /// </summary>
         [Alias("gre")]
-        Gre=47,    
+        Gre=47,
         /// <summary>
         /// Dynamic Source Routing Protocol
         /// </summary>
@@ -288,32 +286,32 @@ namespace NFSharp.Common.Unix.Net
         /// Encap Security Payload
         /// </summary>
         [Alias("esp")]
-        Esp=50,   
+        Esp=50,
         /// <summary>
         /// Autentication Header
         /// </summary>
         [Alias("ah")]
-        Ah=51,   
+        Ah=51,
         /// <summary>
         /// Integrated Net Layer Security TUBA
         /// </summary>
         [Alias("I-nlsp")]
-        INlsp=52,   
+        INlsp=52,
         /// <summary>
         /// IP with Encryption
         /// </summary>
         [Alias("swipe")]
-        Swipe=53,   
+        Swipe=53,
         /// <summary>
         /// NBMA Address Resolution Protocol
         /// </summary>
         [Alias("narp")]
-        Narp=54,   
+        Narp=54,
         /// <summary>
         /// IP Mobility
         /// </summary>
         [Alias("mobile")]
-        Mobile=55,   
+        Mobile=55,
         /// <summary>
         /// Transport Layer Security Protocol using Kryptonet key management
         /// </summary>
@@ -323,7 +321,7 @@ namespace NFSharp.Common.Unix.Net
         /// SKIP
         /// </summary>
         [Alias("skip")]
-        Skip=57,   
+        Skip=57,
         /// <summary>
         /// ICMP for IPv6
         /// </summary>
@@ -343,17 +341,17 @@ namespace NFSharp.Common.Unix.Net
 //        /// Any host internal protocol
 //        /// </summary>
 //        [Alias("")]
-//        =61,   
+//        =61,
         /// <summary>
         /// General Routing Encapsulation
         /// </summary>
         [Alias("cftp")]
-        Cftp=62,   
+        Cftp=62,
 //        /// <summary>
 //        /// Any local network
 //        /// </summary>
 //        [Alias("")]
-//        =63,   
+//        =63,
         /// <summary>
         /// SATNET and Backroom EXPAK
         /// </summary>
@@ -363,7 +361,7 @@ namespace NFSharp.Common.Unix.Net
         /// Kryptolan
         /// </summary>
         [Alias("kryptolan")]
-        Kryptolan=65,        
+        Kryptolan=65,
         /// <summary>
         /// MIT Remote Virtual Disk Protocol
         /// </summary>
@@ -493,7 +491,7 @@ namespace NFSharp.Common.Unix.Net
         /// Locus Address Resolution Protocol
         /// </summary>
         [Alias("larp")]
-        Larp=91, 
+        Larp=91,
         /// <summary>
         /// Multicast Transport Protocol
         /// </summary>
@@ -508,7 +506,7 @@ namespace NFSharp.Common.Unix.Net
         /// IP-within-IP Encapsulation Protocol
         /// </summary>
         [Alias("ipip")]
-        Ipip=94,         
+        Ipip=94,
         /// <summary>
         /// Mobile Internetworking Control Pro.
         /// </summary>
@@ -523,7 +521,7 @@ namespace NFSharp.Common.Unix.Net
         /// Ethernet-within-IP Encapsulation
         /// </summary>
         [Alias("etherip")]
-        etherip=97,     
+        etherip=97,
         /// <summary>
         /// Encapsulation Header
         /// </summary>
@@ -643,12 +641,12 @@ namespace NFSharp.Common.Unix.Net
         /// Simple Message Protocol
         /// </summary>
         [Alias("smp")]
-        Smp=121,	
+        Smp=121,
         /// <summary>
         /// SM
         /// </summary>
         [Alias("sm")]
-        Sm=122,	
+        Sm=122,
         /// <summary>
         /// Performance Transparency Protocol
         /// </summary>
@@ -658,32 +656,32 @@ namespace NFSharp.Common.Unix.Net
         /// ISIS over IPv4
         /// </summary>
         [Alias("isis")]
-        Isis=124,	
+        Isis=124,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Alias("fire")]
-        Fire=125,	
+        Fire=125,
         /// <summary>
         /// Combat Radio Transport Protocol
         /// </summary>
         [Alias("crtp")]
-        Crtp=126,	
+        Crtp=126,
         /// <summary>
         /// Combat Radio User Datagram
         /// </summary>
         [Alias("crudp")]
-        Crudp=127,	
+        Crudp=127,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Alias("sscopmce")]
-        Sscopmce=128,	
+        Sscopmce=128,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Alias("iplt")]
-        Iplt=129,	
+        Iplt=129,
         /// <summary>
         /// Secure Packet Shield
         /// </summary>
@@ -693,19 +691,19 @@ namespace NFSharp.Common.Unix.Net
         /// Private IP Encapsulation within IP
         /// </summary>
         [Alias("pipe")]
-        Pipe=131,	
+        Pipe=131,
         /// <summary>
         /// Stream Control Transmission Protocol
         /// </summary>
         [Alias("sctp")]
-        Sctp=132,	
+        Sctp=132,
         /// <summary>
         /// Fibre Channel
         /// </summary>
         [Alias("fc")]
-        Fc=133,	
+        Fc=133,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Alias("rsvp-e2e-ignore")]
         RsvpE2eIgnore=134,
@@ -713,20 +711,20 @@ namespace NFSharp.Common.Unix.Net
 //        /// Mobility Header
 //        /// </summary>
 //        [Alias("")]
-//        =135,	
+//        =135,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Alias("udplite")]
-        UdpLite=136,	
+        UdpLite=136,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [Alias("mpls-in-ip")]
         MplsInIp=137
 //   138-252 Unassigned                                       [IANA]
-//   253     Use for experimentation and testing           [RFC3692] 
-//   254     Use for experimentation and testing           [RFC3692] 
+//   253     Use for experimentation and testing           [RFC3692]
+//   254     Use for experimentation and testing           [RFC3692]
 //   255                 Reserved                             [IANA]
-     }
-}
+             }
+         }

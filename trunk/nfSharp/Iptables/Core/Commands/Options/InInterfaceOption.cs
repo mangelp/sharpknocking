@@ -15,53 +15,46 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
 
 using NFSharp.Iptables;
 
-namespace NFSharp.Iptables.Core.Commands.Options
-{
-	
-	/// <summary>
-	/// input interface option
-	/// </summary>
-	public class InInterfaceOption: GenericOption
-	{
-	    private string iface;
-	    
-	    public string Interface
-	    {
-	        get { return this.iface;}
-	        set 
-            { 
+namespace NFSharp.Iptables.Core.Commands.Options {
+
+    /// <summary>
+    /// input interface option
+    /// </summary>
+    public class InInterfaceOption: GenericOption {
+        private string iface;
+
+        public string Interface {
+            get {
+                return this.iface;
+            } set {
                 this.iface = value;
             }
-	    }
+        }
 
-		public InInterfaceOption()
-		  :base(RuleOptions.InInterface)
-		{
-		}
-		
-		public override bool TryReadValues (string strVal, out string errStr)
-		{
-		    if(!String.IsNullOrEmpty(strVal))
-		    {
-		        this.iface = strVal;
-		        errStr=String.Empty;
-		        return true;
-		    }
-		    
-		    errStr = "The value can't be null or empty";
-		    return false;
-		}
+        public InInterfaceOption()
+        :base(RuleOptions.InInterface) {
+        }
 
-		protected override string GetValueAsString()
-		{
-			return this.iface;
-		}
+        public override bool TryReadValues (string strVal, out string errStr) {
+            if(!String.IsNullOrEmpty(strVal)) {
+                this.iface = strVal;
+                errStr=String.Empty;
+                return true;
+            }
 
-	}
+            errStr = "The value can't be null or empty";
+            return false;
+        }
+
+        protected override string GetValueAsString() {
+            return this.iface;
+        }
+
+    }
 }

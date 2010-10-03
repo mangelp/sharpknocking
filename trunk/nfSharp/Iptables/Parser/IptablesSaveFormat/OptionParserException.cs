@@ -19,42 +19,40 @@
 
 using System;
 
-namespace NFSharp.Iptables.Parser.IptablesSaveFormat
-{
-	
-	/// <summary>
-	/// Exception for problems within the option parser
-	/// </summary>
-	public class OptionParserException: Exception
-	{
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public OptionParserException()
-			:base("Problem found while parsing the command line")
-		{}
-		
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="msg">
-		/// A <see cref="System.String"/> message of the exception
-		/// </param>
-		public OptionParserException(string msg)
-			:base(msg)
-		{}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="msg">
-		/// A <see cref="System.String"/> message of the exception
-		/// </param>
-		/// <param name="innerEx">
-		/// A <see cref="Exception"/> inner exception
-		/// </param>
-		public OptionParserException(string msg, Exception innerEx)
-			:base(msg, innerEx)
-		{}
-	}
+namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
+
+    /// <summary>
+    /// Exception for problems within the option parser
+    /// </summary>
+    public class OptionParserException: Exception {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public OptionParserException()
+        :base("Problem found while parsing the command line")
+        {}
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="msg">
+        /// A <see cref="System.String"/> message of the exception
+        /// </param>
+        public OptionParserException(string msg)
+        :base(msg)
+        {}
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="msg">
+        /// A <see cref="System.String"/> message of the exception
+        /// </param>
+        /// <param name="innerEx">
+        /// A <see cref="Exception"/> inner exception
+        /// </param>
+        public OptionParserException(string msg, Exception innerEx)
+        :base(msg, innerEx)
+        {}
+    }
 }

@@ -15,43 +15,41 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 //
 
 using System;
 
-namespace NFSharp.Iptables.Core.Commands
-{
-	/// <summary>
-	/// Models the new chain command
-	/// </summary>
-	public class NewChainCommand: GenericCommand
-	{
-		/// <summary>
-		/// Gets if the command requires a rule to be specified
-		/// </summary>
-	    public override bool MustSpecifyRule {
-	    	get { return false; }
-	    }
-		
-		/// <summary>
-		/// Default constructor
-		/// </summary>
-		public NewChainCommand()
-		  :base(RuleCommands.NewChain)
-		{
-		}
-		
-		/// <summary>
-		/// Gets an string that represents the command
-		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String"/>
-		/// </returns>
-		protected override string GetValueAsString()
-		{
-			return String.Empty;
-		}
-	}
+namespace NFSharp.Iptables.Core.Commands {
+    /// <summary>
+    /// Models the new chain command
+    /// </summary>
+    public class NewChainCommand: GenericCommand {
+        /// <summary>
+        /// Gets if the command requires a rule to be specified
+        /// </summary>
+        public override bool MustSpecifyRule {
+            get {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public NewChainCommand()
+        :base(RuleCommands.NewChain) {
+        }
+
+        /// <summary>
+        /// Gets an string that represents the command
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/>
+        /// </returns>
+        protected override string GetValueAsString() {
+            return String.Empty;
+        }
+    }
 }

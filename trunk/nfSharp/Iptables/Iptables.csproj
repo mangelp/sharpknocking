@@ -100,8 +100,6 @@
     <Compile Include="Core\NetfilterRuleList.cs" />
     <Compile Include="Core\NetfilterTable.cs" />
     <Compile Include="Core\NetfilterTableSet.cs" />
-    <Compile Include="Core\RuleException.cs" />
-    <Compile Include="Core\RuleParser.cs" />
     <Compile Include="Parser\TextFileParser.cs" />
     <Compile Include="Parser\IRuleParser.cs" />
     <Compile Include="Parser\IptablesSaveFormat\CommandParser.cs" />
@@ -109,6 +107,8 @@
     <Compile Include="Parser\RuleParserException.cs" />
     <Compile Include="Parser\IptablesSaveFormat\IptablesCommandFactory.cs" />
     <Compile Include="Parser\IptablesSaveFormat\TableParser.cs" />
+    <Compile Include="Converter\IptablesSaveFormatStringConverter.cs" />
+    <Compile Include="Converter\IRuleConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -130,5 +130,9 @@
       <Project>{BBF58DC8-CF38-4557-949D-48268D082543}</Project>
       <Name>CommonUtilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Converter\" />
+    <Folder Include="Converter\IptablesSaveFormatString\" />
   </ItemGroup>
 </Project>

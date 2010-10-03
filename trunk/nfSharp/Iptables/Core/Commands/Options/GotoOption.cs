@@ -15,56 +15,50 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
 
 using NFSharp.Iptables;
 
-namespace NFSharp.Iptables.Core.Commands.Options
-{
-	
-	/// <summary>
-	/// Goto option
-	/// </summary>
-	public class GotoOption: GenericOption
-	{
-	    private string chainName;
-	    
-	    public string ChainName
-	    {
-	        get{ return this.chainName;}
-	        set
-	        {
-	            if(String.IsNullOrEmpty(value))
-	                throw new ArgumentException("The value can't be null or empty");
-	            
-	            this.chainName = value;
-	        }
-	    }
-	    
-		public GotoOption()
-		  :base(RuleOptions.Goto)
-		{
-		}
-		
-		public override bool TryReadValues(string strVal, out string errStr)
-		{
-		    if(String.IsNullOrEmpty(strVal))
-		    {
-		        errStr = "The input string is null or empty";
-		        return false;
-		    }
-		    
-		    this.chainName = strVal;
-		    errStr=String.Empty;
-		    return true;
-		}
-		
-		protected override string GetValueAsString()
-		{
-			return this.chainName;
-		}
+namespace NFSharp.Iptables.Core.Commands.Options {
 
-	}
+    /// <summary>
+    /// Goto option
+    /// </summary>
+    public class GotoOption: GenericOption {
+        private string chainName;
+
+        public string ChainName {
+            get {
+                return this.chainName;
+            } set {
+                if(String.IsNullOrEmpty(value)) {
+                    throw new ArgumentException("The value can't be null or empty");
+                }
+
+                this.chainName = value;
+            }
+        }
+
+        public GotoOption()
+        :base(RuleOptions.Goto) {
+        }
+
+        public override bool TryReadValues(string strVal, out string errStr) {
+            if(String.IsNullOrEmpty(strVal)) {
+                errStr = "The input string is null or empty";
+                return false;
+            }
+
+            this.chainName = strVal;
+            errStr=String.Empty;
+            return true;
+        }
+
+        protected override string GetValueAsString() {
+            return this.chainName;
+        }
+
+    }
 }

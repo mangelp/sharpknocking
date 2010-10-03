@@ -15,32 +15,27 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
 
 using NFSharp.Iptables;
 
-namespace NFSharp.Iptables.Core.Commands.Options
-{
-	
-	
-	public class FragmentOption: GenericOption
-	{	    
-		public FragmentOption()
-		  :base(RuleOptions.Fragment)
-		{
-		}
-		
-		public override bool TryReadValues (string strVal, out string errStr)
-		{
-		    errStr="The fragment option doesn't allow any values";
-		    return false;
-		}
-		
-		protected override string GetValueAsString()
-		{
-			return String.Empty;
-		}
-	}
+namespace NFSharp.Iptables.Core.Commands.Options {
+
+
+    public class FragmentOption: GenericOption {
+        public FragmentOption()
+        :base(RuleOptions.Fragment) {
+        }
+
+        public override bool TryReadValues (string strVal, out string errStr) {
+            errStr="The fragment option doesn't allow any values";
+            return false;
+        }
+
+        protected override string GetValueAsString() {
+            return String.Empty;
+        }
+    }
 }

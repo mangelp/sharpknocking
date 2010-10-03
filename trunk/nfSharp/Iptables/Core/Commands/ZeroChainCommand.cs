@@ -15,45 +15,43 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 //
 
 using System;
 
-namespace NFSharp.Iptables.Core.Commands
-{
-	
-	/// <summary>
-	/// This class implements the ZeroChain command of iptables
-	/// </summary>
-	public class ZeroChainCommand: GenericCommand
-	{
-		/// <summary>
-		/// Gets if the rule must be specified for the command
-		/// </summary>
-	    public override bool MustSpecifyRule {
-	    	get { return false; }
-	    }
-		
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public ZeroChainCommand()
-		  :base(RuleCommands.ZeroChain)
-		{
-			throw new NotImplementedException ("This command is not implemented properly to be usable");
-		}
+namespace NFSharp.Iptables.Core.Commands {
 
-		/// <summary>
-		/// Gets a string that represents the command
-		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String"/>
-		/// </returns>
-		protected override string GetValueAsString()
-		{
-			return String.Empty;
-		}
-	}
+    /// <summary>
+    /// This class implements the ZeroChain command of iptables
+    /// </summary>
+    public class ZeroChainCommand: GenericCommand {
+        /// <summary>
+        /// Gets if the rule must be specified for the command
+        /// </summary>
+        public override bool MustSpecifyRule {
+            get {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ZeroChainCommand()
+        :base(RuleCommands.ZeroChain) {
+            throw new NotImplementedException ("This command is not implemented properly to be usable");
+        }
+
+        /// <summary>
+        /// Gets a string that represents the command
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/>
+        /// </returns>
+        protected override string GetValueAsString() {
+            return String.Empty;
+        }
+    }
 }

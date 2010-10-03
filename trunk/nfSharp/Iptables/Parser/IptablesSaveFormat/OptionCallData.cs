@@ -19,98 +19,91 @@
 
 using System;
 
-namespace NFSharp.Iptables.Parser.IptablesSaveFormat
-{
-	/// <summary>
-	/// Models the data about the procesing of a parameter
-	/// </summary>
-	public class OptionCallData
-	{
-		private CmdLineOption sourceOption;
-		private string errorMessage;
-		private bool hasErrors;
-		private bool abortParsing;
+namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
+    /// <summary>
+    /// Models the data about the procesing of a parameter
+    /// </summary>
+    public class OptionCallData {
+        private CmdLineOption sourceOption;
+        private string errorMessage;
+        private bool hasErrors;
+        private bool abortParsing;
 
-		/// <summary>
-		/// Gets/Sets the option that matched the parameter
-		/// </summary>
-		public CmdLineOption SourceOption {
-			get {
-				return sourceOption;
-			}
-			set {
-				sourceOption = value;
-			}
-		}
-		
-		/// <summary>
-		/// Return the position of the parameter in the input array of arguments
-		/// </summary>
-		public int Order
-		{
-			get {
-				if (this.sourceOption != null)
-					return this.sourceOption.HitPosition;
-				else
-					return -1;
-			}
-		}
-		
-		/// <summary>
-		/// Return the value of the parameter in the input array of arguments
-		/// </summary>
-		public string Value
-		{
-			get {
-				if (this.sourceOption != null)
-					return this.sourceOption.Parameter.Value;
-				else
-					return String.Empty;
-			}
-		}
+        /// <summary>
+        /// Gets/Sets the option that matched the parameter
+        /// </summary>
+        public CmdLineOption SourceOption {
+            get {
+                return sourceOption;
+            } set {
+                sourceOption = value;
+            }
+        }
 
-		/// <summary>
-		/// Gets/Sets the error string
-		/// </summary>
-		public string ErrorMessage {
-			get {
-				return errorMessage;
-			}
-			set {
-				errorMessage = value;
-			}
-		}
+        /// <summary>
+        /// Return the position of the parameter in the input array of arguments
+        /// </summary>
+        public int Order {
+            get {
+                if (this.sourceOption != null) {
+                    return this.sourceOption.HitPosition;
+                } else {
+                    return -1;
+                }
+            }
+        }
 
-		/// <summary>
-		/// Gets/Sets if the parameter has errors
-		/// </summary>
-		public bool HasErrors {
-			get {
-				return hasErrors;
-			}
-			set {
-				hasErrors = value;
-			}
-		}
+        /// <summary>
+        /// Return the value of the parameter in the input array of arguments
+        /// </summary>
+        public string Value {
+            get {
+                if (this.sourceOption != null) {
+                    return this.sourceOption.Parameter.Value;
+                } else {
+                    return String.Empty;
+                }
+            }
+        }
 
-		/// <summary>
-		/// Gets/Sets if the parameter parsing must be aborted after this
-		/// parameter.
-		/// </summary>
-		public bool AbortParsing {
-			get {
-				return abortParsing;
-			}
-			set {
-				abortParsing = value;
-			}
-		}
-		
-		/// <summary>
-		/// TODO:
-		/// </summary>
-		public OptionCallData()
-		{
-		}
-	}
+        /// <summary>
+        /// Gets/Sets the error string
+        /// </summary>
+        public string ErrorMessage {
+            get {
+                return errorMessage;
+            } set {
+                errorMessage = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets/Sets if the parameter has errors
+        /// </summary>
+        public bool HasErrors {
+            get {
+                return hasErrors;
+            } set {
+                hasErrors = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets/Sets if the parameter parsing must be aborted after this
+        /// parameter.
+        /// </summary>
+        public bool AbortParsing {
+            get {
+                return abortParsing;
+            } set {
+                abortParsing = value;
+            }
+        }
+
+        /// <summary>
+        /// TODO:
+        /// </summary>
+        public OptionCallData() {
+        }
+    }
 }

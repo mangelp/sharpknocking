@@ -15,43 +15,41 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 //
 
 using System;
 
-namespace NFSharp.Iptables.Core.Commands
-{
-	/// <summary>
-	/// Models the flush chain command
-	/// </summary>
-	public class FlushChainCommand: GenericCommand
-	{
-		/// <summary>
-		/// Gets if the rule must be specified in the rule
-		/// </summary>
-	    public override bool MustSpecifyRule {
-	    	get { return false; }
-	    }
-	    
-		/// <summary>
-		/// Default constructor
-		/// </summary>
-	    public FlushChainCommand()
-	      :base(RuleCommands.FlushChain)
-		{
-		}
-		
-		/// <summary>
-		/// Returns an string with the value of the command
-		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String"/>
-		/// </returns>
-		protected override string GetValueAsString()
-		{
-			return String.Empty;
-		}
-	}
+namespace NFSharp.Iptables.Core.Commands {
+    /// <summary>
+    /// Models the flush chain command
+    /// </summary>
+    public class FlushChainCommand: GenericCommand {
+        /// <summary>
+        /// Gets if the rule must be specified in the rule
+        /// </summary>
+        public override bool MustSpecifyRule {
+            get {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public FlushChainCommand()
+        :base(RuleCommands.FlushChain) {
+        }
+
+        /// <summary>
+        /// Returns an string with the value of the command
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String"/>
+        /// </returns>
+        protected override string GetValueAsString() {
+            return String.Empty;
+        }
+    }
 }

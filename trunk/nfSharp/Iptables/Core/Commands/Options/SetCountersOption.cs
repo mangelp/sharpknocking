@@ -15,37 +15,32 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA 
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
 
 using NFSharp.Iptables;
 
-namespace NFSharp.Iptables.Core.Commands.Options
-{
-	
-	
-	public class SetCountersOption: GenericOption
-	{
-		
-		public SetCountersOption()
-		  :base(RuleOptions.SetCounters)
-		{
-		    throw new NotImplementedException("A lazy programmer didn't implemented "+
-		                                      "this class properly.");
-		}
-		
-		
-		public override bool TryReadValues (string strVal, out string errStr)
-		{
-		    throw new NotImplementedException("A lazy programmer didn't implemented "+
-                                 "this class properly.");
-		}
+namespace NFSharp.Iptables.Core.Commands.Options {
 
-		protected override string GetValueAsString()
-		{
-			throw new NotImplementedException("O_o");
-		}
 
-	}
+    public class SetCountersOption: GenericOption {
+
+        public SetCountersOption()
+        :base(RuleOptions.SetCounters) {
+            throw new NotImplementedException("A lazy programmer didn't implemented "+
+                                              "this class properly.");
+        }
+
+
+        public override bool TryReadValues (string strVal, out string errStr) {
+            throw new NotImplementedException("A lazy programmer didn't implemented "+
+                                              "this class properly.");
+        }
+
+        protected override string GetValueAsString() {
+            throw new NotImplementedException("O_o");
+        }
+
+    }
 }
