@@ -28,7 +28,7 @@ namespace NFSharp.Iptables.Core.Extensions.Match {
 
     public abstract class MatchExtensionParameter: ExtensionParameter<MatchExtensionHandler> {
         public MatchExtensionParameter(MatchExtensionHandler owner, object enumValue)
-        :base(owner, enumValue) {
+        		:base(owner, enumValue) {
 
         }
     }

@@ -43,7 +43,7 @@ namespace NFSharp.Iptables.Core {
     /// to load explicitly the extension and then you can access the extension
     /// handler from the list and add the options to the extension handler object.
     /// </remarks>
-    public class NetfilterRule: IComparable <NetfilterRule> {
+    public class NetfilterRule {
         private NetfilterChain parentChain;
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace NFSharp.Iptables.Core {
         /// parameter or there is no extension target loaded it returns null.
         /// </remarks>
         public TargetExtensionHandler FindTargetExtensionHandler(string paramName) {
-            if(this.jumpOption!=null &&
+            if(this.jumpOption != null &&
                     this.jumpOption.HasOptionNamed(paramName)) {
                 return this.jumpOption.Extension;
             }
@@ -294,69 +294,5 @@ namespace NFSharp.Iptables.Core {
 
             return null;
         }
-
-
-        public void AppendContentsTo(StringBuilder sb, StringFormatOptions options) {
-            //Console.WriteLine("** Converting rule to string ** ");
-            for(int i=0; i<this.options.Count; i++) {
-                if(this.options[i]==this.jumpOption) {
-                    continue;
-                } else if(this.options[i] is MatchExtensionOption) {
-                    //First we print the option and then the parameters
-                    sb.Append(this.options[i].ToString()+" ");
-                    MatchExtensionHandler handler = this.FindMatchExtensionHandler((MatchExtensionOption)this.options[i]);
-                    if(handler!=null) {
-                        handler.AppendContentsTo(sb);
-                        sb.Append(" ");
-                    }
-                    //Console.WriteLine("MatchExtension: "+this.options[i]+" "+handler);
-                } else {
-                    //Console.WriteLine("Option: "+this.options[i]);
-                    sb.Append(this.options[i].ToString()+" ");
-                }
-            }
-
-            //Console.WriteLine("Target extension: "+jumpOption);
-            if(jumpOption!=null) {
-                sb.Append(this.jumpOption.ToString());
-            }
-        }
-
-        public string GetContentsAsString(StringFormatOptions options) {
-            StringBuilder sb = new StringBuilder();
-            this.AppendContentsTo(sb, options);
-            return sb.ToString();
-        }
-
-        //---------------------------------------------------
-        // IComparable<T> implementation and overrides of ToString, Equals and
-        // GetHashCode.
-
-        public override string ToString () {
-            return this.GetContentsAsString(StringFormatOptions.Default);
-        }
-
-        public override bool Equals (object o) {
-            if(!(o is NetfilterRule) || o == null) {
-                return false;
-            }
-
-            string strThis = this.ToString ();
-            return strThis.Equals(o.ToString(), StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        public override int GetHashCode () {
-            return this.ToString ().GetHashCode ();
-        }
-
-        public int CompareTo (NetfilterRule rule) {
-            if(rule==null) {
-                throw new ArgumentNullException ("rule");
-            }
-
-            string strThis = this.ToString ();
-            return strThis.CompareTo (rule.ToString());
-        }
-
     }
 }

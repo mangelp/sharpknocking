@@ -148,8 +148,9 @@ namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
             }
 
             if(gCmd.MustSpecifyRule && parameters.Length < 2) {
-                // With only 2 parameters there is no room for a rule specifcation.
-                // Cry if it is required
+                // With only 2 parameters there is no room for a rule
+                // specification so if it is required we must throw an
+                // exception about this
                 throw new FormatException("Unexpected parameters in line after command: "+line);
             }
 
@@ -163,32 +164,32 @@ namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
             MatchExtensionHandler matchExHandler = null;
             TargetExtensionHandler targetExHandler = null;
 
-            //Now we must parse the rest of the parameters and add them to the command
+            // Now we must parse the rest of the parameters and add them to the command
             while(pos <parameters.Length) {
                 currParam = parameters[pos];
-                //Console.WriteLine("Processing["+pos+"-"+(parameters.Length-1)+"]: "+currParam);
-                //Give to the parameter the correct procesing based in the guess
-                //of his type
+                // Console.WriteLine("Processing["+pos+"-"+(parameters.Length-1)+"]: "+currParam);
+                // Give to the parameter the correct procesing based in the guess
+                // of his type
                 if(GenericOption.IsOption(currParam.Name)) {
-                    //If this command doesn't have a rule there can't be more than the
-                    //parameters for the command that where already grouped into the
-                    //first SimpleParameter object. So if there is a parameter something
-                    //got broken and we must give back an exception
+                    // If this command doesn't have a rule there can't be more than the
+                    // parameters for the command that where already grouped into the
+                    // first SimpleParameter object. So if there is a parameter something
+                    // got broken and we must give back an exception
                     if(!gCmd.MustSpecifyRule) {
                         throw new FormatException("Found rule where no rule was expected");
                     }
-                    //We use a factory to build an option object
+                    // We use a factory to build an option object
                     else if(!IptablesOptionFactory.TryGetOption(currParam, out option, out ex)) {
                         throw ex;
                     }
-                    //Console.WriteLine("Adding option parameter: "+currParam);
-                    //Add the option to the rule
+                    // Console.WriteLine("Adding option parameter: "+currParam);
+                    // Add the option to the rule
                     gCmd.Rule.Options.Add(option);
                 } else if(gCmd.Rule.TryGetMatchExtensionHandler(currParam.Name, out matchExHandler)) {
-                    //Console.WriteLine("Adding a match extension parameter: "+currParam);
-                    //The parameter is an option for a match extension. We add to it
-                    //TODO: If the name is not a valid parameter we get a null reference exception
-                    //check that.
+                    // Console.WriteLine("Adding a match extension parameter: "+currParam);
+                    // The parameter is an option for a match extension. We add to it
+                    // TODO: If the name is not a valid parameter we get a null reference exception
+                    // check that.
                     matchExHandler.AddParameter(currParam.Name, currParam.Value);
                 } else if(gCmd.Rule.TryGetTargetExtensionHandler(currParam.Name, out targetExHandler)) {
                     //Console.WriteLine("Adding a target extension parameter: "+currParam.Name+", "+currParam.Value);

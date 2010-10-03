@@ -34,15 +34,13 @@ namespace NFSharp.Iptables.Parser {
         private CommandParser cmdParser;
         private ChainParser chainParser;
 
-        public IptablesSaveFormatParser(string fileName) :
-        base(fileName) {
-
+        public IptablesSaveFormatParser(string fileName)
+        : base(fileName) {
             this.init();
         }
 
-        public IptablesSaveFormatParser() :
-        base( ) {
-
+        public IptablesSaveFormatParser()
+        : base( ) {
             this.init();
         }
 
@@ -135,7 +133,7 @@ namespace NFSharp.Iptables.Parser {
         /// Gets if the string is a valid table. If it is the enum that matches
         /// the table is set in the output parameter.
         /// </summary>
-        protected bool TryGetTableType(string line, out PacketTableType table) {
+        protected bool tryGetTableType(string line, out PacketTableType table) {
             line = line.Trim();
             object obj = null;
 

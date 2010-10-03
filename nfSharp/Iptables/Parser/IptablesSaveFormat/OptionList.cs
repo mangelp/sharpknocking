@@ -42,7 +42,7 @@ namespace NFSharp.Iptables.Parser.IptablesSaveFormat {
         }
 
         public OptionList()
-		:base() {
+        :base() {
         }
 
         /// <summary>
